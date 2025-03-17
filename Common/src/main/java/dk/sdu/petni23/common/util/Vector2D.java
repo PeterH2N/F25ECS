@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Vector2D
 {
-
+    public static Vector2D ZERO = new Vector2D(0,0);
     public double x;
     public double y;
 

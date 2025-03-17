@@ -9,7 +9,7 @@ import java.util.List;
 
 public class RenderNodeSPI extends INodeSPI
 {
-    private static final List<Class<? extends Component>> requiredComponents = Node.getComponentClasses(RenderNode.class);
+    private static final List<Class<? extends Component>> requiredComponents = Node.getRequiredComponentClasses(RenderNode.class);
     @Override
     public List<Class<? extends Component>> getRequiredComponents()
     {

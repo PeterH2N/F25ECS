@@ -1,7 +1,7 @@
 import dk.sdu.petni23.common.entity.IEntitySPI;
-import dk.sdu.petni23.common.services.ISystem;
+import dk.sdu.petni23.common.services.IPluginService;
 import dk.sdu.petni23.player.PlayerSPI;
-import dk.sdu.petni23.player.PlayerSystem;
+import dk.sdu.petni23.player.PlayerPlugin;
 
 module Player {
     requires javafx.graphics;
@@ -9,5 +9,5 @@ module Player {
     opens dk.sdu.petni23.player to javafx.graphics;
     uses PlayerSPI;
     provides IEntitySPI with PlayerSPI;
-    provides ISystem with PlayerSystem;
+    provides IPluginService with PlayerPlugin;
 }

@@ -8,7 +8,7 @@ import java.util.List;
 
 public class MoveNodeSPI extends INodeSPI
 {
-    private static final List<Class<? extends Component>> requiredComponents = Node.getComponentClasses(MoveNode.class);
+    private static final List<Class<? extends Component>> requiredComponents = Node.getRequiredComponentClasses(MoveNode.class);
 
     @Override
     public List<Class<? extends Component>> getRequiredComponents()

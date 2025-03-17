@@ -12,11 +12,12 @@ public abstract class Node
     public Node(Entity entity) {
         initNode(entity, this);
     }
-    public static List<Class<? extends Component>> getComponentClasses(Class<? extends Node> nodeClass) {
+
+    public static List<Class<? extends Component>> getRequiredComponentClasses(Class<? extends Node> nodeClass) {
         List<Class<? extends Component>> componentClasses = new ArrayList<>();
         for (Field field : nodeClass.getDeclaredFields()) {
             Class<?> type = field.getType();
-            if (Component.class.isAssignableFrom(type)) {
+            if (Component.class.isAssignableFrom(type) && !field.isAnnotationPresent(Optional.class)) {
                 componentClasses.add((Class<? extends Component>) type);
             }
         }
@@ -25,8 +26,9 @@ public abstract class Node
 
     public static <T extends Node> void initNode(Entity entity, T node) {
         var components = entity.getComponents();
+        var fields = node.getClass().getFields();
         for (Component component : components) {
-            for (Field field : node.getClass().getFields()) {
+            for (Field field : fields) {
                 if (component.getClass().isAssignableFrom(field.getType())) {
                     field.setAccessible(true);
                     try {

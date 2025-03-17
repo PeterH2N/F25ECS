@@ -4,15 +4,20 @@ import dk.sdu.petni23.common.entity.Entity;
 import dk.sdu.petni23.common.entity.IEntitySPI;
 import dk.sdu.petni23.common.node.INodeSPI;
 import dk.sdu.petni23.common.node.Node;
-import dk.sdu.petni23.common.services.ISystem;
+import dk.sdu.petni23.common.services.IPluginService;
+import dk.sdu.petni23.common.services.IPostProcessingSystem;
+import dk.sdu.petni23.common.services.IProcessingSystem;
 import java.util.*;
 
 public class Engine
 {
     private final static List<Entity> entities = new ArrayList<>();
-    private final static List<ISystem> systems = getServices(ISystem.class);
+    private final static List<IProcessingSystem> systems = getServices(IProcessingSystem.class);
+    private final static Collection<? extends IPostProcessingSystem> postSystems = getServices(IPostProcessingSystem.class);
+    private final static Collection<? extends IPluginService> plugins = getServices(IPluginService.class);
     private final static List<Node> nodes = new ArrayList<>();
     private final static Collection<? extends INodeSPI> nodeSPIs = getServices(INodeSPI.class);
+
     private final static List<IEntitySPI> entitySPIs = getServices(IEntitySPI.class);
     public static void addEntity(Entity entity) {
         entities.add(entity);
@@ -28,9 +33,19 @@ public class Engine
         nodes.removeIf(node -> node.getComponents().stream().anyMatch(c -> entity.getComponents().contains(c)));
     }
 
+    public static void addNode(Node node) {
+        nodes.add(node);
+    }
+
     public static void start() {
-        for (var system : systems) {
-            system.start();
+        for (var plugin : plugins) {
+            plugin.start();
+        }
+    }
+
+    public static void stop() {
+        for (var plugin : plugins) {
+            plugin.stop();
         }
     }
 
@@ -40,13 +55,11 @@ public class Engine
         }
     }
 
-    public static <T extends Node> List<T> getNodes(Class<T>... nodeTypes) {
+    public static <T extends Node> List<T> getNodes(Class<T> nodeType) {
         List<T> r = new ArrayList<>();
         for (Node node : nodes) {
-            for (Class<T> nodeType : nodeTypes) {
                 if (nodeType.isInstance(node))
                     r.add((T)node);
-            }
         }
         return r;
     }

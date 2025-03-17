@@ -1,17 +1,15 @@
 package dk.sdu.petni23.main;
 
 import dk.sdu.petni23.common.Engine;
-import dk.sdu.petni23.common.data.GameData;
-import dk.sdu.petni23.common.services.ISystem;
+import dk.sdu.petni23.common.GameData;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
-import static dk.sdu.petni23.common.data.GameData.gameWindow;
+import static dk.sdu.petni23.common.GameData.gameWindow;
 
 public class Main extends Application
 {
@@ -24,7 +22,7 @@ public class Main extends Application
     @Override
     public void start(Stage stage) throws IOException
     {
-        Scene scene = new Scene(gameWindow);
+        Scene scene = GameData.scene;
         gameWindow.setPrefSize(800,800);
         GameData.displayWidthProperty().bind(gameWindow.widthProperty());
         GameData.displayHeightProperty().bind(gameWindow.heightProperty());
@@ -41,11 +39,9 @@ public class Main extends Application
         new AnimationTimer() {
             @Override
             public void handle(long now) {
-                //gameData.setTime(now);
-                //if (!gameData.isPaused())
-                    Engine.update(1.0/60);
-                //gameData.getKeys().update();
-                //gameData.setFrameTime(java.lang.System.nanoTime() - now);
+                GameData.setTime(now);
+                Engine.update(GameData.getDeltaTime());
+                GameData.setFrameTime(java.lang.System.nanoTime() - now);
             }
         }.start();
     }
