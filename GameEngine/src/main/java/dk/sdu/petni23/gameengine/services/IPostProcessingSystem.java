@@ -1,4 +1,4 @@
-package dk.sdu.petni23.common.services;
+package dk.sdu.petni23.gameengine.services;
 
 public interface IPostProcessingSystem
 {

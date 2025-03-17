@@ -16,6 +16,7 @@
         <module>Nodes</module>
         <module>Player</module>
         <module>Environment</module>
+        <module>GameEngine</module>
     </modules>
     <properties>
         <java>java</java>

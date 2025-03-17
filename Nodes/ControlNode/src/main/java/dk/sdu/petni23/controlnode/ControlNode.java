@@ -1,9 +1,9 @@
 package dk.sdu.petni23.controlnode;
 
 import dk.sdu.petni23.common.components.*;
-import dk.sdu.petni23.common.entity.Entity;
-import dk.sdu.petni23.common.node.Node;
-import dk.sdu.petni23.common.node.Optional;
+import dk.sdu.petni23.gameengine.entity.Entity;
+import dk.sdu.petni23.gameengine.node.Node;
+
 
 public class ControlNode extends Node
 {

@@ -1,21 +1,21 @@
-package dk.sdu.petni23.common;
+package dk.sdu.petni23.gameengine;
 
-import dk.sdu.petni23.common.entity.Entity;
-import dk.sdu.petni23.common.entity.IEntitySPI;
-import dk.sdu.petni23.common.node.INodeSPI;
-import dk.sdu.petni23.common.node.Node;
-import dk.sdu.petni23.common.services.IPluginService;
-import dk.sdu.petni23.common.services.IPostProcessingSystem;
-import dk.sdu.petni23.common.services.IProcessingSystem;
+import dk.sdu.petni23.gameengine.entity.Entity;
+import dk.sdu.petni23.gameengine.entity.IEntitySPI;
+import dk.sdu.petni23.gameengine.node.INodeSPI;
+import dk.sdu.petni23.gameengine.node.Node;
+import dk.sdu.petni23.gameengine.services.IPluginService;
+import dk.sdu.petni23.gameengine.services.IPostProcessingSystem;
+import dk.sdu.petni23.gameengine.services.IProcessingSystem;
 import java.util.*;
 
 public class Engine
 {
     private final static List<Entity> entities = new ArrayList<>();
+    private final static List<Node> nodes = new ArrayList<>();
     private final static List<IProcessingSystem> systems = getServices(IProcessingSystem.class);
     private final static Collection<? extends IPostProcessingSystem> postSystems = getServices(IPostProcessingSystem.class);
     private final static Collection<? extends IPluginService> plugins = getServices(IPluginService.class);
-    private final static List<Node> nodes = new ArrayList<>();
     private final static Collection<? extends INodeSPI> nodeSPIs = getServices(INodeSPI.class);
 
     private final static List<IEntitySPI> entitySPIs = getServices(IEntitySPI.class);
@@ -52,6 +52,9 @@ public class Engine
     public static void update(double deltaTime) {
         for (var system : systems) {
             system.update(deltaTime);
+        }
+        for (var postSystem : postSystems) {
+            postSystem.update(deltaTime);
         }
     }
 

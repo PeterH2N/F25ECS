@@ -3,12 +3,11 @@ package dk.sdu.petni23.decoration;
 import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.components.PositionComponent;
 import dk.sdu.petni23.common.components.SpriteComponent;
-import dk.sdu.petni23.common.entity.Entity;
-import dk.sdu.petni23.common.entity.IEntitySPI;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.common.util.Vector2D;
+import dk.sdu.petni23.gameengine.entity.Entity;
 import javafx.scene.image.Image;
-
+import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 import java.util.Objects;
 
 public class DecorationSPI implements IEntitySPI

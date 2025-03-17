@@ -2,11 +2,11 @@ package dk.sdu.petni23.player;
 
 import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.components.*;
-import dk.sdu.petni23.common.entity.Entity;
-import dk.sdu.petni23.common.entity.IEntitySPI;
 import dk.sdu.petni23.common.shape.CircleShape;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.common.util.Vector2D;
+import dk.sdu.petni23.gameengine.entity.Entity;
+import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 

@@ -1,10 +1,11 @@
 package dk.sdu.petni23.rendernode;
 
-import dk.sdu.petni23.common.Engine;
+
 import dk.sdu.petni23.common.GameData;
-import dk.sdu.petni23.common.services.IProcessingSystem;
+
 import dk.sdu.petni23.common.util.Vector2D;
-import javafx.scene.canvas.Canvas;
+import dk.sdu.petni23.gameengine.Engine;
+import dk.sdu.petni23.gameengine.services.IProcessingSystem;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -55,7 +56,7 @@ public class RenderSystem implements IProcessingSystem
         if (node.spriteComponent == null) return;
         // render sprite
         Vector2D pos = GameData.toScreenSpace(node.positionComponent.getPosition());
-        Image sprite = node.spriteComponent.getSprite(GameData.getCurrentMillis());
+        Image sprite = node.spriteComponent.getSprite();
 
         double width = sprite.getWidth() * GameData.getTileRatio();
         double height = sprite.getHeight() * GameData.getTileRatio();

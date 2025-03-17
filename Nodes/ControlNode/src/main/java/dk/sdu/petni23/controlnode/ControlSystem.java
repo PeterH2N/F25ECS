@@ -1,9 +1,10 @@
 package dk.sdu.petni23.controlnode;
 
-import dk.sdu.petni23.common.Engine;
+
 import dk.sdu.petni23.common.GameData;
-import dk.sdu.petni23.common.services.IProcessingSystem;
 import dk.sdu.petni23.common.util.Vector2D;
+import dk.sdu.petni23.gameengine.Engine;
+import dk.sdu.petni23.gameengine.services.IProcessingSystem;
 
 public class ControlSystem implements IProcessingSystem
 {

@@ -1,7 +1,8 @@
 package dk.sdu.petni23.main;
 
-import dk.sdu.petni23.common.Engine;
+
 import dk.sdu.petni23.common.GameData;
+import dk.sdu.petni23.gameengine.Engine;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;

@@ -2,11 +2,13 @@ package dk.sdu.petni23.common.components;
 
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.common.util.Vector2D;
+import dk.sdu.petni23.gameengine.Component;
 import javafx.scene.image.Image;
 
 public class SpriteComponent extends Component
 {
     public int animationIndex = 0;
+    public long time = 0;
     public boolean mirror = false;
     public boolean reverse = false;
     public SpriteSheet spriteSheet;
@@ -18,7 +20,7 @@ public class SpriteComponent extends Component
         this.spriteOrigin = spriteOrigin;
     }
 
-    public Image getSprite(long now) {
-        return spriteSheet.getAnimation(animationIndex).getSprite(now, reverse);
+    public Image getSprite() {
+        return spriteSheet.getAnimation(animationIndex).getSprite(time, reverse);
     }
 }

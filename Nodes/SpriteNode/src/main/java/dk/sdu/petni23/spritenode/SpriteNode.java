@@ -1,9 +1,10 @@
 package dk.sdu.petni23.spritenode;
 
 import dk.sdu.petni23.common.components.*;
-import dk.sdu.petni23.common.entity.Entity;
-import dk.sdu.petni23.common.node.Node;
-import dk.sdu.petni23.common.node.Optional;
+import dk.sdu.petni23.gameengine.entity.Entity;
+import dk.sdu.petni23.gameengine.node.Node;
+import dk.sdu.petni23.gameengine.node.Optional;
+
 
 public class SpriteNode extends Node
 {

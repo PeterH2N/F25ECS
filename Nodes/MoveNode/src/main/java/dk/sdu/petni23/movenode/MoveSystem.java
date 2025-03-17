@@ -1,9 +1,11 @@
 package dk.sdu.petni23.movenode;
 
-import dk.sdu.petni23.common.Engine;
+
 import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.components.PositionComponent;
-import dk.sdu.petni23.common.services.IProcessingSystem;
+import dk.sdu.petni23.gameengine.Engine;
+import dk.sdu.petni23.gameengine.services.IProcessingSystem;
+
 
 public class MoveSystem implements IProcessingSystem
 {

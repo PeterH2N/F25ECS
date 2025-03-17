@@ -1,8 +1,8 @@
 package dk.sdu.petni23.decoration;
 
-import dk.sdu.petni23.common.Engine;
-import dk.sdu.petni23.common.entity.Entity;
-import dk.sdu.petni23.common.services.IPluginService;
+
+import dk.sdu.petni23.gameengine.Engine;
+import dk.sdu.petni23.gameengine.services.IPluginService;
 
 import java.util.Optional;
 

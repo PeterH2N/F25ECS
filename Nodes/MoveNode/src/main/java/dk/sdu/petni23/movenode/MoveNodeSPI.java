@@ -1,9 +1,11 @@
 package dk.sdu.petni23.movenode;
 
-import dk.sdu.petni23.common.components.Component;
-import dk.sdu.petni23.common.entity.Entity;
-import dk.sdu.petni23.common.node.INodeSPI;
-import dk.sdu.petni23.common.node.Node;
+
+import dk.sdu.petni23.gameengine.Component;
+import dk.sdu.petni23.gameengine.entity.Entity;
+import dk.sdu.petni23.gameengine.node.INodeSPI;
+import dk.sdu.petni23.gameengine.node.Node;
+
 import java.util.List;
 
 public class MoveNodeSPI extends INodeSPI

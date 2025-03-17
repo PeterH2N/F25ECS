@@ -1,8 +1,10 @@
 package dk.sdu.petni23.spritenode;
 
-import dk.sdu.petni23.common.Engine;
-import dk.sdu.petni23.common.services.IProcessingSystem;
+
+import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.util.Vector2D;
+import dk.sdu.petni23.gameengine.Engine;
+import dk.sdu.petni23.gameengine.services.IProcessingSystem;
 
 public class SpriteSystem implements IProcessingSystem
 {
@@ -10,6 +12,7 @@ public class SpriteSystem implements IProcessingSystem
     public void update(double deltaTime)
     {
         for (var node : Engine.getNodes(SpriteNode.class)) {
+            node.spriteComponent.time = GameData.getCurrentMillis();
             node.spriteComponent.animationIndex = 0;
             boolean moving = false;
             // update animation index based on stuff

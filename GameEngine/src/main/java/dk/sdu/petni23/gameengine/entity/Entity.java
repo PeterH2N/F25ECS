@@ -1,6 +1,6 @@
-package dk.sdu.petni23.common.entity;
+package dk.sdu.petni23.gameengine.entity;
 
-import dk.sdu.petni23.common.components.Component;
+import dk.sdu.petni23.gameengine.Component;
 
 import java.util.Collection;
 import java.util.HashMap;

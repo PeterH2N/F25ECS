@@ -1,7 +1,8 @@
 package dk.sdu.petni23.inputnode;
 
 import dk.sdu.petni23.common.GameData;
-import dk.sdu.petni23.common.services.IPluginService;
+
+import dk.sdu.petni23.gameengine.services.IPluginService;
 import javafx.scene.Scene;
 
 public class IOPlugin implements IPluginService

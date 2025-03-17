@@ -1,9 +1,9 @@
 package dk.sdu.petni23.inputnode;
 
 import dk.sdu.petni23.common.GameData;
-import dk.sdu.petni23.common.services.IProcessingSystem;
+
 import dk.sdu.petni23.common.util.Vector2D;
-import javafx.scene.Scene;
+import dk.sdu.petni23.gameengine.services.IProcessingSystem;
 
 public class IOSystem implements IProcessingSystem
 {
