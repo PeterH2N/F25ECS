@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/Characters/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Characters/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Common/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Common/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Core/src/main/java" charset="UTF-8" />
@@ -11,6 +13,10 @@
     <file url="file://$PROJECT_DIR$/Environment/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/GameEngine/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/GameEngine/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Nodes/AnimationNode/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Nodes/AnimationNode/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Nodes/CollisionNode/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Nodes/CollisionNode/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Nodes/ControlNode/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Nodes/ControlNode/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Nodes/InputNode/src/main/java" charset="UTF-8" />
@@ -19,12 +25,8 @@
     <file url="file://$PROJECT_DIR$/Nodes/MoveNode/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Nodes/RenderNode/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Nodes/RenderNode/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Nodes/SpriteNode/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Nodes/SpriteNode/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Nodes/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Nodes/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Player/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Player/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Renderer/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Renderer/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />

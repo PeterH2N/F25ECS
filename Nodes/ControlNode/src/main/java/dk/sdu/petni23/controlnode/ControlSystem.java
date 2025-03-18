@@ -4,9 +4,9 @@ package dk.sdu.petni23.controlnode;
 import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.Engine;
-import dk.sdu.petni23.gameengine.services.IProcessingSystem;
+import dk.sdu.petni23.gameengine.services.ISystem;
 
-public class ControlSystem implements IProcessingSystem
+public class ControlSystem implements ISystem
 {
 
     @Override
@@ -40,6 +40,12 @@ public class ControlSystem implements IProcessingSystem
             }
 
         }
+    }
+
+    @Override
+    public int getPriority()
+    {
+        return Priority.PREPROCESSING.get();
     }
 
 }

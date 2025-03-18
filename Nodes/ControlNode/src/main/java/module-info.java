@@ -1,7 +1,7 @@
 import dk.sdu.petni23.controlnode.ControlSystem;
 import dk.sdu.petni23.controlnode.ControlNodeSPI;
 import dk.sdu.petni23.gameengine.node.INodeSPI;
-import dk.sdu.petni23.gameengine.services.IProcessingSystem;
+import dk.sdu.petni23.gameengine.services.ISystem;
 
 
 module ControlNode {
@@ -10,5 +10,5 @@ module ControlNode {
     requires GameEngine;
     exports dk.sdu.petni23.controlnode;
     provides INodeSPI with ControlNodeSPI;
-    provides IProcessingSystem with ControlSystem;
+    provides ISystem with ControlSystem;
 }

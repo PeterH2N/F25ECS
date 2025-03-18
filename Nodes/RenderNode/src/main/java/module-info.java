@@ -1,5 +1,6 @@
 import dk.sdu.petni23.gameengine.node.INodeSPI;
-import dk.sdu.petni23.gameengine.services.IProcessingSystem;
+import dk.sdu.petni23.gameengine.services.IPluginService;
+import dk.sdu.petni23.gameengine.services.ISystem;
 import dk.sdu.petni23.rendernode.RenderNodeSPI;
 import dk.sdu.petni23.rendernode.RenderSystem;
 
@@ -9,5 +10,6 @@ module RenderNode {
     requires GameEngine;
     exports dk.sdu.petni23.rendernode;
     provides INodeSPI with RenderNodeSPI;
-    provides IProcessingSystem with RenderSystem;
+    provides ISystem with RenderSystem;
+    provides IPluginService with RenderSystem;
 }

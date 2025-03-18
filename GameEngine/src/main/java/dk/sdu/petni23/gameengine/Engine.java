@@ -5,16 +5,14 @@ import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 import dk.sdu.petni23.gameengine.node.INodeSPI;
 import dk.sdu.petni23.gameengine.node.Node;
 import dk.sdu.petni23.gameengine.services.IPluginService;
-import dk.sdu.petni23.gameengine.services.IPostProcessingSystem;
-import dk.sdu.petni23.gameengine.services.IProcessingSystem;
+import dk.sdu.petni23.gameengine.services.ISystem;
 import java.util.*;
 
 public class Engine
 {
     private final static List<Entity> entities = new ArrayList<>();
     private final static List<Node> nodes = new ArrayList<>();
-    private final static List<IProcessingSystem> systems = getServices(IProcessingSystem.class);
-    private final static Collection<? extends IPostProcessingSystem> postSystems = getServices(IPostProcessingSystem.class);
+    private final static List<ISystem> systems = getServices(ISystem.class);
     private final static Collection<? extends IPluginService> plugins = getServices(IPluginService.class);
     private final static Collection<? extends INodeSPI> nodeSPIs = getServices(INodeSPI.class);
 
@@ -38,6 +36,9 @@ public class Engine
     }
 
     public static void start() {
+        // sort systems based on their priority
+        systems.sort(Comparator.comparingInt(ISystem::getPriority));
+
         for (var plugin : plugins) {
             plugin.start();
         }
@@ -53,9 +54,6 @@ public class Engine
         for (var system : systems) {
             system.update(deltaTime);
         }
-        for (var postSystem : postSystems) {
-            postSystem.update(deltaTime);
-        }
     }
 
     public static <T extends Node> List<T> getNodes(Class<T> nodeType) {
@@ -67,8 +65,8 @@ public class Engine
         return r;
     }
 
-    private static <T> List<T> getServices(Class<T> c) {
-        return ServiceLoader.load(c).stream().map(ServiceLoader.Provider::get).toList();
+    private static <T> ArrayList<T> getServices(Class<T> c) {
+        return new ArrayList<>(ServiceLoader.load(c).stream().map(ServiceLoader.Provider::get).toList()) ;
     }
 
 

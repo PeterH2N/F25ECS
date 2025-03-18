@@ -9,4 +9,5 @@ module Common {
     exports dk.sdu.petni23.common;
     exports dk.sdu.petni23.common.misc;
     exports dk.sdu.petni23.common.spritesystem;
+    exports dk.sdu.petni23.common.world;
 }

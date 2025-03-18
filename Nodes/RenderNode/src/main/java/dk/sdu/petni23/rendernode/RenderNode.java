@@ -1,5 +1,6 @@
 package dk.sdu.petni23.rendernode;
 
+import dk.sdu.petni23.common.components.BodyComponent;
 import dk.sdu.petni23.common.components.DirectionComponent;
 import dk.sdu.petni23.common.components.PositionComponent;
 import dk.sdu.petni23.common.components.SpriteComponent;
@@ -12,9 +13,8 @@ public class RenderNode extends Node
 {
     public PositionComponent positionComponent;
     public SpriteComponent spriteComponent;
-    @
-            Optional
-    public DirectionComponent directionComponent;
+    @Optional
+    public BodyComponent bodyComponent;
 
     public double getZ() {
         return positionComponent.getPosition().y;

@@ -8,8 +8,9 @@ public class SpriteSheet
 {
     private Animation[] animations;
 
-    public void init(Image img, int numRows, int[] numFrames) {
+    public void init(Image img, int[] numFrames) {
         int maxFrames = Util.largestValue(numFrames);
+        int numRows = numFrames.length;
         animations = new Animation[numRows];
         for (int i = 0, yOffset = 0; i < numRows; i++,yOffset++) {
             animations[i] = new Animation(img, yOffset, numFrames[yOffset], maxFrames);

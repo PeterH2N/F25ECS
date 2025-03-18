@@ -1,8 +1,7 @@
 import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 import dk.sdu.petni23.gameengine.node.INodeSPI;
 import dk.sdu.petni23.gameengine.services.IPluginService;
-import dk.sdu.petni23.gameengine.services.IPostProcessingSystem;
-import dk.sdu.petni23.gameengine.services.IProcessingSystem;
+import dk.sdu.petni23.gameengine.services.ISystem;
 
 module GameEngine {
     exports dk.sdu.petni23.gameengine;
@@ -10,8 +9,7 @@ module GameEngine {
     exports dk.sdu.petni23.gameengine.node;
     exports dk.sdu.petni23.gameengine.entity;
     uses INodeSPI;
-    uses IProcessingSystem;
-    uses IPostProcessingSystem;
+    uses ISystem;
     uses IPluginService;
     uses IEntitySPI;
 }

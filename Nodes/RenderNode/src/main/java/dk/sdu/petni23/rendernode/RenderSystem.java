@@ -3,9 +3,13 @@ package dk.sdu.petni23.rendernode;
 
 import dk.sdu.petni23.common.GameData;
 
+import dk.sdu.petni23.common.shape.AABBShape;
+import dk.sdu.petni23.common.shape.OvalShape;
 import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.Engine;
-import dk.sdu.petni23.gameengine.services.IProcessingSystem;
+import dk.sdu.petni23.gameengine.services.IPluginService;
+import dk.sdu.petni23.gameengine.services.ISystem;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -14,12 +18,26 @@ import java.text.DecimalFormat;
 import java.util.Comparator;
 import java.util.List;
 
-public class RenderSystem implements IProcessingSystem
+public class RenderSystem implements ISystem, IPluginService
 {
+    private static final Canvas canvas = new Canvas();
+    @Override
+    public void start()
+    {
+        GameData.gameWindow.getChildren().add(canvas);
+        canvas.getGraphicsContext2D().setImageSmoothing(false);
+        canvas.widthProperty().bind(GameData.displayWidthProperty());
+        canvas.heightProperty().bind(GameData.displayHeightProperty());
+    }
+
+    @Override
+    public void stop() {
+
+    }
     @Override
     public void update(double deltaTime)
     {
-        var gc = GameData.canvas.getGraphicsContext2D();
+        var gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.WHITE);
         gc.fillRect(0,0, GameData.getDisplayWidth(), GameData.getDisplayHeight());
 
@@ -28,6 +46,11 @@ public class RenderSystem implements IProcessingSystem
         drawFrameTime(gc);
     }
 
+    @Override
+    public int getPriority()
+    {
+        return Priority.RENDERING.get();
+    }
 
 
     void drawFrameTime(GraphicsContext gc) {
@@ -40,20 +63,22 @@ public class RenderSystem implements IProcessingSystem
 
     void drawNodes(GraphicsContext gc) {
         gc.save();
-        gc.setStroke(Color.BLACK);
+        gc.setStroke(Color.RED);
 
         // sort by y value
         List<RenderNode> nodes = Engine.getNodes(RenderNode.class);
         nodes.sort((Comparator.comparingDouble(RenderNode::getZ).reversed()));
 
         for (var node : nodes) {
-            drawNode(gc, node);
+            drawSprite(gc, node);
+        }
+        for (var node : nodes) {
+            drawBody(gc, node);
         }
         gc.restore();
     }
 
-    void drawNode(GraphicsContext gc, RenderNode node) {
-        if (node.spriteComponent == null) return;
+    void drawSprite(GraphicsContext gc, RenderNode node) {
         // render sprite
         Vector2D pos = GameData.toScreenSpace(node.positionComponent.getPosition());
         Image sprite = node.spriteComponent.getSprite();
@@ -75,6 +100,30 @@ public class RenderSystem implements IProcessingSystem
         else
             gc.drawImage(sprite, x, y, width, height);
 
+    }
+
+    void drawBody(GraphicsContext gc, RenderNode node) {
+        if (node.bodyComponent == null) return;
+        Vector2D pos = GameData.toScreenSpace(node.positionComponent.getPosition());
+        switch (node.bodyComponent.getShape()) {
+            case OvalShape oval -> {
+                double width = oval.a * 2 * GameData.getPPM();
+                double height = oval.b * 2 * GameData.getPPM();
+                double x = pos.x - width * 0.5;
+                double y = pos.y - height * 0.5;
+
+                gc.strokeOval(x, y, width, height);
+            }
+            case AABBShape aabb -> {
+                double width = aabb.width * GameData.getPPM();
+                double height = aabb.height * GameData.getPPM();
+                double x = pos.x - width * 0.5;
+                double y = pos.y - height * 0.5;
+
+                gc.strokeRect(x, y, width, height);
+            }
+            default -> throw new IllegalStateException("Unexpected value: " + node.bodyComponent.getShape());
+        }
     }
 
     void drawGrid(GraphicsContext gc) {

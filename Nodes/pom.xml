@@ -25,7 +25,8 @@
         <module>RenderNode</module>
         <module>InputNode</module>
         <module>ControlNode</module>
-        <module>SpriteNode</module>
+        <module>AnimationNode</module>
+        <module>CollisionNode</module>
     </modules>
 
     <dependencies>

@@ -21,8 +21,8 @@ public class Entity
         components.remove(c);
     }
 
-    public Component get(Class<? extends Component> c) {
-        return components.get(c);
+    public <T extends Component> T get(Class<T> c) {
+        return (T) components.get(c);
     }
 
     public Collection<Class<? extends Component>> getComponentClasses() {

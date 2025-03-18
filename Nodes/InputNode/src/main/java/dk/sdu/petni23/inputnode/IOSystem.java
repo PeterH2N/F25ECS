@@ -3,9 +3,9 @@ package dk.sdu.petni23.inputnode;
 import dk.sdu.petni23.common.GameData;
 
 import dk.sdu.petni23.common.util.Vector2D;
-import dk.sdu.petni23.gameengine.services.IProcessingSystem;
+import dk.sdu.petni23.gameengine.services.ISystem;
 
-public class IOSystem implements IProcessingSystem
+public class IOSystem implements ISystem
 {
     private static final double minZoom = 4;
     private static final double maxZoom = 50;
@@ -18,6 +18,12 @@ public class IOSystem implements IProcessingSystem
         updateCameraPos();
 
         GameData.gameKeys.update();
+    }
+
+    @Override
+    public int getPriority()
+    {
+        return Priority.PREPROCESSING.get();
     }
 
     void zoom() {

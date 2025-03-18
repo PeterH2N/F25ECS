@@ -6,11 +6,10 @@ import dk.sdu.petni23.gameengine.Engine;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-
-import static dk.sdu.petni23.common.GameData.gameWindow;
 
 public class Main extends Application
 {
@@ -23,16 +22,13 @@ public class Main extends Application
     @Override
     public void start(Stage stage) throws IOException
     {
-        Scene scene = GameData.scene;
-        gameWindow.setPrefSize(800,800);
-        GameData.displayWidthProperty().bind(gameWindow.widthProperty());
-        GameData.displayHeightProperty().bind(gameWindow.heightProperty());
+        GameData.gameWindow.setPrefSize(800,800);
 
         Engine.start();
 
         render();
         stage.setTitle("Hello!");
-        stage.setScene(scene);
+        stage.setScene(GameData.scene);
         stage.show();
     }
 

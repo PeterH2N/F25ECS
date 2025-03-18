@@ -3,6 +3,7 @@ package dk.sdu.petni23.common;
 import dk.sdu.petni23.common.misc.GameKeys;
 import dk.sdu.petni23.common.misc.Viewport;
 import dk.sdu.petni23.common.util.Vector2D;
+import dk.sdu.petni23.common.world.GameWorld;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -19,26 +20,22 @@ public class GameData
     public static final int worldSize = 50;
     private static final DoubleProperty displayRatioProperty = new SimpleDoubleProperty();
     private static final DoubleProperty tileRatioProperty = new SimpleDoubleProperty();
-    public static final double gravitationalConstant = 6.6743e-11;
     public static final Pane gameWindow = new Pane();
     public static final Scene scene = new Scene(gameWindow);
-    public static final Canvas canvas = new Canvas();
     public static final GameKeys gameKeys = new GameKeys();
     private static long currentTime = java.lang.System.nanoTime();
     private static double deltaTime = 0;
     private static long frameTime = 0;
     private static long currentMillis = 0;
     public static final Viewport camera = new Viewport(Math.min(40, worldSize));
+    public static final GameWorld world = new GameWorld();
 
     static {
         ppmProperty.bind(displayWidth.divide(camera.widthProperty));
         displayRatioProperty.bind(displayHeightProperty().divide(displayWidthProperty()));
         tileRatioProperty.bind(ppmProperty.multiply(1.0 / 64.0)); // reciprocal of 64 (tilesize in pixels) multiplied by pixels per tile
-
-        gameWindow.getChildren().add(canvas);
-        canvas.getGraphicsContext2D().setImageSmoothing(false);
-        canvas.widthProperty().bind(GameData.gameWindow.widthProperty());
-        canvas.heightProperty().bind(GameData.gameWindow.heightProperty());
+        GameData.displayWidthProperty().bind(GameData.gameWindow.widthProperty());
+        GameData.displayHeightProperty().bind(GameData.gameWindow.heightProperty());
     }
     public static IntegerProperty displayWidthProperty() {
         return displayWidth;

@@ -4,10 +4,10 @@ package dk.sdu.petni23.movenode;
 import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.components.PositionComponent;
 import dk.sdu.petni23.gameengine.Engine;
-import dk.sdu.petni23.gameengine.services.IProcessingSystem;
+import dk.sdu.petni23.gameengine.services.ISystem;
 
 
-public class MoveSystem implements IProcessingSystem
+public class MoveSystem implements ISystem
 {
     @Override
     public void update(double deltaTime)
@@ -16,6 +16,12 @@ public class MoveSystem implements IProcessingSystem
             node.position.getPosition().add(node.velocity.getVelocity().getMultiplied(deltaTime));
             containWithinWorldBounds(node.position);
         }
+    }
+
+    @Override
+    public int getPriority()
+    {
+        return Priority.PROCESSING.get();
     }
 
 

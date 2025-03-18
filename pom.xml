@@ -14,7 +14,7 @@
         <module>Core</module>
         <module>Common</module>
         <module>Nodes</module>
-        <module>Player</module>
+        <module>Characters</module>
         <module>Environment</module>
         <module>GameEngine</module>
     </modules>
