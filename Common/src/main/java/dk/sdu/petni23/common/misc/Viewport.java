@@ -1,7 +1,7 @@
 package dk.sdu.petni23.common.misc;
 
 import dk.sdu.petni23.common.GameData;
-import dk.sdu.petni23.common.components.PositionComponent;
+import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.util.Vector2D;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;

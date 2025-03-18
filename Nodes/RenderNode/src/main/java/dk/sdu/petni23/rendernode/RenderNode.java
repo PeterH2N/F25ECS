@@ -1,9 +1,8 @@
 package dk.sdu.petni23.rendernode;
 
-import dk.sdu.petni23.common.components.BodyComponent;
-import dk.sdu.petni23.common.components.DirectionComponent;
-import dk.sdu.petni23.common.components.PositionComponent;
-import dk.sdu.petni23.common.components.SpriteComponent;
+import dk.sdu.petni23.common.components.collision.BodyComponent;
+import dk.sdu.petni23.common.components.movement.PositionComponent;
+import dk.sdu.petni23.common.components.animation.SpriteComponent;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.node.Node;
 import dk.sdu.petni23.gameengine.node.Optional;

@@ -2,18 +2,15 @@ package dk.sdu.petni23.enemy;
 
 import dk.sdu.petni23.character.Character;
 import dk.sdu.petni23.common.GameData;
-import dk.sdu.petni23.common.components.BodyComponent;
-import dk.sdu.petni23.common.components.ControlComponent;
-import dk.sdu.petni23.common.components.SpeedComponent;
-import dk.sdu.petni23.common.components.SpriteComponent;
-import dk.sdu.petni23.common.shape.AABBShape;
+import dk.sdu.petni23.common.components.collision.BodyComponent;
+import dk.sdu.petni23.common.components.movement.SpeedComponent;
+import dk.sdu.petni23.common.components.animation.SpriteComponent;
+import dk.sdu.petni23.common.shape.OvalShape;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.entity.IEntitySPI;
-import dk.sdu.petni23.player.PlayerSPI;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
 
 import java.util.Objects;
 
@@ -37,11 +34,11 @@ public class TorchGoblinSPI implements IEntitySPI
         speed.speed = 2.5;
         goblin.add(speed);
 
-        var aabb = new AABBShape();
-        aabb.width = 21d / 64;
-        aabb.height = 4d / 64;
+        var oval = new OvalShape();
+        oval.a = (21d * 0.5) / 64;
+        oval.b = (4d * 0.5) / 64;
         var body = new BodyComponent();
-        body.setShape(aabb);
+        body.setShape(oval);
         goblin.add(body);
 
         var spriteComponent = new SpriteComponent(this.spriteSheet, new Vector2D(-0.5, -127d / 192));

@@ -7,34 +7,34 @@ import dk.sdu.petni23.common.shape.OvalShape;
 import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.node.Node;
+import dk.sdu.petni23.gameengine.services.IPhysicsSystem;
 import dk.sdu.petni23.gameengine.services.IPluginService;
 import dk.sdu.petni23.gameengine.services.ISystem;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CollisionSystem implements ISystem, IPluginService
+public class CollisionSystem implements IPhysicsSystem, IPluginService
 {
     private static final List<CollisionNode>[][] collisionGrid = (ArrayList<CollisionNode>[][])new ArrayList[GameData.worldSize][GameData.worldSize];
+
     @Override
-    public void update(double deltaTime)
+    public void preUpdate()
     {
         clearGrid();
         populateGrid();
         GameData.world.manifolds.clear();
         createManifolds();
+    }
 
+    @Override
+    public void step(double deltaTime)
+    {
         for (var m :  GameData.world.manifolds) {
             if (checkCollision(m)) {
                 resolveCollision(m);
             }
         }
-    }
-
-    @Override
-    public int getPriority()
-    {
-        return Priority.POSTPROCESSING.get();
     }
 
     @Override

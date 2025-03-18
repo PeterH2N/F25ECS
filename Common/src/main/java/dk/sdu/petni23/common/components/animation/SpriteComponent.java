@@ -1,4 +1,4 @@
-package dk.sdu.petni23.common.components;
+package dk.sdu.petni23.common.components.animation;
 
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.common.util.Vector2D;

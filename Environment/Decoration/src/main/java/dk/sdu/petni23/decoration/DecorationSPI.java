@@ -1,10 +1,9 @@
 package dk.sdu.petni23.decoration;
 
 import dk.sdu.petni23.common.GameData;
-import dk.sdu.petni23.common.components.BodyComponent;
-import dk.sdu.petni23.common.components.PositionComponent;
-import dk.sdu.petni23.common.components.SpriteComponent;
-import dk.sdu.petni23.common.shape.AABBShape;
+import dk.sdu.petni23.common.components.collision.BodyComponent;
+import dk.sdu.petni23.common.components.movement.PositionComponent;
+import dk.sdu.petni23.common.components.animation.SpriteComponent;
 import dk.sdu.petni23.common.shape.OvalShape;
 import dk.sdu.petni23.common.shape.Shape;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;

@@ -10,10 +10,7 @@ public class OvalShape extends Shape
     public double b = 0;
 
     public double getRadius(Vector2D n) {
-        double t = Math.atan2(n.y, n.x);
-        if (t < 0 ) t += 2 * Math.PI;
-        double sinT = Math.sin(t);
-        double cosT = Math.cos(t);
-        return (a * b) / Math.sqrt((a*a*sinT*sinT)+(b*b*cosT*cosT));
+        var normal = n.getNormalized();
+        return (a * b) / Math.sqrt((a*a*normal.y*normal.y)+(b*b*normal.x*normal.x));
     }
 }

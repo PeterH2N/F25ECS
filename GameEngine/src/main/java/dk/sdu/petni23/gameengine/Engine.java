@@ -4,15 +4,18 @@ import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 import dk.sdu.petni23.gameengine.node.INodeSPI;
 import dk.sdu.petni23.gameengine.node.Node;
+import dk.sdu.petni23.gameengine.services.IPhysicsSystem;
 import dk.sdu.petni23.gameengine.services.IPluginService;
 import dk.sdu.petni23.gameengine.services.ISystem;
 import java.util.*;
 
 public class Engine
 {
+    private static final int physicsSteps = 4;
     private final static List<Entity> entities = new ArrayList<>();
     private final static List<Node> nodes = new ArrayList<>();
     private final static List<ISystem> systems = getServices(ISystem.class);
+    private final static List<IPhysicsSystem> physicsSystems = getServices(IPhysicsSystem.class);
     private final static Collection<? extends IPluginService> plugins = getServices(IPluginService.class);
     private final static Collection<? extends INodeSPI> nodeSPIs = getServices(INodeSPI.class);
 
@@ -53,6 +56,16 @@ public class Engine
     public static void update(double deltaTime) {
         for (var system : systems) {
             system.update(deltaTime);
+        }
+
+        for (var system : physicsSystems) {
+            system.preUpdate();
+        }
+        double timeStep = deltaTime / physicsSteps;
+        for (int i = 0; i < physicsSteps; i++) {
+            for (var system : physicsSystems) {
+                system.step(timeStep);
+            }
         }
     }
 

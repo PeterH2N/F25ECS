@@ -1,6 +1,10 @@
 package dk.sdu.petni23.controlnode;
 
-import dk.sdu.petni23.common.components.*;
+import dk.sdu.petni23.common.components.control.ControlComponent;
+import dk.sdu.petni23.common.components.movement.DirectionComponent;
+import dk.sdu.petni23.common.components.movement.PositionComponent;
+import dk.sdu.petni23.common.components.movement.SpeedComponent;
+import dk.sdu.petni23.common.components.movement.VelocityComponent;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.node.Node;
 
