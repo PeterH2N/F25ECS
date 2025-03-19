@@ -14,9 +14,8 @@
         <module>Core</module>
         <module>Common</module>
         <module>Nodes</module>
-        <module>Characters</module>
-        <module>Environment</module>
         <module>GameEngine</module>
+        <module>Entities</module>
     </modules>
     <properties>
         <java>java</java>

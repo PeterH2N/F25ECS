@@ -3,16 +3,22 @@ package dk.sdu.petni23.rendernode;
 
 import dk.sdu.petni23.common.GameData;
 
+import dk.sdu.petni23.common.components.LifeTimeComponent;
 import dk.sdu.petni23.common.shape.AABBShape;
 import dk.sdu.petni23.common.shape.OvalShape;
+import dk.sdu.petni23.common.shape.Shape;
 import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.services.IPluginService;
 import dk.sdu.petni23.gameengine.services.ISystem;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 
 import java.text.DecimalFormat;
 import java.util.Comparator;
@@ -63,24 +69,25 @@ public class RenderSystem implements ISystem, IPluginService
 
     void drawNodes(GraphicsContext gc) {
         gc.save();
-        gc.setStroke(Color.RED);
 
         // sort by y value
         List<RenderNode> nodes = Engine.getNodes(RenderNode.class);
         nodes.sort((Comparator.comparingDouble(RenderNode::getZ).reversed()));
 
         for (var node : nodes) {
-            drawSprite(gc, node);
+            Vector2D pos = GameData.toScreenSpace(node.positionComponent.getPosition());
+            drawSprite(gc, node, pos);
+            drawBody(gc, node, pos);
+            drawHitBox(gc, node, pos);
+            drawHealth(gc, node, pos);
         }
-        for (var node : nodes) {
-            drawBody(gc, node);
-        }
+
         gc.restore();
     }
 
-    void drawSprite(GraphicsContext gc, RenderNode node) {
+    void drawSprite(GraphicsContext gc, RenderNode node, Vector2D pos) {
         // render sprite
-        Vector2D pos = GameData.toScreenSpace(node.positionComponent.getPosition());
+        if (node.spriteComponent == null) return;
         Image sprite = node.spriteComponent.getSprite();
 
         double width = sprite.getWidth() * GameData.getTileRatio();
@@ -102,10 +109,23 @@ public class RenderSystem implements ISystem, IPluginService
 
     }
 
-    void drawBody(GraphicsContext gc, RenderNode node) {
+    void drawBody(GraphicsContext gc, RenderNode node, Vector2D pos) {
+        gc.setStroke(Color.YELLOW);
         if (node.bodyComponent == null) return;
-        Vector2D pos = GameData.toScreenSpace(node.positionComponent.getPosition());
-        switch (node.bodyComponent.getShape()) {
+        drawShape(gc, node.bodyComponent.getShape(), pos);
+    }
+
+    void drawHitBox(GraphicsContext gc, RenderNode node, Vector2D pos) {
+        gc.setStroke(Color.RED);
+        if (node.hitBoxComponent == null) return;
+        Vector2D nPos = new Vector2D(pos);
+        nPos.y -= node.hitBoxComponent.yOffset * GameData.getPPM();
+
+        drawShape(gc, node.hitBoxComponent.hitBox, nPos);
+    }
+
+    void drawShape(GraphicsContext gc, Shape shape, Vector2D pos) {
+        switch (shape) {
             case OvalShape oval -> {
                 double width = oval.a * 2 * GameData.getPPM();
                 double height = oval.b * 2 * GameData.getPPM();
@@ -122,10 +142,21 @@ public class RenderSystem implements ISystem, IPluginService
 
                 gc.strokeRect(x, y, width, height);
             }
-            default -> throw new IllegalStateException("Unexpected value: " + node.bodyComponent.getShape());
+            default -> throw new IllegalStateException("Unexpected value: " + shape);
         }
     }
 
+    void drawHealth(GraphicsContext gc, RenderNode node, Vector2D pos) {
+        if (node.healthComponent == null) return;
+        gc.save();
+        gc.setFill(Color.GREEN);
+        DecimalFormat df = new DecimalFormat("#0.0");
+        gc.setFont(new Font(gc.getFont().getName(), GameData.getPPM() * 0.2));
+        gc.setTextAlign(TextAlignment.CENTER);
+        gc.setTextBaseline(VPos.CENTER);
+        gc.fillText(df.format(node.healthComponent.health), pos.x, pos.y - 80 * GameData.getTileRatio());
+        gc.restore();
+    }
     void drawGrid(GraphicsContext gc) {
         gc.save();
         gc.setLineWidth(0.5);

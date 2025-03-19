@@ -5,6 +5,7 @@ import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.services.ISystem;
+import javafx.scene.input.MouseButton;
 
 public class ControlSystem implements ISystem
 {
@@ -37,6 +38,15 @@ public class ControlSystem implements ISystem
                 Vector2D dir = GameData.toWorldSpace(GameData.gameKeys.getMousePos()).getSubtracted(node.positionComponent.getPosition());
                 // vector is normalized in the setter
                 node.directionComponent.setDirection(dir);
+            }
+            if (node.actionSetComponent != null) {
+                if (GameData.gameKeys.isDown(MouseButton.PRIMARY)) {
+                    // logic for secondary attack
+                    if (node.actionSetComponent.lastAction == node.actionSetComponent.actions.get(0) && GameData.getCurrentMillis() < node.actionSetComponent.lastActionTime + node.actionSetComponent.lastAction.duration + 50)
+                        node.actionSetComponent.performAction(1);
+                    else
+                        node.actionSetComponent.performAction(0);
+                }
             }
 
         }

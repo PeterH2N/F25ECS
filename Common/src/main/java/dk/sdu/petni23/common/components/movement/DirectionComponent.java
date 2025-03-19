@@ -8,7 +8,6 @@ public class DirectionComponent extends Component
     private final Vector2D dir = new Vector2D(1,0);
 
     public void setRotation(double r) {
-
         dir.set(Math.cos(r), Math.sin(r));
     }
 

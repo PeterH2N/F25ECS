@@ -12,7 +12,7 @@ import java.util.*;
 public class Engine
 {
     private static final int physicsSteps = 4;
-    private final static List<Entity> entities = new ArrayList<>();
+    private final static Map<Long, Entity> entities = new HashMap<>();
     private final static List<Node> nodes = new ArrayList<>();
     private final static List<ISystem> systems = getServices(ISystem.class);
     private final static List<IPhysicsSystem> physicsSystems = getServices(IPhysicsSystem.class);
@@ -21,7 +21,7 @@ public class Engine
 
     private final static List<IEntitySPI> entitySPIs = getServices(IEntitySPI.class);
     public static void addEntity(Entity entity) {
-        entities.add(entity);
+        entities.put(entity.getId(), entity);
         for (var spi : nodeSPIs) {
             if (spi.requiredComponentsContained(entity.getComponentClasses())) {
                 nodes.add(spi.createNode(entity));
@@ -30,12 +30,14 @@ public class Engine
     }
 
     public static void removeEntity(Entity entity) {
-        entities.remove(entity);
-        nodes.removeIf(node -> node.getComponents().stream().anyMatch(c -> entity.getComponents().contains(c)));
+        if (entities.remove(entity.getId()) != null)
+            nodes.removeIf(node -> node.getEntityID() == entity.getId());
     }
 
-    public static void addNode(Node node) {
-        nodes.add(node);
+    public static void removeEntity(long id) {
+        Entity entity = entities.remove(id);
+        if (entity != null)
+            nodes.removeIf(node -> node.getEntityID() == entity.getId());
     }
 
     public static void start() {
@@ -58,9 +60,6 @@ public class Engine
             system.update(deltaTime);
         }
 
-        for (var system : physicsSystems) {
-            system.preUpdate();
-        }
         double timeStep = deltaTime / physicsSteps;
         for (int i = 0; i < physicsSteps; i++) {
             for (var system : physicsSystems) {

@@ -9,19 +9,6 @@ import dk.sdu.petni23.gameengine.services.IPhysicsSystem;
 
 public class MoveSystem implements IPhysicsSystem
 {
-    void containWithinWorldBounds(PositionComponent position) {
-        var pos = position.getPosition();
-        double halfExtent = (double) GameData.worldSize / 2;
-        pos.x = Math.clamp(pos.x, -halfExtent, halfExtent);
-        pos.y = Math.clamp(pos.y, -halfExtent, halfExtent);
-    }
-
-    @Override
-    public void preUpdate()
-    {
-
-    }
-
     @Override
     public void step(double deltaTime)
     {
@@ -29,5 +16,12 @@ public class MoveSystem implements IPhysicsSystem
             node.position.getPosition().add(node.velocity.getVelocity().getMultiplied(deltaTime));
             containWithinWorldBounds(node.position);
         }
+    }
+
+    void containWithinWorldBounds(PositionComponent position) {
+        var pos = position.getPosition();
+        double halfExtent = (double) GameData.worldSize / 2;
+        pos.x = Math.clamp(pos.x, -halfExtent, halfExtent);
+        pos.y = Math.clamp(pos.y, -halfExtent, halfExtent);
     }
 }

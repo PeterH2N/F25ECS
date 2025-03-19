@@ -11,8 +11,10 @@ import java.util.List;
 
 public abstract class Node
 {
+    private final long entityID;
     public Node(Entity entity) {
         initNode(entity, this);
+        entityID = entity.getId();
     }
 
     public static List<Class<? extends Component>> getRequiredComponentClasses(Class<? extends Node> nodeClass) {
@@ -46,15 +48,37 @@ public abstract class Node
     public List<Component> getComponents() {
         List<Component> components = new ArrayList<>();
         for (Field field : this.getClass().getFields()) {
-            if (field.getType().isAssignableFrom(Component.class)) {
-                field.setAccessible(true);
-                try {
-                    components.add((Component)field.get(this));
-                } catch (IllegalAccessException e) {
-                    throw new RuntimeException(e);
+            try {
+                Object fieldValue = field.get(this);
+                if (fieldValue instanceof Component) {
+                    field.setAccessible(true);
+                    components.add((Component)fieldValue);
                 }
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
             }
         }
         return components;
+    }
+
+    public <T extends Component> T getComponent(Class<T> c)
+    {
+        for (Field field : this.getClass().getFields()) {
+            try {
+                Object fieldValue = field.get(this);
+                if (c.isInstance(fieldValue)) {
+                    field.setAccessible(true);
+                        return (T)fieldValue;
+                }
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return null;
+    }
+
+    public long getEntityID()
+    {
+        return entityID;
     }
 }

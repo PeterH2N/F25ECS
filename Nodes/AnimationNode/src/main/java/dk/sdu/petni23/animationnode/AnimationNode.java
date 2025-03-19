@@ -1,6 +1,7 @@
 package dk.sdu.petni23.animationnode;
 
-import dk.sdu.petni23.common.components.animation.SpriteComponent;
+import dk.sdu.petni23.common.components.SpriteComponent;
+import dk.sdu.petni23.common.components.actions.ActionSetComponent;
 import dk.sdu.petni23.common.components.movement.DirectionComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.components.movement.VelocityComponent;
@@ -17,6 +18,8 @@ public class AnimationNode extends Node
     public VelocityComponent velocityComponent;
     @Optional
     public DirectionComponent directionComponent;
+    @Optional
+    public ActionSetComponent actionSetComponent;
 
     public AnimationNode(Entity entity) {
         super(entity);

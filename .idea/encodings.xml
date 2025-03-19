@@ -1,24 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/Characters/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Characters/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Common/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Common/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Core/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Core/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Environment/Decoration/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Environment/Decoration/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Entities/Characters/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Entities/Characters/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Entities/Damage/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Entities/Damage/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Entities/Decoration/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Entities/Decoration/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Entities/TempEntities/Damage/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Entities/TempEntities/Damage/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Entities/TempEntities/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Entities/TempEntities/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Entities/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Entities/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Environment/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Environment/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/GameEngine/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/GameEngine/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Nodes/ActionNode/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Nodes/ActionNode/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Nodes/AnimationNode/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Nodes/AnimationNode/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Nodes/CollisionNode/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Nodes/CollisionNode/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Nodes/ControlNode/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Nodes/ControlNode/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Nodes/DamageNode/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Nodes/DamageNode/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Nodes/DurationNode/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Nodes/DurationNode/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Nodes/InputNode/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Nodes/InputNode/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Nodes/MoveNode/src/main/java" charset="UTF-8" />

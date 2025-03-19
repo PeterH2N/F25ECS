@@ -11,6 +11,7 @@ module Common {
     exports dk.sdu.petni23.common.world;
     exports dk.sdu.petni23.common.components.collision;
     exports dk.sdu.petni23.common.components.movement;
-    exports dk.sdu.petni23.common.components.control;
-    exports dk.sdu.petni23.common.components.animation;
+    exports dk.sdu.petni23.common.components.actions;
+    exports dk.sdu.petni23.common.components;
+    exports dk.sdu.petni23.common.components.hp;
 }

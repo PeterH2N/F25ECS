@@ -7,5 +7,7 @@ import java.util.List;
 
 public class GameWorld
 {
-    public List<Manifold> manifolds = new ArrayList<>();
+    public List<Manifold> collisionManifolds = new ArrayList<>();
+    public List<Manifold> hitBoxManifolds = new ArrayList<>();
+
 }
