@@ -8,7 +8,7 @@ import dk.sdu.petni23.gameengine.services.ISystem;
 public class IOSystem implements ISystem
 {
     private static final double minZoom = 4;
-    private static final double maxZoom = 50;
+    private static final double maxZoom = GameData.worldSize;
     private static final double scrollMagnitude = -1.0 / 20.0;
     @Override
     public void update(double deltaTime)
@@ -23,16 +23,18 @@ public class IOSystem implements ISystem
     @Override
     public int getPriority()
     {
-        return Priority.PREPROCESSING.get();
+        return Priority.POSTPROCESSING.get();
     }
 
     void zoom() {
         double deltaY = GameData.gameKeys.getScrollDeltaY();
-        if (deltaY == 0) return;
-
         double newWidth = GameData.camera.getWidth() + deltaY * scrollMagnitude;
         newWidth = Math.clamp(newWidth, minZoom, maxZoom);
         GameData.camera.setWidth(newWidth);
+
+        double newHeight = GameData.camera.getHeight();
+        newHeight = Math.clamp(newHeight, minZoom, maxZoom);
+        GameData.camera.setHeight(newHeight);
     }
 
     void updateCameraPos() {
@@ -40,8 +42,8 @@ public class IOSystem implements ISystem
             Vector2D pos = new Vector2D(GameData.camera.following.getPosition());
             // cut off at edges of world
             double hws = (double) GameData.worldSize / 2;
-            double hw = GameData.camera.getWidth() * 0.5;
-            double hh = GameData.camera.getHeight() * 0.5;
+            double hw = GameData.camera.getWidth() * 0.5 - 0.001;    //slack
+            double hh = GameData.camera.getHeight() * 0.5 - 0.001;   //slack
             pos.x = Math.clamp(pos.x, -hws + hw, hws - hw);
             pos.y = Math.clamp(pos.y, -hws + hh , hws - hh);
             GameData.camera.setCenter(pos);

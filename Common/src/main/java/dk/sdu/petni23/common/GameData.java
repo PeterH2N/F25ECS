@@ -8,14 +8,15 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.Pane;
 
 public class GameData
 {
-    private static final IntegerProperty displayWidth = new SimpleIntegerProperty(800);
-    private static final IntegerProperty displayHeight = new SimpleIntegerProperty(600);
+    private static final DoubleProperty displayWidth = new SimpleDoubleProperty(800);
+    private static final DoubleProperty displayHeight = new SimpleDoubleProperty(600);
     private static final DoubleProperty ppmProperty = new SimpleDoubleProperty();
     public static final int worldSize = 50;
     private static final DoubleProperty displayRatioProperty = new SimpleDoubleProperty();
@@ -32,32 +33,32 @@ public class GameData
 
     static {
         ppmProperty.bind(displayWidth.divide(camera.widthProperty));
-        displayRatioProperty.bind(displayHeightProperty().divide(displayWidthProperty()));
+        displayRatioProperty.bind(displayHeight.divide(displayWidth));
         tileRatioProperty.bind(ppmProperty.multiply(1.0 / 64.0)); // reciprocal of 64 (tilesize in pixels) multiplied by pixels per tile
-        GameData.displayWidthProperty().bind(GameData.gameWindow.widthProperty());
-        GameData.displayHeightProperty().bind(GameData.gameWindow.heightProperty());
+        displayWidth.bind(gameWindow.widthProperty());
+        displayHeight.bind(gameWindow.heightProperty());
     }
-    public static IntegerProperty displayWidthProperty() {
+    public static DoubleProperty displayWidthProperty() {
         return displayWidth;
     }
-    public static IntegerProperty displayHeightProperty() {
+    public static DoubleProperty displayHeightProperty() {
         return displayHeight;
     }
     public static int getDisplayWidth()
     {
-        return displayWidth.get();
+        return (int)displayWidth.get();
     }
 
     public static int getDisplayHeight()
     {
-        return displayHeight.get();
+        return (int)displayHeight.get();
     }
 
     public static double getDisplayRatio() {
         return displayRatioProperty.get();
     }
 
-    public static DoubleProperty getDisplayRationProperty() {
+    public static DoubleProperty getDisplayRatioProperty() {
         return displayRatioProperty;
     }
     public static double getPPM() {

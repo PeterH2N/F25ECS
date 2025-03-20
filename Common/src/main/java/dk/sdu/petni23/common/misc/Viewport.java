@@ -16,7 +16,7 @@ public class Viewport
     public Viewport(double width)
     {
         widthProperty.set(width);
-        heightProperty.bind(widthProperty.multiply(GameData.getDisplayRationProperty()));
+        heightProperty.bind(widthProperty.multiply(GameData.getDisplayRatioProperty()));
     }
 
     public double getWidth()
@@ -31,6 +31,11 @@ public class Viewport
     public void setWidth(double width)
     {
         widthProperty.set(width);
+    }
+
+    public void setHeight(double height) {
+        double w = height / GameData.getDisplayRatio();
+        widthProperty.set(w);
     }
 
     public Vector2D getCenter()

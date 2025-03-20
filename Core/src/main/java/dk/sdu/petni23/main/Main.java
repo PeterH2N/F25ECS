@@ -23,6 +23,8 @@ public class Main extends Application
     public void start(Stage stage) throws IOException
     {
         GameData.gameWindow.setPrefSize(800,800);
+        stage.setMinWidth(200);
+        stage.setMinHeight(200);
 
         Engine.start();
 
