@@ -13,9 +13,9 @@ public class ActionSystem implements ISystem
             long now = GameData.getCurrentMillis();
             if (node.actionSetComponent.isPerformingAction()) {
                 if (now > node.actionSetComponent.lastActionTime + node.actionSetComponent.lastAction.delay) {
-                    if (node.actionSetComponent.lastAction.spi != null && !node.actionSetComponent.hasDispatched) {
+                    if (node.actionSetComponent.lastAction.onDispatch != null && !node.actionSetComponent.hasDispatched) {
                         node.actionSetComponent.hasDispatched = true;
-                        Engine.addEntity(node.actionSetComponent.lastAction.spi.create(node));
+                        node.actionSetComponent.lastAction.onDispatch.dispatch(node);
                     }
                 }
             } else node.actionSetComponent.hasDispatched = false;

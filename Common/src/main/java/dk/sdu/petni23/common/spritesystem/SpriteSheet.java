@@ -8,12 +8,11 @@ public class SpriteSheet
 {
     private Animation[] animations;
 
-    public void init(Image img, int[] numFrames, int[] order) {
-        int maxFrames = Util.largestValue(numFrames);
+    public void init(Image img, int[] numFrames, Vector2D spriteSize, int[] order) {
         int numRows = numFrames.length;
         var unordered = new Animation[numRows];
         for (int i = 0, yOffset = 0; i < numRows; i++,yOffset++) {
-            unordered[i] = new Animation(img, yOffset, numFrames[yOffset], maxFrames);
+            unordered[i] = new Animation(img, yOffset, numFrames[yOffset], spriteSize);
         }
 
         animations = new Animation[numRows];
@@ -27,8 +26,8 @@ public class SpriteSheet
         }
     }
 
-    public void init(Image img, int[] numFrames) {
-        init(img, numFrames, null);
+    public void init(Image img, int[] numFrames, Vector2D spriteSize) {
+        init(img, numFrames, spriteSize, null);
     }
 
     public Animation getAnimation(int i) {

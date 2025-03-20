@@ -13,7 +13,6 @@ import dk.sdu.petni23.gameengine.node.Optional;
 public class AnimationNode extends Node
 {
     public SpriteComponent spriteComponent;
-    public PositionComponent positionComponent;
     @Optional
     public VelocityComponent velocityComponent;
     @Optional

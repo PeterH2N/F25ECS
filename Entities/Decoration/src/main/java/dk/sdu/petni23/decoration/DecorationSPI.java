@@ -29,7 +29,7 @@ public class DecorationSPI implements IEntitySPI
             String path = templatePath + (i + 1) + ".png";
             Image img = new Image(Objects.requireNonNull(DecorationSPI.class.getResourceAsStream(path)));
             spriteSheets[i] = new SpriteSheet();
-            spriteSheets[i].init(img, numFrames);
+            spriteSheets[i].init(img, numFrames, new Vector2D(img.getWidth(), img.getHeight()));
         }
 
         origins = new Vector2D[]{

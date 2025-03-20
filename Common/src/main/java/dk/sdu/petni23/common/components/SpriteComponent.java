@@ -1,5 +1,6 @@
 package dk.sdu.petni23.common.components;
 
+import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.Component;
@@ -20,6 +21,7 @@ public class SpriteComponent extends Component
     {
         this.spriteSheet = spriteSheet;
         this.spriteOrigin = spriteOrigin;
+        createdAt = GameData.getCurrentMillis();
     }
 
     public Image getSprite() {

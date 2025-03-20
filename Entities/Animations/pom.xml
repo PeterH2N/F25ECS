@@ -6,14 +6,14 @@
 
     <parent>
         <groupId>dk.sdu.petni23</groupId>
-        <artifactId>Nodes</artifactId>
+        <artifactId>Entities</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>DurationNode</artifactId>
+    <artifactId>Animations</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>DurationNode</name>
+    <name>Animations</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -28,8 +28,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>10</source>
-                    <target>10</target>
+                    <source>16</source>
+                    <target>16</target>
                 </configuration>
             </plugin>
         </plugins>

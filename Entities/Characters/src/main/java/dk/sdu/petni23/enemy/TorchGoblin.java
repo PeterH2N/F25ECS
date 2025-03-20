@@ -21,14 +21,14 @@ public class TorchGoblin
     static {
         final int[] numFrames = {7,6,6,6,6};
         Image img = new Image(Objects.requireNonNull(TorchGoblin.class.getResourceAsStream("/enemysprites/Goblin.png")));
-        spriteSheet.init(img, numFrames);
+        spriteSheet.init(img, numFrames, new Vector2D(img.getWidth() / 7, img.getHeight() / 5));
     }
 
     public static Entity create()
     {
         double x = Math.random() * GameData.worldSize - (double) GameData.worldSize / 2;
         double y = Math.random() * GameData.worldSize - (double) GameData.worldSize / 2;
-        Entity goblin = Character.create(new Vector2D(x, y));
+        Entity goblin = Character.create(new Vector2D(x, y), 30);
 
         var speed = new SpeedComponent();
         speed.speed = 2.5;
@@ -38,10 +38,6 @@ public class TorchGoblin
         goblin.add(spriteComponent);
 
         goblin.add(new LayerComponent(LayerComponent.Layer.ENEMY));
-
-        var health = new HealthComponent();
-        health.setMaxHealth(30);
-        goblin.add(health);
 
         return goblin;
     }

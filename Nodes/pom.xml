@@ -27,7 +27,7 @@
         <module>ControlNode</module>
         <module>AnimationNode</module>
         <module>CollisionNode</module>
-        <module>DurationNode</module>
+        <module>LifeTimeNode</module>
         <module>DamageNode</module>
         <module>ActionNode</module>
     </modules>

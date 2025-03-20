@@ -3,7 +3,6 @@ package dk.sdu.petni23.rendernode;
 
 import dk.sdu.petni23.common.GameData;
 
-import dk.sdu.petni23.common.components.LifeTimeComponent;
 import dk.sdu.petni23.common.shape.AABBShape;
 import dk.sdu.petni23.common.shape.OvalShape;
 import dk.sdu.petni23.common.shape.Shape;
@@ -11,10 +10,10 @@ import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.services.IPluginService;
 import dk.sdu.petni23.gameengine.services.ISystem;
-import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -27,6 +26,7 @@ import java.util.List;
 public class RenderSystem implements ISystem, IPluginService
 {
     private static final Canvas canvas = new Canvas();
+    private static final ColorAdjust white = new ColorAdjust(0.0, -0.5, 0.5, 0);
     @Override
     public void start()
     {
@@ -86,6 +86,7 @@ public class RenderSystem implements ISystem, IPluginService
     }
 
     void drawSprite(GraphicsContext gc, RenderNode node, Vector2D pos) {
+        gc.save();
         // render sprite
         if (node.spriteComponent == null) return;
         Image sprite = node.spriteComponent.getSprite();
@@ -101,27 +102,37 @@ public class RenderSystem implements ISystem, IPluginService
         Vector2D o = node.spriteComponent.spriteOrigin;
         double x = pos.x + (width * o.x);
         double y = pos.y + (height * o.y);
+        // hurt
+        if (node.healthComponent != null) {
+            if (GameData.getCurrentMillis() < node.healthComponent.getLastHurtTime() + 200)
+                gc.setEffect(white);
+        }
 
         if (node.spriteComponent.mirror)
             gc.drawImage(sprite, x + width, y, -width, height);
         else
             gc.drawImage(sprite, x, y, width, height);
 
+        gc.restore();
     }
 
     void drawBody(GraphicsContext gc, RenderNode node, Vector2D pos) {
-        gc.setStroke(Color.YELLOW);
         if (node.bodyComponent == null) return;
+        gc.save();
+        gc.setStroke(Color.YELLOW);
         drawShape(gc, node.bodyComponent.getShape(), pos);
+        gc.restore();
     }
 
     void drawHitBox(GraphicsContext gc, RenderNode node, Vector2D pos) {
-        gc.setStroke(Color.RED);
         if (node.hitBoxComponent == null) return;
+        gc.save();
+        gc.setStroke(Color.RED);
         Vector2D nPos = new Vector2D(pos);
         nPos.y -= node.hitBoxComponent.yOffset * GameData.getPPM();
 
         drawShape(gc, node.hitBoxComponent.hitBox, nPos);
+        gc.restore();
     }
 
     void drawShape(GraphicsContext gc, Shape shape, Vector2D pos) {
@@ -154,7 +165,7 @@ public class RenderSystem implements ISystem, IPluginService
         gc.setFont(new Font(gc.getFont().getName(), GameData.getPPM() * 0.2));
         gc.setTextAlign(TextAlignment.CENTER);
         gc.setTextBaseline(VPos.CENTER);
-        gc.fillText(df.format(node.healthComponent.health), pos.x, pos.y - 80 * GameData.getTileRatio());
+        gc.fillText(df.format(node.healthComponent.getHealth()), pos.x, pos.y - 80 * GameData.getTileRatio());
         gc.restore();
     }
     void drawGrid(GraphicsContext gc) {

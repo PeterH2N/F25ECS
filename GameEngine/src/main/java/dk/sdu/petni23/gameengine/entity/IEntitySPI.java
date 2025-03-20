@@ -11,6 +11,7 @@ public interface IEntitySPI
         PLAYER,
         ENEMY,
         ENVIRONMENT,
+        DEATH_ANIMATION,
         DAMAGE;
     }
 }

@@ -13,4 +13,10 @@ public class OvalShape extends Shape
         var normal = n.getNormalized();
         return (a * b) / Math.sqrt((a*a*normal.y*normal.y)+(b*b*normal.x*normal.x));
     }
+
+    @Override
+    public Vector2D getBB()
+    {
+        return new Vector2D(2*a, 2*b);
+    }
 }

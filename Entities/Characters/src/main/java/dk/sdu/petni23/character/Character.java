@@ -3,17 +3,20 @@ package dk.sdu.petni23.character;
 import dk.sdu.petni23.common.components.DisplayComponent;
 import dk.sdu.petni23.common.components.collision.BodyComponent;
 import dk.sdu.petni23.common.components.collision.HitBoxComponent;
+import dk.sdu.petni23.common.components.hp.HealthComponent;
 import dk.sdu.petni23.common.components.movement.DirectionComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.components.movement.VelocityComponent;
 import dk.sdu.petni23.common.shape.AABBShape;
 import dk.sdu.petni23.common.shape.OvalShape;
 import dk.sdu.petni23.common.util.Vector2D;
+import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.entity.Entity;
+import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 
 public class Character
 {
-    public static Entity create(Vector2D pos) {
+    public static Entity create(Vector2D pos, double maxHP) {
         Entity character = new Entity();
         var position = new PositionComponent();
         position.setPosition(pos);
@@ -39,8 +42,26 @@ public class Character
         hitBox.yOffset = 0.5;
         character.add(hitBox);
 
+        var deathAnimation = getSPI(IEntitySPI.Type.DEATH_ANIMATION);
+        var health = new HealthComponent();
+        health.setMaxHealth(maxHP);
+        health.onDeath = node -> {
+            assert deathAnimation != null;
+            Engine.addEntity(deathAnimation.create(node));
+        };
+        character.add(health);
+
+
         character.add(new DisplayComponent());
 
         return character;
+    }
+
+    public static IEntitySPI getSPI(IEntitySPI.Type type) {
+        for (var spi : Engine.getEntitySPIs()) {
+            if (spi.getType() == type)
+                return spi;
+        }
+        return null;
     }
 }

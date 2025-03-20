@@ -2,7 +2,7 @@ package dk.sdu.petni23.damage;
 
 import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.components.DisplayComponent;
-import dk.sdu.petni23.common.components.LifeTimeComponent;
+import dk.sdu.petni23.common.components.DurationComponent;
 import dk.sdu.petni23.common.components.actions.ActionSetComponent;
 import dk.sdu.petni23.common.components.collision.HitBoxComponent;
 import dk.sdu.petni23.common.components.hp.DamageComponent;
@@ -21,7 +21,7 @@ public class DamageSPI implements IEntitySPI
         assert parent != null;
         Entity dmgE = new Entity();
 
-        var duration = new LifeTimeComponent(1, GameData.getCurrentMillis());
+        var duration = new DurationComponent(1, GameData.getCurrentMillis());
         dmgE.add(duration);
 
         var dmg = new DamageComponent();
