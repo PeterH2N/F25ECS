@@ -1,11 +1,9 @@
 package dk.sdu.petni23.common.misc;
 
-import dk.sdu.petni23.common.components.collision.BodyComponent;
 import dk.sdu.petni23.common.components.collision.HasShapeComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.shape.Shape;
 import dk.sdu.petni23.common.util.Vector2D;
-import dk.sdu.petni23.gameengine.Component;
 import dk.sdu.petni23.gameengine.node.Node;
 
 public class Manifold

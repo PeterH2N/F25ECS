@@ -1,0 +1,17 @@
+package dk.sdu.petni23.common.components.collision;
+
+import dk.sdu.petni23.common.shape.Shape;
+
+public class CollisionComponent extends HasShapeComponent
+{
+    public Shape shape;
+
+    public CollisionComponent(Shape shape) {
+        this.shape = shape;
+    }
+    @Override
+    public Shape getShape()
+    {
+        return shape;
+    }
+}

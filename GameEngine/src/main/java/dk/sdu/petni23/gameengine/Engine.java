@@ -18,7 +18,6 @@ public class Engine
     private final static List<IPhysicsSystem> physicsSystems = getServices(IPhysicsSystem.class);
     private final static Collection<? extends IPluginService> plugins = getServices(IPluginService.class);
     private final static Collection<? extends INodeSPI> nodeSPIs = getServices(INodeSPI.class);
-
     private final static List<IEntitySPI> entitySPIs = getServices(IEntitySPI.class);
     public static void addEntity(Entity entity) {
         entities.put(entity.getId(), entity);

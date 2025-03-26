@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class Vector2D
 {
+    private static double toDegrees = 180d / Math.PI;
     public static Vector2D ZERO = new Vector2D(0,0);
     public double x;
     public double y;
@@ -222,6 +223,14 @@ public class Vector2D
     public void reverse() {
         x = -x;
         y = -y;
+    }
+
+    public double angleRadians() {
+        return Math.atan2(y, x);
+    }
+
+    public double angleDegrees() {
+        return angleRadians() * toDegrees;
     }
 
     public Vector2D getReversed() {

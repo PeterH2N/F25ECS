@@ -23,8 +23,4 @@ public class SpriteComponent extends Component
         this.spriteOrigin = spriteOrigin;
         createdAt = GameData.getCurrentMillis();
     }
-
-    public Image getSprite() {
-        return spriteSheet.getAnimation(animationIndex).getSprite(time, reverse);
-    }
 }

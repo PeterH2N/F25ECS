@@ -12,13 +12,13 @@ import dk.sdu.petni23.gameengine.entity.Entity;
 public class Animation
 {
     // helper function for animation entities
-    static Entity create(long duration, SpriteSheet spriteSheet, Vector2D pos) {
+    static Entity create(long duration, SpriteSheet spriteSheet, Vector2D pos, DisplayComponent.Order order) {
         Entity animation = new Entity();
-        animation.add(new DisplayComponent());
+        animation.add(new DisplayComponent(order));
         animation.add(new DurationComponent(duration, GameData.getCurrentMillis()));
         animation.add(new SpriteComponent(spriteSheet, new Vector2D(-0.5, -0.67)));
         var position = new PositionComponent();
-        position.setPosition(pos);
+        position.position.set(pos);
         animation.add(position);
 
         return animation;

@@ -1,7 +1,7 @@
 package dk.sdu.petni23.character;
 
 import dk.sdu.petni23.common.components.DisplayComponent;
-import dk.sdu.petni23.common.components.collision.BodyComponent;
+import dk.sdu.petni23.common.components.collision.CollisionComponent;
 import dk.sdu.petni23.common.components.collision.HitBoxComponent;
 import dk.sdu.petni23.common.components.hp.HealthComponent;
 import dk.sdu.petni23.common.components.movement.DirectionComponent;
@@ -19,7 +19,7 @@ public class Character
     public static Entity create(Vector2D pos, double maxHP) {
         Entity character = new Entity();
         var position = new PositionComponent();
-        position.setPosition(pos);
+        position.position.set(pos);
         character.add(position);
 
         var direction = new DirectionComponent();
@@ -31,9 +31,8 @@ public class Character
         var oval = new OvalShape();
         oval.a = (21d * 0.5) / 64;
         oval.b = (4d * 0.5) / 64;
-        var body = new BodyComponent();
-        body.setShape(oval);
-        character.add(body);
+        var collision = new CollisionComponent(oval);
+        character.add(collision);
 
         var rect = new AABBShape();
         rect.width = 0.6;
@@ -43,8 +42,7 @@ public class Character
         character.add(hitBox);
 
         var deathAnimation = getSPI(IEntitySPI.Type.DEATH_ANIMATION);
-        var health = new HealthComponent();
-        health.setMaxHealth(maxHP);
+        var health = new HealthComponent(maxHP);
         health.onDeath = node -> {
             assert deathAnimation != null;
             Engine.addEntity(deathAnimation.create(node));
@@ -52,7 +50,7 @@ public class Character
         character.add(health);
 
 
-        character.add(new DisplayComponent());
+        character.add(new DisplayComponent(DisplayComponent.Order.FOREGROUND));
 
         return character;
     }

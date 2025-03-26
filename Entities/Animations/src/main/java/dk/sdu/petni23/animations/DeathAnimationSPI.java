@@ -1,5 +1,6 @@
 package dk.sdu.petni23.animations;
 
+import dk.sdu.petni23.common.components.DisplayComponent;
 import dk.sdu.petni23.common.components.SpriteComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
@@ -26,7 +27,7 @@ public class DeathAnimationSPI implements IEntitySPI
         var pos = parent.getComponent(PositionComponent.class);
         assert pos != null;
 
-        return Animation.create(1200,  spriteSheet, pos.getPosition());
+        return Animation.create(1200,  spriteSheet, pos.position, DisplayComponent.Order.FOREGROUND);
     }
 
     @Override

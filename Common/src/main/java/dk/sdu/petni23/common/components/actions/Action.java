@@ -4,11 +4,13 @@ import dk.sdu.petni23.common.components.Dispatch;
 
 public class Action
 {
-    public Dispatch onDispatch;
+    public Dispatch onDispatch = null;
     public long delay = 0;
     public long duration = 0;
     public int animationIndex = 0;
     public boolean biDirectional = false;
     public double strength = 1;
+
+    public static Action DEFAULT = new Action();
 }
 
