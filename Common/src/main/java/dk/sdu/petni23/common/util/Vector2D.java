@@ -225,12 +225,8 @@ public class Vector2D
         y = -y;
     }
 
-    public double angleRadians() {
-        return Math.atan2(y, x);
-    }
-
     public double angleDegrees() {
-        return angleRadians() * toDegrees;
+        return getAngle() * toDegrees;
     }
 
     public Vector2D getReversed() {

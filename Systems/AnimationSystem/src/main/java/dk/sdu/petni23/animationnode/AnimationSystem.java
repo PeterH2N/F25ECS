@@ -29,25 +29,21 @@ public class AnimationSystem implements ISystem
         long now = GameData.getCurrentMillis();
         boolean isPerformingAction = now < node.actionSetComponent.lastActionTime + node.actionSetComponent.lastAction.duration;
         if (isPerformingAction) {
-            node.spriteComponent.mirror = false;
             node.spriteComponent.reverse = false;
             node.spriteComponent.time = now - node.actionSetComponent.lastActionTime;
             node.spriteComponent.animationIndex = node.actionSetComponent.lastAction.animationIndex;
 
             if (node.directionComponent != null) {
                 // direction
-                if (node.actionSetComponent.lastAction.biDirectional)
-                    node.spriteComponent.mirror = node.directionComponent.dir.x < 0;
-                else {
-                    var dir = node.directionComponent.dir;
-                    if (dir.x <= 0.5 && dir.x > -0.5 && dir.y > 0) {         // up
-                        node.spriteComponent.animationIndex += 2;
-                    }
-                    else if (dir.x < 0.5 && dir.x >= -0.5 && dir.y < 0) {    // down
-                        node.spriteComponent.animationIndex += 1;
-                    }
-                    else if (dir.x < 0) {    // left
-                        node.spriteComponent.mirror = true;
+                var dir = node.directionComponent.dir;
+                double dr = Math.abs(dir.getRotatedBy(-Math.PI * 0.5).getAngle());
+                int numDirections = node.actionSetComponent.lastAction.directionality.value();
+                double angleStep = 2 * Math.PI / numDirections;
+                int i = 0;
+                for (double r = angleStep * 0.5; r <= Math.PI + angleStep + 0.01; r += angleStep, i++) {
+                    if (dr > r - angleStep && dr <= r) {
+                        node.spriteComponent.animationIndex += i;
+                        break;
                     }
                 }
             }

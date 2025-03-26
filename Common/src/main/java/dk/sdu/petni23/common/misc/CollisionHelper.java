@@ -1,9 +1,6 @@
 package dk.sdu.petni23.common.misc;
 
-import dk.sdu.petni23.common.components.collision.HasShapeComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
-import dk.sdu.petni23.common.components.movement.VelocityComponent;
-import dk.sdu.petni23.common.misc.Manifold;
 import dk.sdu.petni23.common.shape.AABBShape;
 import dk.sdu.petni23.common.shape.OvalShape;
 import dk.sdu.petni23.common.shape.Shape;

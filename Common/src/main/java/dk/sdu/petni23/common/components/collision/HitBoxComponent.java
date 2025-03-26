@@ -1,6 +1,5 @@
 package dk.sdu.petni23.common.components.collision;
 
-import dk.sdu.petni23.common.shape.AABBShape;
 import dk.sdu.petni23.common.shape.Shape;
 
 public class HitBoxComponent extends HasShapeComponent
