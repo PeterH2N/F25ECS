@@ -25,6 +25,7 @@
         <module>Damage</module>
         <module>Decoration</module>
         <module>Animations</module>
+        <module>Structures</module>
     </modules>
 
     <dependencies>

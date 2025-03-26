@@ -13,6 +13,8 @@
     <file url="file://$PROJECT_DIR$/Entities/Damage/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Entities/Decoration/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Entities/Decoration/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Entities/Structures/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Entities/Structures/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Entities/TempEntities/Damage/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Entities/TempEntities/Damage/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Entities/TempEntities/src/main/java" charset="UTF-8" />
@@ -23,28 +25,28 @@
     <file url="file://$PROJECT_DIR$/Environment/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/GameEngine/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/GameEngine/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Nodes/ActionNode/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Nodes/ActionNode/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Nodes/AnimationNode/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Nodes/AnimationNode/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Nodes/CollisionNode/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Nodes/CollisionNode/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Nodes/ControlNode/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Nodes/ControlNode/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Nodes/DamageNode/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Nodes/DamageNode/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Nodes/InputNode/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Nodes/InputNode/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Nodes/LifeTimeNode/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Nodes/LifeTimeNode/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Nodes/MoveNode/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Nodes/MoveNode/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Nodes/RenderNode/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Nodes/RenderNode/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Nodes/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Nodes/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Renderer/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Renderer/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Systems/ActionSystem/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Systems/ActionSystem/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Systems/AnimationSystem/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Systems/AnimationSystem/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Systems/CollisionSystem/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Systems/CollisionSystem/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Systems/ControlSystem/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Systems/ControlSystem/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Systems/DamageSystem/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Systems/DamageSystem/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Systems/DeathSystem/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Systems/DeathSystem/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Systems/InputSystem/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Systems/InputSystem/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Systems/MoveSystem/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Systems/MoveSystem/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Systems/RenderSystem/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Systems/RenderSystem/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Systems/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Systems/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
   </component>

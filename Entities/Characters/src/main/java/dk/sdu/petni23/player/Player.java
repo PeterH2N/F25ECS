@@ -9,6 +9,7 @@ import dk.sdu.petni23.common.components.actions.ActionSetComponent;
 import dk.sdu.petni23.common.components.hp.HealthComponent;
 import dk.sdu.petni23.common.components.hp.LayerComponent;
 import dk.sdu.petni23.common.components.hp.StrengthComponent;
+import dk.sdu.petni23.common.components.movement.DirectionComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.components.movement.SpeedComponent;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;

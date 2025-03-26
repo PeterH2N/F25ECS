@@ -35,7 +35,7 @@ public class DamageSPI implements IEntitySPI
 
         var position = new PositionComponent();
         var posC = parent.getComponent(PositionComponent.class);
-        if (posC != null) position.setPosition(posC.getPosition());
+        if (posC != null) position.position.set(posC.position);
         dmgE.add(position);
 
         OvalShape circle = new OvalShape();
@@ -48,7 +48,7 @@ public class DamageSPI implements IEntitySPI
         if (layer != null) dmgE.add(layer);
         else dmgE.add(new LayerComponent(LayerComponent.Layer.ALL));
 
-        dmgE.add(new DisplayComponent());
+        dmgE.add(new DisplayComponent(DisplayComponent.Order.FOREGROUND));
 
         return dmgE;
     }

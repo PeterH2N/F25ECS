@@ -6,38 +6,14 @@ import dk.sdu.petni23.gameengine.Component;
 
 public class HealthComponent extends Component
 {
-    private double maxHealth;
-    private double health;
-    private long lastHurtTime = 0;
+    public double maxHealth;
+    public double health;
+    public long lastHurtTime = 0;
     public Dispatch onDeath;
 
-    public void setMaxHealth(double max) {
+    public HealthComponent(double max) {
         maxHealth = max;
-        setHealth(max);
+        health = max;
     }
 
-    public void hurt(double dmg) {
-        setHealth(getHealth() - dmg);
-        lastHurtTime = GameData.getCurrentMillis();
-    }
-
-    public double getMaxHealth()
-    {
-        return maxHealth;
-    }
-
-    public double getHealth()
-    {
-        return health;
-    }
-
-    public void setHealth(double health)
-    {
-        this.health = health;
-    }
-
-    public long getLastHurtTime()
-    {
-        return lastHurtTime;
-    }
 }

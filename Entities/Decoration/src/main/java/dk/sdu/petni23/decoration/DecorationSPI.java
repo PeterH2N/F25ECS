@@ -2,7 +2,7 @@ package dk.sdu.petni23.decoration;
 
 import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.components.DisplayComponent;
-import dk.sdu.petni23.common.components.collision.BodyComponent;
+import dk.sdu.petni23.common.components.collision.CollisionComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.components.SpriteComponent;
 import dk.sdu.petni23.common.shape.OvalShape;
@@ -64,14 +64,13 @@ public class DecorationSPI implements IEntitySPI
         decoration.add(positionComponent);
         double x = Math.random() * GameData.worldSize - (double) GameData.worldSize / 2;
         double y = Math.random() * GameData.worldSize - (double) GameData.worldSize / 2;
-        positionComponent.setPosition(x, y);
+        positionComponent.position.set(x, y);
         decoration.add(new SpriteComponent(spriteSheets[t], origins[t]));
-        decoration.add(new DisplayComponent());
+        decoration.add(new DisplayComponent(DisplayComponent.Order.FOREGROUND));
 
         if (shapes[t] != null) {
-            var body = new BodyComponent();
-            body.setShape(shapes[t]);
-            decoration.add(body);
+            var collision = new CollisionComponent(shapes[t]);
+            decoration.add(collision);
         }
 
         return decoration;

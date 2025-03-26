@@ -31,7 +31,7 @@ public class CollisionHelper
     private static boolean OvalvsOval(Manifold m) {
         OvalShape ao = (OvalShape) m.aShape;
         OvalShape bo = (OvalShape) m.bShape;
-        Vector2D n = m.bPos.getPosition().getSubtracted(m.aPos.getPosition());
+        Vector2D n = m.bPos.position.getSubtracted(m.aPos.position);
         double aRadius = ao.getRadius(n);
         double bRadius = bo.getRadius(n);
 
@@ -54,7 +54,7 @@ public class CollisionHelper
         AABBShape ab = (AABBShape) m.aShape;
         AABBShape bb = (AABBShape) m.bShape;
 
-        Vector2D n = m.bPos.getPosition().getSubtracted(m.aPos.getPosition());
+        Vector2D n = m.bPos.position.getSubtracted(m.aPos.position);
 
         double aExtent = ab.width / 2;
         double bExtent = bb.width / 2;
@@ -97,7 +97,7 @@ public class CollisionHelper
         AABBShape ab = (AABBShape) m.aShape;
         OvalShape bo = (OvalShape) m.bShape;
 
-        Vector2D n = m.bPos.getPosition().getSubtracted(m.aPos.getPosition());
+        Vector2D n = m.bPos.position.getSubtracted(m.aPos.position);
         Vector2D closest = new Vector2D(n);
 
         double xExtent = ab.width / 2;
