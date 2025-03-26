@@ -1,9 +1,10 @@
 package dk.sdu.petni23.animations;
 
 import dk.sdu.petni23.common.GameData;
-import dk.sdu.petni23.common.components.DisplayComponent;
-import dk.sdu.petni23.common.components.DurationComponent;
-import dk.sdu.petni23.common.components.SpriteComponent;
+import dk.sdu.petni23.common.components.AnimationComponent;
+import dk.sdu.petni23.common.components.rendering.DisplayComponent;
+import dk.sdu.petni23.common.components.rendering.DurationComponent;
+import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.common.util.Vector2D;
@@ -20,6 +21,7 @@ public class Animation
         var position = new PositionComponent();
         position.position.set(pos);
         animation.add(position);
+        animation.add(new AnimationComponent());
 
         return animation;
     }

@@ -1,6 +1,6 @@
 package dk.sdu.petni23.durationnode;
 
-import dk.sdu.petni23.common.components.DurationComponent;
+import dk.sdu.petni23.common.components.rendering.DurationComponent;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.node.Node;
 

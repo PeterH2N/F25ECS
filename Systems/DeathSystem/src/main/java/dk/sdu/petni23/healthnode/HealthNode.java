@@ -1,6 +1,5 @@
 package dk.sdu.petni23.healthnode;
 
-import dk.sdu.petni23.common.components.SpriteComponent;
 import dk.sdu.petni23.common.components.hp.HealthComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.gameengine.entity.Entity;

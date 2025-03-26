@@ -1,8 +1,8 @@
 package dk.sdu.petni23.damage;
 
 import dk.sdu.petni23.common.GameData;
-import dk.sdu.petni23.common.components.DisplayComponent;
-import dk.sdu.petni23.common.components.DurationComponent;
+import dk.sdu.petni23.common.components.rendering.DisplayComponent;
+import dk.sdu.petni23.common.components.rendering.DurationComponent;
 import dk.sdu.petni23.common.components.actions.ActionSetComponent;
 import dk.sdu.petni23.common.components.collision.HitBoxComponent;
 import dk.sdu.petni23.common.components.hp.DamageComponent;

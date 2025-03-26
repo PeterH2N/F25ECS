@@ -1,7 +1,10 @@
 package dk.sdu.petni23.structures.tree;
 
-import dk.sdu.petni23.common.components.DisplayComponent;
-import dk.sdu.petni23.common.components.SpriteComponent;
+import dk.sdu.petni23.common.GameData;
+import dk.sdu.petni23.common.components.AnimationComponent;
+import dk.sdu.petni23.common.components.rendering.DisplayComponent;
+import dk.sdu.petni23.common.components.rendering.DurationComponent;
+import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.common.components.collision.CollisionComponent;
 import dk.sdu.petni23.common.components.collision.HitBoxComponent;
 import dk.sdu.petni23.common.components.hp.HealthComponent;
@@ -11,6 +14,7 @@ import dk.sdu.petni23.common.shape.AABBShape;
 import dk.sdu.petni23.common.shape.OvalShape;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.common.util.Vector2D;
+import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import javafx.scene.image.Image;
 
@@ -21,12 +25,12 @@ public class Tree
     private static final SpriteSheet spriteSheet = new SpriteSheet();
 
     static {
-        final int[] numFrames = {4};
+        final int[] numFrames = {4,2,1};
         Image img = new Image(Objects.requireNonNull(Tree.class.getResourceAsStream("/structuresprites/Tree.png")));
         spriteSheet.init(img, numFrames, new Vector2D(img.getWidth() / 4, img.getHeight() / 3));
     }
 
-    public static Entity create(Vector2D pos) {
+    public static Entity createTree(Vector2D pos) {
         Entity tree = new Entity();
 
         var position = new PositionComponent();
@@ -45,6 +49,7 @@ public class Tree
         tree.add(collision);
 
         var health = new HealthComponent(20);
+        health.onDeath = node -> Engine.addEntity(createStump(pos));
 
         tree.add(health);
 
@@ -56,9 +61,34 @@ public class Tree
         tree.add(hitBox);
 
         tree.add(new LayerComponent(LayerComponent.Layer.ALL));
-
+        tree.add(new AnimationComponent());
 
         return tree;
+    }
 
+    public static Entity createStump(Vector2D pos) {
+        Entity stump = new Entity();
+
+        var position = new PositionComponent();
+        position.position.set(pos);
+        stump.add(position);
+
+        var sprite = new SpriteComponent(spriteSheet, new Vector2D(-0.5, -0.875));
+        sprite.animationIndex = 2;
+        stump.add(sprite);
+
+        stump.add(new DisplayComponent(DisplayComponent.Order.FOREGROUND));
+
+        var duration = new DurationComponent(10000, GameData.getCurrentMillis());
+        duration.onDeath = node -> Engine.addEntity(createTree(pos));
+        stump.add(duration);
+
+        var oval = new OvalShape();
+        oval.a = (24d * 0.5) / 64;
+        oval.b = (6d * 0.5) / 64;
+        var collision = new CollisionComponent(oval);
+        stump.add(collision);
+
+        return stump;
     }
 }

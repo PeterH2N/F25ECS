@@ -3,8 +3,8 @@ package dk.sdu.petni23.rendernode;
 
 import dk.sdu.petni23.common.GameData;
 
-import dk.sdu.petni23.common.components.DisplayComponent;
-import dk.sdu.petni23.common.components.SpriteComponent;
+import dk.sdu.petni23.common.components.rendering.DisplayComponent;
+import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.common.shape.AABBShape;
 import dk.sdu.petni23.common.shape.OvalShape;
 import dk.sdu.petni23.common.shape.Shape;

@@ -1,4 +1,4 @@
-package dk.sdu.petni23.common.components;
+package dk.sdu.petni23.common.components.rendering;
 
 import dk.sdu.petni23.gameengine.Component;
 

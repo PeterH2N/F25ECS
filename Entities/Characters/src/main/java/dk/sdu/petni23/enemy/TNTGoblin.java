@@ -2,7 +2,7 @@ package dk.sdu.petni23.enemy;
 
 import dk.sdu.petni23.character.Character;
 import dk.sdu.petni23.common.GameData;
-import dk.sdu.petni23.common.components.SpriteComponent;
+import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.common.components.hp.LayerComponent;
 import dk.sdu.petni23.common.components.movement.SpeedComponent;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
