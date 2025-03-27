@@ -15,4 +15,5 @@ module Common {
     exports dk.sdu.petni23.common.components;
     exports dk.sdu.petni23.common.components.life;
     exports dk.sdu.petni23.common.components.rendering;
+    exports dk.sdu.petni23.common.components.sound;
 }

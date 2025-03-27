@@ -3,6 +3,8 @@ package dk.sdu.petni23.player;
 import dk.sdu.petni23.character.Character;
 import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
+import dk.sdu.petni23.common.components.sound.FootstepSoundComponent;
+import dk.sdu.petni23.common.components.sound.SoundComponent;
 import dk.sdu.petni23.common.components.ControlComponent;
 import dk.sdu.petni23.common.components.actions.Action;
 import dk.sdu.petni23.common.components.actions.ActionSetComponent;
@@ -31,16 +33,15 @@ public class Player
         spriteSheet = new SpriteSheet(img, numFrames, new Vector2D(img.getWidth() / 6, img.getHeight() / 8), order);
     }
 
-    public static Entity create()
-    {
-        Entity player = Character.create(new Vector2D(0,0), 100);
+    public static Entity create() {
+        Entity player = Character.create(new Vector2D(0, 0), 100);
 
         var speed = new SpeedComponent();
         speed.speed = 3;
         player.add(speed);
 
         var control = new ControlComponent();
-        control.ULDR = new KeyCode[]{KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D};
+        control.ULDR = new KeyCode[] { KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D };
         control.pointsToMouse = true;
         player.add(control);
 
@@ -55,7 +56,9 @@ public class Player
         action1.delay = 300;
         action1.onDispatch = node -> {
             assert damageSPI != null;
-            Engine.addEntity(damageSPI.create(node));
+            Entity damageEntity = damageSPI.create(node);
+            damageEntity.add(new SoundComponent("woosh1"));
+            Engine.addEntity(damageEntity); // ✅ add the one you modified
         };
         action1.strength = 1;
         var action2 = new Action(Action.Directionality.QUAD);
@@ -65,13 +68,17 @@ public class Player
         action2.delay = 300;
         action2.onDispatch = node -> {
             assert damageSPI != null;
-            Engine.addEntity(damageSPI.create(node));
+            Entity damageEntity = damageSPI.create(node);
+            damageEntity.add(new SoundComponent("woosh2"));
+            Engine.addEntity(damageEntity); // ✅ add the one you modified
         };
         actions.actions.add(action1);
         actions.actions.add(action2);
         player.add(actions);
 
         player.add(new LayerComponent(LayerComponent.Layer.PLAYER));
+
+        player.add(new FootstepSoundComponent("footstep_player")); // or "boots", "zombie_step", etc.
 
         var strength = new StrengthComponent();
         strength.strength = 5;

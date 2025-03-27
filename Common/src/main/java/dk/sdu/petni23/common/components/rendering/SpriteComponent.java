@@ -10,6 +10,7 @@ public class SpriteComponent extends Component
     public final SpriteSheet spriteSheet;
     public final Vector2D spriteOrigin;
     public boolean rotateWithDirection = false;
+    public int lastFrame = -1;
     public boolean mirror = false;
 
     public SpriteComponent(SpriteSheet spriteSheet, Vector2D spriteOrigin, int column, int row)
