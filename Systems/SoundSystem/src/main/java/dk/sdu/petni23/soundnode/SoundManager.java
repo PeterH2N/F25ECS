@@ -17,7 +17,12 @@ public class SoundManager {
             soundEntity.play(delayMillis);
         }, delayMillis, TimeUnit.MILLISECONDS);
     }
-    
+
+    public void preloadSounds(String... soundNames) {
+        for (String name : soundNames) {
+            soundCache.computeIfAbsent(name, SoundEntity::new);
+        }
+    }
 
     public void playSound(String action, int delayMillis, double volume) {
         scheduler.schedule(() -> {

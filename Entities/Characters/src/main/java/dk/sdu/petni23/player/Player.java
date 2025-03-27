@@ -69,7 +69,7 @@ public class Player
         action2.onDispatch = node -> {
             assert damageSPI != null;
             Entity damageEntity = damageSPI.create(node);
-            damageEntity.add(new SoundComponent("woosh2"));
+            damageEntity.add(new SoundComponent("woosh2",0,0.5));
             Engine.addEntity(damageEntity); // ✅ add the one you modified
         };
         actions.actions.add(action1);
