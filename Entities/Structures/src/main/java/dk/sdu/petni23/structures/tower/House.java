@@ -6,7 +6,7 @@ import dk.sdu.petni23.common.components.rendering.DisplayComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.common.shape.AABBShape;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
-import dk.sdu.petni23.common.util.Vector2D;
+import dk.sdu.petni23.gameengine.util.Vector2D;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import javafx.scene.image.Image;
 
@@ -28,9 +28,9 @@ public class House
         house.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
         house.add(new SpriteComponent(spriteSheet, new Vector2D(-0.5, -0.85)));
         AABBShape aabb = new AABBShape();
-        aabb.width = 90d / 64d;
-        aabb.height = 90d / 64d;
-        house.add(new CollisionComponent(aabb, new Vector2D(0, 0.7)));
+        aabb.width = 100d / 64d;
+        aabb.height = 70d / 64d;
+        house.add(new CollisionComponent(aabb, new Vector2D(0, 0.5)));
 
         return house;
     }

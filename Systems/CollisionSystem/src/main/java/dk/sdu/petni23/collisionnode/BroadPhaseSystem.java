@@ -6,9 +6,10 @@ import dk.sdu.petni23.common.components.collision.HasShapeComponent;
 import dk.sdu.petni23.common.components.collision.HitBoxComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.components.movement.VelocityComponent;
+import dk.sdu.petni23.gameengine.util.Collider;
 import dk.sdu.petni23.common.misc.Manifold;
 import dk.sdu.petni23.common.shape.Shape;
-import dk.sdu.petni23.common.util.Vector2D;
+import dk.sdu.petni23.gameengine.util.Vector2D;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.node.Node;
 import dk.sdu.petni23.gameengine.services.IPluginService;
@@ -20,19 +21,17 @@ public class BroadPhaseSystem implements ISystem, IPluginService
 {
     private static final List<Collider>[][] collisionGrid = (ArrayList<Collider>[][])new ArrayList[(int) GameData.worldSize][(int) GameData.worldSize];
     private static final List<Collider>[][] hitBoxGrid = (ArrayList<Collider>[][])new ArrayList[(int) GameData.worldSize][(int) GameData.worldSize];
-    private final static Map<Node, Collider> collisionColliders = new HashMap<>();
-    private final static Map<Node, Collider> hitBoxColliders = new HashMap<>();
     @Override
     public void update(double deltaTime)
     {
         clearGrid(collisionGrid);
         clearGrid(hitBoxGrid);
-        populateGrid(CollisionNode.class, collisionGrid, CollisionComponent.class, collisionColliders);
-        populateGrid(HitBoxNode.class, hitBoxGrid, HitBoxComponent.class, hitBoxColliders);
+        populateGrid(CollisionNode.class, collisionGrid, CollisionComponent.class, Engine.collisionColliders);
+        populateGrid(HitBoxNode.class, hitBoxGrid, HitBoxComponent.class, Engine.hitBoxColliders);
         GameData.world.collisionManifolds.clear();
         GameData.world.hitBoxManifolds.clear();
-        populateManifoldList(collisionGrid, GameData.world.collisionManifolds, collisionColliders);
-        populateManifoldList(hitBoxGrid, GameData.world.hitBoxManifolds, hitBoxColliders);
+        populateManifoldList(collisionGrid, GameData.world.collisionManifolds, Engine.collisionColliders);
+        populateManifoldList(hitBoxGrid, GameData.world.hitBoxManifolds, Engine.hitBoxColliders);
     }
 
     @Override
@@ -101,31 +100,6 @@ public class BroadPhaseSystem implements ISystem, IPluginService
                 }
             }
         }
-        /*for (int x = 0; x < grid.length; x++) {
-            for (int y = 0; y < grid[x].length; y++) {
-                // for each collider in this tile
-                for (Collider n1 : grid[y][x]) {
-                    // loop through all neighboring tiles
-                    int startX = (x == 0) ? 0 : x-1;
-                    int startY = (y == 0) ? 0 : y-1;
-                    int endX = (x == grid.length - 1) ? x : x+1;
-                    int endY = (y == grid[x].length - 1) ? y : y+1;
-
-                    for (int i = startX; i <= endX; i++) {
-                        for (int j = startY; j <= endY; j++) {
-                            // loop through all entities in this tile
-                            for (Node n2 : grid[j][i]) {
-                                if (n1 == n2)
-                                    continue;
-
-                                Manifold c = new Manifold(n1, n2);
-                                if (!manifoldList.contains(c)) manifoldList.add(c);
-                            }
-                        }
-                    }
-                }
-            }
-        }*/
     }
 
     @Override
@@ -145,15 +119,5 @@ public class BroadPhaseSystem implements ISystem, IPluginService
     {
         clearGrid(collisionGrid);
         clearGrid(hitBoxGrid);
-    }
-
-    static class Collider {
-        List<Vector2D> cells = new ArrayList<>();
-        final Node node;
-
-        Collider(Node node)
-        {
-            this.node = node;
-        }
     }
 }

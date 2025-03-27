@@ -8,11 +8,16 @@ import dk.sdu.petni23.gameengine.services.IPhysicsSystem;
 import dk.sdu.petni23.gameengine.services.IPluginService;
 import dk.sdu.petni23.gameengine.services.IRenderSystem;
 import dk.sdu.petni23.gameengine.services.ISystem;
+import dk.sdu.petni23.gameengine.util.Collider;
+
 import java.util.*;
 
 public class Engine
 {
     private static final int physicsSteps = 2;
+
+    public static final Map<Node, Collider> collisionColliders = new HashMap<>();
+    public static final Map<Node, Collider> hitBoxColliders = new HashMap<>();
     private final static Map<Long, Entity> entities = new HashMap<>();
     private final static List<Node> nodes = new ArrayList<>();
     private final static List<ISystem> systems = getServices(ISystem.class);
@@ -32,14 +37,17 @@ public class Engine
     }
 
     public static void removeEntity(Entity entity) {
-        if (entities.remove(entity.getId()) != null)
+        if (entities.remove(entity.getId()) != null) {
+            collisionColliders.keySet().removeIf(node -> node.getEntityID() == entity.getId());
+            hitBoxColliders.keySet().removeIf(node -> node.getEntityID() == entity.getId());
             nodes.removeIf(node -> node.getEntityID() == entity.getId());
+        }
     }
 
     public static void removeEntity(long id) {
-        Entity entity = entities.remove(id);
+        Entity entity = entities.get(id);
         if (entity != null)
-            nodes.removeIf(node -> node.getEntityID() == entity.getId());
+            removeEntity(entity);
     }
 
     public static void start() {

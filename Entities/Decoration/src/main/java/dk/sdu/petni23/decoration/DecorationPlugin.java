@@ -2,11 +2,9 @@ package dk.sdu.petni23.decoration;
 
 
 import dk.sdu.petni23.common.GameData;
-import dk.sdu.petni23.common.util.Vector2D;
+import dk.sdu.petni23.gameengine.util.Vector2D;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.services.IPluginService;
-
-import java.util.Optional;
 
 public class DecorationPlugin implements IPluginService
 {
