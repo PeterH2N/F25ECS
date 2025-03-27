@@ -37,7 +37,7 @@ public class TorchGoblin
         var spriteComponent = new SpriteComponent(spriteSheet, new Vector2D(-0.5, -127d / 192));
         goblin.add(spriteComponent);
 
-        IEntitySPI damageSPI = Character.getSPI(IEntitySPI.Type.DAMAGE);
+        IEntitySPI damageSPI = Engine.getEntitySPI(IEntitySPI.Type.DAMAGE);
         Action attack = new Action(Action.Directionality.QUAD);
         attack.delay = 300;
         attack.strength = 2;

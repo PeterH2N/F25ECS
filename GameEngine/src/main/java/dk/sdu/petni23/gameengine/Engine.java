@@ -101,4 +101,12 @@ public class Engine
     {
         return entitySPIs;
     }
+
+    public static IEntitySPI getEntitySPI(IEntitySPI.Type type) {
+        for (var spi : Engine.getEntitySPIs()) {
+            if (spi.getType() == type)
+                return spi;
+        }
+        return null;
+    }
 }

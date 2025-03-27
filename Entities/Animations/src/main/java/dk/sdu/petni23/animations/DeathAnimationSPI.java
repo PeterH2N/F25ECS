@@ -1,5 +1,7 @@
 package dk.sdu.petni23.animations;
 
+import dk.sdu.petni23.common.GameData;
+import dk.sdu.petni23.common.components.life.DurationComponent;
 import dk.sdu.petni23.common.components.rendering.DisplayComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
@@ -26,7 +28,9 @@ public class DeathAnimationSPI implements IEntitySPI
         var pos = parent.getComponent(PositionComponent.class);
         assert pos != null;
 
-        return Animation.create(1200,  spriteSheet, pos.position, DisplayComponent.Layer.FOREGROUND);
+        Entity death = Animation.create(spriteSheet, new Vector2D(-0.5, -0.67), pos.position, DisplayComponent.Layer.FOREGROUND);
+        death.add(new DurationComponent(1200, GameData.getCurrentMillis()));
+        return death;
     }
 
     @Override

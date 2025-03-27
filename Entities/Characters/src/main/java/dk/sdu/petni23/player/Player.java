@@ -48,7 +48,7 @@ public class Player
         var spriteComponent = new SpriteComponent(spriteSheet, new Vector2D(-0.5, -127d / 192));
         player.add(spriteComponent);
 
-        IEntitySPI damageSPI = Character.getSPI(IEntitySPI.Type.DAMAGE);
+        IEntitySPI damageSPI = Engine.getEntitySPI(IEntitySPI.Type.DAMAGE);
         var actions = new ActionSetComponent();
         var action1 = new Action(Action.Directionality.QUAD);
         action1.animationIndex = 2;

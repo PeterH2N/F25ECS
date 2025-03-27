@@ -41,7 +41,7 @@ public class Character
         var hitBox = new HitBoxComponent(rect, new Vector2D(0, 0.5));
         character.add(hitBox);
 
-        var deathAnimation = getSPI(IEntitySPI.Type.DEATH_ANIMATION);
+        var deathAnimation = Engine.getEntitySPI(IEntitySPI.Type.DEATH_ANIMATION);
         var health = new HealthComponent(maxHP);
         health.onDeath = node -> {
             assert deathAnimation != null;
@@ -54,13 +54,5 @@ public class Character
         character.add(new AnimationComponent());
 
         return character;
-    }
-
-    public static IEntitySPI getSPI(IEntitySPI.Type type) {
-        for (var spi : Engine.getEntitySPIs()) {
-            if (spi.getType() == type)
-                return spi;
-        }
-        return null;
     }
 }

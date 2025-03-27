@@ -6,6 +6,7 @@ import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.components.rendering.DisplayComponent;
 import dk.sdu.petni23.common.shape.AABBShape;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
+import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 import dk.sdu.petni23.gameengine.util.Vector2D;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.entity.Entity;
@@ -20,6 +21,8 @@ public class GameMap
     public Tile[][] tiles = new Tile[(int) GameData.worldSize][(int) GameData.worldSize];
     public Image[][] mapImages;
     public int imageSize;
+
+    private final IEntitySPI foamSPI = Engine.getEntitySPI(IEntitySPI.Type.FOAM_ANIMATION);;
 
     public GameMap() {
         generateMap();
@@ -93,7 +96,37 @@ public class GameMap
                 {
                     Engine.addEntity(BoxCollider(new Vector2D(x + 0.5, y - 0.5), 1, 1));
                 }
+                addFoam(x, y);
             }
+        }
+    }
+
+    void addFoam(int x, int y) {
+        Tile tile = getTile(x,y);
+        if (tile.type == Tile.Type.WATER) return;
+        // placement
+        Tile pTile;
+        // north
+        pTile = getTile(x, y + 1);
+        boolean north = (pTile != null && pTile.type == Tile.Type.WATER);
+
+        // south
+        pTile = getTile(x, y - 1);
+        boolean south = (pTile != null && pTile.type == Tile.Type.WATER);
+
+        // east
+        pTile = getTile(x + 1, y);
+        boolean east = (pTile != null && pTile.type == Tile.Type.WATER);
+
+        // west
+        pTile = getTile(x - 1, y);
+        boolean west = (pTile != null && pTile.type == Tile.Type.WATER);
+
+        // foam
+        if (north || south || east || west) {
+            Entity foam = foamSPI.create(null);
+            foam.get(PositionComponent.class).position.set(x + 0.5, y - 0.5);
+            Engine.addEntity(foam);
         }
     }
 
