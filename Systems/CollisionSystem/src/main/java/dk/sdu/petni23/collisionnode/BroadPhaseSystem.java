@@ -59,8 +59,8 @@ public class BroadPhaseSystem implements ISystem, IPluginService
         }
         if (!(node.getComponent(VelocityComponent.class) == null && !collider.cells.isEmpty())) {
             // we update collider cells
-            collider.cells.clear();;
-            Vector2D pos = positionComponent.position;
+            collider.cells.clear();
+            Vector2D pos = positionComponent.position.getAdded(node.getComponent(HasShapeComponent.class).offset);
             Shape shape = node.getComponent(c).getShape();
             Vector2D hbb = shape.getBB().getMultiplied(0.5);
             Vector2D min = pos.getSubtracted(hbb);

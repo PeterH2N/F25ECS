@@ -2,6 +2,7 @@ package dk.sdu.petni23.common;
 
 import dk.sdu.petni23.common.misc.GameKeys;
 import dk.sdu.petni23.common.misc.Viewport;
+import dk.sdu.petni23.common.util.DebugOptions;
 import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.common.world.GameWorld;
 import dk.sdu.petni23.common.world.Tile;
@@ -30,6 +31,7 @@ public class GameData
     public static final GameWorld world = new GameWorld();
     private static final BooleanProperty focusedProperty = new SimpleBooleanProperty();
     private static boolean paused = false;
+    public static final DebugOptions debugOptions = new DebugOptions();
 
     static {
         ppmProperty.bind(displayWidth.divide(camera.widthProperty));

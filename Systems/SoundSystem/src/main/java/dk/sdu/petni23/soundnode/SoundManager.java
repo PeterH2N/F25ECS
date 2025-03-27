@@ -3,7 +3,6 @@ package dk.sdu.petni23.soundnode;
 
 import java.util.Map;
 import java.util.concurrent.*;
-import dk.sdu.petni23.soundnode.SoundEntity;
 
 public class SoundManager {
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(4);
