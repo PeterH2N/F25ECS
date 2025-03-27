@@ -11,8 +11,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 
-import dk.sdu.petni23.common.util.Sound;
-
 public class SettingsController {
 
     @FXML
