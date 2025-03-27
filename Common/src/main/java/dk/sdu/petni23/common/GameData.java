@@ -12,6 +12,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.Pane;
 
 public class GameData
@@ -19,11 +20,12 @@ public class GameData
     private static final DoubleProperty displayWidth = new SimpleDoubleProperty(800);
     private static final DoubleProperty displayHeight = new SimpleDoubleProperty(600);
     private static final DoubleProperty ppmProperty = new SimpleDoubleProperty();
-    public static final int worldSize = 76;
+    public static final int worldSize = 150; // must be an even number
     private static final DoubleProperty displayRatioProperty = new SimpleDoubleProperty();
     private static final DoubleProperty tileRatioProperty = new SimpleDoubleProperty();
     public static final Pane gameWindow = new Pane();
     public static final Scene scene = new Scene(gameWindow);
+    public static final Canvas canvas = new Canvas();
     public static final GameKeys gameKeys = new GameKeys();
     private static long currentTime = java.lang.System.nanoTime();
     private static double deltaTime = 0;

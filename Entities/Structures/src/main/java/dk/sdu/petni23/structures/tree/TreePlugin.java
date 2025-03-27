@@ -10,7 +10,7 @@ public class TreePlugin implements IPluginService
     @Override
     public void start()
     {
-        for (int i = 0; i < 25; i++) {
+        for (int i = 0; i < GameData.worldSize / 2; i++) {
             Vector2D pos = GameData.randomWorldPos();
             if (pos != null)
                 Engine.addEntity(Tree.createTree(pos));

@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public class DecorationPlugin implements IPluginService
 {
-    final int numDecorations = 100;
+    final int numDecorations = GameData.worldSize * 2;
     @Override
     public void start()
     {
