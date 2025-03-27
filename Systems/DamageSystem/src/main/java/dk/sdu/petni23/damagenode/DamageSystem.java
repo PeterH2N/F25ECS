@@ -34,7 +34,7 @@ public class DamageSystem implements ISystem
 
                 double dmg = node.damageComponent.damage;
                 if (node.strengthComponent != null) dmg *= node.strengthComponent.strength;
-                hurt(healthComponent, dmg);
+                hurt(node, healthComponent, dmg);
             }
         }
     }
@@ -45,8 +45,9 @@ public class DamageSystem implements ISystem
         return Priority.PROCESSING.get();
     }
 
-    public void hurt(HealthComponent hp, double dmg) {
+    public void hurt(Node node, HealthComponent hp, double dmg) {
         hp.health -= dmg;
         hp.lastHurtTime = GameData.getCurrentMillis();
+        if (hp.onHurt != null) hp.onHurt.dispatch(node);
     }
 }

@@ -1,6 +1,9 @@
 package dk.sdu.petni23.soundnode;
 
 import dk.sdu.petni23.common.GameData;
+import dk.sdu.petni23.common.components.sound.FootstepSoundComponent;
+import dk.sdu.petni23.common.util.Sound;
+import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.services.ISystem;
 import dk.sdu.petni23.common.components.sound.SoundComponent;
 import dk.sdu.petni23.gameengine.Engine;
@@ -23,6 +26,24 @@ public class SoundSystem implements ISystem {
                 System.out.println("🎧 Triggered sound: " + soundComponent.action);
                 soundManager.playSound(soundComponent.action, 0);
                 soundComponent.triggered = false;
+            }
+        }
+        // footsteps
+        for (FootStepSoundNode node : Engine.getNodes(FootStepSoundNode.class)) {
+            if (node.velocityComponent.velocity.equals(Vector2D.ZERO)) continue;
+
+            int currentFrame = node.spriteComponent.column;
+
+            if (node.footstepSoundComponent.lastFrame != currentFrame) {
+                if (currentFrame == 1 || currentFrame == 4) {
+                    var footstep = node.footstepSoundComponent;
+                        System.out.println("👟 Triggering step sound: " + footstep.sound);
+                        Sound.emitSound(footstep.sound);
+                }
+                //System.out.println("🖼 Frame: " + currentFrame + ", Moving: " + moving);
+
+
+                node.footstepSoundComponent.lastFrame = currentFrame;
             }
         }
     }

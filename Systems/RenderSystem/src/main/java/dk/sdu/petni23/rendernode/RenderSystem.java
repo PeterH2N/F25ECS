@@ -83,7 +83,7 @@ public class RenderSystem implements IRenderSystem, IPluginService
         for (var node : nodes) {
             Vector2D pos = GameData.toScreenSpace(node.positionComponent.position);
             drawSprite(gc, node, pos);
-            drawBody(gc, node, pos);
+            drawCollider(gc, node, pos);
             drawHitBox(gc, node, pos);
             drawHealth(gc, node, pos);
         }
@@ -127,11 +127,13 @@ public class RenderSystem implements IRenderSystem, IPluginService
         gc.restore();
     }
 
-    void drawBody(GraphicsContext gc, RenderNode node, Vector2D pos) {
+    void drawCollider(GraphicsContext gc, RenderNode node, Vector2D pos) {
         if (node.collisionComponent == null) return;
         gc.save();
         gc.setStroke(Color.YELLOW);
-        drawShape(gc, node.collisionComponent.getShape(), pos);
+        Vector2D nPos = new Vector2D(pos);
+        nPos.subtract(node.collisionComponent.offset.getMultiplied(GameData.getPPM()));
+        drawShape(gc, node.collisionComponent.getShape(), nPos);
         gc.restore();
     }
 
@@ -140,7 +142,7 @@ public class RenderSystem implements IRenderSystem, IPluginService
         gc.save();
         gc.setStroke(Color.RED);
         Vector2D nPos = new Vector2D(pos);
-        nPos.y -= node.hitBoxComponent.yOffset * GameData.getPPM();
+        nPos.subtract(node.hitBoxComponent.offset.getMultiplied(GameData.getPPM()));
 
         drawShape(gc, node.hitBoxComponent.hitBox, nPos);
         gc.restore();

@@ -1,3 +1,9 @@
+import dk.sdu.petni23.gameengine.node.INodeSPI;
+import dk.sdu.petni23.gameengine.services.ISystem;
+import dk.sdu.petni23.soundnode.FootStepSoundNodeSPI;
+import dk.sdu.petni23.soundnode.SoundNodeSPI;
+import dk.sdu.petni23.soundnode.SoundSystem;
+
 module SoundSystem {
     requires java.desktop;
     requires javafx.graphics;
@@ -6,6 +12,6 @@ module SoundSystem {
 
     exports dk.sdu.petni23.soundnode;
 
-    provides dk.sdu.petni23.gameengine.node.INodeSPI with dk.sdu.petni23.soundnode.SoundNodeSPI;
-    provides dk.sdu.petni23.gameengine.services.ISystem with dk.sdu.petni23.soundnode.SoundSystem;
+    provides INodeSPI with SoundNodeSPI, FootStepSoundNodeSPI;
+    provides ISystem with SoundSystem;
 }

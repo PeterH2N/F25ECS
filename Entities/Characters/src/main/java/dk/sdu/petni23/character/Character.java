@@ -38,8 +38,7 @@ public class Character
         var rect = new AABBShape();
         rect.width = 0.6;
         rect.height = 0.7;
-        var hitBox = new HitBoxComponent(rect);
-        hitBox.yOffset = 0.5;
+        var hitBox = new HitBoxComponent(rect, new Vector2D(0, 0.5));
         character.add(hitBox);
 
         var deathAnimation = getSPI(IEntitySPI.Type.DEATH_ANIMATION);

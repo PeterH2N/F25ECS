@@ -26,11 +26,11 @@ public class House
         posC.position.set(pos);
         house.add(posC);
         house.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
-        house.add(new SpriteComponent(spriteSheet, new Vector2D(-0.5, -0.67)));
+        house.add(new SpriteComponent(spriteSheet, new Vector2D(-0.5, -0.85)));
         AABBShape aabb = new AABBShape();
         aabb.width = 90d / 64d;
         aabb.height = 90d / 64d;
-        house.add(new CollisionComponent(aabb));
+        house.add(new CollisionComponent(aabb, new Vector2D(0, 0.7)));
 
         return house;
     }

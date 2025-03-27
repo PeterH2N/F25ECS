@@ -56,8 +56,7 @@ public class Tree
         var rect = new AABBShape();
         rect.width = 0.6;
         rect.height = 0.7;
-        var hitBox = new HitBoxComponent(rect);
-        hitBox.yOffset = 0.5;
+        var hitBox = new HitBoxComponent(rect, new Vector2D(0, 0.5));
         tree.add(hitBox);
 
         tree.add(new LayerComponent(LayerComponent.Layer.ALL));
