@@ -25,6 +25,7 @@ public class Main extends Application
         GameData.gameWindow.setPrefSize(800,800);
         stage.setMinWidth(200);
         stage.setMinHeight(200);
+        GameData.getFocusedProperty().bind(stage.focusedProperty());
 
         Engine.start();
 
@@ -46,7 +47,8 @@ public class Main extends Application
             @Override
             public void handle(long now) {
                 GameData.setTime(now);
-                Engine.update(GameData.getDeltaTime());
+                if (!GameData.isPaused())
+                    Engine.update(GameData.getDeltaTime());
                 GameData.setFrameTime(java.lang.System.nanoTime() - now);
             }
         }.start();

@@ -11,7 +11,7 @@ import dk.sdu.petni23.common.shape.Shape;
 import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.services.IPluginService;
-import dk.sdu.petni23.gameengine.services.ISystem;
+import dk.sdu.petni23.gameengine.services.IRenderSystem;
 import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class RenderSystem implements ISystem, IPluginService
+public class RenderSystem implements IRenderSystem, IPluginService
 {
     private final Canvas canvas = GameData.canvas;
     private final ColorAdjust white = new ColorAdjust(0.0, -0.5, 0.5, 0);
@@ -46,7 +46,7 @@ public class RenderSystem implements ISystem, IPluginService
 
     }
     @Override
-    public void update(double deltaTime)
+    public void render()
     {
         var gc = canvas.getGraphicsContext2D();
         gc.setFill(seaColor);
@@ -56,13 +56,6 @@ public class RenderSystem implements ISystem, IPluginService
         drawNodes(gc);
         drawFrameTime(gc);
     }
-
-    @Override
-    public int getPriority()
-    {
-        return Priority.RENDERING.get();
-    }
-
 
     void drawFrameTime(GraphicsContext gc) {
         gc.save();

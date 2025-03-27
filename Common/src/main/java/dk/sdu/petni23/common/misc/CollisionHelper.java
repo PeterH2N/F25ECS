@@ -109,7 +109,7 @@ public class CollisionHelper
             inside = true;
 
             // find closest axis
-            if (Math.abs(n.x) > Math.abs(n.y)) {
+            if (xExtent - Math.abs(n.x) < yExtent - Math.abs(n.y)) {
                 // clamp to the closest extent
                 if (closest.x > 0)
                     closest.x = xExtent;
@@ -141,11 +141,15 @@ public class CollisionHelper
 
 
         // collision normal needs to be flipped to point outside if circle was inside the AABB
-        if (inside)
+        if (inside) {
             m.normal = normal.getMultiplied(-1);
-        else
+            m.penetration = d+r;
+        }
+        else {
             m.normal = normal;
-        m.penetration = r-d;
+            m.penetration = r-d;
+        }
+
 
         m.collide = true;
         return true;

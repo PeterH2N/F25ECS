@@ -22,6 +22,12 @@ public class CollisionSystem implements IPhysicsSystem
         }
     }
 
+    @Override
+    public int getPriority()
+    {
+        return Priority.SECOND.get();
+    }
+
     private void resolveCollision(Manifold m) {
         Vector2D pen = m.normal.getMultiplied(m.penetration);
         assert(m.a instanceof CollisionNode && m.b instanceof CollisionNode);

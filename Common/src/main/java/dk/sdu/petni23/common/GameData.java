@@ -5,12 +5,7 @@ import dk.sdu.petni23.common.misc.Viewport;
 import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.common.world.GameWorld;
 import dk.sdu.petni23.common.world.Tile;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import javafx.beans.property.*;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.Pane;
@@ -33,6 +28,8 @@ public class GameData
     private static long currentMillis = 0;
     public static final Viewport camera = new Viewport(Math.min(40, worldSize));
     public static final GameWorld world = new GameWorld();
+    private static final BooleanProperty focusedProperty = new SimpleBooleanProperty();
+    private static boolean paused = false;
 
     static {
         ppmProperty.bind(displayWidth.divide(camera.widthProperty));
@@ -95,6 +92,20 @@ public class GameData
     public static double getDeltaTime()
     {
         return deltaTime;
+    }
+
+    public static void setPaused(boolean paused)
+    {
+        GameData.paused = paused;
+    }
+
+    public static BooleanProperty getFocusedProperty()
+    {
+        return focusedProperty;
+    }
+
+    public static boolean isPaused() {
+        return !focusedProperty.getValue() || paused;
     }
 
     public static Vector2D toScreenSpace(double x, double y) {
