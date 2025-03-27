@@ -43,13 +43,6 @@ public class StartMenu extends Application {
 
         Parent root = FXMLLoader.load(fxmlLocation);
         Scene scene = new Scene(root, 600, 400);
-
-        scene.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
-            if (event.getTarget() instanceof Button ||
-                ((Node) event.getTarget()).getParent() instanceof Button) {
-                UISound.play("click1");
-            }
-        });
         
 
         // Set custom cursor

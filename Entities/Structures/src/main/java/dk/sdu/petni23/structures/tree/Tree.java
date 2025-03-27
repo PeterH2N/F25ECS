@@ -5,6 +5,7 @@ import dk.sdu.petni23.common.components.rendering.AnimationComponent;
 import dk.sdu.petni23.common.components.rendering.DisplayComponent;
 import dk.sdu.petni23.common.components.life.DurationComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
+import dk.sdu.petni23.common.components.sound.SoundComponent;
 import dk.sdu.petni23.common.components.collision.CollisionComponent;
 import dk.sdu.petni23.common.components.collision.HitBoxComponent;
 import dk.sdu.petni23.common.components.life.HealthComponent;
@@ -20,12 +21,11 @@ import javafx.scene.image.Image;
 
 import java.util.Objects;
 
-public class Tree
-{
+public class Tree {
     private static final SpriteSheet spriteSheet;
 
     static {
-        final int[] numFrames = {4,2,1};
+        final int[] numFrames = { 4, 2, 1 };
         Image img = new Image(Objects.requireNonNull(Tree.class.getResourceAsStream("/structuresprites/Tree.png")));
         spriteSheet = new SpriteSheet(img, numFrames, new Vector2D(img.getWidth() / 4, img.getHeight() / 3));
     }
@@ -50,6 +50,11 @@ public class Tree
 
         var health = new HealthComponent(20);
         health.onDeath = node -> Engine.addEntity(createStump(pos));
+        health.onHurt = node -> {
+            Entity e = new Entity();
+            e.add(new SoundComponent("tree_hit1", 150, 0.5));
+            Engine.addEntity(e);
+        };
 
         tree.add(health);
 
