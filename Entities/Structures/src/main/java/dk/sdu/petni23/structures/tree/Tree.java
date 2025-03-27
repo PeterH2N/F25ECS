@@ -53,6 +53,7 @@ public class Tree {
         health.onHurt = node -> {
             Entity e = new Entity();
             e.add(new SoundComponent("tree_hit1", 150, 0.5));
+            e.add(new DurationComponent(200, GameData.getCurrentMillis()));
             Engine.addEntity(e);
         };
 
