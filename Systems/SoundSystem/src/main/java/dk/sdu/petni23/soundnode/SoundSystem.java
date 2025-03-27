@@ -42,8 +42,8 @@ public class SoundSystem implements ISystem {
             if (node.footstepSoundComponent.lastFrame != currentFrame) {
                 if (currentFrame == 1 || currentFrame == 4) {
                     var footstep = node.footstepSoundComponent;
-                    System.out.println("👟 Triggering step sound: " + footstep.sound);
-                    Sound.emitSound(footstep.sound);
+                        System.out.println("👟 Triggering step sound: " + footstep.sound);
+                        soundManager.playSound(footstep.sound, 0);
                 }
 
                 node.footstepSoundComponent.lastFrame = currentFrame;
