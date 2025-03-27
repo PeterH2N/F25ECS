@@ -13,8 +13,10 @@ public class SoundSystem implements ISystem {
 
     @Override
     public void update(double deltaTime) {
+        var nodes = Engine.getNodes(SoundNode.class);
+        System.out.println("🔎 SoundNodes found: " + nodes.size()); // ← log node count
     
-        for (SoundNode node : Engine.getNodes(SoundNode.class)) {
+        for (SoundNode node : nodes) {
             SoundComponent soundComponent = node.soundComponent;
     
             if (soundComponent.triggered) {
@@ -24,6 +26,7 @@ public class SoundSystem implements ISystem {
             }
         }
     }
+    
     
     
     

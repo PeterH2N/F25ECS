@@ -1,7 +1,5 @@
 package dk.sdu.petni23.animationnode;
 
-
-
 import dk.sdu.petni23.gameengine.Component;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.node.INodeSPI;
