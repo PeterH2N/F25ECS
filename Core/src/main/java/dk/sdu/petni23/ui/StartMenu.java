@@ -49,7 +49,7 @@ public class StartMenu extends Application {
         Image cursorImage = new Image(getClass().getResourceAsStream("/Pointers/01.png"), 64, 64, true, true);
         scene.setCursor(new ImageCursor(cursorImage));
 
-        primaryStage.setTitle("AsteroidsFX - Start Menu");
+        primaryStage.setTitle("F25 - Start Menu");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

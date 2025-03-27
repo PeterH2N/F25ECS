@@ -7,13 +7,14 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.*;
 
-public class SoundEntity {
+public class SoundClip
+{
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     private static final Random random = new Random();
     private final List<Clip> clips = new ArrayList<>();
     private float sfxVolume = 0.2f;
 
-    public SoundEntity(String action) {
+    public SoundClip(String action) {
         String soundFile = action + ".wav";
         System.out.println("🧪 Attempting to load: " + soundFile);
     

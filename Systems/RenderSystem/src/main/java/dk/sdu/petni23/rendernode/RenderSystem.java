@@ -133,13 +133,13 @@ public class RenderSystem implements IRenderSystem, IPluginService
     void drawDebug(GraphicsContext gc) {
         DebugOptions options = GameData.debugOptions;
         if (!options.active) return;
-        if (options.drawGrid) drawGrid(gc);
+        if (options.showGrid.get()) drawGrid(gc);
 
         for (var node : Engine.getNodes(RenderNode.class)) {
             Vector2D pos = GameData.toScreenSpace(node.positionComponent.position);
-            if (options.showColliders) drawCollider(gc, node, pos);
-            if (options.showHitBoxes) drawHitBox(gc, node, pos);
-            if (options.showHP) drawHealth(gc, node, pos);
+            if (options.showColliders.get()) drawCollider(gc, node, pos);
+            if (options.showHitBoxes.get()) drawHitBox(gc, node, pos);
+            if (options.showHP.get()) drawHealth(gc, node, pos);
         }
     }
 
@@ -211,6 +211,7 @@ public class RenderSystem implements IRenderSystem, IPluginService
                 continue;
             gc.strokeLine(start.x, start.y, end.x, end.y);
         }
+        gc.setLineWidth(1.0);
     }
 
     void drawMap(GraphicsContext gc) {

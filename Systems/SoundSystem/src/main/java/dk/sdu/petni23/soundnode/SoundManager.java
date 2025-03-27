@@ -6,29 +6,29 @@ import java.util.concurrent.*;
 
 public class SoundManager {
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(4);
-    private static final Map<String, SoundEntity> soundCache = new ConcurrentHashMap<>();
+    private static final Map<String, SoundClip> soundCache = new ConcurrentHashMap<>();
     private static final Map<String, ScheduledFuture<?>> loopingSounds = new ConcurrentHashMap<>();
 
     public void playSound(String action, int delayMillis) {
     
         scheduler.schedule(() -> {
-            SoundEntity soundEntity = soundCache.computeIfAbsent(action, SoundEntity::new);
-            soundEntity.play(delayMillis);
+            SoundClip soundClip = soundCache.computeIfAbsent(action, SoundClip::new);
+            soundClip.play(delayMillis);
         }, delayMillis, TimeUnit.MILLISECONDS);
     }
 
     public void preloadSounds(String... soundNames) {
         for (String name : soundNames) {
-            soundCache.computeIfAbsent(name, SoundEntity::new);
+            soundCache.computeIfAbsent(name, SoundClip::new);
         }
     }
 
     public void playSound(String action, int delayMillis, double volume) {
         scheduler.schedule(() -> {
-            SoundEntity soundEntity = soundCache.computeIfAbsent(action, SoundEntity::new);
+            SoundClip soundClip = soundCache.computeIfAbsent(action, SoundClip::new);
             int vol = (int)(volume * 10f);
-            soundEntity.setVolume((float) vol / 50);
-            soundEntity.play(delayMillis);
+            soundClip.setVolume((float) vol / 50);
+            soundClip.play(delayMillis);
         }, delayMillis, TimeUnit.MILLISECONDS);
     }
 
@@ -38,8 +38,8 @@ public class SoundManager {
         }
 
         ScheduledFuture<?> future = scheduler.scheduleAtFixedRate(() -> {
-            SoundEntity soundEntity = soundCache.computeIfAbsent(action, SoundEntity::new);
-            soundEntity.play(intervalMillis);
+            SoundClip soundClip = soundCache.computeIfAbsent(action, SoundClip::new);
+            soundClip.play(intervalMillis);
         }, 0, intervalMillis, TimeUnit.MILLISECONDS);
 
         loopingSounds.put(action, future);

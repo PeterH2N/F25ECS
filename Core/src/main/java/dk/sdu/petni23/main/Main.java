@@ -19,9 +19,11 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         GameData.gameWindow.setPrefSize(800, 800);
+        GameData.stage = stage;
         stage.setMinWidth(200);
         stage.setMinHeight(200);
         GameData.getFocusedProperty().bind(stage.focusedProperty());
+        stage.setOnCloseRequest(windowEvent -> System.exit(0));
 
         Engine.start();
 
@@ -35,6 +37,7 @@ public class Main extends Application {
     public void stop() throws Exception {
         Engine.stop();
         super.stop();
+        System.exit(0);
     }
 
     private void render() {

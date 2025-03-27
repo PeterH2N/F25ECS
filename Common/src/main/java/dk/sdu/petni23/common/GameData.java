@@ -10,6 +10,8 @@ import javafx.beans.property.*;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
 public class GameData
 {
@@ -19,8 +21,9 @@ public class GameData
     public static final int worldSize = 150; // must be an even number
     private static final DoubleProperty displayRatioProperty = new SimpleDoubleProperty();
     private static final DoubleProperty tileRatioProperty = new SimpleDoubleProperty();
-    public static final Pane gameWindow = new Pane();
+    public static final Pane gameWindow = new StackPane();
     public static final Scene scene = new Scene(gameWindow);
+    public static Stage stage;
     public static final Canvas canvas = new Canvas();
     public static final GameKeys gameKeys = new GameKeys();
     private static long currentTime = java.lang.System.nanoTime();
@@ -107,7 +110,7 @@ public class GameData
     }
 
     public static boolean isPaused() {
-        return !focusedProperty.getValue() || paused;
+        return paused;
     }
 
     public static Vector2D toScreenSpace(double x, double y) {
