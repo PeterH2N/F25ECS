@@ -1,6 +1,7 @@
 package dk.sdu.petni23.structures.tree;
 
 import dk.sdu.petni23.common.components.DisplayComponent;
+import dk.sdu.petni23.common.components.PlacementComponent;
 import dk.sdu.petni23.common.components.SpriteComponent;
 import dk.sdu.petni23.common.components.collision.CollisionComponent;
 import dk.sdu.petni23.common.components.collision.HitBoxComponent;
@@ -13,6 +14,7 @@ import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 
 import java.util.Objects;
 
@@ -57,6 +59,9 @@ public class Tree
 
         tree.add(new LayerComponent(LayerComponent.Layer.ALL));
 
+        var placementComponent = new PlacementComponent();
+        placementComponent.C = KeyCode.C;
+        tree.add(placementComponent);
 
         return tree;
 

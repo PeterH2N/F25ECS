@@ -4,6 +4,7 @@ import dk.sdu.petni23.common.misc.GameKeys;
 import dk.sdu.petni23.common.misc.Viewport;
 import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.common.world.GameWorld;
+import dk.sdu.petni23.gameengine.entity.Entity;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -12,9 +13,11 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import dk.sdu.petni23.common.enums.GameMode;
 
 public class GameData
 {
+
     private static final DoubleProperty displayWidth = new SimpleDoubleProperty(800);
     private static final DoubleProperty displayHeight = new SimpleDoubleProperty(600);
     private static final DoubleProperty ppmProperty = new SimpleDoubleProperty();
@@ -30,6 +33,9 @@ public class GameData
     private static long currentMillis = 0;
     public static final Viewport camera = new Viewport(Math.min(40, worldSize));
     public static final GameWorld world = new GameWorld();
+    private static GameMode gameMode = GameMode.REGULAR;
+    private static Entity hand;
+
 
     static {
         ppmProperty.bind(displayWidth.divide(camera.widthProperty));
@@ -117,5 +123,21 @@ public class GameData
 
     public static Vector2D toWorldSpace(Vector2D v) {
         return toWorldSpace(v.x, v.y);
+    }
+
+    public static void setGameMode(GameMode gameMode){
+        GameData.gameMode = gameMode;
+    }
+
+    public static GameMode getGameMode(){
+        return GameData.gameMode;
+    }
+
+    public static Entity getHand(){
+        return hand;
+    }
+
+    public static void setHand(Entity entity){
+        hand = entity;
     }
 }

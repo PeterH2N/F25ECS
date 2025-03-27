@@ -20,6 +20,10 @@ public class Engine
     private final static Collection<? extends INodeSPI> nodeSPIs = getServices(INodeSPI.class);
     private final static List<IEntitySPI> entitySPIs = getServices(IEntitySPI.class);
     
+    public static Entity getEntity(Long entityId){
+        return entities.get(entityId);
+    }
+
     public static void addEntity(Entity entity) {
         entities.put(entity.getId(), entity);
         for (var spi : nodeSPIs) {

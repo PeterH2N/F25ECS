@@ -30,6 +30,7 @@
         <module>DeathSystem</module>
         <module>DamageSystem</module>
         <module>ActionSystem</module>
+        <module>PlacementSystem</module>
     </modules>
 
     <dependencies>

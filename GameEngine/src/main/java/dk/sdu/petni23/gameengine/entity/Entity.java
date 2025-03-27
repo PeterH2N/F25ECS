@@ -11,6 +11,15 @@ public class Entity
     private static long idCount = 0;
     private final Long id = idCount++;
     private final Map<Class<? extends Component>, Component> components = new HashMap<>();
+    private boolean onMap;
+
+    public boolean isOnMap(){
+        return onMap;
+    }
+
+    public void addToMap(){
+        this.onMap = true;
+    }
 
     public void add(Component component) {
         Class<? extends Component> c = component.getClass();
