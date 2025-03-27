@@ -1,6 +1,5 @@
-package dk.sdu.petni23.common.components.hp;
+package dk.sdu.petni23.common.components.life;
 
-import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.components.Dispatch;
 import dk.sdu.petni23.gameengine.Component;
 

@@ -14,8 +14,8 @@ import java.util.List;
 
 public class BroadPhaseSystem implements ISystem, IPluginService
 {
-    private static final List<Node>[][] collisionGrid = (ArrayList<Node>[][])new ArrayList[GameData.worldSize][GameData.worldSize];
-    private static final List<Node>[][] hitBoxGrid = (ArrayList<Node>[][])new ArrayList[GameData.worldSize][GameData.worldSize];
+    private static final List<Node>[][] collisionGrid = (ArrayList<Node>[][])new ArrayList[(int) GameData.worldSize][(int) GameData.worldSize];
+    private static final List<Node>[][] hitBoxGrid = (ArrayList<Node>[][])new ArrayList[(int) GameData.worldSize][(int) GameData.worldSize];
     @Override
     public void update(double deltaTime)
     {

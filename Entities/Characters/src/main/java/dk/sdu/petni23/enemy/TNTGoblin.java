@@ -3,7 +3,7 @@ package dk.sdu.petni23.enemy;
 import dk.sdu.petni23.character.Character;
 import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
-import dk.sdu.petni23.common.components.hp.LayerComponent;
+import dk.sdu.petni23.common.components.life.LayerComponent;
 import dk.sdu.petni23.common.components.movement.SpeedComponent;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.common.util.Vector2D;
@@ -14,18 +14,16 @@ import java.util.Objects;
 
 public class TNTGoblin
 {
-    private static final SpriteSheet spriteSheet = new SpriteSheet();
+    private static final SpriteSheet spriteSheet;
 
     static {
         final int[] numFrames = {6,6,7};
         Image img = new Image(Objects.requireNonNull(TorchGoblin.class.getResourceAsStream("/enemysprites/TNTGoblin.png")));
-        spriteSheet.init(img, numFrames, new Vector2D(img.getWidth() / 7, img.getHeight() / 3));
+        spriteSheet = new SpriteSheet(img, numFrames, new Vector2D(img.getWidth() / 7, img.getHeight() / 3));
     }
 
-    public static Entity create() {
-        double x = Math.random() * GameData.worldSize - (double) GameData.worldSize / 2;
-        double y = Math.random() * GameData.worldSize - (double) GameData.worldSize / 2;
-        Entity goblin = Character.create(new Vector2D(x, y), 20);
+    public static Entity create(Vector2D pos) {
+        Entity goblin = Character.create(pos, 20);
 
         var speed = new SpeedComponent();
         speed.speed = 2.3;

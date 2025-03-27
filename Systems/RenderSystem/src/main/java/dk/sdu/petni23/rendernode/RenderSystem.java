@@ -8,7 +8,9 @@ import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.common.shape.AABBShape;
 import dk.sdu.petni23.common.shape.OvalShape;
 import dk.sdu.petni23.common.shape.Shape;
+import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.common.util.Vector2D;
+import dk.sdu.petni23.common.world.Tile;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.services.IPluginService;
 import dk.sdu.petni23.gameengine.services.ISystem;
@@ -31,6 +33,7 @@ public class RenderSystem implements ISystem, IPluginService
 {
     private static final Canvas canvas = new Canvas();
     private static final ColorAdjust white = new ColorAdjust(0.0, -0.5, 0.5, 0);
+    private final Color seaColor = Color.rgb(101,160,168);
     @Override
     public void start()
     {
@@ -48,7 +51,7 @@ public class RenderSystem implements ISystem, IPluginService
     public void update(double deltaTime)
     {
         var gc = canvas.getGraphicsContext2D();
-        gc.setFill(Color.WHITE);
+        gc.setFill(seaColor);
         gc.fillRect(0,0, GameData.getDisplayWidth(), GameData.getDisplayHeight());
 
         drawGrid(gc);
@@ -72,24 +75,27 @@ public class RenderSystem implements ISystem, IPluginService
     }
 
     void drawNodes(GraphicsContext gc) {
+        drawNodesByLayer(gc, DisplayComponent.Layer.BACKGROUND);
+
+        drawMap(gc);
+
+        drawNodesByLayer(gc, DisplayComponent.Layer.FOREGROUND);
+    }
+
+    void drawNodesByLayer(GraphicsContext gc, DisplayComponent.Layer layer) {
         gc.save();
+        // get only the nodes in this layer
+        List<RenderNode> nodes = new ArrayList<>(Engine.getNodes(RenderNode.class).stream().filter(node -> node.displayComponent.order == layer).toList());
+        // sort by y value
+        nodes.sort((Comparator.comparingDouble(RenderNode::getY).reversed()));
 
-        for (var o : DisplayComponent.Order.values()) {
-            // get only the nodes in this layer
-            List<RenderNode> nodes = new ArrayList<>(Engine.getNodes(RenderNode.class).stream().filter(node -> node.displayComponent.order == o).toList());
-            // sort by y value
-            nodes.sort((Comparator.comparingDouble(RenderNode::getY).reversed()));
-
-            for (var node : nodes) {
-                Vector2D pos = GameData.toScreenSpace(node.positionComponent.position);
-                drawSprite(gc, node, pos);
-                drawBody(gc, node, pos);
-                drawHitBox(gc, node, pos);
-                drawHealth(gc, node, pos);
-            }
+        for (var node : nodes) {
+            Vector2D pos = GameData.toScreenSpace(node.positionComponent.position);
+            drawSprite(gc, node, pos);
+            drawBody(gc, node, pos);
+            drawHitBox(gc, node, pos);
+            drawHealth(gc, node, pos);
         }
-
-
 
         gc.restore();
     }
@@ -206,7 +212,42 @@ public class RenderSystem implements ISystem, IPluginService
         gc.restore();
     }
 
+    void drawMap(GraphicsContext gc) {
+        double s = 64 * GameData.getTileRatio();
+        for (int x = -GameData.worldSize / 2; x < GameData.worldSize / 2; x++) {
+            for (int y = GameData.worldSize / 2; y > -GameData.worldSize / 2; y--) {
+                Vector2D pos = GameData.toScreenSpace(x, y);
+                // early return
+                if (pos.x < -s || pos.x > GameData.getDisplayWidth() ||
+                        pos.y < -s || pos.y > GameData.getDisplayHeight())
+                    continue;
+
+                Tile tile = GameData.world.map.getTile(x, y);
+
+                for (Tile.Type type : Tile.Type.values()) {
+                    if (type == tile.type) {
+                        SpriteSheet sheet = Tile.sheets.get(tile.type);
+                        if (sheet != null) {
+                            Image img = sheet.sheet[tile.placement.y][tile.placement.x];
+                            gc.drawImage(img, pos.x, pos.y, s, s);
+                        }
+                        break;
+                    }
+                    else {
+                        SpriteSheet sheet = Tile.sheets.get(type);
+                        if (sheet != null) {
+                            Image img = sheet.sheet[Tile.Placement.MIDDLE.y][Tile.Placement.MIDDLE.x];
+                            gc.drawImage(img, pos.x, pos.y, s, s);
+                        }
+                    }
+
+                }
+
+            }
+        }
+    }
+
     public Image getSprite(SpriteComponent spc) {
-        return spc.spriteSheet.getAnimation(spc.animationIndex).getSprite(spc.time, spc.reverse);
+        return spc.spriteSheet.sheet[spc.row][spc.column];
     }
 }

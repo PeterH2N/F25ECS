@@ -1,8 +1,8 @@
 package dk.sdu.petni23.actionnode;
 
 import dk.sdu.petni23.common.components.actions.ActionSetComponent;
-import dk.sdu.petni23.common.components.hp.LayerComponent;
-import dk.sdu.petni23.common.components.hp.StrengthComponent;
+import dk.sdu.petni23.common.components.life.LayerComponent;
+import dk.sdu.petni23.common.components.life.StrengthComponent;
 import dk.sdu.petni23.common.components.movement.DirectionComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.gameengine.entity.Entity;

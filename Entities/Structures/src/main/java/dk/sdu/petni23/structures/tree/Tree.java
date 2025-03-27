@@ -1,14 +1,14 @@
 package dk.sdu.petni23.structures.tree;
 
 import dk.sdu.petni23.common.GameData;
-import dk.sdu.petni23.common.components.AnimationComponent;
+import dk.sdu.petni23.common.components.rendering.AnimationComponent;
 import dk.sdu.petni23.common.components.rendering.DisplayComponent;
-import dk.sdu.petni23.common.components.rendering.DurationComponent;
+import dk.sdu.petni23.common.components.life.DurationComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.common.components.collision.CollisionComponent;
 import dk.sdu.petni23.common.components.collision.HitBoxComponent;
-import dk.sdu.petni23.common.components.hp.HealthComponent;
-import dk.sdu.petni23.common.components.hp.LayerComponent;
+import dk.sdu.petni23.common.components.life.HealthComponent;
+import dk.sdu.petni23.common.components.life.LayerComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.shape.AABBShape;
 import dk.sdu.petni23.common.shape.OvalShape;
@@ -22,12 +22,12 @@ import java.util.Objects;
 
 public class Tree
 {
-    private static final SpriteSheet spriteSheet = new SpriteSheet();
+    private static final SpriteSheet spriteSheet;
 
     static {
         final int[] numFrames = {4,2,1};
         Image img = new Image(Objects.requireNonNull(Tree.class.getResourceAsStream("/structuresprites/Tree.png")));
-        spriteSheet.init(img, numFrames, new Vector2D(img.getWidth() / 4, img.getHeight() / 3));
+        spriteSheet = new SpriteSheet(img, numFrames, new Vector2D(img.getWidth() / 4, img.getHeight() / 3));
     }
 
     public static Entity createTree(Vector2D pos) {
@@ -40,7 +40,7 @@ public class Tree
         var sprite = new SpriteComponent(spriteSheet, new Vector2D(-0.5, -0.875));
         tree.add(sprite);
 
-        tree.add(new DisplayComponent(DisplayComponent.Order.FOREGROUND));
+        tree.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
 
         var oval = new OvalShape();
         oval.a = (24d * 0.5) / 64;
@@ -73,11 +73,10 @@ public class Tree
         position.position.set(pos);
         stump.add(position);
 
-        var sprite = new SpriteComponent(spriteSheet, new Vector2D(-0.5, -0.875));
-        sprite.animationIndex = 2;
+        var sprite = new SpriteComponent(spriteSheet, new Vector2D(-0.5, -0.875), 0, 2);
         stump.add(sprite);
 
-        stump.add(new DisplayComponent(DisplayComponent.Order.FOREGROUND));
+        stump.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
 
         var duration = new DurationComponent(10000, GameData.getCurrentMillis());
         duration.onDeath = node -> Engine.addEntity(createTree(pos));

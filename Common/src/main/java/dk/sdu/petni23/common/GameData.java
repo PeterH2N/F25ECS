@@ -4,6 +4,7 @@ import dk.sdu.petni23.common.misc.GameKeys;
 import dk.sdu.petni23.common.misc.Viewport;
 import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.common.world.GameWorld;
+import dk.sdu.petni23.common.world.Tile;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -18,7 +19,7 @@ public class GameData
     private static final DoubleProperty displayWidth = new SimpleDoubleProperty(800);
     private static final DoubleProperty displayHeight = new SimpleDoubleProperty(600);
     private static final DoubleProperty ppmProperty = new SimpleDoubleProperty();
-    public static final int worldSize = 50;
+    public static final int worldSize = 76;
     private static final DoubleProperty displayRatioProperty = new SimpleDoubleProperty();
     private static final DoubleProperty tileRatioProperty = new SimpleDoubleProperty();
     public static final Pane gameWindow = new Pane();
@@ -117,5 +118,17 @@ public class GameData
 
     public static Vector2D toWorldSpace(Vector2D v) {
         return toWorldSpace(v.x, v.y);
+    }
+
+    /**
+     * Returns null if not on solid ground
+    * */
+    public static Vector2D randomWorldPos() {
+        double x = Math.random() * GameData.worldSize - (double) GameData.worldSize / 2;
+        double y = Math.random() * GameData.worldSize - (double) GameData.worldSize / 2;
+        if (world.map.getTile((int) x, (int) y).type != Tile.Type.GRASS) {
+            return null;
+        }
+        else return new Vector2D(x, y);
     }
 }

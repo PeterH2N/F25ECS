@@ -1,6 +1,6 @@
 package dk.sdu.petni23.animationnode;
 
-import dk.sdu.petni23.common.components.AnimationComponent;
+import dk.sdu.petni23.common.components.rendering.AnimationComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.common.components.actions.ActionSetComponent;
 import dk.sdu.petni23.common.components.movement.DirectionComponent;

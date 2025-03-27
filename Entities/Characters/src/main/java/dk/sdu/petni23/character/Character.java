@@ -1,10 +1,10 @@
 package dk.sdu.petni23.character;
 
-import dk.sdu.petni23.common.components.AnimationComponent;
+import dk.sdu.petni23.common.components.rendering.AnimationComponent;
 import dk.sdu.petni23.common.components.rendering.DisplayComponent;
 import dk.sdu.petni23.common.components.collision.CollisionComponent;
 import dk.sdu.petni23.common.components.collision.HitBoxComponent;
-import dk.sdu.petni23.common.components.hp.HealthComponent;
+import dk.sdu.petni23.common.components.life.HealthComponent;
 import dk.sdu.petni23.common.components.movement.DirectionComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.components.movement.VelocityComponent;
@@ -51,7 +51,7 @@ public class Character
         character.add(health);
 
 
-        character.add(new DisplayComponent(DisplayComponent.Order.FOREGROUND));
+        character.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
         character.add(new AnimationComponent());
 
         return character;

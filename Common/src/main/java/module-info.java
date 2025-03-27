@@ -13,6 +13,6 @@ module Common {
     exports dk.sdu.petni23.common.components.movement;
     exports dk.sdu.petni23.common.components.actions;
     exports dk.sdu.petni23.common.components;
-    exports dk.sdu.petni23.common.components.hp;
+    exports dk.sdu.petni23.common.components.life;
     exports dk.sdu.petni23.common.components.rendering;
 }

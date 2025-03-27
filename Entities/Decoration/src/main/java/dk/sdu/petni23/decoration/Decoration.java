@@ -1,35 +1,37 @@
 package dk.sdu.petni23.decoration;
 
 import dk.sdu.petni23.common.GameData;
+import dk.sdu.petni23.common.components.collision.HitBoxComponent;
 import dk.sdu.petni23.common.components.rendering.DisplayComponent;
 import dk.sdu.petni23.common.components.collision.CollisionComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
+import dk.sdu.petni23.common.shape.AABBShape;
 import dk.sdu.petni23.common.shape.OvalShape;
 import dk.sdu.petni23.common.shape.Shape;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.common.util.Vector2D;
+import dk.sdu.petni23.common.world.Tile;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.node.Node;
 import javafx.scene.image.Image;
-import dk.sdu.petni23.gameengine.entity.IEntitySPI;
+
 import java.util.Objects;
 
-public class DecorationSPI implements IEntitySPI
+public class Decoration
 {
-    final int numSprites = 12;
-    SpriteSheet[] spriteSheets = new SpriteSheet[numSprites];
-    Vector2D[] origins;
-    Shape[] shapes;
+    private static final int numSprites = 12;
+    private static final SpriteSheet[] spriteSheets = new SpriteSheet[numSprites];
+    private static final Vector2D[] origins;
+    private static final Shape[] shapes;
 
-    public DecorationSPI() {
+    static {
         String templatePath = "/decosprites/";
         int[] numFrames = new int[]{1};
         for (int i = 0; i < numSprites; i++) {
             String path = templatePath + (i + 1) + ".png";
-            Image img = new Image(Objects.requireNonNull(DecorationSPI.class.getResourceAsStream(path)));
-            spriteSheets[i] = new SpriteSheet();
-            spriteSheets[i].init(img, numFrames, new Vector2D(img.getWidth(), img.getHeight()));
+            Image img = new Image(Objects.requireNonNull(Decoration.class.getResourceAsStream(path)));
+            spriteSheets[i] = new SpriteSheet(img, numFrames, new Vector2D(img.getWidth(), img.getHeight()));
         }
 
         origins = new Vector2D[]{
@@ -54,19 +56,17 @@ public class DecorationSPI implements IEntitySPI
         shape3.b = (3d * 0.5) / 36;
         shapes[3] = shape3;
     }
-    @Override
-    public Entity create(Node parent)
+
+    public static Entity create(Vector2D pos)
     {
         // randomly create one of the 18 different types of decorations
         int t = (int) (Math.random() * numSprites);
         Entity decoration = new Entity();
         PositionComponent positionComponent = new PositionComponent();
         decoration.add(positionComponent);
-        double x = Math.random() * GameData.worldSize - (double) GameData.worldSize / 2;
-        double y = Math.random() * GameData.worldSize - (double) GameData.worldSize / 2;
-        positionComponent.position.set(x, y);
+        positionComponent.position.set(pos);
         decoration.add(new SpriteComponent(spriteSheets[t], origins[t]));
-        decoration.add(new DisplayComponent(DisplayComponent.Order.FOREGROUND));
+        decoration.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
 
         if (shapes[t] != null) {
             var collision = new CollisionComponent(shapes[t]);
@@ -74,11 +74,5 @@ public class DecorationSPI implements IEntitySPI
         }
 
         return decoration;
-    }
-
-    @Override
-    public Type getType()
-    {
-        return Type.ENVIRONMENT;
     }
 }

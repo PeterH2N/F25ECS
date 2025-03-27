@@ -1,9 +1,9 @@
 package dk.sdu.petni23.damagenode;
 
 import dk.sdu.petni23.common.components.collision.HitBoxComponent;
-import dk.sdu.petni23.common.components.hp.DamageComponent;
-import dk.sdu.petni23.common.components.hp.LayerComponent;
-import dk.sdu.petni23.common.components.hp.StrengthComponent;
+import dk.sdu.petni23.common.components.life.DamageComponent;
+import dk.sdu.petni23.common.components.life.LayerComponent;
+import dk.sdu.petni23.common.components.life.StrengthComponent;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.node.Node;
 import dk.sdu.petni23.gameengine.node.Optional;

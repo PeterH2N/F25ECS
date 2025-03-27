@@ -10,4 +10,6 @@ public class GameWorld
     public List<Manifold> collisionManifolds = new ArrayList<>();
     public List<Manifold> hitBoxManifolds = new ArrayList<>();
 
+    public GameMap map = new GameMap();
+
 }

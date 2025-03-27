@@ -2,12 +2,12 @@ package dk.sdu.petni23.damage;
 
 import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.components.rendering.DisplayComponent;
-import dk.sdu.petni23.common.components.rendering.DurationComponent;
+import dk.sdu.petni23.common.components.life.DurationComponent;
 import dk.sdu.petni23.common.components.actions.ActionSetComponent;
 import dk.sdu.petni23.common.components.collision.HitBoxComponent;
-import dk.sdu.petni23.common.components.hp.DamageComponent;
-import dk.sdu.petni23.common.components.hp.LayerComponent;
-import dk.sdu.petni23.common.components.hp.StrengthComponent;
+import dk.sdu.petni23.common.components.life.DamageComponent;
+import dk.sdu.petni23.common.components.life.LayerComponent;
+import dk.sdu.petni23.common.components.life.StrengthComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.shape.OvalShape;
 import dk.sdu.petni23.gameengine.entity.Entity;
@@ -48,7 +48,7 @@ public class DamageSPI implements IEntitySPI
         if (layer != null) dmgE.add(layer);
         else dmgE.add(new LayerComponent(LayerComponent.Layer.ALL));
 
-        dmgE.add(new DisplayComponent(DisplayComponent.Order.FOREGROUND));
+        dmgE.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
 
         return dmgE;
     }

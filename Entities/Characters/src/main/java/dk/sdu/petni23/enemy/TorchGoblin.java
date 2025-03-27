@@ -4,7 +4,7 @@ import dk.sdu.petni23.character.Character;
 import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.components.actions.Action;
 import dk.sdu.petni23.common.components.actions.ActionSetComponent;
-import dk.sdu.petni23.common.components.hp.LayerComponent;
+import dk.sdu.petni23.common.components.life.LayerComponent;
 import dk.sdu.petni23.common.components.movement.SpeedComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
@@ -18,20 +18,18 @@ import java.util.Objects;
 
 public class TorchGoblin
 {
-    private static final SpriteSheet spriteSheet = new SpriteSheet();
+    private static final SpriteSheet spriteSheet;
 
     static {
         final int[] numFrames = {7,6,6,6,6};
         final int[] order = {0,1,3,2,4};
         Image img = new Image(Objects.requireNonNull(TorchGoblin.class.getResourceAsStream("/enemysprites/Goblin.png")));
-        spriteSheet.init(img, numFrames, new Vector2D(img.getWidth() / 7, img.getHeight() / 5), order);
+        spriteSheet = new SpriteSheet(img, numFrames, new Vector2D(img.getWidth() / 7, img.getHeight() / 5), order);
     }
 
-    public static Entity create()
+    public static Entity create(Vector2D pos)
     {
-        double x = Math.random() * GameData.worldSize - (double) GameData.worldSize / 2;
-        double y = Math.random() * GameData.worldSize - (double) GameData.worldSize / 2;
-        Entity goblin = Character.create(new Vector2D(x, y), 30);
+        Entity goblin = Character.create(pos, 30);
 
         var speed = new SpeedComponent();
         speed.speed = 2.5;

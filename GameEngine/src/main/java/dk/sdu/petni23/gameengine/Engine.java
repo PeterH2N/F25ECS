@@ -11,7 +11,7 @@ import java.util.*;
 
 public class Engine
 {
-    private static final int physicsSteps = 4;
+    private static final int physicsSteps = 6;
     private final static Map<Long, Entity> entities = new HashMap<>();
     private final static List<Node> nodes = new ArrayList<>();
     private final static List<ISystem> systems = getServices(ISystem.class);

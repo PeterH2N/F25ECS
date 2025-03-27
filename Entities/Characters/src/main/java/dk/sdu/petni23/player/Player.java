@@ -6,8 +6,8 @@ import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.common.components.ControlComponent;
 import dk.sdu.petni23.common.components.actions.Action;
 import dk.sdu.petni23.common.components.actions.ActionSetComponent;
-import dk.sdu.petni23.common.components.hp.LayerComponent;
-import dk.sdu.petni23.common.components.hp.StrengthComponent;
+import dk.sdu.petni23.common.components.life.LayerComponent;
+import dk.sdu.petni23.common.components.life.StrengthComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.components.movement.SpeedComponent;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
@@ -22,13 +22,13 @@ import java.util.Objects;
 
 public class Player
 {
-    private static final SpriteSheet spriteSheet = new SpriteSheet();
+    private static final SpriteSheet spriteSheet;
 
     static {
         final int[] numFrames = {6,6,6,6,6,6,6,6};
         final int[] order = {0,1,6,2,4,7,3,5};
         Image img = new Image(Objects.requireNonNull(Player.class.getResourceAsStream("/playersprites/Player.png")));
-        spriteSheet.init(img, numFrames, new Vector2D(img.getWidth() / 6, img.getHeight() / 8), order);
+        spriteSheet = new SpriteSheet(img, numFrames, new Vector2D(img.getWidth() / 6, img.getHeight() / 8), order);
     }
 
     public static Entity create()

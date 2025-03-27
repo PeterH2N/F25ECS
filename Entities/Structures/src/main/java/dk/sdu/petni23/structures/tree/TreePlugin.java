@@ -11,10 +11,9 @@ public class TreePlugin implements IPluginService
     public void start()
     {
         for (int i = 0; i < 25; i++) {
-            double x = Math.random() * GameData.worldSize - (double) GameData.worldSize / 2;
-            double y = Math.random() * GameData.worldSize - (double) GameData.worldSize / 2;
-
-            Engine.addEntity(Tree.createTree(new Vector2D(x, y)));
+            Vector2D pos = GameData.randomWorldPos();
+            if (pos != null)
+                Engine.addEntity(Tree.createTree(pos));
         }
 
 
