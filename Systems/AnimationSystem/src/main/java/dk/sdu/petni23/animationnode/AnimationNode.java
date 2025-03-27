@@ -12,6 +12,7 @@ import dk.sdu.petni23.gameengine.node.Optional;
 
 public class AnimationNode extends Node
 {
+    private final Entity self;
     public SpriteComponent spriteComponent;
     public AnimationComponent animationComponent;
     @Optional
@@ -23,5 +24,10 @@ public class AnimationNode extends Node
 
     public AnimationNode(Entity entity) {
         super(entity);
+        this.self = entity;
+    }
+
+    public Entity getEntity() {
+        return self;
     }
 }
