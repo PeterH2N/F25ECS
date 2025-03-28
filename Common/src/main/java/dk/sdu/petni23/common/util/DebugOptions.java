@@ -8,5 +8,6 @@ public class DebugOptions {
     public BooleanProperty showHitBoxes = new SimpleBooleanProperty(true);
     public BooleanProperty showColliders = new SimpleBooleanProperty(true);
     public BooleanProperty showHP = new SimpleBooleanProperty(true);
-    public BooleanProperty showGrid = new SimpleBooleanProperty(true);
+    public BooleanProperty showGrid = new SimpleBooleanProperty(false);
+    public BooleanProperty showWallet = new SimpleBooleanProperty(false);
 }

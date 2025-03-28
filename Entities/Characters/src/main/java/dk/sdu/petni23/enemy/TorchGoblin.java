@@ -1,6 +1,7 @@
 package dk.sdu.petni23.enemy;
 
 import dk.sdu.petni23.character.Character;
+import dk.sdu.petni23.common.components.items.LootComponent;
 import dk.sdu.petni23.common.components.actions.Action;
 import dk.sdu.petni23.common.components.actions.ActionSetComponent;
 import dk.sdu.petni23.common.components.life.LayerComponent;
@@ -50,6 +51,14 @@ public class TorchGoblin
 
 
         goblin.add(new LayerComponent(LayerComponent.Layer.ENEMY));
+        var goldSPI = Engine.getEntitySPI(IEntitySPI.Type.GOLD);
+        var loot = goblin.add(new LootComponent(node -> {
+            if (goldSPI != null) {
+                Engine.addEntity(goldSPI.create(node));
+            }
+        }));
+        loot.minDrop = 2;
+        loot.maxDrop = 5;
 
         return goblin;
     }

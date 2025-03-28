@@ -1,10 +1,13 @@
 package dk.sdu.petni23.enemy;
 
 import dk.sdu.petni23.character.Character;
+import dk.sdu.petni23.common.components.items.LootComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.common.components.life.LayerComponent;
 import dk.sdu.petni23.common.components.movement.SpeedComponent;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
+import dk.sdu.petni23.gameengine.Engine;
+import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 import dk.sdu.petni23.gameengine.util.Vector2D;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import javafx.scene.image.Image;
@@ -32,6 +35,13 @@ public class TNTGoblin
         goblin.add(spriteComponent);
 
         goblin.add(new LayerComponent(LayerComponent.Layer.ENEMY));
+        var goldSPI = Engine.getEntitySPI(IEntitySPI.Type.GOLD);
+        var loot = goblin.add(new LootComponent(node -> {
+            if (goldSPI != null) {
+                Engine.addEntity(goldSPI.create(node));
+            }
+        }));
+        loot.maxDrop = 3;
 
         return goblin;
     }

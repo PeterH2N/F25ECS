@@ -2,6 +2,9 @@ package dk.sdu.petni23.player;
 
 import dk.sdu.petni23.character.Character;
 import dk.sdu.petni23.common.GameData;
+import dk.sdu.petni23.common.components.inventory.InventoryComponent;
+import dk.sdu.petni23.common.components.inventory.PickUpComponent;
+import dk.sdu.petni23.common.components.inventory.WalletComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.common.components.sound.FootstepSoundComponent;
 import dk.sdu.petni23.common.components.sound.SoundComponent;
@@ -80,9 +83,13 @@ public class Player
 
         player.add(new FootstepSoundComponent("footstep_player")); // or "boots", "zombie_step", etc.
 
-        var strength = new StrengthComponent();
+        var strength = player.add(new StrengthComponent());
         strength.strength = 5;
-        player.add(strength);
+
+        player.add(new WalletComponent());
+        var pickup = player.add(new PickUpComponent());
+        pickup.range = 1.5;
+        player.add(new InventoryComponent());
 
         // set the camera to track the player
         GameData.camera.following = player.get(PositionComponent.class);

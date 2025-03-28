@@ -15,7 +15,6 @@ import java.util.*;
 public class Engine
 {
     private static final int physicsSteps = 2;
-
     public static final Map<Node, Collider> collisionColliders = new HashMap<>();
     public static final Map<Node, Collider> hitBoxColliders = new HashMap<>();
     private final static Map<Long, Entity> entities = new HashMap<>();
@@ -34,6 +33,10 @@ public class Engine
                 nodes.add(spi.createNode(entity));
             }
         }
+    }
+
+    public static Entity getEntity(Long ID) {
+        return entities.get(ID);
     }
 
     public static void removeEntity(Entity entity) {

@@ -7,7 +7,7 @@ import javafx.scene.control.CheckBox;
 public class DebugWindowController
 {
     @FXML
-    private CheckBox colliders, hitBoxes, hp, grid;
+    private CheckBox colliders, hitBoxes, hp, grid, wallet;
 
     @FXML
     public void initialize() {
@@ -15,5 +15,6 @@ public class DebugWindowController
         hitBoxes.selectedProperty().bindBidirectional(GameData.debugOptions.showHitBoxes);
         hp.selectedProperty().bindBidirectional(GameData.debugOptions.showHP);
         grid.selectedProperty().bindBidirectional(GameData.debugOptions.showGrid);
+        wallet.selectedProperty().bindBidirectional(GameData.debugOptions.showWallet);
     }
 }

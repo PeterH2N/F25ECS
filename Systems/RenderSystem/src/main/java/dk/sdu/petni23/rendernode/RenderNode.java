@@ -1,5 +1,6 @@
 package dk.sdu.petni23.rendernode;
 
+import dk.sdu.petni23.common.components.inventory.WalletComponent;
 import dk.sdu.petni23.common.components.rendering.DisplayComponent;
 import dk.sdu.petni23.common.components.collision.CollisionComponent;
 import dk.sdu.petni23.common.components.collision.HitBoxComponent;
@@ -26,6 +27,8 @@ public class RenderNode extends Node
     public HealthComponent healthComponent;
     @Optional
     public DirectionComponent directionComponent;
+    @Optional
+    public WalletComponent walletComponent;
 
     public double getY() {
         return positionComponent.position.y;

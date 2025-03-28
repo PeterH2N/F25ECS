@@ -13,6 +13,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+import java.util.Random;
+
 public class GameData
 {
     private static final DoubleProperty displayWidth = new SimpleDoubleProperty(800);
@@ -21,7 +23,7 @@ public class GameData
     public static final int worldSize = 150; // must be an even number
     private static final DoubleProperty displayRatioProperty = new SimpleDoubleProperty();
     private static final DoubleProperty tileRatioProperty = new SimpleDoubleProperty();
-    public static final Pane gameWindow = new StackPane();
+    public static final StackPane gameWindow = new StackPane();
     public static final Scene scene = new Scene(gameWindow);
     public static Stage stage;
     public static final Canvas canvas = new Canvas();
@@ -35,6 +37,7 @@ public class GameData
     private static final BooleanProperty focusedProperty = new SimpleBooleanProperty();
     private static boolean paused = false;
     public static final DebugOptions debugOptions = new DebugOptions();
+    public static final Random random = new Random();
 
     static {
         ppmProperty.bind(displayWidth.divide(camera.widthProperty));

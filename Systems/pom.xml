@@ -32,6 +32,8 @@
         <module>ActionSystem</module>
         <module>SoundSystem</module>
         <module>DebugSystem</module>
+        <module>ItemSystem</module>
+        <module>InventorySystem</module>
     </modules>
 
     <dependencies>

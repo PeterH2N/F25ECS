@@ -16,5 +16,7 @@ module Common {
     exports dk.sdu.petni23.common.components.life;
     exports dk.sdu.petni23.common.components.rendering;
     exports dk.sdu.petni23.common.components.sound;
+    exports dk.sdu.petni23.common.components.items;
+    exports dk.sdu.petni23.common.components.inventory;
     uses IEntitySPI;
 }

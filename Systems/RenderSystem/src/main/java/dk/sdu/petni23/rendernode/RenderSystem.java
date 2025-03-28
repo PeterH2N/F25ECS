@@ -57,15 +57,14 @@ public class RenderSystem implements IRenderSystem, IPluginService
 
         drawNodes(gc);
         drawDebug(gc);
-        drawFrameTime(gc);
     }
 
     void drawFrameTime(GraphicsContext gc) {
         gc.setFill(Color.BLACK);
-        gc.setTextAlign(TextAlignment.LEFT);
+        gc.setTextAlign(TextAlignment.RIGHT);
         gc.setFont(new Font(gc.getFont().getName(), 12));
         DecimalFormat df = new DecimalFormat("#0.000000");
-        gc.fillText(df.format((double)GameData.getFrameTime() / 1000000000), 10, 20);
+        gc.fillText(df.format((double)GameData.getFrameTime() / 1000000000), GameData.getDisplayWidth() - 10, 20);
     }
 
     void drawNodes(GraphicsContext gc) {
@@ -88,6 +87,15 @@ public class RenderSystem implements IRenderSystem, IPluginService
             Vector2D pos = GameData.toScreenSpace(node.positionComponent.position);
             drawSprite(gc, node, pos);
         }
+    }
+
+    void drawWallet(GraphicsContext gc, RenderNode node, Vector2D pos) {
+        if (node.walletComponent == null) return;
+        gc.setFill(Color.GOLDENROD);
+        gc.setFont(new Font(gc.getFont().getName(), GameData.getPPM() * 0.2));
+        gc.setTextAlign(TextAlignment.CENTER);
+        gc.setTextBaseline(VPos.CENTER);
+        gc.fillText(String.valueOf(node.walletComponent.money), pos.x, pos.y - 100 * GameData.getTileRatio());
     }
 
     void drawSprite(GraphicsContext gc, RenderNode node, Vector2D pos) {
@@ -140,7 +148,9 @@ public class RenderSystem implements IRenderSystem, IPluginService
             if (options.showColliders.get()) drawCollider(gc, node, pos);
             if (options.showHitBoxes.get()) drawHitBox(gc, node, pos);
             if (options.showHP.get()) drawHealth(gc, node, pos);
+            if (options.showWallet.get()) drawWallet(gc, node, pos);
         }
+        drawFrameTime(gc);
     }
 
     void drawCollider(GraphicsContext gc, RenderNode node, Vector2D pos) {

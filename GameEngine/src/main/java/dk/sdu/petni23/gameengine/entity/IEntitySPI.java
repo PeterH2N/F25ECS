@@ -13,6 +13,7 @@ public interface IEntitySPI
         ENVIRONMENT,
         DEATH_ANIMATION,
         FOAM_ANIMATION,
+        GOLD,
         DAMAGE;
     }
 }

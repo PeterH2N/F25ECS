@@ -13,9 +13,10 @@ public class Entity implements Serializable
     private final Long id = idCount++;
     private final Map<Class<? extends Component>, Component> components = new HashMap<>();
 
-    public void add(Component component) {
+    public <T extends Component> T add(T component) {
         Class<? extends Component> c = component.getClass();
         components.put(c, component);
+        return component;
     }
 
     public void remove(Class<? extends Component> c) {

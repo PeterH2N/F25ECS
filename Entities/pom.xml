@@ -26,6 +26,7 @@
         <module>Decoration</module>
         <module>Animations</module>
         <module>Structures</module>
+        <module>Items</module>
     </modules>
 
     <dependencies>
