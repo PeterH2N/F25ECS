@@ -6,6 +6,7 @@ import dk.sdu.petni23.gameengine.util.Vector2D;
 
 public class PickupSystem implements ISystem
 {
+    double pickupDistance = 0.3;
     @Override
     public void update(double deltaTime)
     {
@@ -30,24 +31,27 @@ public class PickupSystem implements ISystem
                 }
             }
             if (closest == null) continue;
-            if (closestDist < 0.3) {
-                pickup(item, closest);
+            if (closestDist < pickupDistance) {
+                if (pickup(item, closest) && item.itemComponent.onPickup != null)
+                    item.itemComponent.onPickup.dispatch(closest);
             }
             var closestPos = closest.positionComponent.position;
 
             Vector2D n = closestPos.getSubtracted(itemPos).getNormalized();
-            item.velocityComponent.velocity.set(n.getMultiplied(4 / closestDist * closestDist));
+            double scalar = 4d / (closestDist - pickupDistance) * (closestDist - pickupDistance);
+            item.velocityComponent.velocity.set(n.getMultiplied(scalar));
         }
     }
 
-    void pickup(ItemNode item, PickUpNode pickup) {
+    boolean pickup(ItemNode item, PickUpNode pickup) {
         if (item.currencyComponent != null) {
             if (pickup.walletComponent != null) {
                 pickup.walletComponent.money += item.currencyComponent.value;
                 Engine.removeEntity(item.getEntityID());
+                return true;
             }
         }
-
+        return false;
     }
 
     @Override
