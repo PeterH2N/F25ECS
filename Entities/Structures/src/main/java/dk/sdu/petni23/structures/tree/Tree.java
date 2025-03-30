@@ -1,8 +1,8 @@
 package dk.sdu.petni23.structures.tree;
 
-import dk.sdu.petni23.common.components.DisplayComponent;
+import dk.sdu.petni23.common.components.rendering.DisplayComponent;
 import dk.sdu.petni23.common.components.PlacementComponent;
-import dk.sdu.petni23.common.components.SpriteComponent;
+import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.components.rendering.AnimationComponent;
 import dk.sdu.petni23.common.components.rendering.DisplayComponent;

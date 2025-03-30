@@ -1,8 +1,10 @@
 package dk.sdu.petni23.common;
 
+import dk.sdu.petni23.common.enums.GameMode;
 import dk.sdu.petni23.common.misc.GameKeys;
 import dk.sdu.petni23.common.misc.Viewport;
 import dk.sdu.petni23.common.util.DebugOptions;
+import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.util.Vector2D;
 import dk.sdu.petni23.common.world.GameWorld;
 import dk.sdu.petni23.common.world.Tile;
@@ -39,7 +41,8 @@ public class GameData
     private static boolean paused = false;
     public static final DebugOptions debugOptions = new DebugOptions();
     public static final Random random = new Random();
-
+    private static GameMode gameMode = GameMode.REGULAR;
+    private static Entity hand;
     static {
         ppmProperty.bind(displayWidth.divide(camera.widthProperty));
         displayRatioProperty.bind(displayHeight.divide(displayWidth));
@@ -152,5 +155,20 @@ public class GameData
             return null;
         }
         else return new Vector2D(x, y);
+    }
+    public static void setGameMode(GameMode gameMode){
+        GameData.gameMode = gameMode;
+    }
+
+    public static GameMode getGameMode(){
+        return GameData.gameMode;
+    }
+
+    public static Entity getHand(){
+        return hand;
+    }
+
+    public static void setHand(Entity entity){
+        hand = entity;
     }
 }

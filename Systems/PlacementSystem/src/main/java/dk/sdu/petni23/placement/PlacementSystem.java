@@ -2,12 +2,12 @@ package dk.sdu.petni23.placement;
 
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.services.ISystem;
+import dk.sdu.petni23.gameengine.util.Vector2D;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 
 import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.enums.GameMode;
-import dk.sdu.petni23.common.util.Vector2D;
 
 public class PlacementSystem implements ISystem{
 
@@ -23,7 +23,7 @@ public class PlacementSystem implements ISystem{
             }
             if(GameData.getGameMode() == GameMode.PLACING){
 
-                Vector2D mousePos = GameData.gameKeys.getMousePos();
+                dk.sdu.petni23.gameengine.util.Vector2D mousePos = GameData.gameKeys.getMousePos();
                 double mousePosRelX = mousePos.x/GameData.getDisplayWidth();
                 double mousePosRelY = mousePos.y/GameData.getDisplayHeight();
                 
