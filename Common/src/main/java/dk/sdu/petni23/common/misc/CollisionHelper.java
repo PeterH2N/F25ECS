@@ -2,12 +2,10 @@ package dk.sdu.petni23.common.misc;
 
 import dk.sdu.petni23.common.components.collision.HasShapeComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
-import dk.sdu.petni23.common.components.movement.VelocityComponent;
-import dk.sdu.petni23.common.misc.Manifold;
 import dk.sdu.petni23.common.shape.AABBShape;
 import dk.sdu.petni23.common.shape.OvalShape;
 import dk.sdu.petni23.common.shape.Shape;
-import dk.sdu.petni23.common.util.Vector2D;
+import dk.sdu.petni23.gameengine.util.Vector2D;
 import dk.sdu.petni23.gameengine.node.Node;
 
 public class CollisionHelper
@@ -31,7 +29,9 @@ public class CollisionHelper
     private static boolean OvalvsOval(Manifold m) {
         OvalShape ao = (OvalShape) m.aShape;
         OvalShape bo = (OvalShape) m.bShape;
-        Vector2D n = m.bPos.position.getSubtracted(m.aPos.position);
+        Vector2D aPos = m.aPos.position.getAdded(m.a.getComponent(HasShapeComponent.class).offset);
+        Vector2D bPos = m.bPos.position.getAdded(m.b.getComponent(HasShapeComponent.class).offset);
+        Vector2D n = bPos.getSubtracted(aPos);
         double aRadius = ao.getRadius(n);
         double bRadius = bo.getRadius(n);
 
@@ -53,8 +53,10 @@ public class CollisionHelper
     private static boolean AABBvsAABB(Manifold m) {
         AABBShape ab = (AABBShape) m.aShape;
         AABBShape bb = (AABBShape) m.bShape;
+        Vector2D aPos = m.aPos.position.getAdded(m.a.getComponent(HasShapeComponent.class).offset);
+        Vector2D bPos = m.bPos.position.getAdded(m.b.getComponent(HasShapeComponent.class).offset);
 
-        Vector2D n = m.bPos.position.getSubtracted(m.aPos.position);
+        Vector2D n = bPos.getSubtracted(aPos);
 
         double aExtent = ab.width / 2;
         double bExtent = bb.width / 2;
@@ -96,8 +98,10 @@ public class CollisionHelper
     private static boolean AABBvsOval(Manifold m) {
         AABBShape ab = (AABBShape) m.aShape;
         OvalShape bo = (OvalShape) m.bShape;
+        Vector2D aPos = m.aPos.position.getAdded(m.a.getComponent(HasShapeComponent.class).offset);
+        Vector2D bPos = m.bPos.position.getAdded(m.b.getComponent(HasShapeComponent.class).offset);
 
-        Vector2D n = m.bPos.position.getSubtracted(m.aPos.position);
+        Vector2D n = bPos.getSubtracted(aPos);
         Vector2D closest = new Vector2D(n);
 
         double xExtent = ab.width / 2;
@@ -112,7 +116,7 @@ public class CollisionHelper
             inside = true;
 
             // find closest axis
-            if (Math.abs(n.x) > Math.abs(n.y)) {
+            if (xExtent - Math.abs(n.x) < yExtent - Math.abs(n.y)) {
                 // clamp to the closest extent
                 if (closest.x > 0)
                     closest.x = xExtent;
@@ -144,11 +148,15 @@ public class CollisionHelper
 
 
         // collision normal needs to be flipped to point outside if circle was inside the AABB
-        if (inside)
+        if (inside) {
             m.normal = normal.getMultiplied(-1);
-        else
+            m.penetration = d+r;
+        }
+        else {
             m.normal = normal;
-        m.penetration = r-d;
+            m.penetration = r-d;
+        }
+
 
         m.collide = true;
         return true;

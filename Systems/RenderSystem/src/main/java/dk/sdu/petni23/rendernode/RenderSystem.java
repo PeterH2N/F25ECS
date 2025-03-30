@@ -3,15 +3,16 @@ package dk.sdu.petni23.rendernode;
 
 import dk.sdu.petni23.common.GameData;
 
-import dk.sdu.petni23.common.components.DisplayComponent;
-import dk.sdu.petni23.common.components.SpriteComponent;
+import dk.sdu.petni23.common.components.rendering.DisplayComponent;
+import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.common.shape.AABBShape;
 import dk.sdu.petni23.common.shape.OvalShape;
 import dk.sdu.petni23.common.shape.Shape;
-import dk.sdu.petni23.common.util.Vector2D;
+import dk.sdu.petni23.common.util.DebugOptions;
+import dk.sdu.petni23.gameengine.util.Vector2D;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.services.IPluginService;
-import dk.sdu.petni23.gameengine.services.ISystem;
+import dk.sdu.petni23.gameengine.services.IRenderSystem;
 import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -20,6 +21,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+import javafx.scene.transform.Affine;
 import javafx.scene.transform.Rotate;
 
 import java.text.DecimalFormat;
@@ -27,10 +29,12 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class RenderSystem implements ISystem, IPluginService
+public class RenderSystem implements IRenderSystem, IPluginService
 {
-    private static final Canvas canvas = new Canvas();
-    private static final ColorAdjust white = new ColorAdjust(0.0, -0.5, 0.5, 0);
+    private final Canvas canvas = GameData.canvas;
+    private final ColorAdjust white = new ColorAdjust(0.0, -0.5, 0.5, 0);
+    private final Color seaColor = Color.rgb(101,160,168);
+    private Affine defaultTransform;
     @Override
     public void start()
     {
@@ -45,57 +49,56 @@ public class RenderSystem implements ISystem, IPluginService
 
     }
     @Override
-    public void update(double deltaTime)
+    public void render()
     {
         var gc = canvas.getGraphicsContext2D();
-        gc.setFill(Color.WHITE);
+        gc.setFill(seaColor);
         gc.fillRect(0,0, GameData.getDisplayWidth(), GameData.getDisplayHeight());
 
-        drawGrid(gc);
         drawNodes(gc);
-        drawFrameTime(gc);
+        drawDebug(gc);
     }
-
-    @Override
-    public int getPriority()
-    {
-        return Priority.RENDERING.get();
-    }
-
 
     void drawFrameTime(GraphicsContext gc) {
-        gc.save();
         gc.setFill(Color.BLACK);
+        gc.setTextAlign(TextAlignment.RIGHT);
+        gc.setFont(new Font(gc.getFont().getName(), 12));
         DecimalFormat df = new DecimalFormat("#0.000000");
-        gc.fillText(df.format((double)GameData.getFrameTime() / 1000000000), 10, 20);
-        gc.restore();
+        gc.fillText(df.format((double)GameData.getFrameTime() / 1000000000), GameData.getDisplayWidth() - 10, 20);
     }
 
     void drawNodes(GraphicsContext gc) {
-        gc.save();
+        drawSpritesByLayer(gc, DisplayComponent.Layer.BACKGROUND);
+        drawMap(gc);
+        drawSpritesByLayer(gc, DisplayComponent.Layer.FOREGROUND);
+    }
 
-        for (var o : DisplayComponent.Order.values()) {
-            // get only the nodes in this layer
-            List<RenderNode> nodes = new ArrayList<>(Engine.getNodes(RenderNode.class).stream().filter(node -> node.displayComponent.order == o).toList());
-            // sort by y value
-            nodes.sort((Comparator.comparingDouble(RenderNode::getY).reversed()));
+    void drawSpritesByLayer(GraphicsContext gc, DisplayComponent.Layer layer) {
+        // get only the nodes in this layer
+        List<RenderNode> nodes = new ArrayList<>(Engine.getNodes(RenderNode.class).stream().filter(node -> node.displayComponent.order == layer).toList());
+        // sort by y value
+        nodes.sort((Comparator.comparingDouble(RenderNode::getY).reversed()));
+        drawSprites(gc, nodes);
 
-            for (var node : nodes) {
-                Vector2D pos = GameData.toScreenSpace(node.positionComponent.position);
-                drawSprite(gc, node, pos);
-                drawBody(gc, node, pos);
-                drawHitBox(gc, node, pos);
-                drawHealth(gc, node, pos);
-            }
+    }
+
+    void drawSprites(GraphicsContext gc, List<RenderNode> nodes) {
+        for (var node : nodes) {
+            Vector2D pos = GameData.toScreenSpace(node.positionComponent.position);
+            drawSprite(gc, node, pos);
         }
+    }
 
-
-
-        gc.restore();
+    void drawWallet(GraphicsContext gc, RenderNode node, Vector2D pos) {
+        if (node.walletComponent == null) return;
+        gc.setFill(Color.GOLDENROD);
+        gc.setFont(new Font(gc.getFont().getName(), GameData.getPPM() * 0.2));
+        gc.setTextAlign(TextAlignment.CENTER);
+        gc.setTextBaseline(VPos.CENTER);
+        gc.fillText(String.valueOf(node.walletComponent.money), pos.x, pos.y - 100 * GameData.getTileRatio());
     }
 
     void drawSprite(GraphicsContext gc, RenderNode node, Vector2D pos) {
-        gc.save();
         // render sprite
         if (node.spriteComponent == null) return;
         Image sprite = getSprite(node.spriteComponent);
@@ -116,8 +119,9 @@ public class RenderSystem implements ISystem, IPluginService
             if (GameData.getCurrentMillis() < node.healthComponent.lastHurtTime + 200)
                 gc.setEffect(white);
         }
-
+        boolean rotated = false;
         if (node.directionComponent != null && node.spriteComponent.rotateWithDirection) {
+            rotated = true;
             Rotate r = new Rotate(-node.directionComponent.dir.angleDegrees(), pos.x, pos.y);
             gc.setTransform(r.getMxx(), r.getMyx(), r.getMxy(), r.getMyy(), r.getTx(), r.getTy());
         }
@@ -127,26 +131,43 @@ public class RenderSystem implements ISystem, IPluginService
         else
             gc.drawImage(sprite, x, y, width, height);
 
-        gc.restore();
+        gc.setEffect(null);
+        if (rotated) {
+            Rotate r = new Rotate(0);
+            gc.setTransform(r.getMxx(), r.getMyx(), r.getMxy(), r.getMyy(), r.getTx(), r.getTy());
+        }
     }
 
-    void drawBody(GraphicsContext gc, RenderNode node, Vector2D pos) {
+    void drawDebug(GraphicsContext gc) {
+        DebugOptions options = GameData.debugOptions;
+        if (!options.active) return;
+        if (options.showGrid.get()) drawGrid(gc);
+
+        for (var node : Engine.getNodes(RenderNode.class)) {
+            Vector2D pos = GameData.toScreenSpace(node.positionComponent.position);
+            if (options.showColliders.get()) drawCollider(gc, node, pos);
+            if (options.showHitBoxes.get()) drawHitBox(gc, node, pos);
+            if (options.showHP.get()) drawHealth(gc, node, pos);
+            if (options.showWallet.get()) drawWallet(gc, node, pos);
+        }
+        drawFrameTime(gc);
+    }
+
+    void drawCollider(GraphicsContext gc, RenderNode node, Vector2D pos) {
         if (node.collisionComponent == null) return;
-        gc.save();
         gc.setStroke(Color.YELLOW);
-        drawShape(gc, node.collisionComponent.getShape(), pos);
-        gc.restore();
+        Vector2D nPos = new Vector2D(pos);
+        nPos.subtract(node.collisionComponent.offset.getMultiplied(GameData.getPPM()));
+        drawShape(gc, node.collisionComponent.getShape(), nPos);
     }
 
     void drawHitBox(GraphicsContext gc, RenderNode node, Vector2D pos) {
         if (node.hitBoxComponent == null) return;
-        gc.save();
         gc.setStroke(Color.RED);
         Vector2D nPos = new Vector2D(pos);
-        nPos.y -= node.hitBoxComponent.yOffset * GameData.getPPM();
+        nPos.subtract(node.hitBoxComponent.offset.getMultiplied(GameData.getPPM()));
 
         drawShape(gc, node.hitBoxComponent.hitBox, nPos);
-        gc.restore();
     }
 
     void drawShape(GraphicsContext gc, Shape shape, Vector2D pos) {
@@ -173,17 +194,14 @@ public class RenderSystem implements ISystem, IPluginService
 
     void drawHealth(GraphicsContext gc, RenderNode node, Vector2D pos) {
         if (node.healthComponent == null) return;
-        gc.save();
         gc.setFill(Color.GREEN);
         DecimalFormat df = new DecimalFormat("#0.0");
         gc.setFont(new Font(gc.getFont().getName(), GameData.getPPM() * 0.2));
         gc.setTextAlign(TextAlignment.CENTER);
         gc.setTextBaseline(VPos.CENTER);
         gc.fillText(df.format(node.healthComponent.health), pos.x, pos.y - 80 * GameData.getTileRatio());
-        gc.restore();
     }
     void drawGrid(GraphicsContext gc) {
-        gc.save();
         gc.setLineWidth(0.5);
         gc.setStroke(Color.GRAY);
         for (int i = 0; i <= GameData.worldSize; i++) {
@@ -203,10 +221,27 @@ public class RenderSystem implements ISystem, IPluginService
                 continue;
             gc.strokeLine(start.x, start.y, end.x, end.y);
         }
-        gc.restore();
+        gc.setLineWidth(1.0);
+    }
+
+    void drawMap(GraphicsContext gc) {
+        Vector2D initialPos = GameData.toScreenSpace(new Vector2D((double) -GameData.worldSize / 2, (double) GameData.worldSize / 2));
+        var mapImage = GameData.world.map.mapImages;
+
+        for (int i = 0; i < mapImage.length; i++) {
+            for (int j = 0; j < mapImage[i].length; j++) {
+                Image img = GameData.world.map.mapImages[i][j];
+                double width = img.getWidth() * GameData.getTileRatio();
+                double height = img.getHeight() * GameData.getTileRatio();
+                double x = initialPos.x + j * width;
+                double y = initialPos.y + i * height;
+                if ((x + width < 0 && x > GameData.getDisplayWidth()) || y + height < 0 && y > GameData.getDisplayHeight()) continue;
+                gc.drawImage(img, x, y, width, height);
+            }
+        }
     }
 
     public Image getSprite(SpriteComponent spc) {
-        return spc.spriteSheet.getAnimation(spc.animationIndex).getSprite(spc.time, spc.reverse);
+        return spc.spriteSheet.sheet[spc.row][spc.column];
     }
 }

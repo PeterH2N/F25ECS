@@ -2,11 +2,12 @@ package dk.sdu.petni23.gameengine.entity;
 
 import dk.sdu.petni23.gameengine.Component;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Entity
+public class Entity implements Serializable
 {
     private static long idCount = 0;
     private final Long id = idCount++;
@@ -21,9 +22,10 @@ public class Entity
         this.onMap = true;
     }
 
-    public void add(Component component) {
+    public <T extends Component> T add(T component) {
         Class<? extends Component> c = component.getClass();
         components.put(c, component);
+        return component;
     }
 
     public void remove(Class<? extends Component> c) {

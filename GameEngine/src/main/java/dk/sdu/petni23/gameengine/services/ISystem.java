@@ -7,8 +7,7 @@ public interface ISystem
     enum Priority {
         PREPROCESSING(0),
         PROCESSING(1),
-        POSTPROCESSING(2),
-        RENDERING(3);
+        POSTPROCESSING(2);
         private final int index;
         public int get() {
             return index;

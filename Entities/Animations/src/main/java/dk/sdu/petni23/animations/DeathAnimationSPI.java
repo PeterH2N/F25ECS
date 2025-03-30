@@ -1,10 +1,11 @@
 package dk.sdu.petni23.animations;
 
-import dk.sdu.petni23.common.components.DisplayComponent;
-import dk.sdu.petni23.common.components.SpriteComponent;
+import dk.sdu.petni23.common.GameData;
+import dk.sdu.petni23.common.components.life.DurationComponent;
+import dk.sdu.petni23.common.components.rendering.DisplayComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
-import dk.sdu.petni23.common.util.Vector2D;
+import dk.sdu.petni23.gameengine.util.Vector2D;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 import dk.sdu.petni23.gameengine.node.Node;
@@ -14,12 +15,12 @@ import java.util.Objects;
 
 public class DeathAnimationSPI implements IEntitySPI
 {
-    private static final SpriteSheet spriteSheet = new SpriteSheet();
+    private static final SpriteSheet spriteSheet;
 
     static {
         final int[] numFrames = {14};
         Image img = new Image(Objects.requireNonNull(DeathAnimationSPI.class.getResourceAsStream("/animationsprites/Death.png")));
-        spriteSheet.init(img, numFrames, new Vector2D(img.getWidth() / 7, img.getHeight() / 2));
+        spriteSheet = new SpriteSheet(img, numFrames, new Vector2D(img.getWidth() / 7, img.getHeight() / 2));
     }
     @Override
     public Entity create(Node parent)
@@ -27,7 +28,9 @@ public class DeathAnimationSPI implements IEntitySPI
         var pos = parent.getComponent(PositionComponent.class);
         assert pos != null;
 
-        return Animation.create(1200,  spriteSheet, pos.position, DisplayComponent.Order.FOREGROUND);
+        Entity death = Animation.create(spriteSheet, new Vector2D(-0.5, -0.67), pos.position, DisplayComponent.Layer.FOREGROUND);
+        death.add(new DurationComponent(1200, GameData.getCurrentMillis()));
+        return death;
     }
 
     @Override

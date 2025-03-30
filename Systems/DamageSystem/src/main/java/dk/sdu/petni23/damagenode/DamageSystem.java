@@ -1,9 +1,8 @@
 package dk.sdu.petni23.damagenode;
 
 import dk.sdu.petni23.common.GameData;
-import dk.sdu.petni23.common.components.collision.HitBoxComponent;
-import dk.sdu.petni23.common.components.hp.HealthComponent;
-import dk.sdu.petni23.common.components.hp.LayerComponent;
+import dk.sdu.petni23.common.components.life.HealthComponent;
+import dk.sdu.petni23.common.components.life.LayerComponent;
 import dk.sdu.petni23.common.misc.CollisionHelper;
 import dk.sdu.petni23.common.misc.Manifold;
 import dk.sdu.petni23.gameengine.Engine;
@@ -35,7 +34,7 @@ public class DamageSystem implements ISystem
 
                 double dmg = node.damageComponent.damage;
                 if (node.strengthComponent != null) dmg *= node.strengthComponent.strength;
-                hurt(healthComponent, dmg);
+                hurt(node, healthComponent, dmg);
             }
         }
     }
@@ -46,8 +45,9 @@ public class DamageSystem implements ISystem
         return Priority.PROCESSING.get();
     }
 
-    public void hurt(HealthComponent hp, double dmg) {
+    public void hurt(Node node, HealthComponent hp, double dmg) {
         hp.health -= dmg;
         hp.lastHurtTime = GameData.getCurrentMillis();
+        if (hp.onHurt != null) hp.onHurt.dispatch(node);
     }
 }

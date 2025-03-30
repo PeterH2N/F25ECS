@@ -2,14 +2,18 @@ package dk.sdu.petni23.common;
 
 import dk.sdu.petni23.common.misc.GameKeys;
 import dk.sdu.petni23.common.misc.Viewport;
-import dk.sdu.petni23.common.util.Vector2D;
+import dk.sdu.petni23.common.util.DebugOptions;
+import dk.sdu.petni23.gameengine.util.Vector2D;
 import dk.sdu.petni23.common.world.GameWorld;
-import dk.sdu.petni23.gameengine.entity.Entity;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
+import dk.sdu.petni23.common.world.Tile;
+import javafx.beans.property.*;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.Pane;
-import dk.sdu.petni23.common.enums.GameMode;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+
+import java.util.Random;
 
 public class GameData
 {
@@ -17,11 +21,13 @@ public class GameData
     private static final DoubleProperty displayWidth = new SimpleDoubleProperty(800);
     private static final DoubleProperty displayHeight = new SimpleDoubleProperty(600);
     private static final DoubleProperty ppmProperty = new SimpleDoubleProperty();
-    public static final int worldSize = 50;
+    public static final int worldSize = 150; // must be an even number
     private static final DoubleProperty displayRatioProperty = new SimpleDoubleProperty();
     private static final DoubleProperty tileRatioProperty = new SimpleDoubleProperty();
-    public static final Pane gameWindow = new Pane();
+    public static final StackPane gameWindow = new StackPane();
     public static final Scene scene = new Scene(gameWindow);
+    public static Stage stage;
+    public static final Canvas canvas = new Canvas();
     public static final GameKeys gameKeys = new GameKeys();
     private static long currentTime = java.lang.System.nanoTime();
     private static double deltaTime = 0;
@@ -29,9 +35,10 @@ public class GameData
     private static long currentMillis = 0;
     public static final Viewport camera = new Viewport(Math.min(40, worldSize));
     public static final GameWorld world = new GameWorld();
-    private static GameMode gameMode = GameMode.REGULAR;
-    private static Entity hand;
-
+    private static final BooleanProperty focusedProperty = new SimpleBooleanProperty();
+    private static boolean paused = false;
+    public static final DebugOptions debugOptions = new DebugOptions();
+    public static final Random random = new Random();
 
     static {
         ppmProperty.bind(displayWidth.divide(camera.widthProperty));
@@ -96,6 +103,20 @@ public class GameData
         return deltaTime;
     }
 
+    public static void setPaused(boolean paused)
+    {
+        GameData.paused = paused;
+    }
+
+    public static BooleanProperty getFocusedProperty()
+    {
+        return focusedProperty;
+    }
+
+    public static boolean isPaused() {
+        return paused;
+    }
+
     public static Vector2D toScreenSpace(double x, double y) {
         Vector2D origin = new Vector2D((double) GameData.getDisplayWidth() / 2, (double) GameData.getDisplayHeight() / 2);
         Vector2D p = new Vector2D(x, y).getSubtracted(camera.getCenter()); // distance from camera center to point
@@ -121,19 +142,15 @@ public class GameData
         return toWorldSpace(v.x, v.y);
     }
 
-    public static void setGameMode(GameMode gameMode){
-        GameData.gameMode = gameMode;
-    }
-
-    public static GameMode getGameMode(){
-        return GameData.gameMode;
-    }
-
-    public static Entity getHand(){
-        return hand;
-    }
-
-    public static void setHand(Entity entity){
-        hand = entity;
+    /**
+     * Returns null if not on solid ground
+    * */
+    public static Vector2D randomWorldPos() {
+        double x = Math.random() * GameData.worldSize - (double) GameData.worldSize / 2;
+        double y = Math.random() * GameData.worldSize - (double) GameData.worldSize / 2;
+        if (world.map.getTile((int) x, (int) y).type != Tile.Type.GRASS) {
+            return null;
+        }
+        else return new Vector2D(x, y);
     }
 }

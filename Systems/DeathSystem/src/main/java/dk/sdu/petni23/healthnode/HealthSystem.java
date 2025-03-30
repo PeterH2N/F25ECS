@@ -13,6 +13,12 @@ public class HealthSystem implements ISystem
             if (node.healthComponent.health <= 0) {
                 if (node.healthComponent.onDeath != null)
                     node.healthComponent.onDeath.dispatch(node);
+                if (node.lootComponent != null) {
+                    int numDrops = GameData.random.nextInt(node.lootComponent.minDrop, node.lootComponent.maxDrop + 1);
+                    for (int i = 0; i < numDrops; i++) {
+                        node.lootComponent.drop.dispatch(node);
+                    }
+                }
                 Engine.removeEntity(node.getEntityID());
             }
         }

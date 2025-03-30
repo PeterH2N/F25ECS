@@ -31,6 +31,10 @@
         <module>DamageSystem</module>
         <module>ActionSystem</module>
         <module>PlacementSystem</module>
+        <module>SoundSystem</module>
+        <module>DebugSystem</module>
+        <module>ItemSystem</module>
+        <module>InventorySystem</module>
     </modules>
 
     <dependencies>

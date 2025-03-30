@@ -1,15 +1,16 @@
 package dk.sdu.petni23.character;
 
-import dk.sdu.petni23.common.components.DisplayComponent;
+import dk.sdu.petni23.common.components.rendering.AnimationComponent;
+import dk.sdu.petni23.common.components.rendering.DisplayComponent;
 import dk.sdu.petni23.common.components.collision.CollisionComponent;
 import dk.sdu.petni23.common.components.collision.HitBoxComponent;
-import dk.sdu.petni23.common.components.hp.HealthComponent;
+import dk.sdu.petni23.common.components.life.HealthComponent;
 import dk.sdu.petni23.common.components.movement.DirectionComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.components.movement.VelocityComponent;
 import dk.sdu.petni23.common.shape.AABBShape;
 import dk.sdu.petni23.common.shape.OvalShape;
-import dk.sdu.petni23.common.util.Vector2D;
+import dk.sdu.petni23.gameengine.util.Vector2D;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.entity.IEntitySPI;
@@ -37,11 +38,10 @@ public class Character
         var rect = new AABBShape();
         rect.width = 0.6;
         rect.height = 0.7;
-        var hitBox = new HitBoxComponent(rect);
-        hitBox.yOffset = 0.5;
+        var hitBox = new HitBoxComponent(rect, new Vector2D(0, 0.5));
         character.add(hitBox);
 
-        var deathAnimation = getSPI(IEntitySPI.Type.DEATH_ANIMATION);
+        var deathAnimation = Engine.getEntitySPI(IEntitySPI.Type.DEATH_ANIMATION);
         var health = new HealthComponent(maxHP);
         health.onDeath = node -> {
             assert deathAnimation != null;
@@ -50,16 +50,9 @@ public class Character
         character.add(health);
 
 
-        character.add(new DisplayComponent(DisplayComponent.Order.FOREGROUND));
+        character.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
+        character.add(new AnimationComponent());
 
         return character;
-    }
-
-    public static IEntitySPI getSPI(IEntitySPI.Type type) {
-        for (var spi : Engine.getEntitySPIs()) {
-            if (spi.getType() == type)
-                return spi;
-        }
-        return null;
     }
 }

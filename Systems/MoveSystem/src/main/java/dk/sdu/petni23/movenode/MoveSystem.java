@@ -18,6 +18,12 @@ public class MoveSystem implements IPhysicsSystem
         }
     }
 
+    @Override
+    public int getPriority()
+    {
+        return Priority.FIRST.get();
+    }
+
     void containWithinWorldBounds(PositionComponent position) {
         var pos = position.position;
         double halfExtent = (double) GameData.worldSize / 2;

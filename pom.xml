@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>dk.sdu.petni23</groupId>
@@ -22,6 +22,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.9</maven.compiler.source>
         <maven.compiler.target>1.9</maven.compiler.target>
+        <Dprism.order>sw</Dprism.order>
     </properties>
 
     <dependencyManagement>
@@ -39,6 +40,11 @@
             <dependency>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-base</artifactId>
+                <version>21.0.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-fxml</artifactId>
                 <version>21.0.2</version>
             </dependency>
         </dependencies>
@@ -85,9 +91,10 @@
                         I still wanted to do it for clarity, but for some reason that results
                         in "java.lang.module.FindException: Module monitor.observer.zero not found";
                         strange... -->
-                        <argument>-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=127.0.0.1:8000
+                        <argument>
+                            -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=127.0.0.1:8000
                         </argument>
-                        <argument>--module=Core/dk.sdu.petni23.main.Main</argument>
+                        <argument>--module=Core/dk.sdu.petni23.ui.StartMenu</argument>
                         <argument>--add-modules javafx.graphics</argument>
                     </arguments>
                 </configuration>

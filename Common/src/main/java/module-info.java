@@ -1,6 +1,6 @@
+import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 
 module Common {
-
     requires javafx.graphics;
     requires GameEngine;
     exports dk.sdu.petni23.common.shape;
@@ -14,5 +14,10 @@ module Common {
     exports dk.sdu.petni23.common.components.movement;
     exports dk.sdu.petni23.common.components.actions;
     exports dk.sdu.petni23.common.components;
-    exports dk.sdu.petni23.common.components.hp;
+    exports dk.sdu.petni23.common.components.life;
+    exports dk.sdu.petni23.common.components.rendering;
+    exports dk.sdu.petni23.common.components.sound;
+    exports dk.sdu.petni23.common.components.items;
+    exports dk.sdu.petni23.common.components.inventory;
+    uses IEntitySPI;
 }
