@@ -60,7 +60,6 @@ public class Tree
         tree.add(new LayerComponent(LayerComponent.Layer.ALL));
 
         var placementComponent = new PlacementComponent();
-        placementComponent.C = KeyCode.C;
         tree.add(placementComponent);
 
         return tree;

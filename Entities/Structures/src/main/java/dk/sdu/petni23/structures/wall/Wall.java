@@ -44,7 +44,6 @@ public class Wall {
         wall.add(new LayerComponent(LayerComponent.Layer.ALL));
 
         var placementComponent = new PlacementComponent();
-        placementComponent.C = KeyCode.C;
         wall.add(placementComponent);
 
         var health = new HealthComponent(20);

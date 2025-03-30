@@ -11,7 +11,6 @@ public class WallPlugin implements IPluginService{
     public void start() {
         GameData.setHand(Wall.create(new Vector2D(0,0)));
         Engine.addEntity(GameData.getHand());
-        System.out.println("added entity to gameEngine: " + GameData.getHand().toString());
     }
 
     @Override
