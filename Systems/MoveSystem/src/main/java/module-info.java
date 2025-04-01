@@ -10,6 +10,6 @@ module MoveSystem {
     requires GameEngine;
     provides ISystem with RotationSystem, TrajectorySystem;
     provides IPhysicsSystem with MoveSystem;
-    provides INodeSPI with MoveNodeSPI;
+    provides INodeSPI with MoveNodeSPI, RotateNodeSPI, TrajectoryNodeSPI;
     exports dk.sdu.petni23.movenode;
 }

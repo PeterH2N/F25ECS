@@ -33,13 +33,12 @@ public class ControlSystem implements ISystem
             if (node.speedComponent != null)
                 v.multiply(node.speedComponent.speed);
             node.velocityComponent.velocity.set(v);
-
+            Vector2D mousePos = GameData.toWorldSpace(GameData.gameKeys.getMousePos());
+            // get vector from entity position to mouse position
+            Vector2D toMousePos = mousePos.getSubtracted(node.positionComponent.position);
             if (node.controlComponent.pointsToMouse) {
                 // set rotation based on mouse
-                // get vector from entity position to mouse position
-                Vector2D dir = GameData.toWorldSpace(GameData.gameKeys.getMousePos()).getSubtracted(node.positionComponent.position);
-                // vector is normalized in the setter
-                node.directionComponent.dir.set(dir.getNormalized());
+                node.directionComponent.dir.set(toMousePos.getNormalized());
             }
             if (node.actionSetComponent != null) {
                 if (GameData.gameKeys.isDown(MouseButton.PRIMARY)) {
@@ -50,6 +49,10 @@ public class ControlSystem implements ISystem
                     else if (!node.actionSetComponent.actions.isEmpty())
                         performAction(node.actionSetComponent, 0);
                 }
+            }
+            if (node.throwComponent != null) {
+                double d = toMousePos.getLength();
+                node.throwComponent.distance = Math.clamp(d, node.throwComponent.min, node.throwComponent.range);
             }
 
         }

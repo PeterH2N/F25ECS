@@ -21,33 +21,28 @@ import javafx.scene.image.Image;
 
 import java.util.Objects;
 
-public class TNTStickItemSPI implements IEntitySPI
+public class DynamiteSPI implements IEntitySPI
 {
     private static final SpriteSheet spriteSheet;
 
     static {
         final int[] numFrames = {6};
-        Image img = new Image(Objects.requireNonNull(TNTStickItemSPI.class.getResourceAsStream("/damagesprites/Dynamite.png")));
+        Image img = new Image(Objects.requireNonNull(DynamiteSPI.class.getResourceAsStream("/damagesprites/Dynamite.png")));
         spriteSheet = new SpriteSheet(img, numFrames, new Vector2D(img.getWidth() / 6, img.getHeight()));
     }
 
 
-    public static Entity createStick(Vector2D start, Vector2D end, double dmg, double radius) {
+    public static Entity createDynamite(Vector2D pos) {
         Entity tnt = new Entity();
-        tnt.add(new PositionComponent(start));
+        tnt.add(new PositionComponent(pos));
         tnt.add(new DirectionComponent());
-        tnt.add(new AngularMomentumComponent());
         tnt.add(new DirectionComponent());
         tnt.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
-        var spriteCOmponent = tnt.add(new SpriteComponent(spriteSheet, new Vector2D(0,0)));
+        var spriteCOmponent = tnt.add(new SpriteComponent(spriteSheet, new Vector2D(-0.5,-0.5)));
         spriteCOmponent.rotateWithDirection = true;
         tnt.add(new AnimationComponent());
 
-        Dispatch onEnd = node -> {
-            var circle = new OvalShape(radius, radius);
-            Engine.addEntity(DamageSPI.createDamageEntity(end, new HitBoxComponent(circle), LayerComponent.Layer.ALL, dmg));
-        };
-        tnt.add(new TrajectoryComponent(start, end, 0.5, onEnd));
+
 
         return tnt;
     }
@@ -58,9 +53,22 @@ public class TNTStickItemSPI implements IEntitySPI
         assert parent != null;
         Vector2D pos = parent.get(PositionComponent.class).position;
         Vector2D dir = parent.get(DirectionComponent.class).dir;
-        Vector2D end = pos.getAdded(dir.getMultiplied(parent.get(ThrowComponent.class).distance));
+        double distance = parent.get(ThrowComponent.class).distance;
+        Vector2D end = pos.getAdded(dir.getMultiplied(distance));
 
-        return createStick(pos, end, 10, 1);
+        var dynamite = createDynamite(pos);
+        var am = dynamite.add(new AngularMomentumComponent());
+        am.angularMomentum = dir.x > 0 ? -10 : 10;
+
+        var explosionSPI = Engine.getEntitySPI(Type.EXPLOSION_ANIMATION);
+        Dispatch onEnd = node -> {
+            var circle = new OvalShape(0.35, 0.35);
+            Engine.addEntity(DamageSPI.createDamageEntity(end, new HitBoxComponent(circle), LayerComponent.Layer.ALL, 10));
+            assert explosionSPI != null;
+            Engine.addEntity(explosionSPI.create(dynamite));
+        };
+        dynamite.add(new TrajectoryComponent(pos, end, distance * 0.33, onEnd));
+        return dynamite;
     }
 
     @Override

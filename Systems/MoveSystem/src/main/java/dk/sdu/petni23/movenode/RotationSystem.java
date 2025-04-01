@@ -9,7 +9,7 @@ public class RotationSystem implements ISystem
     public void update(double deltaTime)
     {
         for (RotateNode node : Engine.getNodes(RotateNode.class)){
-            node.directionComponent.dir.rotateBy(node.angularMomentumComponent.angularMomentum);
+            node.directionComponent.dir.rotateBy(node.angularMomentumComponent.angularMomentum * deltaTime);
         }
     }
 

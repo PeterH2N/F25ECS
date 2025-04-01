@@ -14,6 +14,7 @@ public class TrajectoryComponent extends Component
     public double t = 0;
     public final double a;
     public final double b;
+    public final double d;
     public final Dispatch onEnd;
 
     public TrajectoryComponent(Vector2D start, Vector2D end, double height, Dispatch onEnd)
@@ -24,7 +25,9 @@ public class TrajectoryComponent extends Component
         this.onEnd = onEnd;
         dir = end.getSubtracted(start);
 
-        double d = dir.getLength();
+        d = dir.getLength();
+        dir.normalize();
+
         b = height / (d * 0.25);
         a = -b / d;
     }

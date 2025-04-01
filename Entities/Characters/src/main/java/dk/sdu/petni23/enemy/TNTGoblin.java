@@ -1,6 +1,9 @@
 package dk.sdu.petni23.enemy;
 
 import dk.sdu.petni23.character.Character;
+import dk.sdu.petni23.common.components.actions.Action;
+import dk.sdu.petni23.common.components.actions.ActionSetComponent;
+import dk.sdu.petni23.common.components.damage.ThrowComponent;
 import dk.sdu.petni23.common.components.items.LootComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.common.components.damage.LayerComponent;
@@ -42,6 +45,22 @@ public class TNTGoblin
             }
         }));
         loot.maxDrop = 3;
+
+        goblin.add(new ThrowComponent(5));
+
+        IEntitySPI dynamiteSPI = Engine.getEntitySPI(IEntitySPI.Type.DYNAMITE);
+        var actions = goblin.add(new ActionSetComponent());
+        var attack = new Action(Action.Directionality.BI);
+        actions.actions.add(attack);
+        attack.animationIndex = 2;
+        attack.duration = 600;
+        attack.delay = 300;
+        attack.onDispatch = node -> {
+            assert dynamiteSPI != null;
+            Engine.addEntity(dynamiteSPI.create(Engine.getEntity(node.getEntityID())));
+        };
+        attack.strength = 1;
+
 
         return goblin;
     }

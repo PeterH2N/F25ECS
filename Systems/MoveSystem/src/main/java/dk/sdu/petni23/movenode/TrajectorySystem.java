@@ -10,7 +10,20 @@ public class TrajectorySystem implements ISystem
     public void update(double deltaTime)
     {
         for (var node : Engine.getNodes(TrajectoryNode.class)) {
-            node.trajectoryComponent.t += deltaTime;
+            double t = node.trajectoryComponent.t;
+            if (t >= node.trajectoryComponent.d) {
+                node.trajectoryComponent.onEnd.dispatch(node);
+                Engine.removeEntity(node.getEntityID());
+            }
+
+            node.trajectoryComponent.t += deltaTime * 6;
+
+            var start = node.trajectoryComponent.start;
+
+            var dir = node.trajectoryComponent.dir;
+            node.positionComponent.position.set(start.getAdded(dir.getMultiplied(t)));
+            node.positionComponent.position.y += y(node.trajectoryComponent);
+
 
         }
     }
@@ -26,5 +39,12 @@ public class TrajectorySystem implements ISystem
         double b = trajectoryComponent.b;
         double t = trajectoryComponent.t;
         return a * t * t + b * t;
+    }
+
+    double slope(TrajectoryComponent trajectoryComponent) {
+        double a = trajectoryComponent.a;
+        double b = trajectoryComponent.b;
+        double t = trajectoryComponent.t;
+        return a * t + b;
     }
 }

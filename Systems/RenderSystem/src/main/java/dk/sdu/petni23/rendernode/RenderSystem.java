@@ -34,7 +34,7 @@ public class RenderSystem implements IRenderSystem, IPluginService
     private final Canvas canvas = GameData.canvas;
     private final ColorAdjust white = new ColorAdjust(0.0, -0.5, 0.5, 0);
     private final Color seaColor = Color.rgb(101,160,168);
-    private Affine defaultTransform;
+    private final Rotate r = new Rotate(0);
     @Override
     public void start()
     {
@@ -71,6 +71,7 @@ public class RenderSystem implements IRenderSystem, IPluginService
         drawSpritesByLayer(gc, DisplayComponent.Layer.BACKGROUND);
         drawMap(gc);
         drawSpritesByLayer(gc, DisplayComponent.Layer.FOREGROUND);
+        drawSpritesByLayer(gc, DisplayComponent.Layer.EFFECT);
     }
 
     void drawSpritesByLayer(GraphicsContext gc, DisplayComponent.Layer layer) {
@@ -87,15 +88,6 @@ public class RenderSystem implements IRenderSystem, IPluginService
             Vector2D pos = GameData.toScreenSpace(node.positionComponent.position);
             drawSprite(gc, node, pos);
         }
-    }
-
-    void drawWallet(GraphicsContext gc, RenderNode node, Vector2D pos) {
-        if (node.walletComponent == null) return;
-        gc.setFill(Color.GOLDENROD);
-        gc.setFont(new Font(gc.getFont().getName(), GameData.getPPM() * 0.2));
-        gc.setTextAlign(TextAlignment.CENTER);
-        gc.setTextBaseline(VPos.CENTER);
-        gc.fillText(String.valueOf(node.walletComponent.money), pos.x, pos.y - 100 * GameData.getTileRatio());
     }
 
     void drawSprite(GraphicsContext gc, RenderNode node, Vector2D pos) {
@@ -133,7 +125,6 @@ public class RenderSystem implements IRenderSystem, IPluginService
 
         gc.setEffect(null);
         if (rotated) {
-            Rotate r = new Rotate(0);
             gc.setTransform(r.getMxx(), r.getMyx(), r.getMxy(), r.getMyy(), r.getTx(), r.getTy());
         }
     }
@@ -149,6 +140,7 @@ public class RenderSystem implements IRenderSystem, IPluginService
             if (options.showHitBoxes.get()) drawHitBox(gc, node, pos);
             if (options.showHP.get()) drawHealth(gc, node, pos);
             if (options.showWallet.get()) drawWallet(gc, node, pos);
+            drawAim(gc, node);
         }
         drawFrameTime(gc);
     }
@@ -168,6 +160,23 @@ public class RenderSystem implements IRenderSystem, IPluginService
         nPos.subtract(node.hitBoxComponent.offset.getMultiplied(GameData.getPPM()));
 
         drawShape(gc, node.hitBoxComponent.hitBox, nPos);
+    }
+    void drawWallet(GraphicsContext gc, RenderNode node, Vector2D pos) {
+        if (node.walletComponent == null) return;
+        gc.setFill(Color.GOLDENROD);
+        gc.setFont(new Font(gc.getFont().getName(), GameData.getPPM() * 0.2));
+        gc.setTextAlign(TextAlignment.CENTER);
+        gc.setTextBaseline(VPos.CENTER);
+        gc.fillText(String.valueOf(node.walletComponent.money), pos.x, pos.y - 100 * GameData.getTileRatio());
+    }
+
+
+    void drawAim(GraphicsContext gc, RenderNode node) {
+        if (node.throwComponent == null || node.directionComponent == null) return;
+        gc.setStroke(Color.RED);
+        Vector2D nPos = GameData.toScreenSpace(node.positionComponent.position.getAdded(node.directionComponent.dir.getMultiplied(node.throwComponent.distance)));
+        double s = 32 * GameData.getTileRatio();
+        gc.strokeOval(nPos.x - s * 0.5, nPos.y - s * 0.5, s,s);
     }
 
     void drawShape(GraphicsContext gc, Shape shape, Vector2D pos) {

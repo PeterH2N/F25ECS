@@ -15,6 +15,7 @@ public interface IEntitySPI
         FOAM_ANIMATION,
         GOLD,
         DAMAGE,
-        DYNAMITE;
+        DYNAMITE,
+        EXPLOSION_ANIMATION;
     }
 }

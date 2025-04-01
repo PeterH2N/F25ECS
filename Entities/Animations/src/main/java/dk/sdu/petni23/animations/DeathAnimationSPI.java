@@ -29,7 +29,7 @@ public class DeathAnimationSPI implements IEntitySPI
         assert pos != null;
 
         Entity death = Animation.create(spriteSheet, new Vector2D(-0.5, -0.67), pos.position, DisplayComponent.Layer.FOREGROUND);
-        death.add(new DurationComponent(1200, GameData.getCurrentMillis()));
+        death.add(new DurationComponent(1400, GameData.getCurrentMillis()));
         return death;
     }
 

@@ -44,7 +44,7 @@ public class AnimationSystem implements ISystem
                 int numDirections = node.actionSetComponent.lastAction.directionality.value();
                 double angleStep = 2 * Math.PI / numDirections;
                 int i = 0;
-                for (double r = angleStep * 0.5; r <= Math.PI + angleStep + 0.01; r += angleStep, i++) {
+                for (double r = angleStep * (2.0 / (double) numDirections); r <= Math.PI + angleStep + 0.01; r += angleStep, i++) {
                     if (dr > r - angleStep && dr <= r) {
                         node.spriteComponent.row += i;
                         break;

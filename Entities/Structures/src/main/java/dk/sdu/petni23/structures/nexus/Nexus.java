@@ -17,13 +17,13 @@ import java.util.Objects;
 
 public class Nexus implements IEntitySPI
 {
-    private static final SpriteSheet spriteSheet;
+    private static SpriteSheet spriteSheet;
     static {
         final int[] numFrames = {1};
-        Image img = new Image(Objects.requireNonNull(House.class.getResourceAsStream("/structuresprites/Nexus.png")));
-        spriteSheet = new SpriteSheet(img, numFrames, new Vector2D(img.getWidth(), img.getHeight()));
+        //Image img = new Image(Objects.requireNonNull(House.class.getResourceAsStream("/structuresprites/Nexus.png")));
+        //spriteSheet = new SpriteSheet(img, numFrames, new Vector2D(img.getWidth(), img.getHeight()));
     }
-    public static Entity Nexus() {
+    public static Entity createNexus() {
         var nexus = new Entity();
         nexus.add(new HealthComponent(1000));
         var hitBoxShape = new AABBShape(2,2);
