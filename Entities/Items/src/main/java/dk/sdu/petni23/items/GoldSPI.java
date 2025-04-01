@@ -9,6 +9,7 @@ import dk.sdu.petni23.common.components.movement.VelocityComponent;
 import dk.sdu.petni23.common.components.rendering.AnimationComponent;
 import dk.sdu.petni23.common.components.rendering.DisplayComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
+import dk.sdu.petni23.common.components.sound.SoundComponent;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.entity.Entity;
@@ -19,24 +20,23 @@ import javafx.scene.image.Image;
 
 import java.util.Objects;
 
-public class GoldSPI implements IEntitySPI
-{
+public class GoldSPI implements IEntitySPI {
     private static final SpriteSheet goldSprite;
     private static final SpriteSheet spawnGoldSprite;
     private final static double spawnRadius = 1.5;
     private final static Vector2D origin = new Vector2D(-0.5, -0.72);
 
     static {
-        int[] numFrames = {1};
+        int[] numFrames = { 1 };
         Image img = new Image(Objects.requireNonNull(GoldSPI.class.getResourceAsStream("/itemsprites/Gold_Idle.png")));
         goldSprite = new SpriteSheet(img, numFrames, new Vector2D(img.getWidth(), img.getHeight()));
-        numFrames = new int[]{7};
+        numFrames = new int[] { 7 };
         img = new Image(Objects.requireNonNull(GoldSPI.class.getResourceAsStream("/itemsprites/Gold_Spawn.png")));
         spawnGoldSprite = new SpriteSheet(img, numFrames, new Vector2D(img.getWidth() / 7, img.getHeight()));
     }
+
     @Override
-    public Entity create(Entity parent)
-    {
+    public Entity create(Entity parent) {
         double radius = Math.max(0.7, Math.random() * spawnRadius);
         double dirX = Math.random() * 2 - 1;
         double dirY = Math.random() * 2 - 1;
@@ -49,8 +49,7 @@ public class GoldSPI implements IEntitySPI
     }
 
     @Override
-    public Type getType()
-    {
+    public Type getType() {
         return Type.GOLD;
     }
 
@@ -66,6 +65,15 @@ public class GoldSPI implements IEntitySPI
         gold.add(new VelocityComponent());
         gold.add(new CurrencyComponent());
 
+        ItemComponent item = new ItemComponent();
+        item.onPickup = node -> {
+            Entity e = new Entity();
+            e.add(new SoundComponent("coin_pickup1", 150, 0.5));
+            e.add(new DurationComponent(200, GameData.getCurrentMillis()));
+            Engine.addEntity(e);
+        };
+        gold.add(item);
+
         return gold;
     }
 
@@ -78,6 +86,8 @@ public class GoldSPI implements IEntitySPI
         spawn.add(spriteComponent);
         spawn.add(new AnimationComponent());
         spawn.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
+
+        spawn.add(new SoundComponent("coin_bag_drop1", 100, 0.8));
 
         var duration = spawn.add(new DurationComponent(700, GameData.getCurrentMillis()));
         duration.onDeath = node -> Engine.addEntity(gold(pos));

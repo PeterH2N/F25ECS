@@ -2,8 +2,11 @@ package dk.sdu.petni23.character;
 
 import dk.sdu.petni23.common.components.rendering.AnimationComponent;
 import dk.sdu.petni23.common.components.rendering.DisplayComponent;
+import dk.sdu.petni23.common.components.sound.SoundComponent;
+import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.components.collision.CollisionComponent;
 import dk.sdu.petni23.common.components.collision.HitBoxComponent;
+import dk.sdu.petni23.common.components.health.DurationComponent;
 import dk.sdu.petni23.common.components.health.HealthComponent;
 import dk.sdu.petni23.common.components.movement.DirectionComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
@@ -15,9 +18,8 @@ import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 
-public class Character
-{
-    public static Entity create(Vector2D pos, double maxHP) {
+public class Character {
+    public static Entity create(Vector2D pos, double maxHP, String damage_sound_path) {
         Entity character = new Entity();
         var position = new PositionComponent();
         position.position.set(pos);
@@ -46,9 +48,16 @@ public class Character
         health.onDeath = node -> {
             assert deathAnimation != null;
             Engine.addEntity(deathAnimation.create(Engine.getEntity(node.getEntityID())));
+
         };
         character.add(health);
 
+        health.onHurt = node -> {
+            Entity e = new Entity();
+            e.add(new SoundComponent(damage_sound_path, 150, 0.5));
+            e.add(new DurationComponent(200, GameData.getCurrentMillis()));
+            Engine.addEntity(e);
+        };
 
         character.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
         character.add(new AnimationComponent());
