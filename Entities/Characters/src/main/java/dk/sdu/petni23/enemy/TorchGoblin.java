@@ -31,7 +31,7 @@ public class TorchGoblin
 
     public static Entity create(Vector2D pos)
     {
-        Entity goblin = Character.create(pos, 30);
+        Entity goblin = Character.create(pos, 30,"goblin_hurt1");
 
         var speed = new SpeedComponent();
         speed.speed = 2.5;
@@ -55,6 +55,7 @@ public class TorchGoblin
         var actionSet = new ActionSetComponent();
         actionSet.actions.add(attack);
         goblin.add(actionSet);
+        
 
         goblin.add(new AttackComponent(2, 0.6));
 

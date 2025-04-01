@@ -25,7 +25,7 @@ public class TNTGoblin
     }
 
     public static Entity create(Vector2D pos) {
-        Entity goblin = Character.create(pos, 20);
+        Entity goblin = Character.create(pos, 20, "goblin_hurt1");
 
         var speed = new SpeedComponent();
         speed.speed = 2.3;
