@@ -12,4 +12,13 @@ public class AABBShape extends Shape
     {
         return new Vector2D(width, height);
     }
+
+    public AABBShape(double width, double height){
+        this.width = width;
+        this.height = height;
+    }
+
+    public AABBShape(){
+        
+    };
 }

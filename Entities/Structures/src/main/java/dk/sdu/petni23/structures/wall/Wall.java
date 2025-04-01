@@ -11,6 +11,7 @@ import dk.sdu.petni23.common.components.life.HealthComponent;
 import dk.sdu.petni23.common.components.life.LayerComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.shape.AABBShape;
+import dk.sdu.petni23.common.shape.Shape;
 import dk.sdu.petni23.common.shape.OvalShape;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.gameengine.util.Vector2D;
@@ -20,6 +21,7 @@ import javafx.scene.input.KeyCode;
 
 public class Wall {
     private static final SpriteSheet spriteSheet;
+
 
     static {
         final int[] numFrames = {1};
@@ -43,23 +45,14 @@ public class Wall {
 
         wall.add(new LayerComponent(LayerComponent.Layer.ALL));
 
-        var placementComponent = new PlacementComponent();
+        Shape collisionShape = new AABBShape(2, 1);
+        Shape hitBoxShape = new AABBShape(2, 1);
+
+        var placementComponent = new PlacementComponent(collisionShape,hitBoxShape);
         wall.add(placementComponent);
 
         var health = new HealthComponent(20);
         wall.add(health);
-
-        var rect = new AABBShape();
-        rect.width = 0.6;
-        rect.height = 0.7;
-        var hitBox = new HitBoxComponent(rect);
-        wall.add(hitBox);
-
-        var rect2 = new AABBShape();
-        rect2.width = 2;
-        rect2.height = 1;
-        var collision = new CollisionComponent(rect2);
-        wall.add(collision);
 
         return wall;
     }

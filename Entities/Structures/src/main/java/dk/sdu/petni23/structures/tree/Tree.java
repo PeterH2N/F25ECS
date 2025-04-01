@@ -71,8 +71,6 @@ public class Tree {
 
         tree.add(new LayerComponent(LayerComponent.Layer.ALL));
 
-        var placementComponent = new PlacementComponent();
-        tree.add(placementComponent);
         tree.add(new AnimationComponent());
 
         return tree;

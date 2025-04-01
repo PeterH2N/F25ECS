@@ -17,4 +17,5 @@ module GameEngine {
     uses IPluginService;
     uses IEntitySPI;
     uses IRenderSystem;
+    requires javafx.graphics;
 }
