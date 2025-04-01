@@ -23,7 +23,7 @@ public class PlacementSystem implements ISystem{
             if(entity!=GameData.getHand()){
                 continue;
             }
-            if(GameData.gameKeys.isDown(KeyCode.C)){
+            if(GameData.gameKeys.isPressed(KeyCode.C)){
                 GameMode newMode = (GameData.getGameMode() == GameMode.REGULAR) ? GameMode.PLACING : GameMode.REGULAR;
                 GameData.setGameMode(newMode);
             }
