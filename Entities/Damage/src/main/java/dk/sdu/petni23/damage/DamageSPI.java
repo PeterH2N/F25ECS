@@ -1,53 +1,68 @@
 package dk.sdu.petni23.damage;
 
 import dk.sdu.petni23.common.GameData;
+import dk.sdu.petni23.common.components.movement.DirectionComponent;
 import dk.sdu.petni23.common.components.rendering.DisplayComponent;
-import dk.sdu.petni23.common.components.life.DurationComponent;
+import dk.sdu.petni23.common.components.health.DurationComponent;
 import dk.sdu.petni23.common.components.actions.ActionSetComponent;
 import dk.sdu.petni23.common.components.collision.HitBoxComponent;
-import dk.sdu.petni23.common.components.life.DamageComponent;
-import dk.sdu.petni23.common.components.life.LayerComponent;
-import dk.sdu.petni23.common.components.life.StrengthComponent;
+import dk.sdu.petni23.common.components.damage.DamageComponent;
+import dk.sdu.petni23.common.components.damage.LayerComponent;
+import dk.sdu.petni23.common.components.damage.AttackComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.shape.OvalShape;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 import dk.sdu.petni23.gameengine.node.Node;
+import dk.sdu.petni23.gameengine.util.Vector2D;
 
 public class DamageSPI implements IEntitySPI
 {
     @Override
-    public Entity create(Node parent) {
+    public Entity create(Entity parent) {
         assert parent != null;
-        Entity dmgE = new Entity();
+        double dmg = 0;
+        var actionC = parent.get(ActionSetComponent.class);
+        var parentPosition = parent.get(PositionComponent.class);
+        var position = parentPosition == null ? new Vector2D(0,0) : new Vector2D(parentPosition.position);
 
-        var duration = new DurationComponent(1, GameData.getCurrentMillis());
-        dmgE.add(duration);
+        if (actionC != null && actionC.lastAction != null)   dmg += actionC.lastAction.strength;
+        var directionComponent = parent.get(DirectionComponent.class);
+        Vector2D dir = directionComponent == null ? new Vector2D(0,0) : directionComponent.dir;
 
-        var dmg = new DamageComponent();
-        var actionC = parent.getComponent(ActionSetComponent.class);
-
-        if (actionC != null && actionC.lastAction != null)   dmg.damage += actionC.lastAction.strength;
-        dmgE.add(dmg);
-
-        var strengthC = parent.getComponent(StrengthComponent.class);
-        if (strengthC != null) dmgE.add(parent.getComponent(StrengthComponent.class));
-
-        var position = new PositionComponent();
-        var posC = parent.getComponent(PositionComponent.class);
-        if (posC != null) position.position.set(posC.position);
-        dmgE.add(position);
-
+        var offset = new Vector2D(0,0);
+        var parentHitBox = parent.get(HitBoxComponent.class);
+        if (parentHitBox != null) offset = parentHitBox.offset;
         OvalShape circle = new OvalShape();
         circle.a = 1;
         circle.b = 1;
-        var hitBox = new HitBoxComponent(circle);
-        dmgE.add(hitBox);
+        var hitBox = new HitBoxComponent(circle, offset);
 
-        var layer = parent.getComponent(LayerComponent.class);
-        if (layer != null) dmgE.add(layer);
-        else dmgE.add(new LayerComponent(LayerComponent.Layer.ALL));
+        // hitbox is influenced by attack component, and parent hitbox
+        var attackComponent = parent.get(AttackComponent.class);
+        if (attackComponent != null) {
+            dmg *= attackComponent.strength;
+            circle.a = attackComponent.range;
+            circle.b = attackComponent.range;
+            position.add(dir.getMultiplied(attackComponent.range));
+        }
 
+        var layerComponent = parent.get(LayerComponent.class);
+        var layer = layerComponent == null ? LayerComponent.Layer.ALL : layerComponent.layer;
+
+        return createDamageEntity(position, hitBox, layer,dmg);
+    }
+
+    public static Entity createDamageEntity(Vector2D pos, HitBoxComponent hitBoxComponent, LayerComponent.Layer layer, double dmg) {
+        Entity dmgE = new Entity();
+        var duration = new DurationComponent(1, GameData.getCurrentMillis());
+        dmgE.add(duration);
+        var dmgComponent = dmgE.add(new DamageComponent());
+        dmgComponent.damage = dmg;
+        dmgE.add(new PositionComponent(pos));
+
+        dmgE.add(hitBoxComponent);
+        dmgE.add(new LayerComponent(layer));
         dmgE.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
 
         return dmgE;

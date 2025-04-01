@@ -1,9 +1,7 @@
 package dk.sdu.petni23.animations;
 
-import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.components.rendering.AnimationComponent;
 import dk.sdu.petni23.common.components.rendering.DisplayComponent;
-import dk.sdu.petni23.common.components.life.DurationComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;

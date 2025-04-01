@@ -3,7 +3,7 @@ package dk.sdu.petni23.items;
 import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.components.items.CurrencyComponent;
 import dk.sdu.petni23.common.components.items.ItemComponent;
-import dk.sdu.petni23.common.components.life.DurationComponent;
+import dk.sdu.petni23.common.components.health.DurationComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.components.movement.VelocityComponent;
 import dk.sdu.petni23.common.components.rendering.AnimationComponent;
@@ -35,13 +35,13 @@ public class GoldSPI implements IEntitySPI
         spawnGoldSprite = new SpriteSheet(img, numFrames, new Vector2D(img.getWidth() / 7, img.getHeight()));
     }
     @Override
-    public Entity create(Node parent)
+    public Entity create(Entity parent)
     {
         double radius = Math.max(0.7, Math.random() * spawnRadius);
         double dirX = Math.random() * 2 - 1;
         double dirY = Math.random() * 2 - 1;
         Vector2D p = new Vector2D(dirX, dirY).getNormalized().getMultiplied(radius);
-        var parentPositionComponent = parent.getComponent(PositionComponent.class);
+        var parentPositionComponent = parent.get(PositionComponent.class);
         assert parentPositionComponent != null;
         Vector2D pos = parentPositionComponent.position.getAdded(p);
 

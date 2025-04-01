@@ -1,12 +1,14 @@
 package dk.sdu.petni23.enemy;
 
 import dk.sdu.petni23.character.Character;
+import dk.sdu.petni23.common.components.damage.AttackComponent;
 import dk.sdu.petni23.common.components.items.LootComponent;
 import dk.sdu.petni23.common.components.actions.Action;
 import dk.sdu.petni23.common.components.actions.ActionSetComponent;
-import dk.sdu.petni23.common.components.life.LayerComponent;
+import dk.sdu.petni23.common.components.damage.LayerComponent;
 import dk.sdu.petni23.common.components.movement.SpeedComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
+import dk.sdu.petni23.common.components.sound.SoundComponent;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.gameengine.util.Vector2D;
 import dk.sdu.petni23.gameengine.Engine;
@@ -22,7 +24,7 @@ public class TorchGoblin
 
     static {
         final int[] numFrames = {7,6,6,6,6};
-        final int[] order = {0,1,3,2,4};
+        final int[] order = {0,1,4,2,3};
         Image img = new Image(Objects.requireNonNull(TorchGoblin.class.getResourceAsStream("/enemysprites/Goblin.png")));
         spriteSheet = new SpriteSheet(img, numFrames, new Vector2D(img.getWidth() / 7, img.getHeight() / 5), order);
     }
@@ -39,22 +41,29 @@ public class TorchGoblin
         goblin.add(spriteComponent);
 
         IEntitySPI damageSPI = Engine.getEntitySPI(IEntitySPI.Type.DAMAGE);
-        Action attack = new Action(Action.Directionality.QUAD);
+        var attack = new Action(Action.Directionality.QUAD);
+        attack.animationIndex = 2;
+        attack.duration = 600;
         attack.delay = 300;
-        attack.strength = 2;
         attack.onDispatch = node -> {
             assert damageSPI != null;
-            Engine.addEntity(damageSPI.create(node));
+            Entity damageEntity = damageSPI.create(Engine.getEntity(node.getEntityID()));
+            //damageEntity.add(new SoundComponent("woosh1"));
+            Engine.addEntity(damageEntity); // ✅ add the one you modified
         };
+        attack.strength = 1;
         var actionSet = new ActionSetComponent();
         actionSet.actions.add(attack);
+        goblin.add(actionSet);
+
+        goblin.add(new AttackComponent(2, 0.6));
 
 
         goblin.add(new LayerComponent(LayerComponent.Layer.ENEMY));
         var goldSPI = Engine.getEntitySPI(IEntitySPI.Type.GOLD);
         var loot = goblin.add(new LootComponent(node -> {
             if (goldSPI != null) {
-                Engine.addEntity(goldSPI.create(node));
+                Engine.addEntity(goldSPI.create(Engine.getEntity(node.getEntityID())));
             }
         }));
         loot.minDrop = 2;

@@ -3,7 +3,7 @@ package dk.sdu.petni23.enemy;
 import dk.sdu.petni23.character.Character;
 import dk.sdu.petni23.common.components.items.LootComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
-import dk.sdu.petni23.common.components.life.LayerComponent;
+import dk.sdu.petni23.common.components.damage.LayerComponent;
 import dk.sdu.petni23.common.components.movement.SpeedComponent;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.gameengine.Engine;
@@ -38,7 +38,7 @@ public class TNTGoblin
         var goldSPI = Engine.getEntitySPI(IEntitySPI.Type.GOLD);
         var loot = goblin.add(new LootComponent(node -> {
             if (goldSPI != null) {
-                Engine.addEntity(goldSPI.create(node));
+                Engine.addEntity(goldSPI.create(Engine.getEntity(node.getEntityID())));
             }
         }));
         loot.maxDrop = 3;

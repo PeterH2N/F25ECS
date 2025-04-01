@@ -1,8 +1,8 @@
 package dk.sdu.petni23.damagenode;
 
 import dk.sdu.petni23.common.GameData;
-import dk.sdu.petni23.common.components.life.HealthComponent;
-import dk.sdu.petni23.common.components.life.LayerComponent;
+import dk.sdu.petni23.common.components.health.HealthComponent;
+import dk.sdu.petni23.common.components.damage.LayerComponent;
 import dk.sdu.petni23.common.misc.CollisionHelper;
 import dk.sdu.petni23.common.misc.Manifold;
 import dk.sdu.petni23.gameengine.Engine;
@@ -33,7 +33,6 @@ public class DamageSystem implements ISystem
                 if (!CollisionHelper.checkCollision(m)) continue;
 
                 double dmg = node.damageComponent.damage;
-                if (node.strengthComponent != null) dmg *= node.strengthComponent.strength;
                 hurt(node, healthComponent, dmg);
             }
         }
