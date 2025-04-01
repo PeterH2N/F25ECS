@@ -28,7 +28,7 @@ public class FoamAnimationSPI implements IEntitySPI
     }
 
     @Override
-    public Entity create(Node parent)
+    public Entity create(Entity parent)
     {
         return create();
     }

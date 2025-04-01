@@ -1,6 +1,7 @@
 package dk.sdu.petni23.gameengine.entity;
 
 import dk.sdu.petni23.gameengine.Component;
+import dk.sdu.petni23.gameengine.Engine;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -16,6 +17,10 @@ public class Entity implements Serializable
     public <T extends Component> T add(T component) {
         Class<? extends Component> c = component.getClass();
         components.put(c, component);
+        if (Engine.getEntity(id) == this) {
+            Engine.removeEntity(id);
+            Engine.addEntity(this);
+        }
         return component;
     }
 

@@ -42,10 +42,11 @@ public class ControlSystem implements ISystem
             }
             if (node.actionSetComponent != null) {
                 if (GameData.gameKeys.isDown(MouseButton.PRIMARY)) {
+
                     // logic for secondary attack
-                    if (node.actionSetComponent.lastAction == node.actionSetComponent.actions.get(0) && GameData.getCurrentMillis() < node.actionSetComponent.lastActionTime + node.actionSetComponent.lastAction.duration + 50)
+                    if (node.actionSetComponent.actions.size() > 1 && node.actionSetComponent.lastAction == node.actionSetComponent.actions.get(0) && GameData.getCurrentMillis() < node.actionSetComponent.lastActionTime + node.actionSetComponent.lastAction.duration + 50)
                         performAction(node.actionSetComponent, 1);
-                    else
+                    else if (!node.actionSetComponent.actions.isEmpty())
                         performAction(node.actionSetComponent, 0);
                 }
             }

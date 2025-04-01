@@ -13,6 +13,8 @@
     <file url="file://$PROJECT_DIR$/Entities/Damage/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Entities/Decoration/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Entities/Decoration/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Entities/Items/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Entities/Items/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Entities/Structures/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Entities/Structures/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Entities/TempEntities/Damage/src/main/java" charset="UTF-8" />
@@ -43,6 +45,10 @@
     <file url="file://$PROJECT_DIR$/Systems/DebugSystem/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Systems/InputSystem/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Systems/InputSystem/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Systems/InventorySystem/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Systems/InventorySystem/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Systems/ItemSystem/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Systems/ItemSystem/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Systems/MoveSystem/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Systems/MoveSystem/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Systems/PlacementSystem/src/main/java" charset="UTF-8" />

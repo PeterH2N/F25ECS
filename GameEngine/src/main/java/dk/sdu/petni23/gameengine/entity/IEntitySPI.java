@@ -4,7 +4,7 @@ import dk.sdu.petni23.gameengine.node.Node;
 
 public interface IEntitySPI
 {
-    Entity create(Node parent);
+    Entity create(Entity parent);
 
     Type getType();
     enum Type {
@@ -14,6 +14,7 @@ public interface IEntitySPI
         DEATH_ANIMATION,
         FOAM_ANIMATION,
         GOLD,
-        DAMAGE;
+        DAMAGE,
+        DYNAMITE;
     }
 }

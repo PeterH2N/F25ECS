@@ -1,6 +1,6 @@
 package dk.sdu.petni23.durationnode;
 
-import dk.sdu.petni23.common.components.life.DurationComponent;
+import dk.sdu.petni23.common.components.health.DurationComponent;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.node.Node;
 
