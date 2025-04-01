@@ -38,7 +38,8 @@ public class Wall {
         wall.add(position);
 
         //add sprite component
-        dk.sdu.petni23.common.components.rendering.SpriteComponent sprite = new SpriteComponent(spriteSheet, pos);
+        final var origin = new Vector2D(-0.5, -0.5);
+        dk.sdu.petni23.common.components.rendering.SpriteComponent sprite = new SpriteComponent(spriteSheet, origin);
         wall.add(sprite);
 
         wall.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
