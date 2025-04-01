@@ -25,7 +25,7 @@ public class Wall {
 
     static {
         final int[] numFrames = {1};
-        Image img = new Image(Objects.requireNonNull(Wall.class.getResourceAsStream("/structuresprites/stone_wall.png")));
+        Image img = new Image(Objects.requireNonNull(Wall.class.getResourceAsStream("/structuresprites/wall_trans.png")));
         spriteSheet = new SpriteSheet(img, numFrames, new Vector2D(img.getWidth(), img.getHeight()));
     }
 
@@ -46,10 +46,14 @@ public class Wall {
 
         wall.add(new LayerComponent(LayerComponent.Layer.ALL));
 
-        Shape collisionShape = new AABBShape(2, 1);
-        Shape hitBoxShape = new AABBShape(2, 1);
+        Shape collisionShape = new AABBShape(3, 1);
+        var offset = new Vector2D(0, -0.5);
+        Shape hitBoxShape = new AABBShape(3, 1);
 
-        var placementComponent = new PlacementComponent(collisionShape,hitBoxShape);
+        var collision = new CollisionComponent(collisionShape, offset);
+        var hitBox = new HitBoxComponent(hitBoxShape, offset);
+
+        var placementComponent = new PlacementComponent(collision, hitBox);
         wall.add(placementComponent);
 
         var health = new HealthComponent(20);

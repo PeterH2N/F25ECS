@@ -46,13 +46,9 @@ public class PlacementSystem implements ISystem{
                 y= (y+(-1*ry));
                 node.positionComponent.position.set(new Vector2D(x,y));
                 if(GameData.gameKeys.isDown(MouseButton.PRIMARY)){
-                    entity.add(new CollisionComponent(node.placementComponent.collisionShape));
-                    entity.add(new HitBoxComponent(node.placementComponent.hitBoxShape));
-                    Engine.removeEntity(entity);
-                    Engine.addEntity(entity);
+                    entity.add(node.placementComponent.collisionComponent);
+                    entity.add(node.placementComponent.hitBoxComponent);
                     GameData.setHand(null);
-                }else{
-
                 }
             }
         }
