@@ -3,13 +3,11 @@ package dk.sdu.petni23.placement;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.services.ISystem;
-import dk.sdu.petni23.gameengine.util.Vector2D;
+import dk.sdu.petni23.common.util.Vector2D;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 
 import dk.sdu.petni23.common.GameData;
-import dk.sdu.petni23.common.components.collision.CollisionComponent;
-import dk.sdu.petni23.common.components.collision.HitBoxComponent;
 import dk.sdu.petni23.common.enums.GameMode;
 
 public class PlacementSystem implements ISystem{

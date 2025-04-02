@@ -4,14 +4,14 @@ import dk.sdu.petni23.common.enums.GameMode;
 import dk.sdu.petni23.common.misc.GameKeys;
 import dk.sdu.petni23.common.misc.Viewport;
 import dk.sdu.petni23.common.util.DebugOptions;
+import dk.sdu.petni23.common.world.mapgen.MapGenOptions;
 import dk.sdu.petni23.gameengine.entity.Entity;
-import dk.sdu.petni23.gameengine.util.Vector2D;
+import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.common.world.GameWorld;
-import dk.sdu.petni23.common.world.Tile;
+import dk.sdu.petni23.common.world.mapgen.Tile;
 import javafx.beans.property.*;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -36,7 +36,8 @@ public class GameData
     private static long frameTime = 0;
     private static long currentMillis = 0;
     public static final Viewport camera = new Viewport(Math.min(40, worldSize));
-    public static final GameWorld world = new GameWorld();
+    public static final MapGenOptions mapGenOptions = new MapGenOptions();
+    public static final GameWorld world = new GameWorld(mapGenOptions);
     private static final BooleanProperty focusedProperty = new SimpleBooleanProperty();
     private static boolean paused = false;
     public static final DebugOptions debugOptions = new DebugOptions();
