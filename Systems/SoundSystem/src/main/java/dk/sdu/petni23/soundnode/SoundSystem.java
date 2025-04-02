@@ -29,6 +29,7 @@ public class SoundSystem implements ISystem {
                         "🎧 Triggered sound: " + soundComponent.action + " (volume: " + soundComponent.volume + ")");
                 soundManager.playSound(soundComponent.action, 0, soundComponent.volume);
                 soundComponent.triggered = false;
+                Engine.removeEntity(node.getEntityID());
             }
         }
 

@@ -19,7 +19,6 @@ import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TreeMap;
 
 public class GameMap
 {
@@ -69,13 +68,14 @@ public class GameMap
         Vector2D center = new Vector2D((double) GameData.worldSize / 2, (double) GameData.worldSize / 2);
         Tile[][] landMap = new Tile[GameData.worldSize][GameData.worldSize];
         double[][] noiseMap = new double[GameData.worldSize][GameData.worldSize];
-        double[] rotationalNoiseMap = new double[360];
+        double[] shapeNoiseMap = new double[360];
+        double[] coastNoiseMap = new double[360];
         // init rotational noise
         for (int i = 0; i < 360; i++) {
-            rotationalNoiseMap[i] = (SimplexNoise.noise(i * genOptions.coastRuggedness.get(), 1) + 1d) / 2d;
+            shapeNoiseMap[i] = SimplexNoise.noise(i * genOptions.islandShapeFrequency.get(), 1);
+            coastNoiseMap[i] = SimplexNoise.noise(i * genOptions.coastFrequency.get(), 2);
         }
 
-        double excessDist = genOptions.maxIslandRadius.get() - genOptions.minIslandRadius.get();
         for (int x = 0; x < GameData.worldSize; x++) {
             for (int y = 0; y < GameData.worldSize; y++) {
                 double noise1 = (SimplexNoise.noise(x * genOptions.landFrequency.get(), y * genOptions.landFrequency.get()) + 1d) / 2d;
@@ -84,8 +84,11 @@ public class GameMap
 
                 Vector2D v = new Vector2D(x + 0.5, y + 0.5).getSubtracted(center);
                 double dist = v.getLength();
-                double noise2 = rotationalNoiseMap[(int) v.angleDegrees() + 180];
-                double threshold = genOptions.minIslandRadius.get() + excessDist * noise2;
+                int angle = (int) v.angleDegrees() + 180;
+                double shapeNoise = shapeNoiseMap[angle];
+                double coastNoise = coastNoiseMap[angle];
+                double shapeThreshold = Math.min(genOptions.islandRadius.get() + shapeNoise * genOptions.islandShapeAmplitude.get(), ((double) GameData.worldSize / 2) - 1);
+                double threshold = Math.min(shapeThreshold + coastNoise * genOptions.coastAmplitude.get(), ((double) GameData.worldSize / 2) - 1);
                 landMap[y][x] = dist < threshold ? new Tile(Tile.Type.GRASS) : new Tile(Tile.Type.WATER);
             }
         }
