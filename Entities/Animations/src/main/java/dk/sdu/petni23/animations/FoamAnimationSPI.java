@@ -2,12 +2,10 @@ package dk.sdu.petni23.animations;
 
 import dk.sdu.petni23.common.components.rendering.AnimationComponent;
 import dk.sdu.petni23.common.components.rendering.DisplayComponent;
-import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.entity.IEntitySPI;
-import dk.sdu.petni23.gameengine.node.Node;
-import dk.sdu.petni23.gameengine.util.Vector2D;
+import dk.sdu.petni23.common.util.Vector2D;
 import javafx.scene.image.Image;
 
 import java.util.Objects;

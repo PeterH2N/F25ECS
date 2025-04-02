@@ -6,7 +6,7 @@ import dk.sdu.petni23.common.components.rendering.DisplayComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.common.shape.AABBShape;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
-import dk.sdu.petni23.gameengine.util.Vector2D;
+import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import javafx.scene.image.Image;
 

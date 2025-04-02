@@ -9,11 +9,7 @@ import dk.sdu.petni23.common.shape.AABBShape;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.entity.IEntitySPI;
-import dk.sdu.petni23.gameengine.util.Vector2D;
-import dk.sdu.petni23.structures.tower.House;
-import javafx.scene.image.Image;
-
-import java.util.Objects;
+import dk.sdu.petni23.common.util.Vector2D;
 
 public class Nexus implements IEntitySPI
 {

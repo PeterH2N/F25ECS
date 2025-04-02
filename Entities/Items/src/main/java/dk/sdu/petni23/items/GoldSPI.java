@@ -14,8 +14,7 @@ import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.entity.IEntitySPI;
-import dk.sdu.petni23.gameengine.node.Node;
-import dk.sdu.petni23.gameengine.util.Vector2D;
+import dk.sdu.petni23.common.util.Vector2D;
 import javafx.scene.image.Image;
 
 import java.util.Objects;
@@ -87,7 +86,7 @@ public class GoldSPI implements IEntitySPI {
         spawn.add(new AnimationComponent());
         spawn.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
 
-        spawn.add(new SoundComponent("coin_bag_drop1", 100, 0.8));
+        spawn.add(new SoundComponent("coin_bag_drop1", 50, 0.8));
 
         var duration = spawn.add(new DurationComponent(700, GameData.getCurrentMillis()));
         duration.onDeath = node -> Engine.addEntity(gold(pos));

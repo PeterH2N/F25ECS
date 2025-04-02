@@ -1,7 +1,7 @@
-package dk.sdu.petni23.common.world;
+package dk.sdu.petni23.common.world.mapgen;
 
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
-import dk.sdu.petni23.gameengine.util.Vector2D;
+import dk.sdu.petni23.common.util.Vector2D;
 import javafx.scene.image.Image;
 
 import java.util.HashMap;

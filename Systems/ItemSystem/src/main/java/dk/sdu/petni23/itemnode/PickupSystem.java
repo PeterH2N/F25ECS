@@ -2,7 +2,7 @@ package dk.sdu.petni23.itemnode;
 
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.services.ISystem;
-import dk.sdu.petni23.gameengine.util.Vector2D;
+import dk.sdu.petni23.common.util.Vector2D;
 
 public class PickupSystem implements ISystem
 {

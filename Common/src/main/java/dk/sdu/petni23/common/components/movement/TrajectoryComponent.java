@@ -2,7 +2,7 @@ package dk.sdu.petni23.common.components.movement;
 
 import dk.sdu.petni23.common.components.Dispatch;
 import dk.sdu.petni23.gameengine.Component;
-import dk.sdu.petni23.gameengine.util.Vector2D;
+import dk.sdu.petni23.common.util.Vector2D;
 
 public class TrajectoryComponent extends Component
 {

@@ -1,4 +1,4 @@
-package dk.sdu.petni23.gameengine.util;
+package dk.sdu.petni23.common.util;
 
 import java.util.Objects;
 

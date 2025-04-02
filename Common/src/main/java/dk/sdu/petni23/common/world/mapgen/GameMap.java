@@ -1,4 +1,4 @@
-package dk.sdu.petni23.common.world;
+package dk.sdu.petni23.common.world.mapgen;
 
 import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.components.collision.CollisionComponent;
@@ -6,8 +6,9 @@ import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.components.rendering.DisplayComponent;
 import dk.sdu.petni23.common.shape.AABBShape;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
+import dk.sdu.petni23.common.util.SimplexNoise;
 import dk.sdu.petni23.gameengine.entity.IEntitySPI;
-import dk.sdu.petni23.gameengine.util.Vector2D;
+import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import javafx.scene.SnapshotParameters;
@@ -16,18 +17,41 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.TreeMap;
+
 public class GameMap
 {
+    private final List<Entity> mapEntities = new ArrayList<>();
     public Tile[][] tiles = new Tile[(int) GameData.worldSize][(int) GameData.worldSize];
     public Image[][] mapImages;
     public int imageSize;
 
+    public final MapGenOptions genOptions;
+
     private final IEntitySPI foamSPI = Engine.getEntitySPI(IEntitySPI.Type.FOAM_ANIMATION);;
 
-    public GameMap() {
+    public GameMap(MapGenOptions genOptions) {
+        this.genOptions = genOptions;
+        genMap();
+    }
+
+    public void genMap() {
+        clearMapEntities();
         generateMap();
         refineMap();
         generateMapImage();
+    }
+
+    private void addEntity(Entity entity) {
+        mapEntities.add(entity);
+        Engine.addEntity(entity);
+    }
+
+    private void clearMapEntities() {
+        mapEntities.forEach(Engine::removeEntity);
+        mapEntities.clear();
     }
 
     public Tile getTile(int x, int y) {
@@ -43,17 +67,45 @@ public class GameMap
 
     private void generateMap() {
         Vector2D center = new Vector2D((double) GameData.worldSize / 2, (double) GameData.worldSize / 2);
+        Tile[][] landMap = new Tile[GameData.worldSize][GameData.worldSize];
+        double[][] noiseMap = new double[GameData.worldSize][GameData.worldSize];
+        double[] rotationalNoiseMap = new double[360];
+        // init rotational noise
+        for (int i = 0; i < 360; i++) {
+            rotationalNoiseMap[i] = (SimplexNoise.noise(i * genOptions.coastRuggedness.get(), 1) + 1d) / 2d;
+        }
+
+        double excessDist = genOptions.maxIslandRadius.get() - genOptions.minIslandRadius.get();
         for (int x = 0; x < GameData.worldSize; x++) {
             for (int y = 0; y < GameData.worldSize; y++) {
+                double noise1 = (SimplexNoise.noise(x * genOptions.landFrequency.get(), y * genOptions.landFrequency.get()) + 1d) / 2d;
+                noiseMap[y][x] = noise1;
 
-                Vector2D v = new Vector2D(x + 0.5, y + 0.5);
-                double dist = center.distance(v);
-                if (dist < (double)GameData.worldSize / 2 - 4)
-                    tiles[y][x] = new Tile(Tile.Type.GRASS);
-                else if (dist < (double)GameData.worldSize / 2 - 1)
-                    tiles[y][x] = new Tile(Tile.Type.SAND);
-                else
-                    tiles[y][x] = new Tile(Tile.Type.WATER);
+
+                Vector2D v = new Vector2D(x + 0.5, y + 0.5).getSubtracted(center);
+                double dist = v.getLength();
+                double noise2 = rotationalNoiseMap[(int) v.angleDegrees() + 180];
+                double threshold = genOptions.minIslandRadius.get() + excessDist * noise2;
+                landMap[y][x] = dist < threshold ? new Tile(Tile.Type.GRASS) : new Tile(Tile.Type.WATER);
+            }
+        }
+
+        for (int x = 0; x < GameData.worldSize; x++){
+            for (int y = 0; y < GameData.worldSize; y++) {
+                if (landMap[y][x].type == Tile.Type.GRASS) {
+                    if (noiseMap[y][x] < genOptions.sandThreshold.get()) {
+                        tiles[y][x] = new Tile(Tile.Type.WATER);
+                    }
+                    else if (noiseMap[y][x] < genOptions.grassThreshold.get()) {
+                        tiles[y][x] = new Tile(Tile.Type.SAND);
+                    }
+                    else {
+                        tiles[y][x] = new Tile(Tile.Type.GRASS);
+                    }
+                }
+                else if (landMap[y][x].type == Tile.Type.SAND) tiles[y][x] = new Tile(Tile.Type.SAND);
+                else tiles[y][x] = new Tile(Tile.Type.WATER);
+
             }
         }
     }
@@ -94,7 +146,7 @@ public class GameMap
 
                 if (coast(x, y))
                 {
-                    Engine.addEntity(BoxCollider(new Vector2D(x + 0.5, y - 0.5), 1, 1));
+                    addEntity(BoxCollider(new Vector2D(x + 0.5, y - 0.5), 1, 1));
                 }
                 addFoam(x, y);
             }
@@ -124,9 +176,10 @@ public class GameMap
 
         // foam
         if (north || south || east || west) {
+            assert foamSPI != null;
             Entity foam = foamSPI.create(null);
             foam.get(PositionComponent.class).position.set(x + 0.5, y - 0.5);
-            Engine.addEntity(foam);
+            addEntity(foam);
         }
     }
 

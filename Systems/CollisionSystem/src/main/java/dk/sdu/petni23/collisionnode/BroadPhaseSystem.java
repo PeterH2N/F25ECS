@@ -6,10 +6,10 @@ import dk.sdu.petni23.common.components.collision.HasShapeComponent;
 import dk.sdu.petni23.common.components.collision.HitBoxComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.components.movement.VelocityComponent;
-import dk.sdu.petni23.gameengine.util.Collider;
+import dk.sdu.petni23.common.util.Collider;
 import dk.sdu.petni23.common.misc.Manifold;
 import dk.sdu.petni23.common.shape.Shape;
-import dk.sdu.petni23.gameengine.util.Vector2D;
+import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.node.Node;
 import dk.sdu.petni23.gameengine.services.IPluginService;
@@ -24,14 +24,16 @@ public class BroadPhaseSystem implements ISystem, IPluginService
     @Override
     public void update(double deltaTime)
     {
+        GameData.world.collisionColliders.keySet().removeIf(node -> Engine.getEntity(node.getEntityID()) == null);
+        GameData.world.hitBoxColliders.keySet().removeIf(node -> Engine.getEntity(node.getEntityID()) == null);
         clearGrid(collisionGrid);
         clearGrid(hitBoxGrid);
-        populateGrid(CollisionNode.class, collisionGrid, CollisionComponent.class, Engine.collisionColliders);
-        populateGrid(HitBoxNode.class, hitBoxGrid, HitBoxComponent.class, Engine.hitBoxColliders);
+        populateGrid(CollisionNode.class, collisionGrid, CollisionComponent.class, GameData.world.collisionColliders);
+        populateGrid(HitBoxNode.class, hitBoxGrid, HitBoxComponent.class, GameData.world.hitBoxColliders);
         GameData.world.collisionManifolds.clear();
         GameData.world.hitBoxManifolds.clear();
-        populateManifoldList(collisionGrid, GameData.world.collisionManifolds, Engine.collisionColliders);
-        populateManifoldList(hitBoxGrid, GameData.world.hitBoxManifolds, Engine.hitBoxColliders);
+        populateManifoldList(collisionGrid, GameData.world.collisionManifolds, GameData.world.collisionColliders);
+        populateManifoldList(hitBoxGrid, GameData.world.hitBoxManifolds, GameData.world.hitBoxColliders);
     }
 
     @Override

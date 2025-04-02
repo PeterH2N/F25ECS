@@ -5,7 +5,7 @@ import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.shape.AABBShape;
 import dk.sdu.petni23.common.shape.OvalShape;
 import dk.sdu.petni23.common.shape.Shape;
-import dk.sdu.petni23.gameengine.util.Vector2D;
+import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.node.Node;
 
 public class CollisionHelper
