@@ -1,7 +1,9 @@
 package dk.sdu.petni23.damage;
 
+import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.components.Dispatch;
 import dk.sdu.petni23.common.components.damage.ThrowComponent;
+import dk.sdu.petni23.common.components.health.DurationComponent;
 import dk.sdu.petni23.common.components.movement.AngularMomentumComponent;
 import dk.sdu.petni23.common.components.movement.TrajectoryComponent;
 import dk.sdu.petni23.common.components.collision.HitBoxComponent;
@@ -11,6 +13,7 @@ import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.components.rendering.AnimationComponent;
 import dk.sdu.petni23.common.components.rendering.DisplayComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
+import dk.sdu.petni23.common.components.sound.SoundComponent;
 import dk.sdu.petni23.common.shape.OvalShape;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.gameengine.Engine;
@@ -21,36 +24,37 @@ import javafx.scene.image.Image;
 
 import java.util.Objects;
 
-public class DynamiteSPI implements IEntitySPI
-{
+public class DynamiteSPI implements IEntitySPI {
     private static final SpriteSheet spriteSheet;
 
     static {
-        final int[] numFrames = {6};
-        Image img = new Image(Objects.requireNonNull(DynamiteSPI.class.getResourceAsStream("/damagesprites/Dynamite.png")));
+        final int[] numFrames = { 6 };
+        Image img = new Image(
+                Objects.requireNonNull(DynamiteSPI.class.getResourceAsStream("/damagesprites/Dynamite.png")));
         spriteSheet = new SpriteSheet(img, numFrames, new Vector2D(img.getWidth() / 6, img.getHeight()));
     }
 
-
     public static Entity createDynamite(Vector2D pos) {
         Entity tnt = new Entity();
+
+        Entity e = new Entity();
+        e.add(new SoundComponent("dynamite_throw1", 0, 0.4));
+        Engine.addEntity(e);
+
         tnt.add(new PositionComponent(pos));
         tnt.add(new DirectionComponent());
         tnt.add(new DirectionComponent());
         tnt.add(new DisplayComponent(DisplayComponent.Layer.EFFECT));
-        var spriteCOmponent = tnt.add(new SpriteComponent(spriteSheet, new Vector2D(-0.5,-0.5)));
+        var spriteCOmponent = tnt.add(new SpriteComponent(spriteSheet, new Vector2D(-0.5, -0.5)));
         spriteCOmponent.rotateWithDirection = true;
         var animation = tnt.add(new AnimationComponent());
         animation.doMirrors = false;
-
-
 
         return tnt;
     }
 
     @Override
-    public Entity create(Entity parent)
-    {
+    public Entity create(Entity parent) {
         assert parent != null;
         Vector2D pos = parent.get(PositionComponent.class).position;
         Vector2D dir = parent.get(DirectionComponent.class).dir;
@@ -65,17 +69,20 @@ public class DynamiteSPI implements IEntitySPI
         var explosionSPI = Engine.getEntitySPI(Type.EXPLOSION_ANIMATION);
         Dispatch onEnd = node -> {
             var circle = new OvalShape(0.35, 0.35);
-            Engine.addEntity(DamageSPI.createDamageEntity(end, new HitBoxComponent(circle), LayerComponent.Layer.ALL, 10));
+            Engine.addEntity(
+                    DamageSPI.createDamageEntity(end, new HitBoxComponent(circle), LayerComponent.Layer.ALL, 10));
             assert explosionSPI != null;
             Engine.addEntity(explosionSPI.create(dynamite));
+            Entity e = new Entity();
+            e.add(new SoundComponent("throw_explosion1", 0, 0.4));
+            Engine.addEntity(e);
         };
         dynamite.add(new TrajectoryComponent(start, end, distance * 0.33, onEnd));
         return dynamite;
     }
 
     @Override
-    public Type getType()
-    {
+    public Type getType() {
         return Type.DYNAMITE;
     }
 }
