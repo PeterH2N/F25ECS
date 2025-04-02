@@ -7,5 +7,6 @@ public class AnimationComponent extends Component
 {
     public long time = 0;
     public boolean reverse = false;
+    public boolean doMirrors = true;
     public long createdAt = GameData.getCurrentMillis();
 }

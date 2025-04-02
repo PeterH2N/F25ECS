@@ -63,7 +63,7 @@ public class AnimationSystem implements ISystem
             moving = !node.velocityComponent.velocity.equals(Vector2D.ZERO);
 
         // mirror if facing left
-        if (node.directionComponent != null)
+        if (node.directionComponent != null && node.animationComponent.doMirrors)
             node.spriteComponent.mirror = node.directionComponent.dir.x < 0;
 
         // if facing in the opposite direction of the movement

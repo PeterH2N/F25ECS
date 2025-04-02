@@ -108,8 +108,9 @@ public class RenderSystem implements IRenderSystem, IPluginService
         double y = pos.y + (height * o.y);
         // hurt
         if (node.healthComponent != null) {
-            if (GameData.getCurrentMillis() < node.healthComponent.lastHurtTime + 200)
+            if (GameData.getCurrentMillis() < node.healthComponent.lastHurtTime + 200) {
                 gc.setEffect(white);
+            }
         }
         boolean rotated = false;
         if (node.directionComponent != null && node.spriteComponent.rotateWithDirection) {
@@ -141,6 +142,7 @@ public class RenderSystem implements IRenderSystem, IPluginService
             if (options.showHP.get()) drawHealth(gc, node, pos);
             if (options.showWallet.get()) drawWallet(gc, node, pos);
             drawAim(gc, node);
+            drawDir(gc, node, pos);
         }
         drawFrameTime(gc);
     }
@@ -177,6 +179,14 @@ public class RenderSystem implements IRenderSystem, IPluginService
         Vector2D nPos = GameData.toScreenSpace(node.positionComponent.position.getAdded(node.directionComponent.dir.getMultiplied(node.throwComponent.distance)));
         double s = 32 * GameData.getTileRatio();
         gc.strokeOval(nPos.x - s * 0.5, nPos.y - s * 0.5, s,s);
+    }
+
+    void drawDir(GraphicsContext gc, RenderNode node, Vector2D start) {
+        if (node.directionComponent == null) return;
+        gc.setStroke(Color.RED);
+        Vector2D pos = node.positionComponent.position;
+        Vector2D end = GameData.toScreenSpace(pos.getAdded(node.directionComponent.dir.getMultiplied(0.25)));
+        gc.strokeLine(start.x, start.y, end.x, end.y);
     }
 
     void drawShape(GraphicsContext gc, Shape shape, Vector2D pos) {

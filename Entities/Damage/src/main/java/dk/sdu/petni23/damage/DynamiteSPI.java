@@ -37,10 +37,11 @@ public class DynamiteSPI implements IEntitySPI
         tnt.add(new PositionComponent(pos));
         tnt.add(new DirectionComponent());
         tnt.add(new DirectionComponent());
-        tnt.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
+        tnt.add(new DisplayComponent(DisplayComponent.Layer.EFFECT));
         var spriteCOmponent = tnt.add(new SpriteComponent(spriteSheet, new Vector2D(-0.5,-0.5)));
         spriteCOmponent.rotateWithDirection = true;
-        tnt.add(new AnimationComponent());
+        var animation = tnt.add(new AnimationComponent());
+        animation.doMirrors = false;
 
 
 
@@ -55,6 +56,7 @@ public class DynamiteSPI implements IEntitySPI
         Vector2D dir = parent.get(DirectionComponent.class).dir;
         double distance = parent.get(ThrowComponent.class).distance;
         Vector2D end = pos.getAdded(dir.getMultiplied(distance));
+        Vector2D start = pos.getAdded(dir.getMultiplied(0.25));
 
         var dynamite = createDynamite(pos);
         var am = dynamite.add(new AngularMomentumComponent());
@@ -67,7 +69,7 @@ public class DynamiteSPI implements IEntitySPI
             assert explosionSPI != null;
             Engine.addEntity(explosionSPI.create(dynamite));
         };
-        dynamite.add(new TrajectoryComponent(pos, end, distance * 0.33, onEnd));
+        dynamite.add(new TrajectoryComponent(start, end, distance * 0.33, onEnd));
         return dynamite;
     }
 
