@@ -17,6 +17,7 @@ import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 import javafx.scene.image.Image;
 
 import java.util.Objects;
+import java.util.Set;
 
 public class Knight
 {
@@ -69,7 +70,7 @@ public class Knight
 
         knight.add(new LayerComponent(LayerComponent.Layer.PLAYER));
 
-        knight.add(new FootstepSoundComponent("footstep_player")); // or "boots", "zombie_step", etc.
+        knight.add(new FootstepSoundComponent("footstep_knight", Set.of(1, 4)));
 
         knight.add(new AttackComponent(5, 0.6));
 

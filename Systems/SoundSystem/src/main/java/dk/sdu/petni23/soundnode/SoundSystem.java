@@ -17,7 +17,7 @@ public class SoundSystem implements ISystem {
             soundManager.preloadSounds("click1", "tree_hit1", "footstep_player", "woosh1", "woosh2");
             preloaded = true;
         }
-        
+
         long now = System.currentTimeMillis();
 
         // Handle regular SoundComponents
@@ -25,34 +25,35 @@ public class SoundSystem implements ISystem {
             SoundComponent soundComponent = node.soundComponent;
 
             if (soundComponent.triggered && now >= soundComponent.playAt) {
-                System.out.println("🎧 Triggered sound: " + soundComponent.action + " (volume: " + soundComponent.volume + ")");
+                System.out.println(
+                        "🎧 Triggered sound: " + soundComponent.action + " (volume: " + soundComponent.volume + ")");
                 soundManager.playSound(soundComponent.action, 0, soundComponent.volume);
                 soundComponent.triggered = false;
             }
         }
 
-        // Handle FootstepSoundComponents
         for (FootStepSoundNode node : Engine.getNodes(FootStepSoundNode.class)) {
-            if (node.velocityComponent.velocity.equals(Vector2D.ZERO)) continue;
+            if (node.velocityComponent.velocity.equals(Vector2D.ZERO))
+                continue;
 
             int currentFrame = node.spriteComponent.column;
+            var footstep = node.footstepSoundComponent;
 
-            if (node.footstepSoundComponent.lastFrame != currentFrame) {
-                if (currentFrame == 1 || currentFrame == 4) {
-                    var footstep = node.footstepSoundComponent;
-                        System.out.println("👟 Triggering step sound: " + footstep.sound);
-                        soundManager.playSound(footstep.sound, 0);
+            if (footstep.lastFrame != currentFrame) {
+                if (footstep.triggerFrames.contains(currentFrame)) {
+                    System.out.println("👟 Triggering step sound: " + footstep.sound);
+                    soundManager.playSound(footstep.sound, 0);
                 }
 
-                node.footstepSoundComponent.lastFrame = currentFrame;
+                footstep.lastFrame = currentFrame;
             }
-            
         }
+
     }
 
     @Override
     public int getPriority() {
         return 5; // Adjust priority if needed
     }
-    
+
 }

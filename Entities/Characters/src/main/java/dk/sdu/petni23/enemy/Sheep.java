@@ -1,0 +1,53 @@
+package dk.sdu.petni23.enemy;
+
+import dk.sdu.petni23.character.Character;
+import dk.sdu.petni23.common.components.items.LootComponent;
+import dk.sdu.petni23.common.components.rendering.SpriteComponent;
+import dk.sdu.petni23.common.components.sound.FootstepSoundComponent;
+import dk.sdu.petni23.common.components.damage.LayerComponent;
+import dk.sdu.petni23.common.components.movement.SpeedComponent;
+import dk.sdu.petni23.common.spritesystem.SpriteSheet;
+import dk.sdu.petni23.gameengine.Engine;
+import dk.sdu.petni23.gameengine.entity.IEntitySPI;
+import dk.sdu.petni23.common.util.Vector2D;
+import dk.sdu.petni23.gameengine.entity.Entity;
+import javafx.scene.image.Image;
+
+import java.util.Objects;
+import java.util.Set;
+
+public class Sheep {
+    private static final SpriteSheet spriteSheet;
+
+    static {
+        final int[] numFrames = { 8, 6 };
+        final int[] order = { 0, 1 };
+        Image img = new Image(Objects.requireNonNull(Sheep.class.getResourceAsStream("/enemysprites/Sheep.png")));
+        spriteSheet = new SpriteSheet(img, numFrames, new Vector2D(img.getWidth() / 8, img.getHeight() / 2), order);
+
+    }
+
+    public static Entity create(Vector2D pos) {
+        Entity sheep = Character.create(pos, 20, "sheep_hurt1");
+
+        var speed = new SpeedComponent();
+        speed.speed = 2.3;
+        sheep.add(speed);
+
+        var spriteComponent = new SpriteComponent(spriteSheet, new Vector2D(-0.5, -127d / 192));
+        sheep.add(spriteComponent);
+
+        sheep.add(new LayerComponent(LayerComponent.Layer.ENEMY));
+        var meatSPI = Engine.getEntitySPI(IEntitySPI.Type.MEAT);
+        var loot = sheep.add(new LootComponent(node -> {
+            if (meatSPI != null) {
+                Engine.addEntity(meatSPI.create(Engine.getEntity(node.getEntityID())));
+            }
+        }));
+        loot.maxDrop = 3;
+
+        sheep.add(new FootstepSoundComponent("sheep_walk1", Set.of(0)));
+
+        return sheep;
+    }
+}

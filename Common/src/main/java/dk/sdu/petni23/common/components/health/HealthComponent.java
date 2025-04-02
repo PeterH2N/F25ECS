@@ -16,4 +16,7 @@ public class HealthComponent extends Component
         health = max;
     }
 
+    public void heal(double amount) {
+        health = Math.min(health + amount, maxHealth);
+    }
 }

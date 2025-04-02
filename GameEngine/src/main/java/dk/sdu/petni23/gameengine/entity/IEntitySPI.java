@@ -16,6 +16,7 @@ public interface IEntitySPI
         GOLD,
         DAMAGE,
         DYNAMITE,
+        MEAT,
         EXPLOSION_ANIMATION;
     }
 }
