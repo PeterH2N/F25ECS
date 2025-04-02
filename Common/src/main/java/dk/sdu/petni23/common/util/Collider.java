@@ -1,6 +1,5 @@
-package dk.sdu.petni23.gameengine.util;
+package dk.sdu.petni23.common.util;
 
-import dk.sdu.petni23.gameengine.util.Vector2D;
 import dk.sdu.petni23.gameengine.node.Node;
 
 import java.util.ArrayList;

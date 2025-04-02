@@ -9,12 +9,10 @@ import dk.sdu.petni23.common.components.inventory.InventoryComponent;
 import dk.sdu.petni23.common.components.inventory.PickUpComponent;
 import dk.sdu.petni23.common.components.inventory.WalletComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
-import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.enemy.TNTGoblin;
-import dk.sdu.petni23.enemy.TorchGoblin;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.services.IPluginService;
-import dk.sdu.petni23.gameengine.util.Vector2D;
+import dk.sdu.petni23.common.util.Vector2D;
 import javafx.scene.input.KeyCode;
 
 public class PlayerPlugin implements IPluginService

@@ -1,6 +1,6 @@
 package dk.sdu.petni23.soundnode;
 
-import dk.sdu.petni23.gameengine.util.Vector2D;
+import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.common.components.sound.SoundComponent;
 import dk.sdu.petni23.gameengine.services.ISystem;

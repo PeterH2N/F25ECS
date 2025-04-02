@@ -8,15 +8,12 @@ import dk.sdu.petni23.gameengine.services.IPhysicsSystem;
 import dk.sdu.petni23.gameengine.services.IPluginService;
 import dk.sdu.petni23.gameengine.services.IRenderSystem;
 import dk.sdu.petni23.gameengine.services.ISystem;
-import dk.sdu.petni23.gameengine.util.Collider;
 
 import java.util.*;
 
 public class Engine
 {
     private static final int physicsSteps = 2;
-    public static final Map<Node, Collider> collisionColliders = new HashMap<>();
-    public static final Map<Node, Collider> hitBoxColliders = new HashMap<>();
     private final static Map<Long, Entity> entities = new HashMap<>();
     private final static List<Node> nodes = new ArrayList<>();
     private final static List<ISystem> systems = getServices(ISystem.class);
@@ -42,8 +39,6 @@ public class Engine
 
     public static void removeEntity(Entity entity) {
         if (entities.remove(entity.getId()) != null) {
-            collisionColliders.keySet().removeIf(node -> node.getEntityID() == entity.getId());
-            hitBoxColliders.keySet().removeIf(node -> node.getEntityID() == entity.getId());
             nodes.removeIf(node -> node.getEntityID() == entity.getId());
         }
     }
@@ -94,6 +89,10 @@ public class Engine
                     r.add((T)node);
         }
         return r;
+    }
+
+    public static List<Node> getNodes() {
+        return new ArrayList<>(nodes);
     }
 
     private static <T> ArrayList<T> getServices(Class<T> c) {

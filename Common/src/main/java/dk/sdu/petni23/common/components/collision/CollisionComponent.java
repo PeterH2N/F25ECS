@@ -1,7 +1,7 @@
 package dk.sdu.petni23.common.components.collision;
 
 import dk.sdu.petni23.common.shape.Shape;
-import dk.sdu.petni23.gameengine.util.Vector2D;
+import dk.sdu.petni23.common.util.Vector2D;
 
 public class CollisionComponent extends HasShapeComponent
 {

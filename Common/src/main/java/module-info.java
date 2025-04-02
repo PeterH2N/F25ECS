@@ -20,5 +20,6 @@ module Common {
     exports dk.sdu.petni23.common.components.items;
     exports dk.sdu.petni23.common.components.inventory;
     exports dk.sdu.petni23.common.components.damage;
+    exports dk.sdu.petni23.common.world.mapgen;
     uses IEntitySPI;
 }
