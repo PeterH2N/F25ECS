@@ -42,9 +42,7 @@ public class Tree {
 
         tree.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
 
-        var oval = new OvalShape();
-        oval.a = (24d * 0.5) / 64;
-        oval.b = (6d * 0.5) / 64;
+        var oval = new OvalShape((24d * 0.5) / 64, (6d * 0.5) / 64);
         var collision = new CollisionComponent(oval);
         tree.add(collision);
 
@@ -59,9 +57,7 @@ public class Tree {
 
         tree.add(health);
 
-        var rect = new AABBShape();
-        rect.width = 0.6;
-        rect.height = 0.7;
+        var rect = new AABBShape(0.6, 0.7);
         var hitBox = new HitBoxComponent(rect, new Vector2D(0, 0.5));
         tree.add(hitBox);
 
@@ -88,9 +84,7 @@ public class Tree {
         duration.onDeath = node -> Engine.addEntity(createTree(pos));
         stump.add(duration);
 
-        var oval = new OvalShape();
-        oval.a = (24d * 0.5) / 64;
-        oval.b = (6d * 0.5) / 64;
+        var oval = new OvalShape((24d * 0.5) / 64, (6d * 0.5) / 64);
         var collision = new CollisionComponent(oval);
         stump.add(collision);
 

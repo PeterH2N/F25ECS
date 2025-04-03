@@ -11,6 +11,9 @@ import dk.sdu.petni23.gameengine.node.Node;
 public class CollisionHelper
 {
     public static boolean checkCollision(Manifold m) {
+        // check if bounding boxes collide first
+        if (!boundingBoxesCollide(m)) return false;
+
         return switch (m.aShape) {
             case OvalShape s -> switch (m.bShape) {
                 case OvalShape c -> OvalvsOval(m);
@@ -29,8 +32,8 @@ public class CollisionHelper
     private static boolean OvalvsOval(Manifold m) {
         OvalShape ao = (OvalShape) m.aShape;
         OvalShape bo = (OvalShape) m.bShape;
-        Vector2D aPos = m.aPos.position.getAdded(m.a.getComponent(HasShapeComponent.class).offset);
-        Vector2D bPos = m.bPos.position.getAdded(m.b.getComponent(HasShapeComponent.class).offset);
+        Vector2D aPos = m.aPos.position.getAdded(m.aOffset);
+        Vector2D bPos = m.bPos.position.getAdded(m.bOffset);
         Vector2D n = bPos.getSubtracted(aPos);
         double aRadius = ao.getRadius(n);
         double bRadius = bo.getRadius(n);
@@ -53,8 +56,8 @@ public class CollisionHelper
     private static boolean AABBvsAABB(Manifold m) {
         AABBShape ab = (AABBShape) m.aShape;
         AABBShape bb = (AABBShape) m.bShape;
-        Vector2D aPos = m.aPos.position.getAdded(m.a.getComponent(HasShapeComponent.class).offset);
-        Vector2D bPos = m.bPos.position.getAdded(m.b.getComponent(HasShapeComponent.class).offset);
+        Vector2D aPos = m.aPos.position.getAdded(m.aOffset);
+        Vector2D bPos = m.bPos.position.getAdded(m.bOffset);
 
         Vector2D n = bPos.getSubtracted(aPos);
 
@@ -98,8 +101,8 @@ public class CollisionHelper
     private static boolean AABBvsOval(Manifold m) {
         AABBShape ab = (AABBShape) m.aShape;
         OvalShape bo = (OvalShape) m.bShape;
-        Vector2D aPos = m.aPos.position.getAdded(m.a.getComponent(HasShapeComponent.class).offset);
-        Vector2D bPos = m.bPos.position.getAdded(m.b.getComponent(HasShapeComponent.class).offset);
+        Vector2D aPos = m.aPos.position.getAdded(m.aOffset);
+        Vector2D bPos = m.bPos.position.getAdded(m.bOffset);
 
         Vector2D n = bPos.getSubtracted(aPos);
         Vector2D closest = new Vector2D(n);
@@ -176,5 +179,25 @@ public class CollisionHelper
         m.bPos = p;
 
         return AABBvsOval(m);
+    }
+
+    private static boolean boundingBoxesCollide(Manifold m) {
+        var aPos = m.aPos.position.getAdded(m.aOffset);
+        var bPos = m.bPos.position.getAdded(m.bOffset);
+        var aMin = m.aShape.aabb.min(aPos);
+        var aMax = m.aShape.aabb.max(aPos);
+        var bMin = m.bShape.aabb.min(bPos);
+        var bMax = m.bShape.aabb.max(bPos);
+
+        if (aMin.x < bMax.x &&
+                aMax.x > bMin.x &&
+                aMin.y < bMax.y &&
+                aMax.y > bMin.y) {
+            m.collide = true;
+            return true;
+        }
+
+        m.collide = false;
+        return false;
     }
 }

@@ -31,15 +31,11 @@ public class Character {
         var velocity = new VelocityComponent();
         character.add(velocity);
 
-        var oval = new OvalShape();
-        oval.a = (21d * 0.5) / 64;
-        oval.b = (4d * 0.5) / 64;
+        var oval = new OvalShape((21d * 0.5) / 64, (4d * 0.5) / 64);
         var collision = new CollisionComponent(oval);
         character.add(collision);
 
-        var rect = new AABBShape();
-        rect.width = 0.6;
-        rect.height = 0.85;
+        var rect = new AABBShape(0.6, 0.85);
         var hitBox = new HitBoxComponent(rect, new Vector2D(0, 0.4));
         character.add(hitBox);
 
