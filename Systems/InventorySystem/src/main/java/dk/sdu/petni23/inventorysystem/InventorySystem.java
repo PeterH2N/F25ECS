@@ -22,18 +22,17 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Enumeration;
 
-public class InventorySystem implements ISystem, IPluginService
-{
+public class InventorySystem implements ISystem, IPluginService {
     static AnchorPane pane;
     InventoryNode playerInventory;
     static InventoryController playerController;
+
     @Override
-    public void update(double deltaTime)
-    {
+    public void update(double deltaTime) {
         setPlayerInventory();
 
         if (playerInventory != null) {
-            // toggle by key
+            // Toggle by key (E)
             if (GameData.gameKeys.isPressed(KeyCode.E)) {
                 if (!playerInventory.inventoryComponent.visible) {
                     playerInventory.inventoryComponent.visible = true;
@@ -49,18 +48,24 @@ public class InventorySystem implements ISystem, IPluginService
     }
 
     @Override
-    public int getPriority()
-    {
+    public int getPriority() {
         return Priority.PROCESSING.get();
     }
 
     void updateInventoryController(InventoryController controller, InventoryNode inventory) {
-        if (inventory.walletComponent != null)
-            controller.gold.setText(String.valueOf(inventory.walletComponent.money));
+        if (inventory.walletComponent != null) {
+            // Update inventory values on the controller
+            controller.updateInventoryValues(
+                inventory.inventoryComponent.meat,   // Meat count
+                inventory.inventoryComponent.wood,   // Wood count
+                inventory.walletComponent.money      // Gold count
+            );
+        }
     }
 
     void setPlayerInventory() {
-        if (playerInventory != null) return;
+        if (playerInventory != null)
+            return;
         for (var node : Engine.getNodes(InventoryNode.class)) {
             if (Engine.getEntity(node.getEntityID()).get(ControlComponent.class) != null) {
                 playerInventory = node;
@@ -70,8 +75,7 @@ public class InventorySystem implements ISystem, IPluginService
     }
 
     @Override
-    public void start()
-    {
+    public void start() {
         URL fxmlLocation = getClass().getResource("/Inventory.fxml");
 
         if (fxmlLocation == null) {
@@ -104,8 +108,6 @@ public class InventorySystem implements ISystem, IPluginService
     }
 
     @Override
-    public void stop()
-    {
-
+    public void stop() {
     }
 }

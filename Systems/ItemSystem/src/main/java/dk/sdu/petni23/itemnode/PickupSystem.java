@@ -44,15 +44,40 @@ public class PickupSystem implements ISystem
     }
 
     boolean pickup(ItemNode item, PickUpNode pickup) {
-        if (item.currencyComponent != null) {
-            if (pickup.walletComponent != null) {
-                pickup.walletComponent.money += item.currencyComponent.value;
-                Engine.removeEntity(item.getEntityID());
-                return true;
+        if (item.currencyComponent != null && item.itemComponent != null) {
+            var type = item.itemComponent.itemType;
+    
+            switch (type) {
+                case GOLD:
+                    if (pickup.walletComponent != null) {
+                        pickup.walletComponent.money += item.currencyComponent.value;
+                        Engine.removeEntity(item.getEntityID());
+                        return true;
+                    }
+                    break;
+    
+                case WOOD:
+                    if (pickup.inventoryComponent != null) {
+                        pickup.inventoryComponent.wood += item.currencyComponent.value;
+                        Engine.removeEntity(item.getEntityID());
+                        return true;
+                    }
+                    break;
+    
+                case MEAT:
+                    if (pickup.inventoryComponent != null) {
+                        pickup.inventoryComponent.meat += item.currencyComponent.value;
+                        Engine.removeEntity(item.getEntityID());
+                        return true;
+                    }
+                    break;
+                default:
+                    break;
             }
         }
         return false;
     }
+    
 
     @Override
     public int getPriority()

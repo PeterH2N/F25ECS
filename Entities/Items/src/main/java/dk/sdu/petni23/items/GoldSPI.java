@@ -48,13 +48,13 @@ public class GoldSPI implements IEntitySPI {
     }
 
     @Override
-    public Type getType() {
-        return Type.GOLD;
+    public IEntitySPI.Type getType() {
+        return IEntitySPI.Type.GOLD;
     }
 
     Entity gold(Vector2D pos) {
         Entity gold = new Entity();
-        gold.add(new ItemComponent());
+        gold.add(new ItemComponent(IEntitySPI.Type.GOLD));
         var positionComponent = new PositionComponent();
         positionComponent.position.set(pos);
         gold.add(positionComponent);
@@ -64,7 +64,7 @@ public class GoldSPI implements IEntitySPI {
         gold.add(new VelocityComponent());
         gold.add(new CurrencyComponent());
 
-        ItemComponent item = new ItemComponent();
+        ItemComponent item = new ItemComponent(IEntitySPI.Type.GOLD);
         item.onPickup = node -> {
             Entity e = new Entity();
             e.add(new SoundComponent("coin_pickup1", 150, 0.5));

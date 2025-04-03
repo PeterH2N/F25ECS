@@ -4,7 +4,6 @@ import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.components.items.CurrencyComponent;
 import dk.sdu.petni23.common.components.items.ItemComponent;
 import dk.sdu.petni23.common.components.health.DurationComponent;
-import dk.sdu.petni23.common.components.health.HealthComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.components.movement.VelocityComponent;
 import dk.sdu.petni23.common.components.rendering.AnimationComponent;
@@ -49,13 +48,13 @@ public class WoodSPI implements IEntitySPI {
     }
 
     @Override
-    public Type getType() {
-        return Type.WOOD;
+    public IEntitySPI.Type getType() {
+        return IEntitySPI.Type.WOOD;
     }
 
     Entity wood(Vector2D pos) {
         Entity wood = new Entity();
-        wood.add(new ItemComponent());
+        wood.add(new ItemComponent(IEntitySPI.Type.WOOD));
         var positionComponent = new PositionComponent();
         positionComponent.position.set(pos);
         wood.add(positionComponent);
@@ -65,16 +64,13 @@ public class WoodSPI implements IEntitySPI {
         wood.add(new VelocityComponent());
         wood.add(new CurrencyComponent());
 
-        ItemComponent item = new ItemComponent();
+        ItemComponent item = new ItemComponent(IEntitySPI.Type.WOOD);
         item.onPickup = node -> {
-            // Play sound when picked up
             Entity soundEntity = new Entity();
             soundEntity.add(new SoundComponent("wood_pickup1", 150, 0.5));
             soundEntity.add(new DurationComponent(200, GameData.getCurrentMillis()));
             Engine.addEntity(soundEntity);
-        
         };
-        
         wood.add(item);
 
         return wood;

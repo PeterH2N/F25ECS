@@ -49,13 +49,13 @@ public class MeatSPI implements IEntitySPI {
     }
 
     @Override
-    public Type getType() {
-        return Type.MEAT;
+    public IEntitySPI.Type getType() {
+        return IEntitySPI.Type.MEAT;
     }
 
     Entity meat(Vector2D pos) {
         Entity meat = new Entity();
-        meat.add(new ItemComponent());
+        meat.add(new ItemComponent(IEntitySPI.Type.MEAT));
         var positionComponent = new PositionComponent();
         positionComponent.position.set(pos);
         meat.add(positionComponent);
@@ -65,21 +65,18 @@ public class MeatSPI implements IEntitySPI {
         meat.add(new VelocityComponent());
         meat.add(new CurrencyComponent());
 
-        ItemComponent item = new ItemComponent();
+        ItemComponent item = new ItemComponent(IEntitySPI.Type.MEAT);
         item.onPickup = node -> {
-            // Play sound when picked up
             Entity soundEntity = new Entity();
             soundEntity.add(new SoundComponent("meat_pickup1", 150, 0.5));
             soundEntity.add(new DurationComponent(200, GameData.getCurrentMillis()));
             Engine.addEntity(soundEntity);
-        
-            // Heal the player
+
             HealthComponent health = node.getComponent(HealthComponent.class);
             if (health != null) {
-                health.heal(20); // Heal for 20 HP
+                health.heal(20);
             }
         };
-        
         meat.add(item);
 
         return meat;
