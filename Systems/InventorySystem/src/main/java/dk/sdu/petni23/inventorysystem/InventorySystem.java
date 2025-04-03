@@ -4,6 +4,7 @@ import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.components.ControlComponent;
 import dk.sdu.petni23.common.components.inventory.InventoryComponent;
 import dk.sdu.petni23.gameengine.Engine;
+import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 import dk.sdu.petni23.gameengine.services.IPluginService;
 import dk.sdu.petni23.gameengine.services.IRenderSystem;
 import dk.sdu.petni23.gameengine.services.ISystem;
@@ -53,14 +54,8 @@ public class InventorySystem implements ISystem, IPluginService {
     }
 
     void updateInventoryController(InventoryController controller, InventoryNode inventory) {
-        if (inventory.walletComponent != null) {
-            // Update inventory values on the controller
-            controller.updateInventoryValues(
-                inventory.inventoryComponent.meat,   // Meat count
-                inventory.inventoryComponent.wood,   // Wood count
-                inventory.walletComponent.money      // Gold count
-            );
-        }
+        // Update inventory values on the controller
+        controller.updateInventoryValues(inventory.inventoryComponent.amounts);
     }
 
     void setPlayerInventory() {

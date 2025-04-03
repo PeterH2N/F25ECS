@@ -1,5 +1,6 @@
 package dk.sdu.petni23.inventorysystem;
 
+import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -45,16 +46,18 @@ public class InventoryController {
         goldIcon.setImage(load("/Inventory/Inventory_Gold.png"));
 
         // Example data for testing
-        updateInventoryValues(34, 0, 98);
+        //updateInventoryValues(34, 0, 98);
     }
 
     private Image load(String path) {
         return new Image(getClass().getResourceAsStream(path));
     }
 
-    private void updateDigitBox(HBox box, int value) {
+    private void updateDigitBox(HBox box, Integer value) {
         box.getChildren().clear();
-        for (char digit : String.valueOf(value).toCharArray()) {
+        char[] digits = "0".toCharArray();
+        if (value != null) digits = String.valueOf(value).toCharArray();
+        for (char digit : digits) {
             Image img = digitImages.get(digit);
             if (img != null) {
                 ImageView view = new ImageView(img);
@@ -65,9 +68,9 @@ public class InventoryController {
         }
     }
 
-    public void updateInventoryValues(int meat, int wood, int gold) {
-        updateDigitBox(meatDigitBox, meat);
-        updateDigitBox(woodDigitBox, wood);
-        updateDigitBox(goldDigitBox, gold);
+    public void updateInventoryValues(Map<IEntitySPI.Type, Integer> inv) {
+        updateDigitBox(meatDigitBox, inv.get(IEntitySPI.Type.MEAT));
+        updateDigitBox(woodDigitBox, inv.get(IEntitySPI.Type.WOOD));
+        updateDigitBox(goldDigitBox, inv.get(IEntitySPI.Type.GOLD));
     }
 }

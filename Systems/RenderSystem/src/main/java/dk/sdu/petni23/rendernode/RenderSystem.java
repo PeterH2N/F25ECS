@@ -139,7 +139,6 @@ public class RenderSystem implements IRenderSystem, IPluginService
             if (options.showColliders.get()) drawCollider(gc, node, pos);
             if (options.showHitBoxes.get()) drawHitBox(gc, node, pos);
             if (options.showHP.get()) drawHealth(gc, node, pos);
-            if (options.showWallet.get()) drawWallet(gc, node, pos);
             drawAim(gc, node);
             drawDir(gc, node, pos);
         }
@@ -161,14 +160,6 @@ public class RenderSystem implements IRenderSystem, IPluginService
         nPos.subtract(node.hitBoxComponent.offset.getMultiplied(GameData.getPPM()));
 
         drawShape(gc, node.hitBoxComponent.hitBox, nPos);
-    }
-    void drawWallet(GraphicsContext gc, RenderNode node, Vector2D pos) {
-        if (node.walletComponent == null) return;
-        gc.setFill(Color.GOLDENROD);
-        gc.setFont(new Font(gc.getFont().getName(), GameData.getPPM() * 0.2));
-        gc.setTextAlign(TextAlignment.CENTER);
-        gc.setTextBaseline(VPos.CENTER);
-        gc.fillText(String.valueOf(node.walletComponent.money), pos.x, pos.y - 100 * GameData.getTileRatio());
     }
 
 

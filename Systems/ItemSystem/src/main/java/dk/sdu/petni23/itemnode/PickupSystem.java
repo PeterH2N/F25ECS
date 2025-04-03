@@ -16,8 +16,6 @@ public class PickupSystem implements ISystem
             double closestDist = Double.MAX_VALUE;
             PickUpNode closest = null;
             for (var pickupNode : pickupNodes) {
-                if (item.currencyComponent != null && pickupNode.walletComponent == null) continue;
-                if (item.currencyComponent == null && pickupNode.inventoryComponent == null) continue;
                 double range = pickupNode.pickUpComponent.range;
                 var pickUpPos = pickupNode.positionComponent.position;
                 double distSq = itemPos.distanceSq(pickUpPos);
@@ -46,34 +44,11 @@ public class PickupSystem implements ISystem
     boolean pickup(ItemNode item, PickUpNode pickup) {
         if (item.currencyComponent != null && item.itemComponent != null) {
             var type = item.itemComponent.itemType;
-    
-            switch (type) {
-                case GOLD:
-                    if (pickup.walletComponent != null) {
-                        pickup.walletComponent.money += item.currencyComponent.value;
-                        Engine.removeEntity(item.getEntityID());
-                        return true;
-                    }
-                    break;
-    
-                case WOOD:
-                    if (pickup.inventoryComponent != null) {
-                        pickup.inventoryComponent.wood += item.currencyComponent.value;
-                        Engine.removeEntity(item.getEntityID());
-                        return true;
-                    }
-                    break;
-    
-                case MEAT:
-                    if (pickup.inventoryComponent != null) {
-                        pickup.inventoryComponent.meat += item.currencyComponent.value;
-                        Engine.removeEntity(item.getEntityID());
-                        return true;
-                    }
-                    break;
-                default:
-                    break;
-            }
+            var amount = pickup.inventoryComponent.amounts.get(type);
+            if (amount == null) amount = 0;
+            pickup.inventoryComponent.amounts.put(type, amount + 1);
+            item.itemComponent.onPickup.dispatch(pickup);
+            Engine.removeEntity(item.getEntityID());
         }
         return false;
     }

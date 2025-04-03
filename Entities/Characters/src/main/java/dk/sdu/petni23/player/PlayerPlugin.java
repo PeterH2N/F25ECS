@@ -7,7 +7,6 @@ import dk.sdu.petni23.common.components.ControlComponent;
 import dk.sdu.petni23.common.components.damage.LayerComponent;
 import dk.sdu.petni23.common.components.inventory.InventoryComponent;
 import dk.sdu.petni23.common.components.inventory.PickUpComponent;
-import dk.sdu.petni23.common.components.inventory.WalletComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.enemy.TNTGoblin;
 import dk.sdu.petni23.enemy.Sheep;
@@ -28,7 +27,6 @@ public class PlayerPlugin implements IPluginService
         control.pointsToMouse = true;
         player.add(control);
         player.add(new LayerComponent(LayerComponent.Layer.PLAYER));
-        player.add(new WalletComponent());
         var pickup = player.add(new PickUpComponent());
         pickup.range = 1.5;
         player.add(new InventoryComponent());
