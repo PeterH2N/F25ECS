@@ -70,10 +70,13 @@ public class GameMap
         double[][] noiseMap = new double[GameData.worldSize][GameData.worldSize];
         double[] shapeNoiseMap = new double[360];
         double[] coastNoiseMap = new double[360];
+        int offset1 = 2983;
+        int offset2 = 86723;
         // init rotational noise
         for (int i = 0; i < 360; i++) {
-            shapeNoiseMap[i] = SimplexNoise.noise(i * genOptions.islandShapeFrequency.get(), 1);
-            coastNoiseMap[i] = SimplexNoise.noise(i * genOptions.coastFrequency.get(), 2);
+            Vector2D pos = new Vector2D(10, 0).getRotatedTo(Math.toRadians(i));
+            shapeNoiseMap[i] = SimplexNoise.noise(offset1 + pos.x * genOptions.islandShapeFrequency.get(), pos.y * genOptions.islandShapeFrequency.get());
+            coastNoiseMap[i] = SimplexNoise.noise(offset2 + pos.x * genOptions.coastFrequency.get(), pos.y * genOptions.coastFrequency.get());
         }
 
         for (int x = 0; x < GameData.worldSize; x++) {
