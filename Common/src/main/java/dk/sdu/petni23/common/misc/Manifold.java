@@ -14,7 +14,7 @@ public class Manifold
     public Vector2D aOffset, bOffset;
     public Vector2D normal;
     public double penetration;
-    public boolean collide;
+    public boolean collide = false;
 
     public Manifold(Node a, Node b) {
         this.a = a;

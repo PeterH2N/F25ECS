@@ -11,7 +11,6 @@ import dk.sdu.petni23.gameengine.node.Node;
 public class CollisionHelper
 {
     public static boolean checkCollision(Manifold m) {
-        // check if bounding boxes collide first
         if (!boundingBoxesCollide(m)) return false;
 
         return switch (m.aShape) {
@@ -178,6 +177,10 @@ public class CollisionHelper
         m.aPos = m.bPos;
         m.bPos = p;
 
+        Vector2D o = m.aOffset;
+        m.aOffset = m.bOffset;
+        m.bOffset = o;
+
         return AABBvsOval(m);
     }
 
@@ -189,15 +192,9 @@ public class CollisionHelper
         var bMin = m.bShape.aabb.min(bPos);
         var bMax = m.bShape.aabb.max(bPos);
 
-        if (aMin.x < bMax.x &&
+        return aMin.x < bMax.x &&
                 aMax.x > bMin.x &&
                 aMin.y < bMax.y &&
-                aMax.y > bMin.y) {
-            m.collide = true;
-            return true;
-        }
-
-        m.collide = false;
-        return false;
+                aMax.y > bMin.y;
     }
 }

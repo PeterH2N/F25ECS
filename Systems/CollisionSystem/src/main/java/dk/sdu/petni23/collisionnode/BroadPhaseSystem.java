@@ -96,7 +96,7 @@ public class BroadPhaseSystem implements ISystem, IPluginService
             for (var cell : collider1.cells) {
                 for (Collider collider2 : grid[(int) cell.y][(int) cell.x]) {
                     if (collider1 == collider2) continue;
-                    if (collider1.node.getComponent(VelocityComponent.class) == null && collider2.node.getComponent(VelocityComponent.class) == null) continue;
+                    if (grid == collisionGrid && Engine.getEntity(collider1.node.getEntityID()).get(VelocityComponent.class) == null && Engine.getEntity(collider2.node.getEntityID()).get(VelocityComponent.class) == null) continue;
                     
                     var m = new Manifold(collider1.node, collider2.node);
                     if (!manifoldList.contains(m)) manifoldList.add(m);
@@ -116,6 +116,8 @@ public class BroadPhaseSystem implements ISystem, IPluginService
             }
         }
     }
+
+
 
     @Override
     public void stop()
