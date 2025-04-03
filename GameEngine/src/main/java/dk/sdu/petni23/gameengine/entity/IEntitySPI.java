@@ -17,6 +17,7 @@ public interface IEntitySPI
         DAMAGE,
         DYNAMITE,
         MEAT,
+        WOOD,
         EXPLOSION_ANIMATION;
     }
 }

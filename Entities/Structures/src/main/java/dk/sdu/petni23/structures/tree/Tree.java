@@ -9,6 +9,7 @@ import dk.sdu.petni23.common.components.sound.SoundComponent;
 import dk.sdu.petni23.common.components.collision.CollisionComponent;
 import dk.sdu.petni23.common.components.collision.HitBoxComponent;
 import dk.sdu.petni23.common.components.health.HealthComponent;
+import dk.sdu.petni23.common.components.items.LootComponent;
 import dk.sdu.petni23.common.components.damage.LayerComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.shape.AABBShape;
@@ -17,6 +18,7 @@ import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.entity.Entity;
+import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 import javafx.scene.image.Image;
 
 import java.util.Objects;
@@ -56,6 +58,14 @@ public class Tree {
             e.add(new DurationComponent(200, GameData.getCurrentMillis()));
             Engine.addEntity(e);
         };
+
+        var woodSPI = Engine.getEntitySPI(IEntitySPI.Type.WOOD);
+        var loot = tree.add(new LootComponent(node -> {
+            if (woodSPI != null) {
+                Engine.addEntity(woodSPI.create(Engine.getEntity(node.getEntityID())));
+            }
+        }));
+        loot.maxDrop = 3;
 
         tree.add(health);
 
