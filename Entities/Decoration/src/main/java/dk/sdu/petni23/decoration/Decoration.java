@@ -46,9 +46,7 @@ public class Decoration
 
         shapes = new Shape[numSprites];
 
-        var shape3 = new OvalShape();
-        shape3.a = (17d * 0.5) / 64;
-        shape3.b = (3d * 0.5) / 36;
+        var shape3 = new OvalShape((17d * 0.5) / 64, (3d * 0.5) / 36);
         shapes[3] = shape3;
     }
 

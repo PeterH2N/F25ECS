@@ -208,9 +208,7 @@ public class GameMap
         pc.position.set(pos);
         box.add(pc);
         box.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
-        AABBShape aabb = new AABBShape();
-        aabb.width = width;
-        aabb.height = height;
+        AABBShape aabb = new AABBShape(width, height);
         box.add(new CollisionComponent(aabb));
 
         return box;

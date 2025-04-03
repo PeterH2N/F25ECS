@@ -32,17 +32,15 @@ public class DamageSPI implements IEntitySPI
         var offset = new Vector2D(0,0);
         var parentHitBox = parent.get(HitBoxComponent.class);
         if (parentHitBox != null) offset = parentHitBox.offset;
-        OvalShape circle = new OvalShape();
-        circle.a = 1;
-        circle.b = 1;
+        OvalShape circle = new OvalShape(1, 1);
         var hitBox = new HitBoxComponent(circle, offset);
 
         // hitbox is influenced by attack component, and parent hitbox
         var attackComponent = parent.get(AttackComponent.class);
         if (attackComponent != null) {
             dmg *= attackComponent.strength;
-            circle.a = attackComponent.range;
-            circle.b = attackComponent.range;
+            circle = new OvalShape(attackComponent.range, attackComponent.range);
+            hitBox = new HitBoxComponent(circle, offset);
             position.add(dir.getMultiplied(attackComponent.range));
         }
 

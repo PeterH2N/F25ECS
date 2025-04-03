@@ -1,24 +1,13 @@
 package dk.sdu.petni23.common.shape;
 
-import dk.sdu.petni23.common.util.Vector2D;
-
 public class AABBShape extends Shape
 {
-    public double width;
-    public double height;
-
-    @Override
-    public Vector2D getBB()
-    {
-        return new Vector2D(width, height);
-    }
+    public final double width;
+    public final double height;
 
     public AABBShape(double width, double height){
+        super(new AABB(width * 0.5, height * 0.5));
         this.width = width;
         this.height = height;
     }
-
-    public AABBShape(){
-        
-    };
 }

@@ -27,9 +27,7 @@ public class House
         house.add(posC);
         house.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
         house.add(new SpriteComponent(spriteSheet, new Vector2D(-0.5, -0.85)));
-        AABBShape aabb = new AABBShape();
-        aabb.width = 100d / 64d;
-        aabb.height = 70d / 64d;
+        AABBShape aabb = new AABBShape(100d / 64d, 70d / 64d);
         house.add(new CollisionComponent(aabb, new Vector2D(0, 0.5)));
 
         return house;
