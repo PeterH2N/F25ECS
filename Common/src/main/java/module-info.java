@@ -3,6 +3,7 @@ import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 module Common {
     requires javafx.graphics;
     requires GameEngine;
+    requires java.desktop;
     exports dk.sdu.petni23.common.shape;
     exports dk.sdu.petni23.common.util;
     exports dk.sdu.petni23.common;

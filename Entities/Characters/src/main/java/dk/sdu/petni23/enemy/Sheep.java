@@ -47,6 +47,7 @@ public class Sheep {
         loot.maxDrop = 3;
 
         sheep.add(new FootstepSoundComponent("sheep_walk1", Set.of(0)));
+        //sheep.add(new HealthBarComponent(40, 5, Color.DARKGREEN));
 
         return sheep;
     }

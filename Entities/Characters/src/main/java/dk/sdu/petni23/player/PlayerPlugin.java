@@ -5,16 +5,16 @@ package dk.sdu.petni23.player;
 import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.components.ControlComponent;
 import dk.sdu.petni23.common.components.damage.LayerComponent;
+import dk.sdu.petni23.common.components.health.HealthBarComponent;
 import dk.sdu.petni23.common.components.inventory.InventoryComponent;
 import dk.sdu.petni23.common.components.inventory.PickUpComponent;
 import dk.sdu.petni23.common.components.inventory.WalletComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
-import dk.sdu.petni23.enemy.TNTGoblin;
-import dk.sdu.petni23.enemy.Sheep;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.services.IPluginService;
 import dk.sdu.petni23.common.util.Vector2D;
 import javafx.scene.input.KeyCode;
+import javafx.scene.paint.Color;
 
 public class PlayerPlugin implements IPluginService
 {
@@ -22,7 +22,7 @@ public class PlayerPlugin implements IPluginService
     public void start()
     {
 
-        var player = TNTGoblin.create(new Vector2D(0,0));
+        var player = Knight.create(new Vector2D(0,0));
         var control = new ControlComponent();
         control.ULDR = new KeyCode[] { KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D };
         control.pointsToMouse = true;
@@ -33,6 +33,7 @@ public class PlayerPlugin implements IPluginService
         pickup.range = 1.5;
         player.add(new InventoryComponent());
         Engine.addEntity(player);
+        player.add(new HealthBarComponent(40, 5, Color.GREEN));
 
         // set the camera to track the player
         GameData.camera.following = player.get(PositionComponent.class);
