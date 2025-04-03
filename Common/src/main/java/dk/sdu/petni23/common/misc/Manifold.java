@@ -11,9 +11,10 @@ public class Manifold
     public Node a, b;
     public Shape aShape, bShape;
     public PositionComponent aPos, bPos;
+    public Vector2D aOffset, bOffset;
     public Vector2D normal;
     public double penetration;
-    public boolean collide;
+    public boolean collide = false;
 
     public Manifold(Node a, Node b) {
         this.a = a;
@@ -25,6 +26,8 @@ public class Manifold
         bShape = bComp.getShape();
         aPos = a.getComponent(PositionComponent.class);
         bPos = b.getComponent(PositionComponent.class);
+        aOffset = aComp.offset;
+        bOffset = bComp.offset;
         assert (aShape != null && bShape != null && aPos != null && bPos != null);
     }
 

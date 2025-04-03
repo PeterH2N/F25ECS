@@ -253,7 +253,7 @@ public class RenderSystem implements IRenderSystem, IPluginService
                 double height = img.getHeight() * GameData.getTileRatio();
                 double x = initialPos.x + j * width;
                 double y = initialPos.y + i * height;
-                if ((x + width < 0 && x > GameData.getDisplayWidth()) || y + height < 0 && y > GameData.getDisplayHeight()) continue;
+                if (x + width < 0 || x > GameData.getDisplayWidth() || y + height < 0 || y > GameData.getDisplayHeight()) continue;
                 gc.drawImage(img, x, y, width, height);
             }
         }

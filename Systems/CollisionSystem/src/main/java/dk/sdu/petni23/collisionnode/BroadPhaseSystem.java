@@ -63,9 +63,8 @@ public class BroadPhaseSystem implements ISystem, IPluginService
             collider.cells.clear();
             Vector2D pos = positionComponent.position.getAdded(node.getComponent(HasShapeComponent.class).offset);
             Shape shape = node.getComponent(c).getShape();
-            Vector2D hbb = shape.getBB().getMultiplied(0.5);
-            Vector2D min = pos.getSubtracted(hbb);
-            Vector2D max = pos.getAdded(hbb);
+            Vector2D min = pos.getSubtracted(shape.aabb.hw, shape.aabb.hh);
+            Vector2D max = pos.getAdded(shape.aabb.hw, shape.aabb.hh);
 
             int startX = (int) (min.x + GameData.worldSize / 2);
             int startY = (int) (min.y + GameData.worldSize / 2);
@@ -97,6 +96,8 @@ public class BroadPhaseSystem implements ISystem, IPluginService
             for (var cell : collider1.cells) {
                 for (Collider collider2 : grid[(int) cell.y][(int) cell.x]) {
                     if (collider1 == collider2) continue;
+                    if (grid == collisionGrid && Engine.getEntity(collider1.node.getEntityID()).get(VelocityComponent.class) == null && Engine.getEntity(collider2.node.getEntityID()).get(VelocityComponent.class) == null) continue;
+                    
                     var m = new Manifold(collider1.node, collider2.node);
                     if (!manifoldList.contains(m)) manifoldList.add(m);
                 }
@@ -115,6 +116,8 @@ public class BroadPhaseSystem implements ISystem, IPluginService
             }
         }
     }
+
+
 
     @Override
     public void stop()

@@ -23,7 +23,7 @@ public class GameData
     private static final DoubleProperty displayWidth = new SimpleDoubleProperty(800);
     private static final DoubleProperty displayHeight = new SimpleDoubleProperty(600);
     private static final DoubleProperty ppmProperty = new SimpleDoubleProperty();
-    public static final int worldSize = 150; // must be an even number
+    public static final int worldSize = 176; // must be an even number
     private static final DoubleProperty displayRatioProperty = new SimpleDoubleProperty();
     private static final DoubleProperty tileRatioProperty = new SimpleDoubleProperty();
     public static final StackPane gameWindow = new StackPane();

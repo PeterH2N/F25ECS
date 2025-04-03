@@ -19,7 +19,6 @@ import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TreeMap;
 
 public class GameMap
 {
@@ -69,13 +68,17 @@ public class GameMap
         Vector2D center = new Vector2D((double) GameData.worldSize / 2, (double) GameData.worldSize / 2);
         Tile[][] landMap = new Tile[GameData.worldSize][GameData.worldSize];
         double[][] noiseMap = new double[GameData.worldSize][GameData.worldSize];
-        double[] rotationalNoiseMap = new double[360];
+        double[] shapeNoiseMap = new double[360];
+        double[] coastNoiseMap = new double[360];
+        int offset1 = 2983;
+        int offset2 = 86723;
         // init rotational noise
         for (int i = 0; i < 360; i++) {
-            rotationalNoiseMap[i] = (SimplexNoise.noise(i * genOptions.coastRuggedness.get(), 1) + 1d) / 2d;
+            Vector2D pos = new Vector2D(10, 0).getRotatedTo(Math.toRadians(i));
+            shapeNoiseMap[i] = SimplexNoise.noise(offset1 + pos.x * genOptions.islandShapeFrequency.get(), pos.y * genOptions.islandShapeFrequency.get());
+            coastNoiseMap[i] = SimplexNoise.noise(offset2 + pos.x * genOptions.coastFrequency.get(), pos.y * genOptions.coastFrequency.get());
         }
 
-        double excessDist = genOptions.maxIslandRadius.get() - genOptions.minIslandRadius.get();
         for (int x = 0; x < GameData.worldSize; x++) {
             for (int y = 0; y < GameData.worldSize; y++) {
                 double noise1 = (SimplexNoise.noise(x * genOptions.landFrequency.get(), y * genOptions.landFrequency.get()) + 1d) / 2d;
@@ -84,8 +87,11 @@ public class GameMap
 
                 Vector2D v = new Vector2D(x + 0.5, y + 0.5).getSubtracted(center);
                 double dist = v.getLength();
-                double noise2 = rotationalNoiseMap[(int) v.angleDegrees() + 180];
-                double threshold = genOptions.minIslandRadius.get() + excessDist * noise2;
+                int angle = (int) v.angleDegrees() + 180;
+                double shapeNoise = shapeNoiseMap[angle];
+                double coastNoise = coastNoiseMap[angle];
+                double shapeThreshold = Math.min(genOptions.islandRadius.get() + shapeNoise * genOptions.islandShapeAmplitude.get(), ((double) GameData.worldSize / 2) - 1);
+                double threshold = Math.min(shapeThreshold + coastNoise * genOptions.coastAmplitude.get(), ((double) GameData.worldSize / 2) - 1);
                 landMap[y][x] = dist < threshold ? new Tile(Tile.Type.GRASS) : new Tile(Tile.Type.WATER);
             }
         }
@@ -205,9 +211,7 @@ public class GameMap
         pc.position.set(pos);
         box.add(pc);
         box.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
-        AABBShape aabb = new AABBShape();
-        aabb.width = width;
-        aabb.height = height;
+        AABBShape aabb = new AABBShape(width, height);
         box.add(new CollisionComponent(aabb));
 
         return box;
