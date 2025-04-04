@@ -1,4 +1,4 @@
-package dk.sdu.petni23.structures.wall;
+package dk.sdu.petni23.structures.archerTower;
 
 import java.util.Objects;
 
@@ -17,46 +17,44 @@ import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import javafx.scene.image.Image;
 
-public class Wall {
-    private static final SpriteSheet spriteSheet;
+public class ArcherTower {
+    // Variables for hitbox and sprite sizes
+    private static final double HITBOX_WIDTH = 1.5;
+    private static final double HITBOX_HEIGHT = 1.55;
 
+    private static final SpriteSheet spriteSheet;
 
     static {
         final int[] numFrames = {1};
-        Image img = new Image(Objects.requireNonNull(Wall.class.getResourceAsStream("/structuresprites/wall_trans.png")));
+        Image img = new Image(Objects.requireNonNull(ArcherTower.class.getResourceAsStream("/structuresprites/Tower_Purple.png")));
         spriteSheet = new SpriteSheet(img, numFrames, new Vector2D(img.getWidth(), img.getHeight()));
     }
 
     public static Entity create(Vector2D pos){
-        Entity wall = new Entity();
+        Entity tower = new Entity();
 
-        //add positionn component to wall entity
         var position = new PositionComponent();
         position.position.set(pos);
-        wall.add(position);
+        tower.add(position);
 
-        //add sprite component
-        final var origin = new Vector2D(-0.5, -0.5);
-        dk.sdu.petni23.common.components.rendering.SpriteComponent sprite = new SpriteComponent(spriteSheet, origin);
-        wall.add(sprite);
+        var origin = new Vector2D(-0.5, -0.5);
+        var sprite = new SpriteComponent(spriteSheet, origin);
+        tower.add(sprite);
 
-        wall.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
+        tower.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
+        tower.add(new LayerComponent(LayerComponent.Layer.ALL));
 
-        wall.add(new LayerComponent(LayerComponent.Layer.ALL));
-
-        Shape collisionShape = new AABBShape(3, 1);
-        var offset = new Vector2D(0, -0.5);
-        Shape hitBoxShape = new AABBShape(3, 1);
+        Shape collisionShape = new AABBShape(HITBOX_WIDTH, HITBOX_HEIGHT);
+        Shape hitBoxShape = new AABBShape(HITBOX_WIDTH, HITBOX_HEIGHT);
+        var offset = new Vector2D(-0, -0.9);
 
         var collision = new CollisionComponent(collisionShape, offset);
         var hitBox = new HitBoxComponent(hitBoxShape, offset);
+        var placement = new PlacementComponent(collision, hitBox);
+        tower.add(placement);
 
-        var placementComponent = new PlacementComponent(collision, hitBox);
-        wall.add(placementComponent);
+        tower.add(new HealthComponent(500)); // Less HP than wall but can attack
 
-        var health = new HealthComponent(200);
-        wall.add(health);
-
-        return wall;
+        return tower;
     }
 }
