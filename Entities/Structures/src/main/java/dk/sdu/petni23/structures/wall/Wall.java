@@ -54,7 +54,7 @@ public class Wall {
         var placementComponent = new PlacementComponent(collision, hitBox);
         wall.add(placementComponent);
 
-        var health = new HealthComponent(20);
+        var health = new HealthComponent(200);
         wall.add(health);
 
         return wall;

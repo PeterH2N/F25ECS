@@ -19,8 +19,8 @@ import javafx.scene.image.Image;
 
 public class ArcherTower {
     // Variables for hitbox and sprite sizes
-    private static final double HITBOX_WIDTH = 2;
-    private static final double HITBOX_HEIGHT = 4;
+    private static final double HITBOX_WIDTH = 1.5;
+    private static final double HITBOX_HEIGHT = 1.55;
 
     private static final SpriteSheet spriteSheet;
 
@@ -44,17 +44,16 @@ public class ArcherTower {
         tower.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
         tower.add(new LayerComponent(LayerComponent.Layer.ALL));
 
-        // Use the hitbox size variables here
         Shape collisionShape = new AABBShape(HITBOX_WIDTH, HITBOX_HEIGHT);
         Shape hitBoxShape = new AABBShape(HITBOX_WIDTH, HITBOX_HEIGHT);
-        var offset = new Vector2D(0, 0);
+        var offset = new Vector2D(-0, -0.9);
 
         var collision = new CollisionComponent(collisionShape, offset);
         var hitBox = new HitBoxComponent(hitBoxShape, offset);
         var placement = new PlacementComponent(collision, hitBox);
         tower.add(placement);
 
-        tower.add(new HealthComponent(15)); // Less HP than wall but can attack
+        tower.add(new HealthComponent(500)); // Less HP than wall but can attack
 
         return tower;
     }
