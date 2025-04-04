@@ -71,6 +71,9 @@ public class RenderSystem implements IRenderSystem, IPluginService
         drawMap(gc);
         drawSpritesByLayer(gc, DisplayComponent.Layer.FOREGROUND);
         drawSpritesByLayer(gc, DisplayComponent.Layer.EFFECT);
+        for (var node : Engine.getNodes(RenderNode.class)) {
+            drawHealthBar(gc, node, GameData.toScreenSpace(node.positionComponent.position));
+        }
     }
 
     void drawSpritesByLayer(GraphicsContext gc, DisplayComponent.Layer layer) {
@@ -209,6 +212,21 @@ public class RenderSystem implements IRenderSystem, IPluginService
         gc.setTextAlign(TextAlignment.CENTER);
         gc.setTextBaseline(VPos.CENTER);
         gc.fillText(df.format(node.healthComponent.health), pos.x, pos.y - 80 * GameData.getTileRatio());
+    }
+
+    void drawHealthBar(GraphicsContext gc, RenderNode node, Vector2D pos) {
+        if (node.healthBarComponent == null) return;
+        double r = GameData.getTileRatio();
+        int barWidth = node.healthBarComponent.width;
+        int barHeight = node.healthBarComponent.height;
+        double health = node.healthComponent.health;
+        double maxHealth = node.healthComponent.maxHealth;
+        gc.setStroke(Color.BLACK);
+        gc.strokeRoundRect(pos.x-20*r, pos.y-80*r, barWidth*r, barHeight*r, 3, 5);
+        gc.setFill(Color.LIGHTGRAY);
+        gc.fillRoundRect(pos.x-20*r, pos.y-80*r, barWidth*r, barHeight*r, 3, 5);
+        gc.setFill(node.healthBarComponent.color);
+        gc.fillRoundRect(pos.x-20*r, pos.y-80*r, health/maxHealth * barWidth*r, barHeight*r, 3, 5);
     }
     void drawGrid(GraphicsContext gc) {
         gc.setLineWidth(0.5);

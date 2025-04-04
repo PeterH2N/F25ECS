@@ -4,6 +4,7 @@ import dk.sdu.petni23.character.Character;
 import dk.sdu.petni23.common.components.actions.Action;
 import dk.sdu.petni23.common.components.actions.ActionSetComponent;
 import dk.sdu.petni23.common.components.damage.ThrowComponent;
+import dk.sdu.petni23.common.components.health.HealthBarComponent;
 import dk.sdu.petni23.common.components.items.LootComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.common.components.damage.LayerComponent;
@@ -14,6 +15,7 @@ import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 
 import java.util.Objects;
 
@@ -60,6 +62,7 @@ public class TNTGoblin
             Engine.addEntity(dynamiteSPI.create(Engine.getEntity(node.getEntityID())));
         };
         attack.strength = 1;
+        goblin.add(new HealthBarComponent(40, 5, Color.RED));
 
 
         return goblin;
