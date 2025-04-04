@@ -12,13 +12,6 @@ import dk.sdu.petni23.gameengine.node.Optional;
 public class ActionNode extends Node
 {
     public ActionSetComponent actionSetComponent;
-    /*public LayerComponent layerComponent;
-    @Optional
-    public PositionComponent positionComponent;
-    @Optional
-    public DirectionComponent directionComponent;
-    @Optional
-    public AttackComponent attackComponent;*/
 
     public ActionNode(Entity entity)
     {

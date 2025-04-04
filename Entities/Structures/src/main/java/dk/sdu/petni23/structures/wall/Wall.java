@@ -42,7 +42,7 @@ public class Wall {
 
         wall.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
 
-        wall.add(new LayerComponent(LayerComponent.Layer.ALL));
+        wall.add(new LayerComponent(LayerComponent.Layer.PLAYER));
 
         Shape collisionShape = new AABBShape(3, 1);
         var offset = new Vector2D(0, -0.5);

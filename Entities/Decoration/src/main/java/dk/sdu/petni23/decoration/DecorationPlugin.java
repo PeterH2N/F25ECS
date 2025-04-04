@@ -8,7 +8,7 @@ import dk.sdu.petni23.gameengine.services.IPluginService;
 
 public class DecorationPlugin implements IPluginService
 {
-    final int numDecorations = GameData.worldSize * 2;
+    final int numDecorations = GameData.worldSize * 4;
     @Override
     public void start()
     {
