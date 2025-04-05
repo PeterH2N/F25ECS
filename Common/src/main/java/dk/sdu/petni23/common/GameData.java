@@ -44,6 +44,7 @@ public class GameData
     public static final Random random = new Random();
     private static GameMode gameMode = GameMode.REGULAR;
     private static Entity hand;
+    private static Entity shop;
     static {
         ppmProperty.bind(displayWidth.divide(camera.widthProperty));
         displayRatioProperty.bind(displayHeight.divide(displayWidth));
@@ -51,6 +52,14 @@ public class GameData
         displayWidth.bind(gameWindow.widthProperty());
         displayHeight.bind(gameWindow.heightProperty());
     }
+    public static Entity getShop(){
+        return shop;
+    }
+
+    public static void setShop(Entity e){
+        shop=e;
+    }
+
     public static DoubleProperty displayWidthProperty() {
         return displayWidth;
     }

@@ -35,6 +35,7 @@
         <module>DebugSystem</module>
         <module>ItemSystem</module>
         <module>InventorySystem</module>
+        <module>ShopSystem</module>
     </modules>
 
     <dependencies>

@@ -1,0 +1,11 @@
+<shopItemsConfig>
+    <woodenWall>
+        <gold>2</gold>
+        <wood>2</wood>
+    </woodenWall>
+    <stoneWall>
+        <gold>4</gold>
+        <stone>2</stone>
+        <wood>2</wood>
+    </stoneWall>
+</shopItemsConfig>
