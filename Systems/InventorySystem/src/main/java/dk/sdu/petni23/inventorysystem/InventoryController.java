@@ -16,14 +16,18 @@ public class InventoryController {
     @FXML private ImageView meatSlotImage;
     @FXML private ImageView woodSlotImage;
     @FXML private ImageView goldSlotImage;
+    @FXML private ImageView stoneSlotImage;
+
     @FXML private ImageView meatIcon;
     @FXML private ImageView woodIcon;
     @FXML private ImageView goldIcon;
+    @FXML private ImageView stoneIcon;
 
     // Digit containers
     @FXML private HBox meatDigitBox;
     @FXML private HBox woodDigitBox;
     @FXML private HBox goldDigitBox;
+    @FXML private HBox stoneDigitBox;
 
     private final Map<Character, Image> digitImages = new HashMap<>();
 
@@ -35,18 +39,18 @@ public class InventoryController {
             digitImages.put(c, new Image(getClass().getResourceAsStream(path)));
         }
 
-        // Load icons dynamically using fx:id
+        // Load icons and slot frames
         bannerImage.setImage(load("/Inventory/Banner.png"));
+
         meatSlotImage.setImage(load("/Inventory/Item_holder.png"));
         woodSlotImage.setImage(load("/Inventory/Item_holder.png"));
         goldSlotImage.setImage(load("/Inventory/Item_holder.png"));
+        stoneSlotImage.setImage(load("/Inventory/Item_holder.png"));
 
         meatIcon.setImage(load("/Inventory/Inventory_Meat.png"));
         woodIcon.setImage(load("/Inventory/Inventory_Wood.png"));
         goldIcon.setImage(load("/Inventory/Inventory_Gold.png"));
-
-        // Example data for testing
-        //updateInventoryValues(34, 0, 98);
+        stoneIcon.setImage(load("/Inventory/Inventory_Stone.png")); // 🔥 your new image
     }
 
     private Image load(String path) {
@@ -72,5 +76,6 @@ public class InventoryController {
         updateDigitBox(meatDigitBox, inv.get(IEntitySPI.Type.MEAT));
         updateDigitBox(woodDigitBox, inv.get(IEntitySPI.Type.WOOD));
         updateDigitBox(goldDigitBox, inv.get(IEntitySPI.Type.GOLD));
+        updateDigitBox(stoneDigitBox, inv.get(IEntitySPI.Type.STONE));
     }
 }
