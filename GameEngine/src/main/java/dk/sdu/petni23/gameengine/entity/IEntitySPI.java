@@ -18,6 +18,7 @@ public interface IEntitySPI
         DYNAMITE,
         MEAT,
         WOOD,
+        STONE,
         EXPLOSION_ANIMATION;
     }
 }
