@@ -17,7 +17,6 @@ import dk.sdu.petni23.structures.tower.House;
 import javafx.scene.image.Image;
 
 import java.util.Objects;
-import java.util.Vector;
 
 public class NexusPlugin implements IPluginService
 {

@@ -7,7 +7,10 @@ module PlacementSystem {
     requires javafx.graphics;
     requires Common;
     requires GameEngine;
+    requires Structures;
+
     exports dk.sdu.petni23.placement;
+
     provides ISystem with PlacementSystem;
     provides INodeSPI with PlacementNodeSPI;
 }

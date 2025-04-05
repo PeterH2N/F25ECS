@@ -5,12 +5,17 @@ import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.services.IPluginService;
 
-public class WallPlugin implements IPluginService{
+public class WallPlugin implements IPluginService {
 
     @Override
     public void start() {
-        GameData.setHand(Wall.create(new Vector2D(0,0)));
-        Engine.addEntity(GameData.getHand());
+    }
+
+    public void update() {
+        if (GameData.getHand() == null) {
+            GameData.setHand(Wall.create(new Vector2D(0, 0)));
+            Engine.addEntity(GameData.getHand());
+        }
     }
 
     @Override
@@ -18,5 +23,5 @@ public class WallPlugin implements IPluginService{
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'stop'");
     }
-    
+
 }
