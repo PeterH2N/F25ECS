@@ -20,18 +20,18 @@ import javafx.scene.image.Image;
 import java.util.Objects;
 
 public class StoneSPI implements IEntitySPI {
-    private static final SpriteSheet woodSprite;
-    private static final SpriteSheet spawnWoodSprite;
+    private static final SpriteSheet stoneSprite;
+    private static final SpriteSheet spawnStoneSprite;
     private final static double spawnRadius = 1.5;
     private final static Vector2D origin = new Vector2D(-0.5, -0.72);
 
     static {
         int[] numFrames = { 1 };
         Image img = new Image(Objects.requireNonNull(StoneSPI.class.getResourceAsStream("/itemsprites/Stone_Idle.png")));
-        woodSprite = new SpriteSheet(img, numFrames, new Vector2D(img.getWidth(), img.getHeight()));
+        stoneSprite = new SpriteSheet(img, numFrames, new Vector2D(img.getWidth(), img.getHeight()));
         numFrames = new int[] { 1 };
         img = new Image(Objects.requireNonNull(StoneSPI.class.getResourceAsStream("/itemsprites/Stone_Spawn.png")));
-        spawnWoodSprite = new SpriteSheet(img, numFrames, new Vector2D(img.getWidth() / 1, img.getHeight()));
+        spawnStoneSprite = new SpriteSheet(img, numFrames, new Vector2D(img.getWidth() / 1, img.getHeight()));
     }
 
     @Override
@@ -49,47 +49,47 @@ public class StoneSPI implements IEntitySPI {
 
     @Override
     public IEntitySPI.Type getType() {
-        return IEntitySPI.Type.WOOD;
+        return IEntitySPI.Type.STONE;
     }
 
-    Entity wood(Vector2D pos) {
-        Entity wood = new Entity();
-        wood.add(new ItemComponent(IEntitySPI.Type.WOOD));
+    Entity stone(Vector2D pos) {
+        Entity stone = new Entity();
+        stone.add(new ItemComponent(IEntitySPI.Type.STONE));
         var positionComponent = new PositionComponent();
         positionComponent.position.set(pos);
-        wood.add(positionComponent);
-        SpriteComponent spriteComponent = new SpriteComponent(woodSprite, origin);
-        wood.add(spriteComponent);
-        wood.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
-        wood.add(new VelocityComponent());
-        wood.add(new CurrencyComponent());
+        stone.add(positionComponent);
+        SpriteComponent spriteComponent = new SpriteComponent(stoneSprite, origin);
+        stone.add(spriteComponent);
+        stone.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
+        stone.add(new VelocityComponent());
+        stone.add(new CurrencyComponent());
 
-        ItemComponent item = new ItemComponent(IEntitySPI.Type.WOOD);
+        ItemComponent item = new ItemComponent(IEntitySPI.Type.STONE);
         item.onPickup = node -> {
             Entity soundEntity = new Entity();
-            soundEntity.add(new SoundComponent("wood_pickup1", 150, 0.5));
+            soundEntity.add(new SoundComponent("stone_pickup1", 150, 0.5));
             soundEntity.add(new DurationComponent(200, GameData.getCurrentMillis()));
             Engine.addEntity(soundEntity);
         };
-        wood.add(item);
+        stone.add(item);
 
-        return wood;
+        return stone;
     }
 
-    Entity spawnWood(Vector2D pos) {
+    public Entity spawnStone(Vector2D pos) {
         Entity spawn = new Entity();
         var positionComponent = new PositionComponent();
         positionComponent.position.set(pos);
         spawn.add(positionComponent);
-        SpriteComponent spriteComponent = new SpriteComponent(spawnWoodSprite, origin);
+        SpriteComponent spriteComponent = new SpriteComponent(spawnStoneSprite, origin);
         spawn.add(spriteComponent);
         spawn.add(new AnimationComponent());
         spawn.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
 
-        spawn.add(new SoundComponent("wood_drop1", 50, 0.8));
+        spawn.add(new SoundComponent("stone_drop1", 50, 0.8));
 
         var duration = spawn.add(new DurationComponent(700, GameData.getCurrentMillis()));
-        duration.onDeath = node -> Engine.addEntity(wood(pos));
+        duration.onDeath = node -> Engine.addEntity(stone(pos));
         return spawn;
     }
 }

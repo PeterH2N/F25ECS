@@ -13,6 +13,6 @@ module Structures {
     requires javafx.graphics;
     requires GameEngine;
     requires Common;
-    provides IPluginService with TreePlugin, WallPlugin, HousePlugin, ArcherTowerPlugin, NexusPlugin;
+    provides IPluginService with TreePlugin, WallPlugin, HousePlugin, ArcherTowerPlugin, NexusPlugin, MinePlugin;
     exports dk.sdu.petni23.structures.wall;
 }
