@@ -64,7 +64,7 @@ public class ControlSystem implements ISystem
     }
 
     public void performAction(ActionSetComponent acs, int i) {
-        if (GameData.getCurrentMillis() < acs.lastActionTime + acs.lastAction.duration) return;
+        if (GameData.getCurrentMillis() <= acs.lastActionTime + acs.lastAction.duration) return;
 
         long now = GameData.getCurrentMillis();
         acs.lastAction = acs.actions.get(i);

@@ -11,7 +11,7 @@ public class ActionSystem implements ISystem
     {
         for (ActionNode node : Engine.getNodes(ActionNode.class)) {
             long now = GameData.getCurrentMillis();
-            if (now < node.actionSetComponent.lastActionTime + node.actionSetComponent.lastAction.duration) {
+            if (now <= node.actionSetComponent.lastActionTime + node.actionSetComponent.lastAction.duration) {
                 if (now > node.actionSetComponent.lastActionTime + node.actionSetComponent.lastAction.delay) {
                     if (node.actionSetComponent.lastAction.onDispatch != null && !node.actionSetComponent.hasDispatched) {
                         node.actionSetComponent.hasDispatched = true;

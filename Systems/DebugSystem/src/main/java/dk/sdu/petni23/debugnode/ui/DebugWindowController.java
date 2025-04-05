@@ -12,9 +12,9 @@ public class DebugWindowController
     @FXML
     private CheckBox colliders, hitBoxes, hp, grid, wallet;
     @FXML
-    private Slider SandThreshold, GrassThreshold, Frequency, islandRadius, islandShapeAmplitude, islandShapeFrequency, coastAmplitude, coastFrequency;
+    private Slider SandThreshold, GrassThreshold, Frequency, islandRadius, islandShapeAmplitude, islandShapeFrequency, islandShapeOffset, islandCoastOffset, landOffset, coastAmplitude, coastFrequency;
     @FXML
-    private Text SandThresholdValue, GrassThresholdValue, FrequencyValue, islandRadiusValue, islandShapeAmplitudeValue, islandShapeFrequencyValue, coastAmplitudeValue, coastFrequencyValue;
+    private Text SandThresholdValue, GrassThresholdValue, FrequencyValue, islandRadiusValue, islandShapeAmplitudeValue, islandShapeFrequencyValue, islandShapeOffsetValue, islandCoastOffsetValue, landOffsetValue, coastAmplitudeValue, coastFrequencyValue;
     @FXML
     private Button generateButton;
 
@@ -33,23 +33,33 @@ public class DebugWindowController
         GrassThreshold.minProperty().bind(GameData.mapGenOptions.sandThreshold);
         Frequency.minProperty().set(0);
         Frequency.maxProperty().set(0.05);
+        landOffset.minProperty().set(0);
+        landOffset.maxProperty().set(5000);
         islandRadius.minProperty().set((double) GameData.worldSize / 4);
         islandRadius.maxProperty().set((double) GameData.worldSize / 2);
         islandShapeAmplitude.minProperty().set(0);
         islandShapeAmplitude.maxProperty().set((double) GameData.worldSize / 2);
         islandShapeFrequency.minProperty().set(0);
         islandShapeFrequency.maxProperty().set(0.1);
+
         coastAmplitude.minProperty().set(0);
         coastAmplitude.maxProperty().set(10);
         coastFrequency.minProperty().set(0);
         coastFrequency.maxProperty().set(0.5);
+        islandShapeOffset.minProperty().set(0);
+        islandShapeOffset.maxProperty().set(5000);
+        islandCoastOffset.minProperty().set(0);
+        islandCoastOffset.maxProperty().set(5000);
 
         SandThreshold.valueProperty().bindBidirectional(GameData.mapGenOptions.sandThreshold);
         GrassThreshold.valueProperty().bindBidirectional(GameData.mapGenOptions.grassThreshold);
         Frequency.valueProperty().bindBidirectional(GameData.mapGenOptions.landFrequency);
+        landOffset.valueProperty().bindBidirectional(GameData.mapGenOptions.landOffset);
         islandRadius.valueProperty().bindBidirectional(GameData.mapGenOptions.islandRadius);
         islandShapeAmplitude.valueProperty().bindBidirectional(GameData.mapGenOptions.islandShapeAmplitude);
         islandShapeFrequency.valueProperty().bindBidirectional(GameData.mapGenOptions.islandShapeFrequency);
+        islandShapeOffset.valueProperty().bindBidirectional(GameData.mapGenOptions.shapeOffset);
+        islandCoastOffset.valueProperty().bind(GameData.mapGenOptions.coastOffset);
         coastAmplitude.valueProperty().bindBidirectional(GameData.mapGenOptions.coastAmplitude);
         coastFrequency.valueProperty().bindBidirectional(GameData.mapGenOptions.coastFrequency);
 
@@ -59,6 +69,9 @@ public class DebugWindowController
         islandRadiusValue.textProperty().bind(islandRadius.valueProperty().asString());
         islandShapeAmplitudeValue.textProperty().bind(islandShapeAmplitude.valueProperty().asString());
         islandShapeFrequencyValue.textProperty().bind(islandShapeFrequency.valueProperty().asString());
+        islandShapeOffsetValue.textProperty().bind(islandShapeOffset.valueProperty().asString());
+        islandCoastOffsetValue.textProperty().bind(islandCoastOffset.valueProperty().asString());
+        landOffsetValue.textProperty().bind(landOffset.valueProperty().asString());
         coastAmplitudeValue.textProperty().bind(coastAmplitude.valueProperty().asString());
         coastFrequencyValue.textProperty().bind(coastFrequency.valueProperty().asString());
 

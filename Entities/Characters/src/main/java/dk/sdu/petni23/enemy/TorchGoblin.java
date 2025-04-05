@@ -2,6 +2,7 @@ package dk.sdu.petni23.enemy;
 
 import dk.sdu.petni23.character.Character;
 import dk.sdu.petni23.common.components.damage.AttackComponent;
+import dk.sdu.petni23.common.components.health.HealthBarComponent;
 import dk.sdu.petni23.common.components.items.LootComponent;
 import dk.sdu.petni23.common.components.actions.Action;
 import dk.sdu.petni23.common.components.actions.ActionSetComponent;
@@ -14,6 +15,7 @@ import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 
 import java.util.Objects;
 
@@ -68,6 +70,7 @@ public class TorchGoblin
         }));
         loot.minDrop = 2;
         loot.maxDrop = 5;
+        goblin.add(new HealthBarComponent(40, 5, Color.RED));
 
         return goblin;
     }
