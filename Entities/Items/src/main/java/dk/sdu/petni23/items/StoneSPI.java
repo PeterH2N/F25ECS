@@ -46,6 +46,9 @@ public class StoneSPI implements IEntitySPI {
         assert parentPositionComponent != null;
         Vector2D start = parentPositionComponent.position;
         Vector2D end = start.getAdded(p);
+        Entity sound = new Entity();
+        sound.add(new SoundComponent("stone_drop1", 50, 0.8));
+        Engine.addEntity(sound);
 
         return spawnStone(start, end);
     }
@@ -71,7 +74,6 @@ public class StoneSPI implements IEntitySPI {
         item.onPickup = node -> {
             Entity soundEntity = new Entity();
             soundEntity.add(new SoundComponent("stone_pickup1", 150, 0.5));
-            soundEntity.add(new DurationComponent(200, GameData.getCurrentMillis()));
             Engine.addEntity(soundEntity);
         };
         stone.add(item);
@@ -87,10 +89,9 @@ public class StoneSPI implements IEntitySPI {
         SpriteComponent spriteComponent = new SpriteComponent(spawnStoneSprite, origin);
         spawn.add(spriteComponent);
         spawn.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
-        double dist = end.getSubtracted(start).getLength();
         spawn.add(new TrajectoryComponent(start, end, 1, 3 ,node -> Engine.addEntity(stone(end))));
 
-        spawn.add(new SoundComponent("stone_drop1", 50, 0.8));
+
         return spawn;
     }
 }

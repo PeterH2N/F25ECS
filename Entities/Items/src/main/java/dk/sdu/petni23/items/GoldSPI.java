@@ -43,7 +43,9 @@ public class GoldSPI implements IEntitySPI {
         var parentPositionComponent = parent.get(PositionComponent.class);
         assert parentPositionComponent != null;
         Vector2D pos = parentPositionComponent.position.getAdded(p);
-
+        Entity sound = new Entity();
+        sound.add(new SoundComponent("coin_bag_drop1", 50, 0.8));
+        Engine.addEntity(sound);
         return spawnGold(pos);
     }
 
@@ -85,9 +87,6 @@ public class GoldSPI implements IEntitySPI {
         spawn.add(spriteComponent);
         spawn.add(new AnimationComponent());
         spawn.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
-
-        spawn.add(new SoundComponent("coin_bag_drop1", 50, 0.8));
-
         var duration = spawn.add(new DurationComponent(700, GameData.getCurrentMillis()));
         duration.onDeath = node -> Engine.addEntity(gold(pos));
         return spawn;

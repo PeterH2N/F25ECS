@@ -49,7 +49,9 @@ public class Knight
         action1.onDispatch = node -> {
             assert damageSPI != null;
             Entity damageEntity = damageSPI.create(Engine.getEntity(node.getEntityID()));
-            damageEntity.add(new SoundComponent("woosh1"));
+            Entity sound = new Entity();
+            sound.add(new SoundComponent("woosh1"));
+            Engine.addEntity(sound);
             Engine.addEntity(damageEntity); // ✅ add the one you modified
         };
         action1.strength = 1;
@@ -61,8 +63,10 @@ public class Knight
         action2.onDispatch = node -> {
             assert damageSPI != null;
             Entity damageEntity = damageSPI.create(Engine.getEntity(node.getEntityID()));
-            damageEntity.add(new SoundComponent("woosh2",0,0.5));
             Engine.addEntity(damageEntity); // ✅ add the one you modified
+            Entity sound = new Entity();
+            sound.add(new SoundComponent("woosh2",0,0.5));
+            Engine.addEntity(sound);
         };
         actions.actions.add(action1);
         actions.actions.add(action2);
