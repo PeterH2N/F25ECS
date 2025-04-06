@@ -22,6 +22,7 @@
   <version>1.0-SNAPSHOT</version>
   <name>Structures</name>
   <properties>
+    <Dprism.order>sw</Dprism.order>
     <java>java</java>
     <junit.version>5.9.2</junit.version>
     <maven.compiler.source>1.9</maven.compiler.source>
@@ -43,6 +44,11 @@
       <dependency>
         <groupId>org.openjfx</groupId>
         <artifactId>javafx-base</artifactId>
+        <version>21.0.2</version>
+      </dependency>
+      <dependency>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-fxml</artifactId>
         <version>21.0.2</version>
       </dependency>
     </dependencies>

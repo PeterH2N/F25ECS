@@ -10,19 +10,14 @@
     <children>
         <!-- Scroll Banner Background -->
         <ImageView fx:id="bannerImage"
-                   fitWidth="300" fitHeight="129"
-                   layoutX="-20" layoutY="-20" />
+                   fitWidth="340" fitHeight="129"
+                   layoutX="-10" layoutY="-20" />
 
         <HBox layoutX="20" layoutY="10" spacing="0" alignment="CENTER">
             <!-- 🥩 Meat Slot -->
             <StackPane prefWidth="70" prefHeight="70">
-                <!-- Bottom layer: slot frame -->
                 <ImageView fx:id="meatSlotImage" fitWidth="50" fitHeight="50" />
-                
-                <!-- Middle layer: meat icon -->
                 <ImageView fx:id="meatIcon" fitWidth="65" fitHeight="55" />
-
-                <!-- Top layer: meat digits -->
                 <HBox fx:id="meatDigitBox"
                       StackPane.alignment="BOTTOM_RIGHT"
                       alignment="BOTTOM_RIGHT"
@@ -46,6 +41,17 @@
                 <ImageView fx:id="goldSlotImage" fitWidth="50" fitHeight="50" />
                 <ImageView fx:id="goldIcon" fitWidth="55" fitHeight="55" />
                 <HBox fx:id="goldDigitBox"
+                      StackPane.alignment="BOTTOM_RIGHT"
+                      alignment="BOTTOM_RIGHT"
+                      spacing="4"
+                      style="-fx-padding: 0 4 4 0;" />
+            </StackPane>
+
+            <!-- 🪨 Stone Slot -->
+            <StackPane prefWidth="70" prefHeight="70">
+                <ImageView fx:id="stoneSlotImage" fitWidth="50" fitHeight="50" />
+                <ImageView fx:id="stoneIcon" fitWidth="50" fitHeight="50" translateY="6" />
+                <HBox fx:id="stoneDigitBox"
                       StackPane.alignment="BOTTOM_RIGHT"
                       alignment="BOTTOM_RIGHT"
                       spacing="4"
