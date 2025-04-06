@@ -86,8 +86,6 @@ public class WoodSPI implements IEntitySPI {
         spawn.add(new AnimationComponent());
         spawn.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
 
-        spawn.add(new SoundComponent("wood_drop1", 50, 0.8));
-
         var duration = spawn.add(new DurationComponent(700, GameData.getCurrentMillis()));
         duration.onDeath = node -> Engine.addEntity(wood(pos));
         return spawn;

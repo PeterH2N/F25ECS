@@ -60,6 +60,9 @@ public class Tree {
         var woodSPI = Engine.getEntitySPI(IEntitySPI.Type.WOOD);
         var loot = tree.add(new LootComponent(node -> {
             if (woodSPI != null) {
+                Entity sound = new Entity();
+                sound.add(new SoundComponent("wood_drop1", 50, 0.8));
+                Engine.addEntity(sound);
                 Engine.addEntity(woodSPI.create(Engine.getEntity(node.getEntityID())));
             }
         }));

@@ -7,11 +7,10 @@ import dk.sdu.petni23.gameengine.services.ISystem;
 
 public class SoundSystem implements ISystem {
     private final SoundManager soundManager = new SoundManager();
+    private boolean preloaded = false;
 
     @Override
     public void update(double deltaTime) {
-
-        boolean preloaded = false;
         // Preload sounds if not already done
         if (!preloaded) {
             soundManager.preloadSounds("click1", "tree_hit1", "footstep_player", "woosh1", "woosh2");
@@ -24,11 +23,11 @@ public class SoundSystem implements ISystem {
         for (SoundNode node : Engine.getNodes(SoundNode.class)) {
             SoundComponent soundComponent = node.soundComponent;
 
-            if (soundComponent.triggered && now >= soundComponent.playAt) {
+            if (now >= soundComponent.playAt) {
                 System.out.println(
                         "🎧 Triggered sound: " + soundComponent.action + " (volume: " + soundComponent.volume + ")");
                 soundManager.playSound(soundComponent.action, 0, soundComponent.volume);
-                soundComponent.triggered = false;
+                Engine.removeEntity(node.getEntityID());
             }
         }
 

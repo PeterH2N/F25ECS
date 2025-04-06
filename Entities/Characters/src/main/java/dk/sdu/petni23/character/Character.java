@@ -51,7 +51,6 @@ public class Character {
         health.onHurt = node -> {
             Entity e = new Entity();
             e.add(new SoundComponent(damage_sound_path, 150, 0.5));
-            e.add(new DurationComponent(200, GameData.getCurrentMillis()));
             Engine.addEntity(e);
         };
 
