@@ -7,8 +7,12 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import dk.sdu.petni23.gameengine.entity.IEntitySPI;
+import dk.sdu.petni23.gameengine.entity.IEntitySPI.Type;
 
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ConfigReader {
     static {
@@ -33,20 +37,25 @@ public class ConfigReader {
     public static Document config_file;
 
     //fx ("woodenWall,gold")
-    public static int getItemPrices(String item, String resource){
+    public static Map<IEntitySPI.Type,Integer> getItemPrices(String item){
+        Map<IEntitySPI.Type,Integer> result = new HashMap<>();
         NodeList documentNodes = config_file.getElementsByTagName(item);
         if(documentNodes.getLength()>0){
-            Node node = documentNodes.item(0);
-            NodeList children = node.getChildNodes();
-            for(int i = 0;i<children.getLength();i++){
-                if(children.item(i).getNodeType() == Node.ELEMENT_NODE && children.item(i).getNodeName()==resource){
-                    Element element = (Element) children.item(i);
-                    return Integer.parseInt(element.getTextContent());
+            Node itemNode = documentNodes.item(0);
+
+            NodeList itemChildren = ((Element)itemNode).getElementsByTagName("price");
+            Node priceNode = itemChildren.item(0);
+
+            NodeList priceChildren = ((Element)priceNode).getChildNodes();
+            for(int i = 0;i<priceChildren.getLength();i++){
+                if(priceChildren.item(i).getNodeType() == Node.ELEMENT_NODE){
+                    result.put(Type.getTypeFromString(priceChildren.item(i).getNodeName()), Integer.parseInt(priceChildren.item(i).getTextContent()));
                 }
             }
-            throw new RuntimeException("item or resource not specified");
+            return result;
         }else{
             throw new RuntimeException("Document empty");
         }
     }
+
 }

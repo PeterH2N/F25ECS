@@ -1,4 +1,4 @@
-package dk.sdu.petni23.shopping;
+package dk.sdu.petni23.common.enums;
 
 public enum ShopItems {
     STONE_WALL(0),

@@ -8,17 +8,36 @@ public interface IEntitySPI
 
     Type getType();
     enum Type {
-        PLAYER,
-        ENEMY,
-        ENVIRONMENT,
-        DEATH_ANIMATION,
-        FOAM_ANIMATION,
-        GOLD,
-        DAMAGE,
-        DYNAMITE,
-        MEAT,
-        WOOD,
-        STONE,
-        EXPLOSION_ANIMATION;
+        PLAYER("player"),
+        ENEMY("enemy"),
+        ENVIRONMENT("environmennt"),
+        DEATH_ANIMATION("death_animation"),
+        FOAM_ANIMATION("foam_animation"),
+        GOLD("gold"),
+        DAMAGE("damage"),
+        DYNAMITE("dynamite"),
+        MEAT("meat"),
+        WOOD("wood"),
+        STONE("stone"),
+        EXPLOSION_ANIMATION("explosion_animation");
+
+        private final String value;
+
+        public String getValue(){
+            return value;
+        }
+
+        Type(String value){
+            this.value = value;
+        }
+
+        public static Type getTypeFromString(String input){
+            for(Type type : Type.values()){
+                if(type.value.equalsIgnoreCase(input)){
+                    return type;
+                }
+            }
+            throw new IllegalArgumentException("No such value in Type enum.");
+        }
     }
 }
