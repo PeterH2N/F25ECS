@@ -5,6 +5,7 @@ import dk.sdu.petni23.common.components.items.CurrencyComponent;
 import dk.sdu.petni23.common.components.items.ItemComponent;
 import dk.sdu.petni23.common.components.health.DurationComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
+import dk.sdu.petni23.common.components.movement.TrajectoryComponent;
 import dk.sdu.petni23.common.components.movement.VelocityComponent;
 import dk.sdu.petni23.common.components.rendering.AnimationComponent;
 import dk.sdu.petni23.common.components.rendering.DisplayComponent;
@@ -18,11 +19,12 @@ import dk.sdu.petni23.common.util.Vector2D;
 import javafx.scene.image.Image;
 
 import java.util.Objects;
+import java.util.Vector;
 
 public class StoneSPI implements IEntitySPI {
     private static final SpriteSheet stoneSprite;
     private static final SpriteSheet spawnStoneSprite;
-    private final static double spawnRadius = 1.5;
+    private final static double spawnRadius = 2.5;
     private final static Vector2D origin = new Vector2D(-0.5, -0.72);
 
     static {
@@ -31,20 +33,21 @@ public class StoneSPI implements IEntitySPI {
         stoneSprite = new SpriteSheet(img, numFrames, new Vector2D(img.getWidth(), img.getHeight()));
         numFrames = new int[] { 1 };
         img = new Image(Objects.requireNonNull(StoneSPI.class.getResourceAsStream("/itemsprites/Stone_Spawn.png")));
-        spawnStoneSprite = new SpriteSheet(img, numFrames, new Vector2D(img.getWidth() / 1, img.getHeight()));
+        spawnStoneSprite = new SpriteSheet(img, numFrames, new Vector2D(img.getWidth(), img.getHeight()));
     }
 
     @Override
     public Entity create(Entity parent) {
-        double radius = Math.max(0.7, Math.random() * spawnRadius);
+        double radius = Math.max(1, Math.random() * spawnRadius);
         double dirX = Math.random() * 2 - 1;
         double dirY = Math.random() * 2 - 1;
         Vector2D p = new Vector2D(dirX, dirY).getNormalized().getMultiplied(radius);
         var parentPositionComponent = parent.get(PositionComponent.class);
         assert parentPositionComponent != null;
-        Vector2D pos = parentPositionComponent.position.getAdded(p);
+        Vector2D start = parentPositionComponent.position;
+        Vector2D end = start.getAdded(p);
 
-        return spawnStone(pos);
+        return spawnStone(start, end);
     }
 
     @Override
@@ -76,20 +79,18 @@ public class StoneSPI implements IEntitySPI {
         return stone;
     }
 
-    public Entity spawnStone(Vector2D pos) {
+    public Entity spawnStone(Vector2D start, Vector2D end) {
         Entity spawn = new Entity();
         var positionComponent = new PositionComponent();
-        positionComponent.position.set(pos);
+        positionComponent.position.set(start);
         spawn.add(positionComponent);
         SpriteComponent spriteComponent = new SpriteComponent(spawnStoneSprite, origin);
         spawn.add(spriteComponent);
-        spawn.add(new AnimationComponent());
         spawn.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
+        double dist = end.getSubtracted(start).getLength();
+        spawn.add(new TrajectoryComponent(start, end, 1, 3 ,node -> Engine.addEntity(stone(end))));
 
         spawn.add(new SoundComponent("stone_drop1", 50, 0.8));
-
-        var duration = spawn.add(new DurationComponent(700, GameData.getCurrentMillis()));
-        duration.onDeath = node -> Engine.addEntity(stone(pos));
         return spawn;
     }
 }

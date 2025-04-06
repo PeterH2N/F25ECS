@@ -16,7 +16,7 @@ public class TrajectorySystem implements ISystem
                 Engine.removeEntity(node.getEntityID());
             }
 
-            node.trajectoryComponent.t += deltaTime * 6;
+            node.trajectoryComponent.t += deltaTime * node.trajectoryComponent.speed;
 
             var start = node.trajectoryComponent.start;
 

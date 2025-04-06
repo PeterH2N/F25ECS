@@ -39,13 +39,13 @@ public class Mine {
         position.position.set(pos);
         mine.add(position);
 
-        var sprite = new SpriteComponent(spriteSheet, new Vector2D(-0.5, -0.875));
+        var sprite = new SpriteComponent(spriteSheet, new Vector2D(-0.5, -0.67));
         mine.add(sprite);
 
         mine.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
 
         var oval = new OvalShape((38d * 0.5) / 16, (10d * 0.5) / 16); // same width
-        var collision = new CollisionComponent(oval, new Vector2D(0, 0.2)); // moved higher
+        var collision = new CollisionComponent(oval, new Vector2D(0, 0)); // moved higher
         mine.add(collision);
 
         // Add HealthComponent first (without onHurt yet)
@@ -70,29 +70,12 @@ public class Mine {
             sound.add(new DurationComponent(200, GameData.getCurrentMillis()));
             Engine.addEntity(sound);
 
-            // ✅ Get the mine (the thing being hurt, not the attacker)
-            Entity mineEntity = Engine.getEntity(node.getEntityID());
-            PositionComponent posComp = mineEntity.get(PositionComponent.class);
-
-            if (stoneSPI != null && posComp != null) {
-                try {
-                    var method = stoneSPI.getClass().getMethod("spawnStone", Vector2D.class);
-                    int numDrops = GameData.random.nextInt(3); // 0–2
-
-                    // ⬅ spawn in front of mine (e.g. facing downward)
-                    Vector2D forward = new Vector2D(0, -1);
-                    Vector2D spawnOffset = forward.getMultiplied(0.6);
-                    Vector2D spawnPos = posComp.position.getAdded(spawnOffset);
-
-                    for (int i = 0; i < numDrops; i++) {
-                        Entity drop = (Entity) method.invoke(stoneSPI, spawnPos);
-                        Engine.addEntity(drop);
-                    }
-                } catch (Exception ex) {
-                    System.out.println("❌ Failed to invoke spawnStone: " + ex.getMessage());
+            if (stoneSPI != null) {
+                int numDrops = GameData.random.nextInt(3); // 0–2
+                for (int i = 0; i < numDrops; i++) {
+                    Entity drop = stoneSPI.create(mine);
+                    Engine.addEntity(drop);
                 }
-            } else {
-                System.out.println("⚠️ Could not spawn: missing SPI or PositionComponent");
             }
         };
 
