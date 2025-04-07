@@ -19,6 +19,7 @@ public interface IEntitySPI
         MEAT,
         WOOD,
         STONE,
+        TREE,
         EXPLOSION_ANIMATION;
     }
 }

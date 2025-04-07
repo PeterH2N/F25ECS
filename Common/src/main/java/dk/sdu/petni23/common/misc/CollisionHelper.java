@@ -42,7 +42,7 @@ public class CollisionHelper
         // if collision
         if (distSq < sumRad * sumRad) {
             m.normal = n.getNormalized();
-            double penLen = Math.sqrt(distSq);
+            double penLen = Vector2D.sqrt(distSq);
             double d1 = penLen - aRadius;
             m.penetration = bRadius - d1;
             m.collide = true;
@@ -146,7 +146,7 @@ public class CollisionHelper
             return false;
         }
 
-        d = Math.sqrt(d);
+        d = Vector2D.sqrt(d);
 
 
         // collision normal needs to be flipped to point outside if circle was inside the AABB

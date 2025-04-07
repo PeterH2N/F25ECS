@@ -10,11 +10,11 @@ import javafx.scene.text.Text;
 public class DebugWindowController
 {
     @FXML
-    private CheckBox colliders, hitBoxes, hp, grid, wallet;
+    private CheckBox colliders, hitBoxes, hp, grid;
     @FXML
-    private Slider SandThreshold, GrassThreshold, Frequency, islandRadius, islandShapeAmplitude, islandShapeFrequency, islandShapeOffset, islandCoastOffset, landOffset, coastAmplitude, coastFrequency;
+    private Slider SandThreshold, GrassThreshold, Frequency, islandRadius, islandShapeAmplitude, islandShapeFrequency, islandShapeOffset, islandCoastOffset, landOffset, coastAmplitude, coastFrequency, forestThreshold, forestFrequency, forestOffset, forestDensity;
     @FXML
-    private Text SandThresholdValue, GrassThresholdValue, FrequencyValue, islandRadiusValue, islandShapeAmplitudeValue, islandShapeFrequencyValue, islandShapeOffsetValue, islandCoastOffsetValue, landOffsetValue, coastAmplitudeValue, coastFrequencyValue;
+    private Text SandThresholdValue, GrassThresholdValue, FrequencyValue, islandRadiusValue, islandShapeAmplitudeValue, islandShapeFrequencyValue, islandShapeOffsetValue, islandCoastOffsetValue, landOffsetValue, coastAmplitudeValue, coastFrequencyValue, forestThresholdValue, forestFrequencyValue, forestOffsetValue, forestDensityValue;
     @FXML
     private Button generateButton;
 
@@ -24,7 +24,6 @@ public class DebugWindowController
         hitBoxes.selectedProperty().bindBidirectional(GameData.debugOptions.showHitBoxes);
         hp.selectedProperty().bindBidirectional(GameData.debugOptions.showHP);
         grid.selectedProperty().bindBidirectional(GameData.debugOptions.showGrid);
-        wallet.selectedProperty().bindBidirectional(GameData.debugOptions.showWallet);
 
         // set min and max values for sliders
         SandThreshold.minProperty().set(0);
@@ -41,6 +40,13 @@ public class DebugWindowController
         islandShapeAmplitude.maxProperty().set((double) GameData.worldSize / 2);
         islandShapeFrequency.minProperty().set(0);
         islandShapeFrequency.maxProperty().set(0.1);
+
+        forestThreshold.minProperty().set(0);
+        forestThreshold.maxProperty().set(1);
+        forestFrequency.minProperty().set(0);
+        forestFrequency.maxProperty().set(0.05);
+        forestDensity.minProperty().set(0);
+        forestDensity.maxProperty().set(1);
 
         coastAmplitude.minProperty().set(0);
         coastAmplitude.maxProperty().set(10);
@@ -62,6 +68,10 @@ public class DebugWindowController
         islandCoastOffset.valueProperty().bind(GameData.mapGenOptions.coastOffset);
         coastAmplitude.valueProperty().bindBidirectional(GameData.mapGenOptions.coastAmplitude);
         coastFrequency.valueProperty().bindBidirectional(GameData.mapGenOptions.coastFrequency);
+        forestThreshold.valueProperty().bindBidirectional(GameData.mapGenOptions.forestThreshold);
+        forestFrequency.valueProperty().bindBidirectional(GameData.mapGenOptions.forestFrequency);
+        forestOffset.valueProperty().bindBidirectional(GameData.mapGenOptions.forestOffset);
+        forestDensity.valueProperty().bindBidirectional(GameData.mapGenOptions.forestDensity);
 
         SandThresholdValue.textProperty().bind(SandThreshold.valueProperty().asString());
         GrassThresholdValue.textProperty().bind(GrassThreshold.valueProperty().asString());
@@ -74,6 +84,10 @@ public class DebugWindowController
         landOffsetValue.textProperty().bind(landOffset.valueProperty().asString());
         coastAmplitudeValue.textProperty().bind(coastAmplitude.valueProperty().asString());
         coastFrequencyValue.textProperty().bind(coastFrequency.valueProperty().asString());
+        forestThresholdValue.textProperty().bind(forestThreshold.valueProperty().asString());
+        forestFrequencyValue.textProperty().bind(forestFrequency.valueProperty().asString());
+        forestOffsetValue.textProperty().bind(forestOffset.valueProperty().asString());
+        forestDensityValue.textProperty().bind(forestDensity.valueProperty().asString());
 
         generateButton.setOnAction(actionEvent -> {
             GameData.world.map.genMap();

@@ -18,6 +18,6 @@ public class OvalShape extends Shape
 
     public double getRadius(Vector2D n) {
         var normal = n.getNormalized();
-        return (a * b) / Math.sqrt((a*a*normal.y*normal.y)+(b*b*normal.x*normal.x));
+        return (a * b) / Vector2D.sqrt((a*a*normal.y*normal.y)+(b*b*normal.x*normal.x));
     }
 }
