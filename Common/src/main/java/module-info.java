@@ -4,6 +4,7 @@ module Common {
     requires javafx.graphics;
     requires GameEngine;
     requires java.desktop;
+    requires java.xml;
     exports dk.sdu.petni23.common.shape;
     exports dk.sdu.petni23.common.util;
     exports dk.sdu.petni23.common;
@@ -21,6 +22,8 @@ module Common {
     exports dk.sdu.petni23.common.components.items;
     exports dk.sdu.petni23.common.components.inventory;
     exports dk.sdu.petni23.common.components.damage;
+    exports dk.sdu.petni23.common.components.shop;
     exports dk.sdu.petni23.common.world.mapgen;
+    exports dk.sdu.petni23.common.configreader;
     uses IEntitySPI;
 }

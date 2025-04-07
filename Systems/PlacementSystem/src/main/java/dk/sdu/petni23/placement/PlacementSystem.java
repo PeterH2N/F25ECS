@@ -9,40 +9,21 @@ import javafx.scene.input.MouseButton;
 
 import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.enums.GameMode;
-import dk.sdu.petni23.structures.wall.Wall;
 
 public class PlacementSystem implements ISystem {
-
-    private double rotation = 0;
 
     @Override
     public void update(double deltaTime) {
 
         // Toggle between placing mode and regular mode when 'C' is pressed
         if (GameData.gameKeys.isPressed(KeyCode.C)) {
-            GameMode newMode = (GameData.getGameMode() == GameMode.REGULAR) ? GameMode.PLACING : GameMode.REGULAR;
+            GameMode newMode = (GameData.getGameMode() != GameMode.PLACING) ? GameMode.PLACING : GameMode.REGULAR;
             GameData.setGameMode(newMode);
         }
-
-        // Create wall when 'B' is pressed
-        if (GameData.gameKeys.isPressed(KeyCode.B)) {
-            GameData.setHand(Wall.create(new Vector2D(0, 0)));
-            Engine.addEntity(GameData.getHand());
-            rotation = 0;
-            System.out.println("B has been pressed");
+        
+        if (GameData.getGameMode()!=GameMode.PLACING || GameData.getHand() == null){
+            return;
         }
-
-        // Rotate the current entity by 90 degrees when 'R' is pressed
-        if (GameData.gameKeys.isPressed(KeyCode.R)) {
-            rotation += 90;
-            if (rotation >= 360) rotation = 0;
-            if (GameData.getHand() != null) {
-                GameData.getHand().setRotation(rotation);
-                System.out.println("Rotated to " + rotation + " degrees");
-            }
-        }
-
-        if (GameData.getHand() == null) return;
 
         for (PlacementNode node : Engine.getNodes(PlacementNode.class)) {
             Entity entity = Engine.getEntity(node.getEntityID());

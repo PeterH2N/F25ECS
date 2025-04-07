@@ -45,6 +45,7 @@ public class GameData
 
     public static final MapGenOptions mapGenOptions = new MapGenOptions();
     public static final GameWorld world = new GameWorld(mapGenOptions);
+    private static Entity shop;
     static {
         ppmProperty.bind(displayWidth.divide(camera.widthProperty));
         displayRatioProperty.bind(displayHeight.divide(displayWidth));
@@ -52,6 +53,14 @@ public class GameData
         displayWidth.bind(gameWindow.widthProperty());
         displayHeight.bind(gameWindow.heightProperty());
     }
+    public static Entity getShop(){
+        return shop;
+    }
+
+    public static void setShop(Entity e){
+        shop=e;
+    }
+
     public static DoubleProperty displayWidthProperty() {
         return displayWidth;
     }
