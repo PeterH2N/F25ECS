@@ -10,6 +10,7 @@ public class HealthComponent extends Component
     public long lastHurtTime = 0;
     public Dispatch onDeath;
     public Dispatch onHurt;
+    public boolean invincible = false;
 
     public HealthComponent(double max) {
         maxHealth = max;

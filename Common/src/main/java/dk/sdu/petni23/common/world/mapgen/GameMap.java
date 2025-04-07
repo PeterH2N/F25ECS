@@ -115,8 +115,11 @@ public class GameMap
                 double shapeNoise = shapeNoiseMap[angle];
                 double coastNoise = coastNoiseMap[angle];
                 double shapeThreshold = Math.min(genOptions.islandRadius.get() + shapeNoise * genOptions.islandShapeAmplitude.get(), ((double) GameData.worldSize / 2) - 1);
+                double beach = 3;
                 double threshold = Math.min(shapeThreshold + coastNoise * genOptions.coastAmplitude.get(), ((double) GameData.worldSize / 2) - 1);
-                landMap[y][x] = dist < threshold ? new Tile(Tile.Type.GRASS) : new Tile(Tile.Type.WATER);
+                if (dist < threshold - beach) landMap[y][x] = new Tile(Tile.Type.GRASS);
+                else if (dist < threshold) landMap[y][x] = new Tile(Tile.Type.SAND);
+                else landMap[y][x] = new Tile(Tile.Type.WATER);
             }
         }
 
@@ -124,7 +127,7 @@ public class GameMap
         IEntitySPI treeSPI = Engine.getEntitySPI(IEntitySPI.Type.TREE);
         for (int x = 0; x < GameData.worldSize; x++){
             for (int y = 0; y < GameData.worldSize; y++) {
-                if (landMap[y][x].type == Tile.Type.GRASS) {
+                if (landMap[y][x].type != Tile.Type.WATER) {
                     if (noiseMap[y][x] < genOptions.sandThreshold.get()) {
                         tiles[y][x] = new Tile(Tile.Type.WATER);
                     }
@@ -132,10 +135,10 @@ public class GameMap
                         tiles[y][x] = new Tile(Tile.Type.SAND);
                     }
                     else {
-                        tiles[y][x] = new Tile(Tile.Type.GRASS);
+                        tiles[y][x] = new Tile(landMap[y][x].type);
                     }
                     // spawn trees
-                    if (treeSPI != null && forestNoiseMap[y][x] > genOptions.forestThreshold.get() && noiseMap[y][x] >= genOptions.grassThreshold.get()) {
+                    if (landMap[y][x].type == Tile.Type.GRASS && treeSPI != null && forestNoiseMap[y][x] > genOptions.forestThreshold.get() && noiseMap[y][x] >= genOptions.grassThreshold.get()) {
                         Vector2D pos = toWorldSpace(x, y);
                         if (pos != null && GameData.random.nextDouble() < genOptions.forestDensity.get()) {
                             Entity tree = treeSPI.create(null);
@@ -146,7 +149,6 @@ public class GameMap
                         }
                     }
                 }
-                else if (landMap[y][x].type == Tile.Type.SAND) tiles[y][x] = new Tile(Tile.Type.SAND);
                 else tiles[y][x] = new Tile(Tile.Type.WATER);
 
 

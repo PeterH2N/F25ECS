@@ -50,6 +50,7 @@ public class Mine {
 
         // Add HealthComponent first (without onHurt yet)
         var health = new HealthComponent(2000);
+        health.invincible = true;
         mine.add(health);
 
         // Add LootComponent

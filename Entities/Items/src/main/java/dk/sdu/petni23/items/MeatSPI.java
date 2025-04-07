@@ -92,10 +92,11 @@ public class MeatSPI implements IEntitySPI {
         spawn.add(new AnimationComponent());
         spawn.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
 
-        spawn.add(new SoundComponent("meat_drop1", 50, 0.8));
-
         var duration = spawn.add(new DurationComponent(700, GameData.getCurrentMillis()));
         duration.onDeath = node -> Engine.addEntity(meat(pos));
+        Entity sound = new Entity();
+        sound.add(new SoundComponent("meat_drop1", 50, 0.8));
+        Engine.addEntity(sound);
         return spawn;
     }
 }

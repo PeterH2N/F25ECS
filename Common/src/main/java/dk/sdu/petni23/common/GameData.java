@@ -128,7 +128,7 @@ public class GameData
     }
 
     public static boolean isPaused() {
-        return paused;
+        return !focusedProperty.getValue() || paused;
     }
 
     public static Vector2D toScreenSpace(double x, double y) {
