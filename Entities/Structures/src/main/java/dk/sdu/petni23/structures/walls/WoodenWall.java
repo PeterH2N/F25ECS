@@ -1,10 +1,15 @@
-package dk.sdu.petni23.structures.wall;
+/*
+ * DEPRECATED
+ */
+
+package dk.sdu.petni23.structures.walls;
 
 import java.util.Objects;
 
 import dk.sdu.petni23.common.components.rendering.DisplayComponent;
 import dk.sdu.petni23.common.components.PlacementComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
+import dk.sdu.petni23.common.configreader.ConfigReader;
 import dk.sdu.petni23.common.components.collision.CollisionComponent;
 import dk.sdu.petni23.common.components.collision.HitBoxComponent;
 import dk.sdu.petni23.common.components.health.HealthComponent;
@@ -15,34 +20,35 @@ import dk.sdu.petni23.common.shape.Shape;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.entity.Entity;
+import dk.sdu.petni23.gameengine.entity.IEntitySPI;
+import dk.sdu.petni23.gameengine.entity.IEntitySPI.Type;
 import javafx.scene.image.Image;
 
-public class Wall {
+public class WoodenWall implements IEntitySPI{
     private static final SpriteSheet spriteSheet;
-
 
     static {
         final int[] numFrames = {1};
-        Image img = new Image(Objects.requireNonNull(Wall.class.getResourceAsStream("/structuresprites/wall_single.png")));
+        Image img = new Image(Objects.requireNonNull(StoneWall.class.getResourceAsStream("/structuresprites/wall_single.png")));
         spriteSheet = new SpriteSheet(img, numFrames, new Vector2D(img.getWidth(), img.getHeight()));
     }
 
     public static Entity create(Vector2D pos){
-        Entity wall = new Entity();
+        Entity woodenWall = new Entity();
 
         //add positionn component to wall entity
         var position = new PositionComponent();
         position.position.set(pos);
-        wall.add(position);
+        woodenWall.add(position);
 
         //add sprite component
         final var origin = new Vector2D(-0.5, -0.5);
         dk.sdu.petni23.common.components.rendering.SpriteComponent sprite = new SpriteComponent(spriteSheet, origin);
-        wall.add(sprite);
+        woodenWall.add(sprite);
 
-        wall.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
+        woodenWall.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
 
-        wall.add(new LayerComponent(LayerComponent.Layer.PLAYER));
+        woodenWall.add(new LayerComponent(LayerComponent.Layer.PLAYER));
 
         Shape collisionShape = new AABBShape(2, 1);
         var offset = new Vector2D(0, -0.5);
@@ -52,11 +58,21 @@ public class Wall {
         var hitBox = new HitBoxComponent(hitBoxShape, offset);
 
         var placementComponent = new PlacementComponent(collision, hitBox);
-        wall.add(placementComponent);
+        woodenWall.add(placementComponent);
 
-        var health = new HealthComponent(200);
-        wall.add(health);
+        var health = new HealthComponent(ConfigReader.getItemHealth(Type.WOODEN_WALL.getValue()));
+        woodenWall.add(health);
 
-        return wall;
+        return woodenWall;
+    }
+
+    @Override
+    public Entity create(Entity parent) {
+        return create(new Vector2D(0,0));
+    }
+
+    @Override
+    public Type getType() {
+        return Type.WOODEN_WALL;
     }
 }

@@ -1,50 +1,50 @@
-package dk.sdu.petni23.structures.shop;
+package dk.sdu.petni23.structures.walls;
 
 import java.util.Objects;
 
+import dk.sdu.petni23.common.components.rendering.DisplayComponent;
 import dk.sdu.petni23.common.components.PlacementComponent;
+import dk.sdu.petni23.common.components.rendering.SpriteComponent;
+import dk.sdu.petni23.common.configreader.ConfigReader;
 import dk.sdu.petni23.common.components.collision.CollisionComponent;
 import dk.sdu.petni23.common.components.collision.HitBoxComponent;
-import dk.sdu.petni23.common.components.damage.LayerComponent;
 import dk.sdu.petni23.common.components.health.HealthComponent;
+import dk.sdu.petni23.common.components.damage.LayerComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
-import dk.sdu.petni23.common.components.rendering.DisplayComponent;
-import dk.sdu.petni23.common.components.rendering.SpriteComponent;
-import dk.sdu.petni23.common.components.shop.ShopComponent;
 import dk.sdu.petni23.common.shape.AABBShape;
 import dk.sdu.petni23.common.shape.Shape;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.entity.Entity;
-import dk.sdu.petni23.structures.walls.StoneWall;
+import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 import javafx.scene.image.Image;
 
-public class Shop {
+public class StoneWall implements IEntitySPI{
     private static final SpriteSheet spriteSheet;
 
 
     static {
         final int[] numFrames = {1};
-        Image img = new Image(Objects.requireNonNull(StoneWall.class.getResourceAsStream("/structuresprites/House_Shop.png")));
+        Image img = new Image(Objects.requireNonNull(StoneWall.class.getResourceAsStream("/structuresprites/stone_wall_single.png")));
         spriteSheet = new SpriteSheet(img, numFrames, new Vector2D(img.getWidth(), img.getHeight()));
     }
 
     public static Entity create(Vector2D pos){
-        Entity shop = new Entity();
+        Entity stoneWall = new Entity();
 
         //add positionn component to wall entity
         var position = new PositionComponent();
         position.position.set(pos);
-        shop.add(position);
+        stoneWall.add(position);
 
         //add sprite component
         final var origin = new Vector2D(-0.5, -0.5);
         dk.sdu.petni23.common.components.rendering.SpriteComponent sprite = new SpriteComponent(spriteSheet, origin);
-        shop.add(sprite);
+        stoneWall.add(sprite);
 
-        shop.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
+        stoneWall.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
 
-        shop.add(new LayerComponent(LayerComponent.Layer.PLAYER));
+        stoneWall.add(new LayerComponent(LayerComponent.Layer.PLAYER));
 
         Shape collisionShape = new AABBShape(2, 1);
         var offset = new Vector2D(0, -0.5);
@@ -52,13 +52,23 @@ public class Shop {
 
         var collision = new CollisionComponent(collisionShape, offset);
         var hitBox = new HitBoxComponent(hitBoxShape, offset);
-        shop.add(collision);
-        shop.add(hitBox);
 
-        var shopComponent = new ShopComponent();
-        shop.add(shopComponent);
+        var placementComponent = new PlacementComponent(collision, hitBox);
+        stoneWall.add(placementComponent);
 
+        var health = new HealthComponent(ConfigReader.getItemHealth(Type.STONE_WALL.getValue()));
+        stoneWall.add(health);
 
-        return shop;
+        return stoneWall;
+    }
+
+    @Override
+    public Entity create(Entity parent) {
+        return create(new Vector2D(0,0));
+    }
+
+    @Override
+    public Type getType() {
+        return Type.STONE_WALL;
     }
 }

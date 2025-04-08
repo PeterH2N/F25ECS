@@ -1,3 +1,4 @@
+import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 import dk.sdu.petni23.gameengine.node.INodeSPI;
 import dk.sdu.petni23.gameengine.services.IPluginService;
 import dk.sdu.petni23.gameengine.services.ISystem;
@@ -7,7 +8,6 @@ module ShopSystem {
     requires javafx.graphics;
     requires Common;
     requires GameEngine;
-    requires Structures;
     requires javafx.fxml;
     requires javafx.controls;
     requires javafx.base;
@@ -17,4 +17,5 @@ module ShopSystem {
     provides ISystem with ShopSystem;
     provides INodeSPI with ShopNodeSPI;
     provides IPluginService with ShopSystem;
+    uses IEntitySPI;
 }

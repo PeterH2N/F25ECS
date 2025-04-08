@@ -15,7 +15,7 @@ public class PlacementSystem implements ISystem {
     @Override
     public void update(double deltaTime) {
 
-        // Toggle between placing mode and regular mode when 'C' is pressed
+        // Toggle between placing mode and regular mode when 'C' is pressed - For debug only
         if (GameData.gameKeys.isPressed(KeyCode.C)) {
             GameMode newMode = (GameData.getGameMode() != GameMode.PLACING) ? GameMode.PLACING : GameMode.REGULAR;
             GameData.setGameMode(newMode);
@@ -43,11 +43,10 @@ public class PlacementSystem implements ISystem {
                 double rx = mousePosRelX * GameData.camera.getWidth() - GameData.camera.getWidth() / 2;
                 double ry = mousePosRelY * GameData.camera.getHeight() - GameData.camera.getHeight() / 2;
 
-                double x = cameraPosX + rx;
-                double y = cameraPosY + (-1 * ry);
+                double x = Math.floor(cameraPosX + rx);
+                double y = Math.floor(cameraPosY + (-1 * ry));
 
                 node.positionComponent.position.set(new Vector2D(x, y));
-
                 if (GameData.gameKeys.isDown(MouseButton.PRIMARY)) {
                     // Add the collision and hitbox components to the entity
                     entity.add(node.placementComponent.collisionComponent);
@@ -58,6 +57,7 @@ public class PlacementSystem implements ISystem {
             }
         }
     }
+
 
     @Override
     public int getPriority() {

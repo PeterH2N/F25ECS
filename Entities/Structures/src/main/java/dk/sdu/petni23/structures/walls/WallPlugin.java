@@ -1,4 +1,4 @@
-package dk.sdu.petni23.structures.wall;
+package dk.sdu.petni23.structures.walls;
 
 import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.util.Vector2D;
@@ -10,7 +10,7 @@ public class WallPlugin implements IPluginService {
 
     @Override
     public void start() {
-        Entity e = Wall.create(new Vector2D(50,50));
+        Entity e = StoneWall.create(new Vector2D(50,50));
         Engine.addEntity(e);
         GameData.setHand(e);
     }

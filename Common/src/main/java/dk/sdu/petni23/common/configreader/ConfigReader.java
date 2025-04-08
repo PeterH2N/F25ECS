@@ -57,5 +57,15 @@ public class ConfigReader {
             throw new RuntimeException("Document empty");
         }
     }
+    public static int getItemHealth(String item){
+        NodeList documentNodes = config_file.getElementsByTagName(item);
+        if(documentNodes.getLength()>0){
+            Node itemNode = documentNodes.item(0);
+            return Integer.parseInt(((Element)itemNode).getElementsByTagName("health").item(0).getTextContent());
+        }else{
+            throw new RuntimeException("Document empty");
+        }
+    }
 
+    
 }

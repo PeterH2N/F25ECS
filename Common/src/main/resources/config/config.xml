@@ -1,15 +1,15 @@
-<itemsConfig>
-    <woodenWall>
+<items_config>
+    <wooden_wall>
         <gold>2</gold>
         <wood>2</wood>
         <health>200</health>
-    </woodenWall>
-    <stoneWall>
+    </wooden_wall>
+    <stone_wall>
         <price>
             <gold>4</gold>
             <stone>2</stone>
             <wood>2</wood>
         </price>
-        <health>500</health>
-    </stoneWall>
-</itemsConfig>
+        <health>50000</health>
+    </stone_wall>
+</items_config>
