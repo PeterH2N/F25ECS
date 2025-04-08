@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Vector2D
 {
-    private static double toDegrees = 180d / Math.PI;
+    private static final double toDegrees = 180d / Math.PI;
     public static Vector2D ZERO = new Vector2D(0,0);
     public double x;
     public double y;
@@ -40,7 +40,7 @@ public class Vector2D
     }
 
     public double getLength() {
-        return Math.sqrt(x * x + y * y);
+        return sqrt(x * x + y * y);
     }
 
     public double getLengthSq() {
@@ -62,13 +62,13 @@ public class Vector2D
     public double distance(double vx, double vy) {
         vx -= x;
         vy -= y;
-        return Math.sqrt(vx * vx + vy * vy);
+        return sqrt(vx * vx + vy * vy);
     }
 
     public double distance(Vector2D v) {
         double vx = v.x - this.x;
         double vy = v.y - this.y;
-        return Math.sqrt(vx * vx + vy * vy);
+        return sqrt(vx * vx + vy * vy);
     }
 
     public double getAngle() {
@@ -76,16 +76,17 @@ public class Vector2D
     }
 
     public void normalize() {
-        double magnitude = getLength();
-        if (magnitude == 0) return;
-        x /= magnitude;
-        y /= magnitude;
+        double invMagnitude = invSqrt(x*x + y*y);
+        //double magnitude = getLength();
+        if (invMagnitude == 0) return;
+        x *= invMagnitude;
+        y *= invMagnitude;
     }
 
     public Vector2D getNormalized() {
-        double magnitude = getLength();
-        if (magnitude == 0) return new Vector2D(0,0);
-        return new Vector2D(x / magnitude, y / magnitude);
+        double invMagnitude = invSqrt(x*x + y*y);
+        if (invMagnitude == 0) return new Vector2D(0,0);
+        return new Vector2D(x * invMagnitude, y * invMagnitude);
     }
 
     public static Vector2D toCartesian(double magnitude, double angle) {
@@ -241,6 +242,19 @@ public class Vector2D
 
     public Vector2D getReversed() {
         return new Vector2D(-x, -y);
+    }
+
+    private static double invSqrt(double x) {
+        double xhalf = 0.5d * x;
+        long i = Double.doubleToLongBits(x);
+        i = 0x5fe6ec85e7de30daL - (i >> 1);
+        x = Double.longBitsToDouble(i);
+        x *= (1.5d - xhalf * x * x);
+        return x;
+    }
+
+    public static double sqrt(double x) {
+        return x * invSqrt(x);
     }
 
     @Override

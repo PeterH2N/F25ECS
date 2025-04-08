@@ -45,8 +45,10 @@ public class DamageSystem implements ISystem
     }
 
     public void hurt(Node node, HealthComponent hp, double dmg) {
-        hp.health -= dmg;
-        hp.lastHurtTime = GameData.getCurrentMillis();
         if (hp.onHurt != null) hp.onHurt.dispatch(node);
+        hp.lastHurtTime = GameData.getCurrentMillis();
+
+        if (!hp.invincible)
+            hp.health -= dmg;
     }
 }

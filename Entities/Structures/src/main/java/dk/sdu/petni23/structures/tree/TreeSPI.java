@@ -12,6 +12,7 @@ import dk.sdu.petni23.common.components.health.HealthComponent;
 import dk.sdu.petni23.common.components.items.LootComponent;
 import dk.sdu.petni23.common.components.damage.LayerComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
+import dk.sdu.petni23.common.shape.AABB;
 import dk.sdu.petni23.common.shape.AABBShape;
 import dk.sdu.petni23.common.shape.OvalShape;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
@@ -23,12 +24,13 @@ import javafx.scene.image.Image;
 
 import java.util.Objects;
 
-public class Tree {
+public class TreeSPI implements IEntitySPI
+{
     private static final SpriteSheet spriteSheet;
 
     static {
         final int[] numFrames = { 4, 2, 1 };
-        Image img = new Image(Objects.requireNonNull(Tree.class.getResourceAsStream("/structuresprites/Tree.png")));
+        Image img = new Image(Objects.requireNonNull(TreeSPI.class.getResourceAsStream("/structuresprites/Tree.png")));
         spriteSheet = new SpriteSheet(img, numFrames, new Vector2D(img.getWidth() / 4, img.getHeight() / 3));
     }
 
@@ -44,16 +46,15 @@ public class Tree {
 
         tree.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
 
-        var oval = new OvalShape((24d * 0.5) / 64, (6d * 0.5) / 64);
-        var collision = new CollisionComponent(oval);
+        var aabb = new AABBShape((24d) / 64, (6d) / 64);
+        var collision = new CollisionComponent(aabb);
         tree.add(collision);
 
         var health = new HealthComponent(20);
-        health.onDeath = node -> Engine.addEntity(createStump(pos));
+        health.onDeath = node -> Engine.addEntity(createStump(tree.get(PositionComponent.class).position));
         health.onHurt = node -> {
             Entity e = new Entity();
             e.add(new SoundComponent("tree_hit1", 150, 0.5));
-            e.add(new DurationComponent(200, GameData.getCurrentMillis()));
             Engine.addEntity(e);
         };
 
@@ -93,14 +94,26 @@ public class Tree {
 
         stump.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
 
-        var duration = new DurationComponent(10000, GameData.getCurrentMillis());
+        var duration = new DurationComponent(GameData.random.nextInt(10000, 50000), GameData.getCurrentMillis()); // between 10 and 50 seconds
         duration.onDeath = node -> Engine.addEntity(createTree(pos));
         stump.add(duration);
 
-        var oval = new OvalShape((24d * 0.5) / 64, (6d * 0.5) / 64);
-        var collision = new CollisionComponent(oval);
+        var aabb = new AABBShape((24d) / 64, (6d) / 64);
+        var collision = new CollisionComponent(aabb);
         stump.add(collision);
 
         return stump;
+    }
+
+    @Override
+    public Entity create(Entity parent)
+    {
+        return createTree(new Vector2D(0,0));
+    }
+
+    @Override
+    public Type getType()
+    {
+        return Type.TREE;
     }
 }

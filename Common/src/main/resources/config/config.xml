@@ -6,9 +6,7 @@
     </wooden_wall>
     <stone_wall>
         <price>
-            <gold>4</gold>
             <stone>2</stone>
-            <wood>2</wood>
         </price>
         <health>50000</health>
     </stone_wall>

@@ -64,10 +64,30 @@ public class GameMap
         return tiles[Y][X];
     }
 
+    private Vector2D toTileSpace(int x, int y) {
+        int X = (x + GameData.worldSize / 2);
+        int Y = (-y + GameData.worldSize / 2);
+
+        if (X < 0 || X > GameData.worldSize - 1 || Y < 0 || Y > GameData.worldSize - 1)
+            return null;
+
+        return new Vector2D(X, Y);
+    }
+    private Vector2D toWorldSpace(int x, int y) {
+        int X = x - GameData.worldSize / 2;
+        int Y = -(y - GameData.worldSize / 2);
+
+        if (X < - GameData.worldSize / 2 || X >= GameData.worldSize / 2 || Y < -GameData.worldSize / 2 || Y >= GameData.worldSize / 2)
+            return null;
+
+        return new Vector2D(X, Y);
+    }
+
     private void generateMap() {
         Vector2D center = new Vector2D((double) GameData.worldSize / 2, (double) GameData.worldSize / 2);
         Tile[][] landMap = new Tile[GameData.worldSize][GameData.worldSize];
         double[][] noiseMap = new double[GameData.worldSize][GameData.worldSize];
+        double[][] forestNoiseMap = new double[GameData.worldSize][GameData.worldSize];
         double[] shapeNoiseMap = new double[360];
         double[] coastNoiseMap = new double[360];
         int offset1 = genOptions.shapeOffset.get();
@@ -81,9 +101,12 @@ public class GameMap
 
         for (int x = 0; x < GameData.worldSize; x++) {
             int offset3 = genOptions.landOffset.get();
+            int offset4 = genOptions.forestOffset.get();
             for (int y = 0; y < GameData.worldSize; y++) {
                 double noise1 = (SimplexNoise.noise(offset3 + x * genOptions.landFrequency.get(), offset3 + y * genOptions.landFrequency.get()) + 1d) / 2d;
                 noiseMap[y][x] = noise1;
+                double forestNoise = (SimplexNoise.noise(offset4 + x * genOptions.forestFrequency.get(), offset4 + y * genOptions.forestFrequency.get()) + 1d) / 2d;
+                forestNoiseMap[y][x] = forestNoise;
 
 
                 Vector2D v = new Vector2D(x + 0.5, y + 0.5).getSubtracted(center);
@@ -92,14 +115,19 @@ public class GameMap
                 double shapeNoise = shapeNoiseMap[angle];
                 double coastNoise = coastNoiseMap[angle];
                 double shapeThreshold = Math.min(genOptions.islandRadius.get() + shapeNoise * genOptions.islandShapeAmplitude.get(), ((double) GameData.worldSize / 2) - 1);
+                double beach = 3;
                 double threshold = Math.min(shapeThreshold + coastNoise * genOptions.coastAmplitude.get(), ((double) GameData.worldSize / 2) - 1);
-                landMap[y][x] = dist < threshold ? new Tile(Tile.Type.GRASS) : new Tile(Tile.Type.WATER);
+                if (dist < threshold - beach) landMap[y][x] = new Tile(Tile.Type.GRASS);
+                else if (dist < threshold) landMap[y][x] = new Tile(Tile.Type.SAND);
+                else landMap[y][x] = new Tile(Tile.Type.WATER);
             }
         }
 
+
+        IEntitySPI treeSPI = Engine.getEntitySPI(IEntitySPI.Type.TREE);
         for (int x = 0; x < GameData.worldSize; x++){
             for (int y = 0; y < GameData.worldSize; y++) {
-                if (landMap[y][x].type == Tile.Type.GRASS) {
+                if (landMap[y][x].type != Tile.Type.WATER) {
                     if (noiseMap[y][x] < genOptions.sandThreshold.get()) {
                         tiles[y][x] = new Tile(Tile.Type.WATER);
                     }
@@ -107,18 +135,29 @@ public class GameMap
                         tiles[y][x] = new Tile(Tile.Type.SAND);
                     }
                     else {
-                        tiles[y][x] = new Tile(Tile.Type.GRASS);
+                        tiles[y][x] = new Tile(landMap[y][x].type);
+                    }
+                    // spawn trees
+                    if (landMap[y][x].type == Tile.Type.GRASS && treeSPI != null && forestNoiseMap[y][x] > genOptions.forestThreshold.get() && noiseMap[y][x] >= genOptions.grassThreshold.get()) {
+                        Vector2D pos = toWorldSpace(x, y);
+                        if (pos != null && GameData.random.nextDouble() < genOptions.forestDensity.get()) {
+                            Entity tree = treeSPI.create(null);
+
+                            tree.get(PositionComponent.class).position.set(pos.x + 0.5, pos.y + 0.5);
+                            Engine.addEntity(tree);
+                            mapEntities.add(tree);
+                        }
                     }
                 }
-                else if (landMap[y][x].type == Tile.Type.SAND) tiles[y][x] = new Tile(Tile.Type.SAND);
                 else tiles[y][x] = new Tile(Tile.Type.WATER);
+
+
 
             }
         }
     }
 
     private void refineMap() {
-        //List<Vector2D> colliders = new ArrayList<>();
         for (int x = (-GameData.worldSize / 2); x < GameData.worldSize / 2; x++) {
             for (int y = (GameData.worldSize / 2); y > -GameData.worldSize / 2; y--) {
                 Tile tile = getTile(x, y);
@@ -156,6 +195,8 @@ public class GameMap
                     addEntity(BoxCollider(new Vector2D(x + 0.5, y - 0.5), 1, 1));
                 }
                 addFoam(x, y);
+
+
             }
         }
     }

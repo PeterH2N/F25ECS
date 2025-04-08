@@ -21,7 +21,7 @@ public class PickupSystem implements ISystem
                 double distSq = itemPos.distanceSq(pickUpPos);
                 // if within range
                 if (distSq <= range * range) {
-                    double dist = Math.sqrt(distSq);
+                    double dist = Vector2D.sqrt(distSq);
                     if (dist < closestDist){
                         closestDist = dist;
                         closest = pickupNode;

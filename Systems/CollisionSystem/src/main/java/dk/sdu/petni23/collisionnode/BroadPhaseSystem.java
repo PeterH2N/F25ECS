@@ -4,11 +4,14 @@ import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.components.collision.CollisionComponent;
 import dk.sdu.petni23.common.components.collision.HasShapeComponent;
 import dk.sdu.petni23.common.components.collision.HitBoxComponent;
+import dk.sdu.petni23.common.components.damage.DamageComponent;
+import dk.sdu.petni23.common.components.damage.LayerComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.components.movement.VelocityComponent;
 import dk.sdu.petni23.common.util.Collider;
 import dk.sdu.petni23.common.misc.Manifold;
 import dk.sdu.petni23.common.shape.Shape;
+import dk.sdu.petni23.common.util.ColliderPair;
 import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.node.Node;
@@ -21,11 +24,14 @@ public class BroadPhaseSystem implements ISystem, IPluginService
 {
     private static final List<Collider>[][] collisionGrid = (ArrayList<Collider>[][])new ArrayList[(int) GameData.worldSize][(int) GameData.worldSize];
     private static final List<Collider>[][] hitBoxGrid = (ArrayList<Collider>[][])new ArrayList[(int) GameData.worldSize][(int) GameData.worldSize];
+
     @Override
     public void update(double deltaTime)
     {
         GameData.world.collisionColliders.keySet().removeIf(node -> Engine.getEntity(node.getEntityID()) == null);
         GameData.world.hitBoxColliders.keySet().removeIf(node -> Engine.getEntity(node.getEntityID()) == null);
+        GameData.world.collisionColliderPairs.keySet().removeIf(pair -> Engine.getEntity(pair.c1().node.getEntityID()) == null || Engine.getEntity(pair.c2().node.getEntityID()) == null);
+        GameData.world.hitBoxColliderPairs.keySet().removeIf(pair -> Engine.getEntity(pair.c1().node.getEntityID()) == null || Engine.getEntity(pair.c2().node.getEntityID()) == null);
         clearGrid(collisionGrid);
         clearGrid(hitBoxGrid);
         populateGrid(CollisionNode.class, collisionGrid, CollisionComponent.class, GameData.world.collisionColliders);
@@ -96,8 +102,32 @@ public class BroadPhaseSystem implements ISystem, IPluginService
             for (var cell : collider1.cells) {
                 for (Collider collider2 : grid[(int) cell.y][(int) cell.x]) {
                     if (collider1 == collider2) continue;
-                    if (grid == collisionGrid && Engine.getEntity(collider1.node.getEntityID()).get(VelocityComponent.class) == null && Engine.getEntity(collider2.node.getEntityID()).get(VelocityComponent.class) == null) continue;
-                    
+                    ColliderPair cp = new ColliderPair(collider1, collider2);
+                    if (grid == collisionGrid) {
+                        if (!GameData.world.collisionColliderPairs.containsKey(cp)) {
+                            if (Engine.getEntity(collider1.node.getEntityID()).get(VelocityComponent.class) == null && Engine.getEntity(collider2.node.getEntityID()).get(VelocityComponent.class) == null) {
+                                GameData.world.collisionColliderPairs.put(cp, false);
+                                continue;
+                            }
+                            GameData.world.collisionColliderPairs.put(cp, true);
+                        } else if (!GameData.world.collisionColliderPairs.get(cp)) continue;
+                    } else if (grid == hitBoxGrid) {
+                        if (!GameData.world.hitBoxColliderPairs.containsKey(cp)) {
+                            // compute early returns
+                            if (Engine.getEntity(collider1.node.getEntityID()).get(DamageComponent.class) == null && Engine.getEntity(collider2.node.getEntityID()).get(DamageComponent.class) == null) {
+                                GameData.world.hitBoxColliderPairs.put(cp, false);
+                                continue;
+                            }
+                            LayerComponent layer1 = Engine.getEntity(collider1.node.getEntityID()).get(LayerComponent.class);
+                            LayerComponent layer2 = Engine.getEntity(collider2.node.getEntityID()).get(LayerComponent.class);
+                            // if they are on the same layer
+                            if (layer1 != null && layer2 != null && (layer1.layer.value() & layer2.layer.value()) != 0) {
+                                GameData.world.hitBoxColliderPairs.put(cp, true);
+                                continue;
+                            }
+                        } else if (!GameData.world.hitBoxColliderPairs.get(cp)) continue;
+                    }
+
                     var m = new Manifold(collider1.node, collider2.node);
                     if (!manifoldList.contains(m)) manifoldList.add(m);
                 }

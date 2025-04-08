@@ -74,7 +74,7 @@ public class Knight
 
         knight.add(new LayerComponent(LayerComponent.Layer.PLAYER));
 
-        knight.add(new FootstepSoundComponent("footstep_knight", Set.of(1, 4)));
+        knight.add(new FootstepSoundComponent("footstep_player", Set.of(1, 4)));
 
         knight.add(new AttackComponent(5, 0.6));
 

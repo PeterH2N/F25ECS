@@ -36,14 +36,15 @@ public class GameData
     private static long frameTime = 0;
     private static long currentMillis = 0;
     public static final Viewport camera = new Viewport(Math.min(40, worldSize));
-    public static final MapGenOptions mapGenOptions = new MapGenOptions();
-    public static final GameWorld world = new GameWorld(mapGenOptions);
     private static final BooleanProperty focusedProperty = new SimpleBooleanProperty();
     private static boolean paused = false;
     public static final DebugOptions debugOptions = new DebugOptions();
-    public static final Random random = new Random();
+    public static final Random random = new Random(984380);
     private static GameMode gameMode = GameMode.REGULAR;
     private static Entity hand;
+
+    public static final MapGenOptions mapGenOptions = new MapGenOptions();
+    public static final GameWorld world = new GameWorld(mapGenOptions);
     private static Entity shop;
     static {
         ppmProperty.bind(displayWidth.divide(camera.widthProperty));
@@ -127,7 +128,7 @@ public class GameData
     }
 
     public static boolean isPaused() {
-        return paused;
+        return !focusedProperty.getValue() || paused;
     }
 
     public static Vector2D toScreenSpace(double x, double y) {

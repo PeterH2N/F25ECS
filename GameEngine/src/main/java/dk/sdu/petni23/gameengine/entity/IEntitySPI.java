@@ -19,6 +19,7 @@ public interface IEntitySPI
         MEAT("meat"),
         WOOD("wood"),
         STONE("stone"),
+        TREE("tree"),
         EXPLOSION_ANIMATION("explosion_animation"),
         WOODEN_WALL("wooden_wall"),
         STONE_WALL("stone_wall");
