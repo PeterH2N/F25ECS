@@ -51,6 +51,9 @@ public class StartMenu extends Application {
 
         primaryStage.setTitle("F25 - Start Menu");
         primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
+        primaryStage.setFullScreen(false);
+        primaryStage.setMaximized(false);
         primaryStage.show();
     }
 

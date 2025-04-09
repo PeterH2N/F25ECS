@@ -99,5 +99,14 @@
             </graphic>
          </Button>
       </StackPane>
+      <Label layoutX="410.0" layoutY="120.0"
+         prefWidth="180.0" wrapText="true"
+         text="🎮 Controls:&#10;W, A, S, D – Move&#10;E – Open inventory&#10;B – Buy towers and walls"
+         style="-fx-font-size: 16px; -fx-text-fill: white; -fx-font-family: 'PatrickHand'; -fx-effect: dropshadow(gaussian, black, 1, 1, 1, 1);" />
+
+      <Label layoutX="20.0" layoutY="120.0"
+         prefWidth="180.0" wrapText="true"
+         text="⚔ Objective:&#10;Protect the Nexus from&#10;waves of goblins.&#10;&#10;🏗 Strategy:&#10;Build wisely.&#10;Survive as long as you can!"
+         style="-fx-font-size: 16px; -fx-text-fill: white; -fx-font-family: 'PatrickHand'; -fx-effect: dropshadow(gaussian, black, 1, 1, 1, 1);" />
    </children>
 </AnchorPane>

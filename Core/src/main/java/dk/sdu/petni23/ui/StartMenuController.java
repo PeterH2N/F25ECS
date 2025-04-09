@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import dk.sdu.petni23.common.util.Sound;
 
@@ -25,6 +26,9 @@ public class StartMenuController {
 
     @FXML
     public void initialize() {
+
+        Font.loadFont(getClass().getResourceAsStream("/Fonts/PatrickHand.ttf"), 14);
+
 
         Platform.runLater(() -> {
             settingsButton.toFront();
