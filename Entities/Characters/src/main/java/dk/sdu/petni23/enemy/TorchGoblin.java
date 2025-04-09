@@ -72,7 +72,7 @@ public class TorchGoblin
         loot.maxDrop = 5;
         goblin.add(new HealthBarComponent(40, 5, Color.RED));
 
-        goblin.add(new AIComponent(AIComponent.Type.CHARACTER, Arrays.asList(AIComponent.Type.CHARACTER, AIComponent.Type.TOWER, AIComponent.Type.NEXUS), AIComponent.Priority.CLOSEST));
+        goblin.add(new AIComponent(AIComponent.Type.CHARACTER, Arrays.asList(AIComponent.Type.NEXUS, AIComponent.Type.CHARACTER, AIComponent.Type.TOWER), AIComponent.Priority.CLOSEST));
 
         return goblin;
     }

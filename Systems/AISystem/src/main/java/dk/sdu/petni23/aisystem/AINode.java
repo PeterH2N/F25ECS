@@ -2,6 +2,7 @@ package dk.sdu.petni23.aisystem;
 
 import dk.sdu.petni23.common.components.AIComponent;
 import dk.sdu.petni23.common.components.actions.ActionSetComponent;
+import dk.sdu.petni23.common.components.collision.HitBoxComponent;
 import dk.sdu.petni23.common.components.damage.AttackComponent;
 import dk.sdu.petni23.common.components.damage.LayerComponent;
 import dk.sdu.petni23.common.components.damage.ThrowComponent;
@@ -15,14 +16,18 @@ import dk.sdu.petni23.gameengine.node.OptionalComponent;
 public class AINode extends Node {
     public AIComponent aiComponent;
     public PositionComponent positionComponent;
-    public DirectionComponent directionComponent;
     public LayerComponent layerComponent;
+    public HitBoxComponent hitBoxComponent;
     @OptionalComponent
     public VelocityComponent velocityComponent;
+    @OptionalComponent
+    public DirectionComponent directionComponent;
     @OptionalComponent
     public ThrowComponent throwComponent;
     @OptionalComponent
     public ActionSetComponent actionSetComponent;
+    @OptionalComponent
+    public AttackComponent attackComponent;
 
     public AINode(Entity entity) {
         super(entity);

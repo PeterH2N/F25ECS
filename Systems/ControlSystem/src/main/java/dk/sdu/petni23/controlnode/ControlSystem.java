@@ -62,7 +62,7 @@ public class ControlSystem implements ISystem
         return Priority.PREPROCESSING.get();
     }
 
-    public void performAction(ActionSetComponent acs, int i) {
+    private void performAction(ActionSetComponent acs, int i) {
         if (GameData.getCurrentMillis() <= acs.lastActionTime + acs.lastAction.duration) return;
 
         long now = GameData.getCurrentMillis();

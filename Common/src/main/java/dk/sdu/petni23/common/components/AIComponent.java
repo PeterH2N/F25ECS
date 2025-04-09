@@ -6,6 +6,7 @@ import java.util.List;
 
 public class AIComponent extends Component
 {
+    public final double range = 10;
     public final Type type;
     public final List<Type> TargetPriorityList;
     public final Priority priority;

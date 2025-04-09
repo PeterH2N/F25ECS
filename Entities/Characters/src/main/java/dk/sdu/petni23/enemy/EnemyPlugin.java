@@ -8,7 +8,7 @@ import dk.sdu.petni23.gameengine.services.IPluginService;
 public class EnemyPlugin implements IPluginService {
     @Override
     public void start() {
-        for (int i = 0; i < GameData.worldSize / 2; i++) {
+        for (int i = 0; i < GameData.worldSize / 5; i++) {
             Vector2D pos = GameData.randomWorldPos();
             if (pos != null)
                 Engine.addEntity(TorchGoblin.create(pos));

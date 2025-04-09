@@ -23,7 +23,6 @@
 /Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/util/Vector2D.java
 /Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/enums/GameMode.java
 /Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/util/Util.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/movement/SpeedComponent.java
 /Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/collision/CollisionComponent.java
 /Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/health/HealthBarComponent.java
 /Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/shape/AABBShape.java
