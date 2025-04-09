@@ -7,27 +7,17 @@
 
 <AnchorPane prefHeight="800" prefWidth="800" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.sdu.petni23.shopping.ShopController">
     <children>
-        <!-- Shop Banner -->
         <ImageView fx:id="bannerImage" fitHeight="129" fitWidth="340" layoutX="230.0" layoutY="657.0" />
-
-        <!-- Item Slots -->
         <HBox alignment="CENTER" layoutX="262.0" layoutY="692.0" spacing="12">
-            <!-- Tower 1 -->
             <StackPane fx:id="tower1Pane" onMouseClicked="#selectTower1" style="-fx-cursor: hand;">
                 <ImageView fx:id="tower1Icon" fitHeight="60" fitWidth="60" />
             </StackPane>
-
-            <!-- Tower 2 -->
             <StackPane fx:id="tower2Pane" onMouseClicked="#selectTower2" style="-fx-cursor: hand;">
                 <ImageView fx:id="tower2Icon" fitHeight="60" fitWidth="60" />
             </StackPane>
-
-            <!-- Tower 3 -->
             <StackPane fx:id="tower3Pane" onMouseClicked="#selectTower3" style="-fx-cursor: hand;">
                 <ImageView fx:id="tower3Icon" fitHeight="60" fitWidth="60" />
             </StackPane>
-
-            <!-- Wall -->
             <StackPane fx:id="wallPane" onMouseClicked="#selectWall" style="-fx-cursor: hand;">
                 <ImageView fx:id="wallIcon" fitHeight="60" fitWidth="60" />
             </StackPane>

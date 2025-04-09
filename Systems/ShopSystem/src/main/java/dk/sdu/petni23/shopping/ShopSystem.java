@@ -29,7 +29,9 @@ public class ShopSystem implements ISystem,IPluginService {
         for (ShopNode node : Engine.getNodes(ShopNode.class)){
             shopNode = node;
         }
-
+        if(shopNode == null){
+            return;
+        }
         if(GameData.gameKeys.isPressed(KeyCode.B)){
             GameMode newMode = (GameData.getGameMode() != GameMode.SHOPPING) ? GameMode.SHOPPING : GameMode.REGULAR;
             GameData.setGameMode(newMode);

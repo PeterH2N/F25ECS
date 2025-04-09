@@ -22,7 +22,10 @@ public interface IEntitySPI
         TREE("tree"),
         EXPLOSION_ANIMATION("explosion_animation"),
         WOODEN_WALL("wooden_wall"),
-        STONE_WALL("stone_wall");
+        STONE_WALL("stone_wall"),
+        TOWER_1("tower_1"),
+        TOWER_2("tower_2"),
+        TOWER_3("tower_3");
 
         private final String value;
 
