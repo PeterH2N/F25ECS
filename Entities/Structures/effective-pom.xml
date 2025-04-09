@@ -97,8 +97,8 @@
     <sourceDirectory>c:\Users\Julius\Desktop\F25ECS\Entities\Structures\src\main\java</sourceDirectory>
     <scriptSourceDirectory>c:\Users\Julius\Desktop\F25ECS\Entities\Structures\src\main\scripts</scriptSourceDirectory>
     <testSourceDirectory>c:\Users\Julius\Desktop\F25ECS\Entities\Structures\src\test\java</testSourceDirectory>
-    <outputDirectory>c:\Users\Julius\Desktop\F25ECS\Entities\Structures\target\classes</outputDirectory>
-    <testOutputDirectory>c:\Users\Julius\Desktop\F25ECS\Entities\Structures\target\test-classes</testOutputDirectory>
+    <outputDirectory>c:\Users\Julius\Desktop\F25ECS\Entities\Structures\type\classes</outputDirectory>
+    <testOutputDirectory>c:\Users\Julius\Desktop\F25ECS\Entities\Structures\type\test-classes</testOutputDirectory>
     <resources>
       <resource>
         <directory>c:\Users\Julius\Desktop\F25ECS\Entities\Structures\src\main\resources</directory>
@@ -109,7 +109,7 @@
         <directory>c:\Users\Julius\Desktop\F25ECS\Entities\Structures\src\test\resources</directory>
       </testResource>
     </testResources>
-    <directory>c:\Users\Julius\Desktop\F25ECS\Entities\Structures\target</directory>
+    <directory>c:\Users\Julius\Desktop\F25ECS\Entities\Structures\type</directory>
     <finalName>Structures-1.0-SNAPSHOT</finalName>
     <pluginManagement>
       <plugins>
@@ -292,7 +292,7 @@
               <goal>site</goal>
             </goals>
             <configuration>
-              <outputDirectory>c:\Users\Julius\Desktop\F25ECS\Entities\Structures\target\site</outputDirectory>
+              <outputDirectory>c:\Users\Julius\Desktop\F25ECS\Entities\Structures\type\site</outputDirectory>
               <reportPlugins>
                 <reportPlugin>
                   <groupId>org.apache.maven.plugins</groupId>
@@ -308,7 +308,7 @@
               <goal>deploy</goal>
             </goals>
             <configuration>
-              <outputDirectory>c:\Users\Julius\Desktop\F25ECS\Entities\Structures\target\site</outputDirectory>
+              <outputDirectory>c:\Users\Julius\Desktop\F25ECS\Entities\Structures\type\site</outputDirectory>
               <reportPlugins>
                 <reportPlugin>
                   <groupId>org.apache.maven.plugins</groupId>
@@ -319,7 +319,7 @@
           </execution>
         </executions>
         <configuration>
-          <outputDirectory>c:\Users\Julius\Desktop\F25ECS\Entities\Structures\target\site</outputDirectory>
+          <outputDirectory>c:\Users\Julius\Desktop\F25ECS\Entities\Structures\type\site</outputDirectory>
           <reportPlugins>
             <reportPlugin>
               <groupId>org.apache.maven.plugins</groupId>
@@ -331,6 +331,6 @@
     </plugins>
   </build>
   <reporting>
-    <outputDirectory>c:\Users\Julius\Desktop\F25ECS\Entities\Structures\target\site</outputDirectory>
+    <outputDirectory>c:\Users\Julius\Desktop\F25ECS\Entities\Structures\type\site</outputDirectory>
   </reporting>
 </project>

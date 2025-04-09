@@ -39,7 +39,13 @@ public class Engine
 
     public static void removeEntity(Entity entity) {
         if (entities.remove(entity.getId()) != null) {
-            nodes.removeIf(node -> node.getEntityID() == entity.getId());
+            nodes.removeIf(node -> {
+                if (node.getEntityID() == entity.getId()) {
+                    node.onRemove();
+                    return true;
+                }
+                return false;
+            });
         }
     }
 

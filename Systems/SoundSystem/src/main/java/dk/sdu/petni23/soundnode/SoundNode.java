@@ -11,4 +11,9 @@ public class SoundNode extends Node {
     public SoundNode(Entity entity) {
         super(entity);
     }
+
+    @Override
+    public void onRemove() {
+
+    }
 }

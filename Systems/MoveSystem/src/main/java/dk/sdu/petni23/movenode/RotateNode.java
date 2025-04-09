@@ -13,4 +13,9 @@ public class RotateNode extends Node
     {
         super(entity);
     }
+
+    @Override
+    public void onRemove() {
+
+    }
 }

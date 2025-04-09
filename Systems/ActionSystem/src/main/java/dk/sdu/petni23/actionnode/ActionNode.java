@@ -1,13 +1,8 @@
 package dk.sdu.petni23.actionnode;
 
 import dk.sdu.petni23.common.components.actions.ActionSetComponent;
-import dk.sdu.petni23.common.components.damage.LayerComponent;
-import dk.sdu.petni23.common.components.damage.AttackComponent;
-import dk.sdu.petni23.common.components.movement.DirectionComponent;
-import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.node.Node;
-import dk.sdu.petni23.gameengine.node.Optional;
 
 public class ActionNode extends Node
 {
@@ -16,5 +11,10 @@ public class ActionNode extends Node
     public ActionNode(Entity entity)
     {
         super(entity);
+    }
+
+    @Override
+    public void onRemove() {
+
     }
 }

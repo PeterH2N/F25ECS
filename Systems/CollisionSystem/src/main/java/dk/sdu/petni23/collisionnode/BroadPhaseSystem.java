@@ -28,10 +28,6 @@ public class BroadPhaseSystem implements ISystem, IPluginService
     @Override
     public void update(double deltaTime)
     {
-        GameData.world.collisionColliders.keySet().removeIf(node -> Engine.getEntity(node.getEntityID()) == null);
-        GameData.world.hitBoxColliders.keySet().removeIf(node -> Engine.getEntity(node.getEntityID()) == null);
-        GameData.world.collisionColliderPairs.keySet().removeIf(pair -> Engine.getEntity(pair.c1().node.getEntityID()) == null || Engine.getEntity(pair.c2().node.getEntityID()) == null);
-        GameData.world.hitBoxColliderPairs.keySet().removeIf(pair -> Engine.getEntity(pair.c1().node.getEntityID()) == null || Engine.getEntity(pair.c2().node.getEntityID()) == null);
         clearGrid(collisionGrid);
         clearGrid(hitBoxGrid);
         populateGrid(CollisionNode.class, collisionGrid, CollisionComponent.class, GameData.world.collisionColliders);

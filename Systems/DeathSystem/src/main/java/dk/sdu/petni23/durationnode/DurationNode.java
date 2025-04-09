@@ -11,4 +11,9 @@ public class DurationNode extends Node
     {
         super(entity);
     }
+
+    @Override
+    public void onRemove() {
+
+    }
 }

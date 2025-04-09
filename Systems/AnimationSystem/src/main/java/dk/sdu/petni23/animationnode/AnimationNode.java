@@ -7,21 +7,26 @@ import dk.sdu.petni23.common.components.movement.DirectionComponent;
 import dk.sdu.petni23.common.components.movement.VelocityComponent;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.node.Node;
-import dk.sdu.petni23.gameengine.node.Optional;
+import dk.sdu.petni23.gameengine.node.OptionalComponent;
 
 
 public class AnimationNode extends Node
 {
     public SpriteComponent spriteComponent;
     public AnimationComponent animationComponent;
-    @Optional
+    @OptionalComponent
     public VelocityComponent velocityComponent;
-    @Optional
+    @OptionalComponent
     public DirectionComponent directionComponent;
-    @Optional
+    @OptionalComponent
     public ActionSetComponent actionSetComponent;
 
     public AnimationNode(Entity entity) {
         super(entity);
+    }
+
+    @Override
+    public void onRemove() {
+
     }
 }

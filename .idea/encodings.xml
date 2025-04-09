@@ -29,6 +29,8 @@
     <file url="file://$PROJECT_DIR$/GameEngine/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Renderer/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Renderer/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Systems/AISystem/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Systems/AISystem/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Systems/ActionSystem/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Systems/ActionSystem/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Systems/AnimationSystem/src/main/java" charset="UTF-8" />

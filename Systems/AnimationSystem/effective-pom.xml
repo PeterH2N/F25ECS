@@ -98,8 +98,8 @@
     <sourceDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\AnimationSystem\src\main\java</sourceDirectory>
     <scriptSourceDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\AnimationSystem\src\main\scripts</scriptSourceDirectory>
     <testSourceDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\AnimationSystem\src\test\java</testSourceDirectory>
-    <outputDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\AnimationSystem\target\classes</outputDirectory>
-    <testOutputDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\AnimationSystem\target\test-classes</testOutputDirectory>
+    <outputDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\AnimationSystem\type\classes</outputDirectory>
+    <testOutputDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\AnimationSystem\type\test-classes</testOutputDirectory>
     <resources>
       <resource>
         <directory>c:\Users\Julius\Desktop\F25ECS\Systems\AnimationSystem\src\main\resources</directory>
@@ -110,7 +110,7 @@
         <directory>c:\Users\Julius\Desktop\F25ECS\Systems\AnimationSystem\src\test\resources</directory>
       </testResource>
     </testResources>
-    <directory>c:\Users\Julius\Desktop\F25ECS\Systems\AnimationSystem\target</directory>
+    <directory>c:\Users\Julius\Desktop\F25ECS\Systems\AnimationSystem\type</directory>
     <finalName>AnimationSystem-1.0-SNAPSHOT</finalName>
     <pluginManagement>
       <plugins>
@@ -293,7 +293,7 @@
               <goal>site</goal>
             </goals>
             <configuration>
-              <outputDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\AnimationSystem\target\site</outputDirectory>
+              <outputDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\AnimationSystem\type\site</outputDirectory>
               <reportPlugins>
                 <reportPlugin>
                   <groupId>org.apache.maven.plugins</groupId>
@@ -309,7 +309,7 @@
               <goal>deploy</goal>
             </goals>
             <configuration>
-              <outputDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\AnimationSystem\target\site</outputDirectory>
+              <outputDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\AnimationSystem\type\site</outputDirectory>
               <reportPlugins>
                 <reportPlugin>
                   <groupId>org.apache.maven.plugins</groupId>
@@ -320,7 +320,7 @@
           </execution>
         </executions>
         <configuration>
-          <outputDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\AnimationSystem\target\site</outputDirectory>
+          <outputDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\AnimationSystem\type\site</outputDirectory>
           <reportPlugins>
             <reportPlugin>
               <groupId>org.apache.maven.plugins</groupId>
@@ -332,6 +332,6 @@
     </plugins>
   </build>
   <reporting>
-    <outputDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\AnimationSystem\target\site</outputDirectory>
+    <outputDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\AnimationSystem\type\site</outputDirectory>
   </reporting>
 </project>

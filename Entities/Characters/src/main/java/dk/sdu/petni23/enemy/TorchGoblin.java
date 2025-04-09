@@ -1,13 +1,14 @@
 package dk.sdu.petni23.enemy;
 
 import dk.sdu.petni23.character.Character;
+import dk.sdu.petni23.common.components.AIComponent;
 import dk.sdu.petni23.common.components.damage.AttackComponent;
 import dk.sdu.petni23.common.components.health.HealthBarComponent;
 import dk.sdu.petni23.common.components.items.LootComponent;
 import dk.sdu.petni23.common.components.actions.Action;
 import dk.sdu.petni23.common.components.actions.ActionSetComponent;
 import dk.sdu.petni23.common.components.damage.LayerComponent;
-import dk.sdu.petni23.common.components.movement.SpeedComponent;
+import dk.sdu.petni23.common.components.movement.VelocityComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.common.util.Vector2D;
@@ -17,6 +18,7 @@ import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public class TorchGoblin
@@ -34,9 +36,7 @@ public class TorchGoblin
     {
         Entity goblin = Character.create(pos, 30,"goblin_hurt1");
 
-        var speed = new SpeedComponent();
-        speed.speed = 2.5;
-        goblin.add(speed);
+        goblin.get(VelocityComponent.class).speed = 2.5;
 
         var spriteComponent = new SpriteComponent(spriteSheet, new Vector2D(-0.5, -127d / 192));
         goblin.add(spriteComponent);
@@ -71,6 +71,8 @@ public class TorchGoblin
         loot.minDrop = 2;
         loot.maxDrop = 5;
         goblin.add(new HealthBarComponent(40, 5, Color.RED));
+
+        goblin.add(new AIComponent(AIComponent.Type.CHARACTER, Arrays.asList(AIComponent.Type.CHARACTER, AIComponent.Type.TOWER, AIComponent.Type.NEXUS), AIComponent.Priority.CLOSEST));
 
         return goblin;
     }

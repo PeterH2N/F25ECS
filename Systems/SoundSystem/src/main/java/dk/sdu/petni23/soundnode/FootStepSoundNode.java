@@ -16,4 +16,9 @@ public class FootStepSoundNode extends Node
     {
         super(entity);
     }
+
+    @Override
+    public void onRemove() {
+
+    }
 }

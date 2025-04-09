@@ -12,5 +12,10 @@ public class ShopNode extends Node{
     public ShopNode(Entity entity) {
         super(entity);
     }
-    
+
+    @Override
+    public void onRemove() {
+
+    }
+
 }

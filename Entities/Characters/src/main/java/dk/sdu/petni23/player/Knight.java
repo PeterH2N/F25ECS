@@ -1,6 +1,8 @@
 package dk.sdu.petni23.player;
 
 import dk.sdu.petni23.character.Character;
+import dk.sdu.petni23.common.components.AIComponent;
+import dk.sdu.petni23.common.components.movement.VelocityComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.common.components.sound.FootstepSoundComponent;
 import dk.sdu.petni23.common.components.sound.SoundComponent;
@@ -8,7 +10,6 @@ import dk.sdu.petni23.common.components.actions.Action;
 import dk.sdu.petni23.common.components.actions.ActionSetComponent;
 import dk.sdu.petni23.common.components.damage.LayerComponent;
 import dk.sdu.petni23.common.components.damage.AttackComponent;
-import dk.sdu.petni23.common.components.movement.SpeedComponent;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.Engine;
@@ -16,8 +17,11 @@ import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 import javafx.scene.image.Image;
 
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Set;
+
+import static dk.sdu.petni23.common.components.AIComponent.Type.CHARACTER;
 
 public class Knight
 {
@@ -33,9 +37,7 @@ public class Knight
     public static Entity create(Vector2D pos) {
         Entity knight = Character.create(pos, 100, "knight_hurt1");
 
-        var speed = new SpeedComponent();
-        speed.speed = 3;
-        knight.add(speed);
+        knight.get(VelocityComponent.class).speed = 3;
 
         var spriteComponent = new SpriteComponent(spriteSheet, new Vector2D(-0.5, -127d / 192));
         knight.add(spriteComponent);
@@ -77,6 +79,8 @@ public class Knight
         knight.add(new FootstepSoundComponent("footstep_player", Set.of(1, 4)));
 
         knight.add(new AttackComponent(5, 0.6));
+
+        knight.add(new AIComponent(CHARACTER, null, null));
 
         return knight;
     }

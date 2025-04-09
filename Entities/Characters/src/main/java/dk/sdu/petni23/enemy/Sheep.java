@@ -2,10 +2,10 @@ package dk.sdu.petni23.enemy;
 
 import dk.sdu.petni23.character.Character;
 import dk.sdu.petni23.common.components.items.LootComponent;
+import dk.sdu.petni23.common.components.movement.VelocityComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.common.components.sound.FootstepSoundComponent;
 import dk.sdu.petni23.common.components.damage.LayerComponent;
-import dk.sdu.petni23.common.components.movement.SpeedComponent;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.entity.IEntitySPI;
@@ -30,9 +30,7 @@ public class Sheep {
     public static Entity create(Vector2D pos) {
         Entity sheep = Character.create(pos, 20, "sheep_hurt1");
 
-        var speed = new SpeedComponent();
-        speed.speed = 2.3;
-        sheep.add(speed);
+        sheep.get(VelocityComponent.class).speed = 2.3;
 
         var spriteComponent = new SpriteComponent(spriteSheet, new Vector2D(-0.5, -127d / 192));
         sheep.add(spriteComponent);
