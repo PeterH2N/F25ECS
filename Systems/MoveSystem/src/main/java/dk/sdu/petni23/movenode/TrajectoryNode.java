@@ -13,4 +13,9 @@ public class TrajectoryNode extends Node
     {
         super(entity);
     }
+
+    @Override
+    public void onRemove() {
+
+    }
 }

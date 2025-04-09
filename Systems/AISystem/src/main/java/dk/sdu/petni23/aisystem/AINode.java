@@ -1,0 +1,37 @@
+package dk.sdu.petni23.aisystem;
+
+import dk.sdu.petni23.common.components.AIComponent;
+import dk.sdu.petni23.common.components.actions.ActionSetComponent;
+import dk.sdu.petni23.common.components.damage.AttackComponent;
+import dk.sdu.petni23.common.components.damage.LayerComponent;
+import dk.sdu.petni23.common.components.damage.ThrowComponent;
+import dk.sdu.petni23.common.components.movement.DirectionComponent;
+import dk.sdu.petni23.common.components.movement.PositionComponent;
+import dk.sdu.petni23.common.components.movement.VelocityComponent;
+import dk.sdu.petni23.gameengine.entity.Entity;
+import dk.sdu.petni23.gameengine.node.Node;
+import dk.sdu.petni23.gameengine.node.OptionalComponent;
+
+public class AINode extends Node {
+    public AIComponent aiComponent;
+    public PositionComponent positionComponent;
+    public DirectionComponent directionComponent;
+    public LayerComponent layerComponent;
+    @OptionalComponent
+    public VelocityComponent velocityComponent;
+    @OptionalComponent
+    public ThrowComponent throwComponent;
+    @OptionalComponent
+    public ActionSetComponent actionSetComponent;
+
+    public AINode(Entity entity) {
+        super(entity);
+        AISystem.nodes.get(layerComponent.layer.value()).add(this);
+    }
+
+    @Override
+    public void onRemove() {
+        if (layerComponent == null) return;
+        AISystem.nodes.get(layerComponent.layer.value()).remove(this);
+    }
+}

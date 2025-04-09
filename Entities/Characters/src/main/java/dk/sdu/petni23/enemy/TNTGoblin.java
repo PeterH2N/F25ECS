@@ -1,14 +1,15 @@
 package dk.sdu.petni23.enemy;
 
 import dk.sdu.petni23.character.Character;
+import dk.sdu.petni23.common.components.AIComponent;
 import dk.sdu.petni23.common.components.actions.Action;
 import dk.sdu.petni23.common.components.actions.ActionSetComponent;
 import dk.sdu.petni23.common.components.damage.ThrowComponent;
 import dk.sdu.petni23.common.components.health.HealthBarComponent;
 import dk.sdu.petni23.common.components.items.LootComponent;
+import dk.sdu.petni23.common.components.movement.VelocityComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.common.components.damage.LayerComponent;
-import dk.sdu.petni23.common.components.movement.SpeedComponent;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.entity.IEntitySPI;
@@ -17,6 +18,7 @@ import dk.sdu.petni23.gameengine.entity.Entity;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public class TNTGoblin
@@ -32,9 +34,7 @@ public class TNTGoblin
     public static Entity create(Vector2D pos) {
         Entity goblin = Character.create(pos, 20, "goblin_hurt1");
 
-        var speed = new SpeedComponent();
-        speed.speed = 2.3;
-        goblin.add(speed);
+        goblin.get(VelocityComponent.class).speed = 2.3;
 
         var spriteComponent = new SpriteComponent(spriteSheet, new Vector2D(-0.5, -127d / 192));
         goblin.add(spriteComponent);
@@ -64,6 +64,7 @@ public class TNTGoblin
         attack.strength = 1;
         goblin.add(new HealthBarComponent(40, 5, Color.RED));
 
+        goblin.add(new AIComponent(AIComponent.Type.CHARACTER, Arrays.asList(AIComponent.Type.CHARACTER, AIComponent.Type.TOWER, AIComponent.Type.NEXUS), AIComponent.Priority.CLOSEST));
 
         return goblin;
     }

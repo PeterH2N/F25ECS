@@ -4,7 +4,6 @@ import dk.sdu.petni23.common.components.PlacementComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.node.Node;
-import dk.sdu.petni23.gameengine.node.Optional;
 
 public class PlacementNode extends Node{
 
@@ -14,5 +13,10 @@ public class PlacementNode extends Node{
     public PlacementNode(Entity entity) {
         super(entity);
     }
-    
+
+    @Override
+    public void onRemove() {
+
+    }
+
 }

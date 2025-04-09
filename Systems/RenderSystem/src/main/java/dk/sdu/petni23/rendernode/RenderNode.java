@@ -11,26 +11,26 @@ import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.node.Node;
-import dk.sdu.petni23.gameengine.node.Optional;
+import dk.sdu.petni23.gameengine.node.OptionalComponent;
 
 
 public class RenderNode extends Node
 {
     public PositionComponent positionComponent;
     public DisplayComponent displayComponent;
-    @Optional
+    @OptionalComponent
     public SpriteComponent spriteComponent;
-    @Optional
+    @OptionalComponent
     public CollisionComponent collisionComponent;
-    @Optional
+    @OptionalComponent
     public HitBoxComponent hitBoxComponent;
-    @Optional
+    @OptionalComponent
     public HealthComponent healthComponent;
-    @Optional
+    @OptionalComponent
     public DirectionComponent directionComponent;
-    @Optional
+    @OptionalComponent
     public ThrowComponent throwComponent;
-    @Optional
+    @OptionalComponent
     public HealthBarComponent healthBarComponent;
 
     public double getY() {
@@ -39,5 +39,10 @@ public class RenderNode extends Node
 
     public RenderNode(Entity entity) {
         super(entity);
+    }
+
+    @Override
+    public void onRemove() {
+
     }
 }

@@ -21,7 +21,7 @@ public abstract class Node
         List<Class<? extends Component>> componentClasses = new ArrayList<>();
         for (Field field : nodeClass.getDeclaredFields()) {
             Class<?> type = field.getType();
-            if (Component.class.isAssignableFrom(type) && !field.isAnnotationPresent(Optional.class)) {
+            if (Component.class.isAssignableFrom(type) && !field.isAnnotationPresent(OptionalComponent.class)) {
                 componentClasses.add((Class<? extends Component>) type);
             }
         }
@@ -76,6 +76,8 @@ public abstract class Node
         }
         return null;
     }
+
+    public abstract void onRemove();
 
     public long getEntityID()
     {

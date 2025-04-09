@@ -29,8 +29,7 @@ public class ControlSystem implements ISystem
                 v.add(1,0);
             }
             v.normalize();
-            if (node.speedComponent != null)
-                v.multiply(node.speedComponent.speed);
+            v.multiply(node.velocityComponent.speed);
             node.velocityComponent.velocity.set(v);
             Vector2D mousePos = GameData.toWorldSpace(GameData.gameKeys.getMousePos());
             // get vector from entity position to mouse position

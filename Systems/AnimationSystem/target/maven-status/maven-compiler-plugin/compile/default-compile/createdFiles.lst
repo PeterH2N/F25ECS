@@ -1,0 +1,4 @@
+module-info.class
+dk/sdu/petni23/animationnode/AnimationSystem.class
+dk/sdu/petni23/animationnode/AnimationNode.class
+dk/sdu/petni23/animationnode/AnimationNodeSPI.class

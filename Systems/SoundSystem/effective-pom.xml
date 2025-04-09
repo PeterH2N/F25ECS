@@ -97,8 +97,8 @@
     <sourceDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\SoundSystem\src\main\java</sourceDirectory>
     <scriptSourceDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\SoundSystem\src\main\scripts</scriptSourceDirectory>
     <testSourceDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\SoundSystem\src\test\java</testSourceDirectory>
-    <outputDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\SoundSystem\target\classes</outputDirectory>
-    <testOutputDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\SoundSystem\target\test-classes</testOutputDirectory>
+    <outputDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\SoundSystem\type\classes</outputDirectory>
+    <testOutputDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\SoundSystem\type\test-classes</testOutputDirectory>
     <resources>
       <resource>
         <directory>c:\Users\Julius\Desktop\F25ECS\Systems\SoundSystem\src\main\resources</directory>
@@ -109,7 +109,7 @@
         <directory>c:\Users\Julius\Desktop\F25ECS\Systems\SoundSystem\src\test\resources</directory>
       </testResource>
     </testResources>
-    <directory>c:\Users\Julius\Desktop\F25ECS\Systems\SoundSystem\target</directory>
+    <directory>c:\Users\Julius\Desktop\F25ECS\Systems\SoundSystem\type</directory>
     <finalName>SoundSystem-1.0-SNAPSHOT</finalName>
     <pluginManagement>
       <plugins>
@@ -292,7 +292,7 @@
               <goal>site</goal>
             </goals>
             <configuration>
-              <outputDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\SoundSystem\target\site</outputDirectory>
+              <outputDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\SoundSystem\type\site</outputDirectory>
               <reportPlugins>
                 <reportPlugin>
                   <groupId>org.apache.maven.plugins</groupId>
@@ -308,7 +308,7 @@
               <goal>deploy</goal>
             </goals>
             <configuration>
-              <outputDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\SoundSystem\target\site</outputDirectory>
+              <outputDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\SoundSystem\type\site</outputDirectory>
               <reportPlugins>
                 <reportPlugin>
                   <groupId>org.apache.maven.plugins</groupId>
@@ -319,7 +319,7 @@
           </execution>
         </executions>
         <configuration>
-          <outputDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\SoundSystem\target\site</outputDirectory>
+          <outputDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\SoundSystem\type\site</outputDirectory>
           <reportPlugins>
             <reportPlugin>
               <groupId>org.apache.maven.plugins</groupId>
@@ -331,6 +331,6 @@
     </plugins>
   </build>
   <reporting>
-    <outputDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\SoundSystem\target\site</outputDirectory>
+    <outputDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\SoundSystem\type\site</outputDirectory>
   </reporting>
 </project>

@@ -12,19 +12,24 @@ public class LayerComponent extends Component
     }
 
     public enum Layer {
-        PLAYER(0b01),
-        ENEMY(0b10),
-        ALL(0),
-        NONE(Integer.MAX_VALUE);
+        PLAYER(0b01, 0b10),
+        ENEMY(0b10, PLAYER.layer),
+        ALL(0, Integer.MAX_VALUE),
+        NONE(Integer.MAX_VALUE, Integer.MAX_VALUE);
 
         private final int layer;
+        private final int opponent;
 
-        Layer(int l) {
+        Layer(int l, int opponent) {
             layer = l;
+            this.opponent = opponent;
         }
 
         public int value() {
             return layer;
+        }
+        public int opponent() {
+            return opponent;
         }
     }
 }
