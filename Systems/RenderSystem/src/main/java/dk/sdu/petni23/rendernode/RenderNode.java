@@ -1,5 +1,6 @@
 package dk.sdu.petni23.rendernode;
 
+import dk.sdu.petni23.common.components.ai.PathFindingComponent;
 import dk.sdu.petni23.common.components.damage.ThrowComponent;
 import dk.sdu.petni23.common.components.health.HealthBarComponent;
 import dk.sdu.petni23.common.components.rendering.DisplayComponent;
@@ -32,7 +33,8 @@ public class RenderNode extends Node
     public ThrowComponent throwComponent;
     @OptionalComponent
     public HealthBarComponent healthBarComponent;
-
+    @OptionalComponent
+    public PathFindingComponent pathFindingComponent;
     public double getY() {
         return positionComponent.position.y;
     }

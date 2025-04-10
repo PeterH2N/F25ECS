@@ -1,7 +1,7 @@
 package dk.sdu.petni23.player;
 
 import dk.sdu.petni23.character.Character;
-import dk.sdu.petni23.common.components.AIComponent;
+import dk.sdu.petni23.common.components.ai.AIComponent;
 import dk.sdu.petni23.common.components.movement.VelocityComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.common.components.sound.FootstepSoundComponent;
@@ -17,11 +17,10 @@ import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 import javafx.scene.image.Image;
 
-import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Set;
 
-import static dk.sdu.petni23.common.components.AIComponent.Type.CHARACTER;
+import static dk.sdu.petni23.common.components.ai.AIComponent.Type.CHARACTER;
 
 public class Knight
 {

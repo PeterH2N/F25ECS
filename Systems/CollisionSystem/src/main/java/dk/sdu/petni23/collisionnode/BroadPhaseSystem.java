@@ -20,11 +20,11 @@ import dk.sdu.petni23.gameengine.services.ISystem;
 
 import java.util.*;
 
+import static dk.sdu.petni23.common.world.GameWorld.collisionGrid;
+import static dk.sdu.petni23.common.world.GameWorld.hitBoxGrid;
+
 public class BroadPhaseSystem implements ISystem, IPluginService
 {
-    private static final List<Collider>[][] collisionGrid = (ArrayList<Collider>[][])new ArrayList[(int) GameData.worldSize][(int) GameData.worldSize];
-    private static final List<Collider>[][] hitBoxGrid = (ArrayList<Collider>[][])new ArrayList[(int) GameData.worldSize][(int) GameData.worldSize];
-
     @Override
     public void update(double deltaTime)
     {

@@ -1,7 +1,7 @@
 package dk.sdu.petni23.enemy;
 
 import dk.sdu.petni23.character.Character;
-import dk.sdu.petni23.common.components.AIComponent;
+import dk.sdu.petni23.common.components.ai.AIComponent;
 import dk.sdu.petni23.common.components.actions.Action;
 import dk.sdu.petni23.common.components.actions.ActionSetComponent;
 import dk.sdu.petni23.common.components.damage.ThrowComponent;

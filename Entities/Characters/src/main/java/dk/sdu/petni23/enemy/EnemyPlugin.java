@@ -8,16 +8,16 @@ import dk.sdu.petni23.gameengine.services.IPluginService;
 public class EnemyPlugin implements IPluginService {
     @Override
     public void start() {
-        for (int i = 0; i < 0; i++) {
-            Vector2D pos = GameData.randomWorldPos();
-            if (pos != null)
-                Engine.addEntity(TorchGoblin.create(pos));
-            pos = GameData.randomWorldPos();
+        for (int i = 0; i < 1; i++) {
+            //Vector2D pos = GameData.randomWorldPos();
+            //if (pos != null)
+                Engine.addEntity(TorchGoblin.create(new Vector2D(10,10)));
+            /*pos = GameData.randomWorldPos();
             if (pos != null)
                 Engine.addEntity(TNTGoblin.create(pos));
             pos = GameData.randomWorldPos();
             if (pos != null)
-                Engine.addEntity(Sheep.create(pos));
+                Engine.addEntity(Sheep.create(pos));*/
         }
     }
 

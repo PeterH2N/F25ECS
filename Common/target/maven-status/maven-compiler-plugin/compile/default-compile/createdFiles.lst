@@ -7,6 +7,7 @@ dk/sdu/petni23/common/components/movement/DirectionComponent.class
 dk/sdu/petni23/common/util/SimplexNoise.class
 dk/sdu/petni23/common/components/damage/LayerComponent.class
 dk/sdu/petni23/common/components/damage/DamageComponent.class
+dk/sdu/petni23/common/components/ai/AIComponent$Priority.class
 dk/sdu/petni23/common/enums/GameMode.class
 dk/sdu/petni23/common/components/actions/ActionSetComponent.class
 dk/sdu/petni23/common/util/Vector2D.class
@@ -25,7 +26,6 @@ dk/sdu/petni23/common/components/damage/ThrowComponent.class
 dk/sdu/petni23/common/components/rendering/DisplayComponent$Layer.class
 dk/sdu/petni23/common/components/damage/LayerComponent$Layer.class
 dk/sdu/petni23/common/components/Dispatch.class
-dk/sdu/petni23/common/components/AIComponent.class
 dk/sdu/petni23/common/components/actions/Action$Directionality.class
 dk/sdu/petni23/common/components/sound/SoundComponent.class
 dk/sdu/petni23/common/world/mapgen/GameMap.class
@@ -39,10 +39,11 @@ dk/sdu/petni23/common/GameData.class
 dk/sdu/petni23/common/world/mapgen/Tile.class
 dk/sdu/petni23/common/components/items/CurrencyComponent.class
 dk/sdu/petni23/common/misc/Manifold.class
+dk/sdu/petni23/common/components/ai/AIComponent$Type.class
 dk/sdu/petni23/common/misc/GridNode.class
 dk/sdu/petni23/common/util/Collider.class
 dk/sdu/petni23/common/util/ColliderPair.class
-dk/sdu/petni23/common/components/AIComponent$Priority.class
+dk/sdu/petni23/common/components/ai/AIComponent.class
 module-info.class
 dk/sdu/petni23/common/components/PlacementComponent.class
 dk/sdu/petni23/common/components/collision/HitBoxComponent.class
@@ -58,8 +59,9 @@ dk/sdu/petni23/common/components/shop/ShopComponent.class
 dk/sdu/petni23/common/components/rendering/SpriteComponent.class
 dk/sdu/petni23/common/components/movement/PositionComponent.class
 dk/sdu/petni23/common/components/collision/HasShapeComponent.class
-dk/sdu/petni23/common/components/AIComponent$Type.class
+dk/sdu/petni23/common/components/ai/PathFindingComponent.class
 dk/sdu/petni23/common/util/SimplexNoise$Grad.class
 dk/sdu/petni23/common/components/inventory/PickUpComponent.class
+dk/sdu/petni23/common/components/ai/Path.class
 dk/sdu/petni23/common/components/actions/Action.class
 dk/sdu/petni23/common/components/inventory/InventoryComponent.class

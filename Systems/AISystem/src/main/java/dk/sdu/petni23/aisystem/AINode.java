@@ -1,7 +1,8 @@
 package dk.sdu.petni23.aisystem;
 
-import dk.sdu.petni23.common.components.AIComponent;
+import dk.sdu.petni23.common.components.ai.AIComponent;
 import dk.sdu.petni23.common.components.actions.ActionSetComponent;
+import dk.sdu.petni23.common.components.ai.PathFindingComponent;
 import dk.sdu.petni23.common.components.collision.HitBoxComponent;
 import dk.sdu.petni23.common.components.damage.AttackComponent;
 import dk.sdu.petni23.common.components.damage.LayerComponent;
@@ -20,6 +21,8 @@ public class AINode extends Node {
     public HitBoxComponent hitBoxComponent;
     @OptionalComponent
     public VelocityComponent velocityComponent;
+    @OptionalComponent
+    public PathFindingComponent pathFindingComponent;
     @OptionalComponent
     public DirectionComponent directionComponent;
     @OptionalComponent

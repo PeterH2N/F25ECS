@@ -141,6 +141,7 @@ public class RenderSystem implements IRenderSystem, IPluginService
             if (options.showHP.get()) drawHealth(gc, node, pos);
             drawAim(gc, node);
             drawDir(gc, node, pos);
+            drawPathFinding(gc, node, pos);
         }
         drawFrameTime(gc);
     }
@@ -166,7 +167,8 @@ public class RenderSystem implements IRenderSystem, IPluginService
     void drawAim(GraphicsContext gc, RenderNode node) {
         if (node.throwComponent == null || node.directionComponent == null) return;
         gc.setStroke(Color.RED);
-        Vector2D nPos = GameData.toScreenSpace(node.positionComponent.position.getAdded(node.directionComponent.dir.getMultiplied(node.throwComponent.distance)));
+        var destination = node.positionComponent.position.getAdded(node.directionComponent.dir.getMultiplied(node.throwComponent.distance));
+        Vector2D nPos = GameData.toScreenSpace(destination);
         double s = 32 * GameData.getTileRatio();
         gc.strokeOval(nPos.x - s * 0.5, nPos.y - s * 0.5, s,s);
     }
@@ -224,6 +226,18 @@ public class RenderSystem implements IRenderSystem, IPluginService
         gc.fillRoundRect(pos.x-20*r, pos.y-80*r, barWidth*r, barHeight*r, 3, 5);
         gc.setFill(node.healthBarComponent.color);
         gc.fillRoundRect(pos.x-20*r, pos.y-80*r, health/maxHealth * barWidth*r, barHeight*r, 3, 5);
+    }
+
+    void drawPathFinding(GraphicsContext gc, RenderNode node, Vector2D pos) {
+        if (node.pathFindingComponent == null) return;
+        gc.setStroke(Color.BLUE);
+        var p = GameData.toScreenSpace(node.pathFindingComponent.path.points.get(0));
+        gc.strokeLine(pos.x, pos.y, p.x, p.y);
+        for (int i = 0; i < node.pathFindingComponent.path.points.size() - 1; i++) {
+            var p0 = GameData.toScreenSpace(node.pathFindingComponent.path.points.get(i));
+            var p1 = GameData.toScreenSpace(node.pathFindingComponent.path.points.get(i + 1));
+            gc.strokeLine(p0.x, p0.y, p1.x, p1.y);
+        }
     }
     void drawGrid(GraphicsContext gc) {
         gc.setLineWidth(0.5);

@@ -1,5 +1,6 @@
 package dk.sdu.petni23.common.world;
 
+import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.util.Collider;
 import dk.sdu.petni23.common.misc.Manifold;
 import dk.sdu.petni23.common.util.ColliderPair;
@@ -21,6 +22,9 @@ public class GameWorld
 
     public final Map<ColliderPair, Boolean> collisionColliderPairs = new HashMap<>();
     public final Map<ColliderPair, Boolean> hitBoxColliderPairs = new HashMap<>();
+
+    public static final List<Collider>[][] collisionGrid = (ArrayList<Collider>[][])new ArrayList[(int) GameData.worldSize][(int) GameData.worldSize];
+    public static final List<Collider>[][] hitBoxGrid = (ArrayList<Collider>[][])new ArrayList[(int) GameData.worldSize][(int) GameData.worldSize];
 
     public MapGenOptions mapGenOptions = new MapGenOptions();
 
