@@ -11,6 +11,4 @@ module Items {
     requires Common;
     requires javafx.graphics;
     provides IEntitySPI with GoldSPI, MeatSPI, WoodSPI, StoneSPI;
-
-    exports dk.sdu.petni23.items;
 }

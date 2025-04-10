@@ -4,6 +4,7 @@ import dk.sdu.petni23.common.components.AIComponent;
 import dk.sdu.petni23.common.components.collision.CollisionComponent;
 import dk.sdu.petni23.common.components.collision.HitBoxComponent;
 import dk.sdu.petni23.common.components.damage.LayerComponent;
+import dk.sdu.petni23.common.components.health.HealthBarComponent;
 import dk.sdu.petni23.common.components.health.HealthComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.components.rendering.AnimationComponent;
@@ -17,6 +18,7 @@ import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.services.IPluginService;
 import dk.sdu.petni23.structures.tower.House;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 
 import java.util.Objects;
 
@@ -42,6 +44,7 @@ public class NexusPlugin implements IPluginService
         nexus.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
         nexus.add(new LayerComponent(LayerComponent.Layer.PLAYER));
         nexus.add(new AIComponent(AIComponent.Type.NEXUS, null, null));
+        nexus.add(new HealthBarComponent(128, 10, Color.GREEN));
 
         return nexus;
     }

@@ -49,11 +49,12 @@ public class ArcherTower {
         var offset = new Vector2D(-0, -0.9);
 
         var collision = new CollisionComponent(collisionShape, offset);
+        collision.active = false;
+        tower.add(collision);
         var hitBox = new HitBoxComponent(hitBoxShape, offset);
-        var placement = new PlacementComponent(collision, hitBox);
+        var healthComponent = new HealthComponent(500);
+        var placement = new PlacementComponent(hitBox, healthComponent);
         tower.add(placement);
-
-        tower.add(new HealthComponent(500)); // Less HP than wall but can attack
 
         return tower;
     }

@@ -38,6 +38,10 @@ public class Entity implements Serializable {
     // Remove components from the entity
     public void remove(Class<? extends Component> c) {
         components.remove(c);
+        if (Engine.getEntity(id) == this) {
+            Engine.removeEntity(id);
+            Engine.addEntity(this);
+        }
     }
 
     // Get the component by its class type

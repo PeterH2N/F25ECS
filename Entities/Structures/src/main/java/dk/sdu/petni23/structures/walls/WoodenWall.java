@@ -21,7 +21,6 @@ import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.entity.IEntitySPI;
-import dk.sdu.petni23.gameengine.entity.IEntitySPI.Type;
 import javafx.scene.image.Image;
 
 public class WoodenWall implements IEntitySPI{
@@ -55,13 +54,13 @@ public class WoodenWall implements IEntitySPI{
         Shape hitBoxShape = new AABBShape(2, 1);
 
         var collision = new CollisionComponent(collisionShape, offset);
+        collision.active = false;
+        woodenWall.add(collision);
         var hitBox = new HitBoxComponent(hitBoxShape, offset);
 
-        var placementComponent = new PlacementComponent(collision, hitBox);
-        woodenWall.add(placementComponent);
-
         var health = new HealthComponent(ConfigReader.getItemHealth(Type.WOODEN_WALL.getValue()));
-        woodenWall.add(health);
+        var placementComponent = new PlacementComponent(hitBox, health);
+        woodenWall.add(placementComponent);
 
         return woodenWall;
     }

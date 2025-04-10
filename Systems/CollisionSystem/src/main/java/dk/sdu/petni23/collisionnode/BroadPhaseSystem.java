@@ -68,10 +68,12 @@ public class BroadPhaseSystem implements ISystem, IPluginService
             Vector2D min = pos.getSubtracted(shape.aabb.hw, shape.aabb.hh);
             Vector2D max = pos.getAdded(shape.aabb.hw, shape.aabb.hh);
 
-            int startX = (int) (min.x + GameData.worldSize / 2);
-            int startY = (int) (min.y + GameData.worldSize / 2);
-            int endX = (int) (max.x + GameData.worldSize / 2);
-            int endY = (int) (max.y + GameData.worldSize / 2);
+            int startX = (int) (min.x + GameData.worldSize / 2 - 1);
+            int startY = (int) (min.y + GameData.worldSize / 2 - 1);
+            int endX = (int) (max.x + GameData.worldSize / 2 + 1);
+            int endY = (int) (max.y + GameData.worldSize / 2 + 1);
+            if (startX < 0) startX++;
+            if (startY < 0) startY++;
             if (endX == GameData.worldSize) endX--;
             if (endY == GameData.worldSize) endY--;
 

@@ -8,6 +8,7 @@ import dk.sdu.petni23.common.misc.Manifold;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.node.Node;
 import dk.sdu.petni23.gameengine.services.ISystem;
+import javafx.scene.effect.ColorAdjust;
 
 import java.util.ArrayList;
 import java.util.List;

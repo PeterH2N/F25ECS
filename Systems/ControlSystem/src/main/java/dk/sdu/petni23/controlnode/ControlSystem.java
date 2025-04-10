@@ -3,6 +3,7 @@ package dk.sdu.petni23.controlnode;
 
 import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.components.actions.ActionSetComponent;
+import dk.sdu.petni23.common.enums.GameMode;
 import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.services.ISystem;
@@ -39,7 +40,7 @@ public class ControlSystem implements ISystem
                 node.directionComponent.dir.set(toMousePos.getNormalized());
             }
             if (node.actionSetComponent != null) {
-                if (GameData.gameKeys.isDown(MouseButton.PRIMARY)) {
+                if (GameData.gameKeys.isDown(MouseButton.PRIMARY) && GameData.getGameMode() != GameMode.PLACING) {
 
                     // logic for secondary attack
                     if (node.actionSetComponent.actions.size() > 1 && node.actionSetComponent.lastAction == node.actionSetComponent.actions.get(0) && GameData.getCurrentMillis() < node.actionSetComponent.lastActionTime + node.actionSetComponent.lastAction.duration + 50)

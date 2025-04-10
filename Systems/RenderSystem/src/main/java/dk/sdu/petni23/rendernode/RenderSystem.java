@@ -108,12 +108,9 @@ public class RenderSystem implements IRenderSystem, IPluginService
         Vector2D o = node.spriteComponent.spriteOrigin;
         double x = pos.x + (width * o.x);
         double y = pos.y + (height * o.y);
-        // hurt
-        if (node.healthComponent != null) {
-            if (GameData.getCurrentMillis() < node.healthComponent.lastHurtTime + 200) {
-                gc.setEffect(white);
-            }
-        }
+        // effect
+        gc.setEffect(node.spriteComponent.effect);
+
         boolean rotated = false;
         if (node.directionComponent != null && node.spriteComponent.rotateWithDirection) {
             rotated = true;
