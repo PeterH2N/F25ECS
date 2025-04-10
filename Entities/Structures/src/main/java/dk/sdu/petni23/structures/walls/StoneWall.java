@@ -39,7 +39,7 @@ public class StoneWall implements IEntitySPI{
         stoneWall.add(position);
 
         //add sprite component
-        final var origin = new Vector2D(-0.5, -0.5);
+        final var origin = new Vector2D(-0.5, -0.99);
         dk.sdu.petni23.common.components.rendering.SpriteComponent sprite = new SpriteComponent(spriteSheet, origin);
         stoneWall.add(sprite);
 
@@ -48,8 +48,8 @@ public class StoneWall implements IEntitySPI{
         stoneWall.add(new LayerComponent(LayerComponent.Layer.PLAYER));
 
         Shape collisionShape = new AABBShape(2, 1);
-        var offset = new Vector2D(0, -0.5);
         Shape hitBoxShape = new AABBShape(2, 1);
+        var offset = new Vector2D(0, 0.5);
 
         var collision = new CollisionComponent(collisionShape, offset);
         collision.active = false;

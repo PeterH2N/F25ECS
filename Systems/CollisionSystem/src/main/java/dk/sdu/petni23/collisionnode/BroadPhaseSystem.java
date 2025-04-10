@@ -103,7 +103,7 @@ public class BroadPhaseSystem implements ISystem, IPluginService
 
     private void populateManifoldList(List<Collider>[][] grid, List<Manifold> manifoldList,Map<Node, Collider> colliderMap) {
         for (var collider1 : colliderMap.values()) {
-            if (Engine.getEntity(collider1.node.getEntityID()).get(VelocityComponent.class)== null) continue;
+            if (grid == collisionGrid && Engine.getEntity(collider1.node.getEntityID()).get(VelocityComponent.class) == null) continue;
             for (var cell : collider1.cells) {
                 for (Collider collider2 : grid[(int) cell.y][(int) cell.x]) {
                     if (collider1 == collider2) continue;
