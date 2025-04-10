@@ -60,18 +60,24 @@ public class BroadPhaseSystem implements ISystem, IPluginService
             collider = new Collider(node);
             colliderMap.put(node, collider);
         }
-        if (!(node.getComponent(VelocityComponent.class) == null && !collider.cells.isEmpty())) {
+        if ((node.getComponent(VelocityComponent.class) != null) || (node.getComponent(VelocityComponent.class) == null && collider.cells.isEmpty())) {
             // we update collider cells
             collider.cells.clear();
             Vector2D pos = positionComponent.position.getAdded(node.getComponent(HasShapeComponent.class).offset);
             Shape shape = node.getComponent(c).getShape();
-            Vector2D min = pos.getSubtracted(shape.aabb.hw, shape.aabb.hh);
-            Vector2D max = pos.getAdded(shape.aabb.hw, shape.aabb.hh);
+            double hw = shape.aabb.hw;
+            double hh = shape.aabb.hh;
+            if (node.getComponent(VelocityComponent.class) != null) {
+                hw += 0.05;
+                hh += 0.05;
+            }
+            Vector2D min = pos.getSubtracted(hw, hh);
+            Vector2D max = pos.getAdded(hw, hh);
 
-            int startX = (int) (min.x + GameData.worldSize / 2 - 1);
-            int startY = (int) (min.y + GameData.worldSize / 2 - 1);
-            int endX = (int) (max.x + GameData.worldSize / 2 + 1);
-            int endY = (int) (max.y + GameData.worldSize / 2 + 1);
+            int startX = (int) (min.x + GameData.worldSize * 0.5);
+            int startY = (int) (min.y + GameData.worldSize * 0.5);
+            int endX = (int) (max.x + GameData.worldSize * 0.5);
+            int endY = (int) (max.y + GameData.worldSize * 0.5);
             if (startX < 0) startX++;
             if (startY < 0) startY++;
             if (endX == GameData.worldSize) endX--;
@@ -97,6 +103,7 @@ public class BroadPhaseSystem implements ISystem, IPluginService
 
     private void populateManifoldList(List<Collider>[][] grid, List<Manifold> manifoldList,Map<Node, Collider> colliderMap) {
         for (var collider1 : colliderMap.values()) {
+            if (Engine.getEntity(collider1.node.getEntityID()).get(VelocityComponent.class)== null) continue;
             for (var cell : collider1.cells) {
                 for (Collider collider2 : grid[(int) cell.y][(int) cell.x]) {
                     if (collider1 == collider2) continue;
