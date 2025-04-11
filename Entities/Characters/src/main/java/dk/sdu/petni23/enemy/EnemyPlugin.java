@@ -11,7 +11,7 @@ public class EnemyPlugin implements IPluginService {
         for (int i = 0; i < 1; i++) {
             //Vector2D pos = GameData.randomWorldPos();
             //if (pos != null)
-                Engine.addEntity(TorchGoblin.create(new Vector2D(10,10)));
+                Engine.addEntity(TorchGoblin.create(new Vector2D(10.5,7.5)));
             /*pos = GameData.randomWorldPos();
             if (pos != null)
                 Engine.addEntity(TNTGoblin.create(pos));

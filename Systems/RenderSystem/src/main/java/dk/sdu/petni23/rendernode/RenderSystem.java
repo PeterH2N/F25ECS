@@ -10,6 +10,7 @@ import dk.sdu.petni23.common.shape.OvalShape;
 import dk.sdu.petni23.common.shape.Shape;
 import dk.sdu.petni23.common.util.DebugOptions;
 import dk.sdu.petni23.common.util.Vector2D;
+import dk.sdu.petni23.common.world.GameWorld;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.services.IPluginService;
 import dk.sdu.petni23.gameengine.services.IRenderSystem;
@@ -231,12 +232,23 @@ public class RenderSystem implements IRenderSystem, IPluginService
     void drawPathFinding(GraphicsContext gc, RenderNode node, Vector2D pos) {
         if (node.pathFindingComponent == null) return;
         gc.setStroke(Color.BLUE);
-        var p = GameData.toScreenSpace(node.pathFindingComponent.path.points.get(0));
-        gc.strokeLine(pos.x, pos.y, p.x, p.y);
+
         for (int i = 0; i < node.pathFindingComponent.path.points.size() - 1; i++) {
-            var p0 = GameData.toScreenSpace(node.pathFindingComponent.path.points.get(i));
-            var p1 = GameData.toScreenSpace(node.pathFindingComponent.path.points.get(i + 1));
-            gc.strokeLine(p0.x, p0.y, p1.x, p1.y);
+            var p0 = node.pathFindingComponent.path.points.get(i);
+            var p1 = node.pathFindingComponent.path.points.get(i + 1);
+            var sp0 = GameData.toScreenSpace(p0);
+            var sp1 = GameData.toScreenSpace(p1);
+            gc.strokeLine(sp0.x, sp0.y, sp1.x, sp1.y );
+            var tp0 = GameWorld.toTileSpace(p0);
+            var tp1 = GameWorld.toTileSpace(p1);
+            var cells = useVisionLine(tp0, tp1);
+            for (var cell : cells) {
+                cell = GameWorld.toWorldSpace(cell);
+                var cellPos = GameData.toScreenSpace(cell);
+                var color = new Color(1,0,0,0.5);
+                gc.setFill(color);
+                gc.fillRect(cellPos.x, cellPos.y, 64 * GameData.getTileRatio(), 64 * GameData.getTileRatio());
+            }
         }
     }
     void drawGrid(GraphicsContext gc) {
@@ -277,6 +289,188 @@ public class RenderSystem implements IRenderSystem, IPluginService
                 gc.drawImage(img, x, y, width, height);
             }
         }
+    }
+
+    private List<Vector2D> bresenhamsLine(Vector2D start, Vector2D end) {
+        List<Vector2D> cells = new ArrayList<>();
+        int sx, sy;
+        int x0 = (int) start.x, y0 = (int) start.y;
+        int x1 = (int) end.x, y1 = (int) end.y;
+
+        int dx = Math.abs(x1 - x0);
+        if (x0 < x1) sx = 1;
+        else sx = -1;
+        int dy = -Math.abs(y1 - y0);
+        if (y0 < y1) sy = 1;
+        else sy = -1;
+
+        int e = dx + dy;
+
+        while(true) {
+            cells.add(new Vector2D(x0, y0));
+            if (x0 == x1 && y0 == y1) break;
+            int e2 = e+e;
+            if (e2 >= dy) {
+                if (x0 == x1) break;
+                e += dy;
+                x0 += sx;
+            }
+            else if (e2 <= dx) {
+                if (y0 == y1) break;
+                e += dx;
+                y0 += sy;
+            }
+        }
+        return cells;
+    }
+
+    private List<Vector2D> useVisionLine(Vector2D p1, Vector2D p2) {
+        List<Vector2D> cells = new ArrayList<>();
+        int x1 = (int) p1.x, y1 = (int)p1.y, x2 = (int) p2.x, y2 = (int)p2.y;
+        int i;
+        int yStep, xStep;
+        int error;
+        int errorPrev;
+        int y = y1, x = x1;
+        int ddy, ddx;
+        int dx = x2 - x1;
+        int dy = y2 - y1;
+        cells.add(new Vector2D(x1, y1));
+
+        if (dy < 0) {
+            yStep = -1;
+            dy = -dy;
+        } else {
+            yStep = 1;
+        }
+        if (dx < 0) {
+            xStep = -1;
+            dx = -dx;
+        } else {
+            xStep = 1;
+        }
+        ddy = 2*dy;
+        ddx = 2*dx;
+        if (ddx >= ddy) {
+            errorPrev = error = dx;
+            for (i = 0; i < dx; i++) {
+                x += xStep;
+                error += ddy;
+                if (error > ddx) {
+                    y += yStep;
+                    error -= ddx;
+                    if (error + errorPrev < ddx)
+                        cells.add(new Vector2D(x, y - yStep));
+                    else if (error + errorPrev > ddx)
+                        cells.add(new Vector2D(x-xStep, y));
+                    else {
+                        cells.add(new Vector2D(x, y - yStep));
+                        cells.add(new Vector2D(x-xStep, y));
+                    }
+                }
+                cells.add(new Vector2D(x, y));
+                errorPrev = error;
+            }
+        } else {
+            errorPrev = error = dy;
+            for (i=0 ; i < dy ; i++){
+                y += yStep;
+                error += ddx;
+                if (error > ddy){
+                    x += xStep;
+                    error -= ddy;
+                    if (error + errorPrev < ddy)
+                        cells.add(new Vector2D(x-xStep, y));
+                    else if (error + errorPrev > ddy)
+                        cells.add(new Vector2D(x, y - yStep));
+                    else{
+                        cells.add(new Vector2D(x-xStep, y));
+                        cells.add(new Vector2D(x, y - yStep));
+                    }
+                }
+                cells.add(new Vector2D(x, y));
+                errorPrev = error;
+            }
+        }
+        return cells;
+    }
+
+    private List<Vector2D> bresenhamsLineNew(Vector2D start, Vector2D end) {
+        List<Vector2D> cells = new ArrayList<>();
+        int sx, sy;
+        int x0 = (int) start.x, y0 = (int) start.y+1;
+        int x1 = (int) end.x, y1 = (int) end.y;
+
+        if (x0 < x1) sx = 1;
+        else sx = -1;
+        if (y0 < y1) sy = 1;
+        else sy = -1;
+
+        /*if (x1 - x0 > 0) x1++;
+        else if (x1 - x0 < 0) x1--;*/
+
+        int dx = Math.abs(x1 - x0);
+        int dy = Math.abs(y1 - y0);
+
+        if (dy < dx) {
+            y1++;
+            dy = Math.abs(y1 - y0);
+        }
+
+        int e = dx - dy;
+
+        while(true) {
+            cells.add(new Vector2D(x0, y0));
+            if (x0 == x1 && y0 == y1) break;
+            int e2 = 4*e;
+
+            if (dy > dx) {
+                if (e2 > -dy) {
+                    e -= dy;
+                    x0 += sx;
+                } else if (e2 < dx) {
+                    e += dx;
+                    y0 += sy;
+                }
+            } else {
+                if (e2 < dx) {
+                    e += dx;
+                    y0 += sy;
+                } else if (e2 > -dy) {
+                    e -= dy;
+                    x0 += sx;
+                }
+            }
+        }
+        return cells;
+    }
+
+    public List<Vector2D> lineNoDiag(Vector2D p0, Vector2D p1) {
+        List<Vector2D> cells = new ArrayList<>();
+        int x0 = (int) p0.x, y0 = (int) p0.y;
+        int x1 = (int) p1.x, y1 = (int) p1.y;
+        int xDist =  Math.abs(x1 - x0);
+        int yDist = -Math.abs(y1 - y0);
+        int xStep = (x0 < x1 ? +1 : -1);
+        int yStep = (y0 < y1 ? +1 : -1);
+        int error = xDist + yDist;
+
+        cells.add(new Vector2D(x0, y0));
+
+        while (x0 != x1 || y0 != y1) {
+            if (2*error - yDist > xDist - 2*error) {
+                // horizontal step
+                error += yDist;
+                x0 += xStep;
+            } else {
+                // vertical step
+                error += xDist;
+                y0 += yStep;
+            }
+
+            cells.add(new Vector2D(x0, y0));
+        }
+        return cells;
     }
 
     public Image getSprite(SpriteComponent spc) {

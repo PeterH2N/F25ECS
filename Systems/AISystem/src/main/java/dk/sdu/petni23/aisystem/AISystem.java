@@ -148,82 +148,48 @@ public class AISystem implements ISystem {
     }
 
     private void pathFind(Vector2D start, Vector2D end, Path path) {
-        pathFindRecursive(start, end, path);
+        start = new Vector2D(start);
+        end = new Vector2D(end);
+        start.x = (int) start.x + 0.5;
+        start.y = (int) start.y + 0.5;
+        end.x = (int) end.x + 0.5;
+        end.y = (int) end.y + 0.5;
+        path.points.add(start);
+        //pathFindRecursive(start, end, path);
         path.points.add(end);
     }
 
     private void pathFindRecursive(Vector2D start, Vector2D end, Path path) {
         // get list of all grid cells te line intersects
-        var cells = BresenhamsLine(toTileSpace((int) start.x, (int) start.y), toTileSpace((int) end.x, (int) end.y));
-
+        /*var cells = BresenhamsLine2(start, end);
+        var endCell = new Vector2D((int)end.x, (int)end.y);
+        var startCell = new Vector2D((int) start.x, (int)start.y);
+        cells.remove(endCell);
+        cells.remove(startCell);
         for (var cell : cells) {
+            var tileCell = GameWorld.toTileSpace(cell);
             // if this cell has a collision object in it
-            if (!GameWorld.collisionGrid[(int) cell.y][(int) cell.x].isEmpty()) {
+            if (!GameWorld.collisionGrid[(int) tileCell.y][(int) tileCell.x].isEmpty()) {
                 // steer around it
                 // steer north or west for now
-                var p = toWorldSpace((int) cell.x, (int) cell.y);
-                var dir = p.getSubtracted(start);
-                p.y += 0.5;
-                p.x += 0.5;
+                var dir = cell.getSubtracted(start);
+                cell.y += 0.5;
+                cell.x += 0.5;
                 if (dir.x > dir.y) {
-                    p.y += 1;
-                    p.x -= 1;
+                    cell.y += 1;
+                    cell.x += dir.x > 0 ? -1 : 1;
                 } else {
-                    p.y -= 1;
-                    p.x += 1;
+                    cell.x += 1;
+                    cell.y += dir.y > 0 ? -1 : 1;
                 }
-                if (path.points.contains(p)) break; // avoid infinite loop
-                path.points.add(p);
-                pathFindRecursive(p ,end, path);
-                break;
+                if (path.points.contains(cell)) return; // avoid infinite loop
+                path.points.add(cell);
+                pathFindRecursive(cell ,end, path);
+                return;
             }
         }
+        path.points.add(end);*/
     }
 
-    private List<Vector2D> BresenhamsLine(Vector2D start, Vector2D end) {
-        List<Vector2D> cells = new ArrayList<>();
-        int sx, sy;
-        int x0 = (int) start.x, y0 = (int) start.y;
-        int x1 = (int) end.x, y1 = (int) end.y;
 
-        int dx = Math.abs(x1 - x0);
-        if (x0 < x1) sx = 1;
-        else sx = -1;
-        int dy = -Math.abs(y1 - y0);
-        if (y0 < y1) sy = 1;
-        else sy = -1;
-
-        int e = dx + dy;
-
-        while(true) {
-            cells.add(new Vector2D(x0, y0));
-            if (x0 == x1 && y0 == y1) break;
-            int e2 = e+e;
-            if (e2 >= dy) {
-                if (x0 == x1) break;
-                e += dy;
-                x0 += sx;
-            }
-            if (e2 <= dx) {
-                if (y0 == y1) break;
-                e += dx;
-                y0 += sy;
-            }
-        }
-        return cells;
-    }
-
-    private Vector2D toTileSpace(int x, int y) {
-        int X = (x + GameData.worldSize / 2) - 1;
-        int Y = (-y + GameData.worldSize / 2);
-
-        return new Vector2D(X, Y);
-    }
-
-    private Vector2D toWorldSpace(int x, int y) {
-        int X = x - GameData.worldSize / 2;
-        int Y = -(y - GameData.worldSize / 2);
-
-        return new Vector2D(X, Y);
-    }
 }

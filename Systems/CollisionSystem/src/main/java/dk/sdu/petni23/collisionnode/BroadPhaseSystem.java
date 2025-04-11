@@ -13,6 +13,7 @@ import dk.sdu.petni23.common.misc.Manifold;
 import dk.sdu.petni23.common.shape.Shape;
 import dk.sdu.petni23.common.util.ColliderPair;
 import dk.sdu.petni23.common.util.Vector2D;
+import dk.sdu.petni23.common.world.GameWorld;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.node.Node;
 import dk.sdu.petni23.gameengine.services.IPluginService;
@@ -74,17 +75,11 @@ public class BroadPhaseSystem implements ISystem, IPluginService
             Vector2D min = pos.getSubtracted(hw, hh);
             Vector2D max = pos.getAdded(hw, hh);
 
-            int startX = (int) (min.x + GameData.worldSize * 0.5);
-            int startY = (int) (min.y + GameData.worldSize * 0.5);
-            int endX = (int) (max.x + GameData.worldSize * 0.5);
-            int endY = (int) (max.y + GameData.worldSize * 0.5);
-            if (startX < 0) startX++;
-            if (startY < 0) startY++;
-            if (endX == GameData.worldSize) endX--;
-            if (endY == GameData.worldSize) endY--;
+            var start = GameWorld.toTileSpace(min);
+            var end = GameWorld.toTileSpace(max);
 
-            for (int x = startX; x <= endX; x++) {
-                for (int y = startY; y <= endY; y++) {
+            for (int x = (int) start.x; x <= end.x; x++) {
+                for (int y = (int) start.y; y <= end.y; y++) {
                     Vector2D cell = new Vector2D(x, y);
                     collider.cells.add(cell);
                 }

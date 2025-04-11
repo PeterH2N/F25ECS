@@ -4,6 +4,7 @@ import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.util.Collider;
 import dk.sdu.petni23.common.misc.Manifold;
 import dk.sdu.petni23.common.util.ColliderPair;
+import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.common.world.mapgen.GameMap;
 import dk.sdu.petni23.common.world.mapgen.MapGenOptions;
 import dk.sdu.petni23.gameengine.node.Node;
@@ -33,5 +34,33 @@ public class GameWorld
     public GameWorld(MapGenOptions options)
     {
         this.map = new GameMap(options);
+    }
+
+    public static Vector2D toTileSpace(int x, int y) {
+        int X = (int) (x + GameData.worldSize * 0.5);
+        int Y = (int) (y + GameData.worldSize * 0.5);
+
+        if (X < 0) X++;
+        if (Y < 0) Y++;
+        if (X == GameData.worldSize) X--;
+        if (Y == GameData.worldSize) Y--;
+
+        return new Vector2D(X, Y);
+    }
+
+    public static Vector2D toTileSpace(Vector2D v) {
+        return toTileSpace((int) v.x, (int) v.y);
+    }
+
+
+
+    public static Vector2D toWorldSpace(int x, int y) {
+        int X = (int) (x - GameData.worldSize * 0.5);
+        int Y = (int) (y - GameData.worldSize * 0.5);
+
+        return new Vector2D(X, Y);
+    }
+    public static Vector2D toWorldSpace(Vector2D v) {
+        return toWorldSpace((int) v.x, (int) v.y);
     }
 }
