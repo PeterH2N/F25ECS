@@ -207,9 +207,10 @@ public class GameMap
                         Vector2D pos = new Vector2D(startX + width * 0.5, y - 0.5);
                         ob.add(new PositionComponent(pos));
                         ob.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
-                        OBShape obShape = new OBShape(OBShape.Direction.HORIZONTAL, width - 0.01, 0.99);
+                        OBShape obShape = new OBShape(OBShape.Direction.HORIZONTAL, width, 1);
                         ob.add(new CollisionComponent(obShape));
                         Engine.addEntity(ob);
+                        mapEntities.add(ob);
                     }
                 }
             }
@@ -232,9 +233,10 @@ public class GameMap
                         Vector2D pos = new Vector2D(x + 0.5, y + height * 0.5);
                         ob.add(new PositionComponent(pos));
                         ob.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
-                        OBShape obShape = new OBShape(OBShape.Direction.VERTICAL, 0.99, height - 0.01);
+                        OBShape obShape = new OBShape(OBShape.Direction.VERTICAL, 1, height);
                         ob.add(new CollisionComponent(obShape));
                         Engine.addEntity(ob);
+                        mapEntities.add(ob);
                     }
                 }
             }

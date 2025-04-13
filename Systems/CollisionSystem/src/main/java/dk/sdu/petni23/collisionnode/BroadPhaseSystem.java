@@ -75,6 +75,8 @@ public class BroadPhaseSystem implements ISystem, IPluginService
             }
             Vector2D min = pos.getSubtracted(hw, hh);
             Vector2D max = pos.getAdded(hw, hh);
+            min.y += 0.01;
+            max.x -= 0.01;
 
             var start = GameWorld.toTileSpace(min);
             var end = GameWorld.toTileSpace(max);
