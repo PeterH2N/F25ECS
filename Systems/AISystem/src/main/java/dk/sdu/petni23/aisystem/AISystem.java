@@ -150,10 +150,10 @@ public class AISystem implements ISystem {
     private void pathFind(Vector2D start, Vector2D end, Path path) {
         start = new Vector2D(start);
         end = new Vector2D(end);
-        start.x = (int) start.x + 0.5;
-        start.y = (int) start.y + 0.5;
-        end.x = (int) end.x + 0.5;
-        end.y = (int) end.y + 0.5;
+        start.x = Math.floor(start.x) + 0.5;
+        start.y = Math.floor(start.y) + 0.5;
+        end.x = Math.floor(end.x) + 0.5;
+        end.y = Math.floor(end.y) + 0.5;
         path.points.add(start);
         //pathFindRecursive(start, end, path);
         path.points.add(end);

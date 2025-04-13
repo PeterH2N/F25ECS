@@ -36,27 +36,27 @@ public class GameWorld
         this.map = new GameMap(options);
     }
 
-    public static Vector2D toTileSpace(int x, int y) {
-        int X = (int) (x + GameData.worldSize * 0.5);
-        int Y = (int) (y + GameData.worldSize * 0.5);
+    public static Vector2D toTileSpace(double x, double y) {
+        int X = (int) Math.floor(x + GameData.worldSize * 0.5);
+        int Y = (int) Math.floor(-y + GameData.worldSize * 0.5);
 
-        if (X < 0) X++;
-        if (Y < 0) Y++;
-        if (X == GameData.worldSize) X--;
-        if (Y == GameData.worldSize) Y--;
+        if (X < 0) X = 0;
+        if (Y < 0) Y = 0;
+        if (X >= GameData.worldSize - 1) X = GameData.worldSize - 1;
+        if (Y >= GameData.worldSize - 1) Y = GameData.worldSize - 1;
 
         return new Vector2D(X, Y);
     }
 
     public static Vector2D toTileSpace(Vector2D v) {
-        return toTileSpace((int) v.x, (int) v.y);
+        return toTileSpace(v.x, v.y);
     }
 
 
 
     public static Vector2D toWorldSpace(int x, int y) {
         int X = (int) (x - GameData.worldSize * 0.5);
-        int Y = (int) (y - GameData.worldSize * 0.5);
+        int Y = (int) -(y - GameData.worldSize * 0.5);
 
         return new Vector2D(X, Y);
     }

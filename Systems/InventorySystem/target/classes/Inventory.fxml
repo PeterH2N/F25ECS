@@ -1,61 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="dk.sdu.petni23.inventorysystem.InventoryController"
-            prefWidth="434" prefHeight="192"
-            style="-fx-background-color: transparent;">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="109.0" prefWidth="330.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.sdu.petni23.inventorysystem.InventoryController">
     <children>
         <!-- Scroll Banner Background -->
-        <ImageView fx:id="bannerImage"
-                   fitWidth="340" fitHeight="129"
-                   layoutX="-10" layoutY="-20" />
+        <ImageView fx:id="bannerImage" fitHeight="129" fitWidth="340" layoutX="-10.0" layoutY="-20.0" />
 
-        <HBox layoutX="20" layoutY="10" spacing="0" alignment="CENTER">
+        <HBox alignment="CENTER" layoutX="20" layoutY="10" spacing="0">
             <!-- 🥩 Meat Slot -->
-            <StackPane prefWidth="70" prefHeight="70">
-                <ImageView fx:id="meatSlotImage" fitWidth="50" fitHeight="50" />
-                <ImageView fx:id="meatIcon" fitWidth="65" fitHeight="55" />
-                <HBox fx:id="meatDigitBox"
-                      StackPane.alignment="BOTTOM_RIGHT"
-                      alignment="BOTTOM_RIGHT"
-                      spacing="4"
-                      style="-fx-padding: 0 4 4 0;" />
+            <StackPane prefHeight="70" prefWidth="70">
+                <ImageView fx:id="meatSlotImage" fitHeight="50" fitWidth="50" />
+                <ImageView fx:id="meatIcon" fitHeight="55" fitWidth="65" />
+                <HBox fx:id="meatDigitBox" alignment="BOTTOM_RIGHT" spacing="4" style="-fx-padding: 0 4 4 0;" StackPane.alignment="BOTTOM_RIGHT" />
             </StackPane>
 
             <!-- 🪵 Wood Slot -->
-            <StackPane prefWidth="70" prefHeight="70">
-                <ImageView fx:id="woodSlotImage" fitWidth="50" fitHeight="50" />
-                <ImageView fx:id="woodIcon" fitWidth="55" fitHeight="55" />
-                <HBox fx:id="woodDigitBox"
-                      StackPane.alignment="BOTTOM_RIGHT"
-                      alignment="BOTTOM_RIGHT"
-                      spacing="4"
-                      style="-fx-padding: 0 4 4 0;" />
+            <StackPane prefHeight="70" prefWidth="70">
+                <ImageView fx:id="woodSlotImage" fitHeight="50" fitWidth="50" />
+                <ImageView fx:id="woodIcon" fitHeight="55" fitWidth="55" />
+                <HBox fx:id="woodDigitBox" alignment="BOTTOM_RIGHT" spacing="4" style="-fx-padding: 0 4 4 0;" StackPane.alignment="BOTTOM_RIGHT" />
             </StackPane>
 
             <!-- 💰 Gold Slot -->
-            <StackPane prefWidth="70" prefHeight="70">
-                <ImageView fx:id="goldSlotImage" fitWidth="50" fitHeight="50" />
-                <ImageView fx:id="goldIcon" fitWidth="55" fitHeight="55" />
-                <HBox fx:id="goldDigitBox"
-                      StackPane.alignment="BOTTOM_RIGHT"
-                      alignment="BOTTOM_RIGHT"
-                      spacing="4"
-                      style="-fx-padding: 0 4 4 0;" />
+            <StackPane prefHeight="70" prefWidth="70">
+                <ImageView fx:id="goldSlotImage" fitHeight="50" fitWidth="50" />
+                <ImageView fx:id="goldIcon" fitHeight="55" fitWidth="55" />
+                <HBox fx:id="goldDigitBox" alignment="BOTTOM_RIGHT" spacing="4" style="-fx-padding: 0 4 4 0;" StackPane.alignment="BOTTOM_RIGHT" />
             </StackPane>
 
             <!-- 🪨 Stone Slot -->
-            <StackPane prefWidth="70" prefHeight="70">
-                <ImageView fx:id="stoneSlotImage" fitWidth="50" fitHeight="50" />
-                <ImageView fx:id="stoneIcon" fitWidth="50" fitHeight="50" translateY="6" />
-                <HBox fx:id="stoneDigitBox"
-                      StackPane.alignment="BOTTOM_RIGHT"
-                      alignment="BOTTOM_RIGHT"
-                      spacing="4"
-                      style="-fx-padding: 0 4 4 0;" />
+            <StackPane prefHeight="70" prefWidth="70">
+                <ImageView fx:id="stoneSlotImage" fitHeight="50" fitWidth="50" />
+                <ImageView fx:id="stoneIcon" fitHeight="50" fitWidth="50" translateY="6" />
+                <HBox fx:id="stoneDigitBox" alignment="BOTTOM_RIGHT" spacing="4" style="-fx-padding: 0 4 4 0;" StackPane.alignment="BOTTOM_RIGHT" />
             </StackPane>
         </HBox>
     </children>

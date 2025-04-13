@@ -134,6 +134,7 @@ public class RenderSystem implements IRenderSystem, IPluginService
         DebugOptions options = GameData.debugOptions;
         if (!options.active) return;
         if (options.showGrid.get()) drawGrid(gc);
+        if (options.showCollisionGrid.get()) drawCollisionGrid(gc);
 
         for (var node : Engine.getNodes(RenderNode.class)) {
             Vector2D pos = GameData.toScreenSpace(node.positionComponent.position);
@@ -145,6 +146,7 @@ public class RenderSystem implements IRenderSystem, IPluginService
             drawPathFinding(gc, node, pos);
         }
         drawFrameTime(gc);
+
     }
 
     void drawCollider(GraphicsContext gc, RenderNode node, Vector2D pos) {
@@ -242,12 +244,35 @@ public class RenderSystem implements IRenderSystem, IPluginService
             var tp0 = GameWorld.toTileSpace(p0);
             var tp1 = GameWorld.toTileSpace(p1);
             var cells = useVisionLine(tp0, tp1);
+            double s = 64 * GameData.getTileRatio();
             for (var cell : cells) {
+                var color = new Color(0,0,1,0.5);
+                var colliders = GameWorld.collisionGrid[(int)cell.y][(int)cell.x];
+                if (!colliders.isEmpty())
+                    color = new Color(1,0,0,0.5);
                 cell = GameWorld.toWorldSpace(cell);
                 var cellPos = GameData.toScreenSpace(cell);
-                var color = new Color(1,0,0,0.5);
+
                 gc.setFill(color);
-                gc.fillRect(cellPos.x, cellPos.y, 64 * GameData.getTileRatio(), 64 * GameData.getTileRatio());
+                gc.fillRect(cellPos.x, cellPos.y, s, s);
+            }
+        }
+    }
+
+    void drawCollisionGrid(GraphicsContext gc) {
+        var red = new Color(1,0,0,0.5);
+        gc.setFill(red);
+        for (int x = 0; x < GameData.worldSize; x++) {
+            for (int y = 0; y < GameData.worldSize; y++) {
+                Vector2D w = GameWorld.toWorldSpace(x, y);
+                Vector2D s = GameData.toScreenSpace(w);
+                if (s.x < 0 || s.x > GameData.getDisplayWidth() || s.y < 0 || s.y > GameData.getDisplayHeight())
+                    continue;
+                if (!GameWorld.collisionGrid[y][x].isEmpty()) {
+
+                    double l = 64 * GameData.getTileRatio();
+                    gc.fillRect(s.x, s.y, l, l);
+                }
             }
         }
     }
@@ -326,7 +351,7 @@ public class RenderSystem implements IRenderSystem, IPluginService
 
     private List<Vector2D> useVisionLine(Vector2D p1, Vector2D p2) {
         List<Vector2D> cells = new ArrayList<>();
-        int x1 = (int) p1.x, y1 = (int)p1.y, x2 = (int) p2.x, y2 = (int)p2.y;
+        int x1 = (int) Math.floor(p1.x), y1 = (int) Math.floor(p1.y), x2 = (int) Math.floor(p2.x), y2 = (int) Math.floor(p2.y);
         int i;
         int yStep, xStep;
         int error;

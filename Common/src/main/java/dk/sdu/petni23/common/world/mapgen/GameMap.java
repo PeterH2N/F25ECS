@@ -64,15 +64,6 @@ public class GameMap
         return tiles[Y][X];
     }
 
-    private Vector2D toTileSpace(int x, int y) {
-        int X = (x + GameData.worldSize / 2);
-        int Y = (-y + GameData.worldSize / 2);
-
-        if (X < 0 || X > GameData.worldSize - 1 || Y < 0 || Y > GameData.worldSize - 1)
-            return null;
-
-        return new Vector2D(X, Y);
-    }
     private Vector2D toWorldSpace(int x, int y) {
         int X = x - GameData.worldSize / 2;
         int Y = -(y - GameData.worldSize / 2);
@@ -192,7 +183,7 @@ public class GameMap
 
                 if (coast(x, y))
                 {
-                    addEntity(BoxCollider(new Vector2D(x + 0.5, y - 0.5), 1, 1));
+                    addEntity(BoxCollider(new Vector2D(x + 0.5, y - 0.5), 0.99, 0.99));
                 }
                 addFoam(x, y);
 

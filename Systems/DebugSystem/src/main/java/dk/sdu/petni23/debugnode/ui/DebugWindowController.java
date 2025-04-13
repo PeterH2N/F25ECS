@@ -10,7 +10,7 @@ import javafx.scene.text.Text;
 public class DebugWindowController
 {
     @FXML
-    private CheckBox colliders, hitBoxes, hp, grid;
+    private CheckBox colliders, hitBoxes, hp, grid, collisionGrid;
     @FXML
     private Slider SandThreshold, GrassThreshold, Frequency, islandRadius, islandShapeAmplitude, islandShapeFrequency, islandShapeOffset, islandCoastOffset, landOffset, coastAmplitude, coastFrequency, forestThreshold, forestFrequency, forestOffset, forestDensity;
     @FXML
@@ -24,6 +24,7 @@ public class DebugWindowController
         hitBoxes.selectedProperty().bindBidirectional(GameData.debugOptions.showHitBoxes);
         hp.selectedProperty().bindBidirectional(GameData.debugOptions.showHP);
         grid.selectedProperty().bindBidirectional(GameData.debugOptions.showGrid);
+        collisionGrid.selectedProperty().bindBidirectional(GameData.debugOptions.showCollisionGrid);
 
         // set min and max values for sliders
         SandThreshold.minProperty().set(0);

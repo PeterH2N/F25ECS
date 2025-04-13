@@ -1,6 +1,7 @@
 package dk.sdu.petni23.collisionnode;
 
 import dk.sdu.petni23.common.GameData;
+import dk.sdu.petni23.common.components.ControlComponent;
 import dk.sdu.petni23.common.components.collision.CollisionComponent;
 import dk.sdu.petni23.common.components.collision.HasShapeComponent;
 import dk.sdu.petni23.common.components.collision.HitBoxComponent;
@@ -78,8 +79,8 @@ public class BroadPhaseSystem implements ISystem, IPluginService
             var start = GameWorld.toTileSpace(min);
             var end = GameWorld.toTileSpace(max);
 
-            for (int x = (int) start.x; x <= end.x; x++) {
-                for (int y = (int) start.y; y <= end.y; y++) {
+            for (int x = (int) start.x; x <= (int) end.x; x++) {
+                for (int y = (int) start.y; y >= (int) end.y; y--) {
                     Vector2D cell = new Vector2D(x, y);
                     collider.cells.add(cell);
                 }

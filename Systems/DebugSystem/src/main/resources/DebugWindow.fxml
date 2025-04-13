@@ -31,6 +31,7 @@
                               <CheckBox fx:id="hitBoxes" mnemonicParsing="false" text="Hitboxes" />
                               <CheckBox fx:id="hp" mnemonicParsing="false" text="HP" />
                               <CheckBox fx:id="grid" mnemonicParsing="false" text="Grid" />
+                              <CheckBox fx:id="collisionGrid" mnemonicParsing="false" text="Collision Grid" />
                            </children>
                         </VBox>
                      </children>
