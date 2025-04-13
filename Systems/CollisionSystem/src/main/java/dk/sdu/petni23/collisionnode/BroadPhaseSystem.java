@@ -102,34 +102,11 @@ public class BroadPhaseSystem implements ISystem, IPluginService
     private void populateManifoldList(List<Collider>[][] grid, List<Manifold> manifoldList,Map<Node, Collider> colliderMap) {
         for (var collider1 : colliderMap.values()) {
             if (grid == collisionGrid && Engine.getEntity(collider1.node.getEntityID()).get(VelocityComponent.class) == null) continue;
+            if (grid == hitBoxGrid && Engine.getEntity(collider1.node.getEntityID()).get(DamageComponent.class) == null) continue;
             for (var cell : collider1.cells) {
                 for (Collider collider2 : grid[(int) cell.y][(int) cell.x]) {
                     if (collider1 == collider2) continue;
-                    ColliderPair cp = new ColliderPair(collider1, collider2);
-                    if (grid == collisionGrid) {
-                        if (!GameData.world.collisionColliderPairs.containsKey(cp)) {
-                            if (Engine.getEntity(collider1.node.getEntityID()).get(VelocityComponent.class) == null && Engine.getEntity(collider2.node.getEntityID()).get(VelocityComponent.class) == null) {
-                                GameData.world.collisionColliderPairs.put(cp, false);
-                                continue;
-                            }
-                            GameData.world.collisionColliderPairs.put(cp, true);
-                        } else if (!GameData.world.collisionColliderPairs.get(cp)) continue;
-                    } else if (grid == hitBoxGrid) {
-                        if (!GameData.world.hitBoxColliderPairs.containsKey(cp)) {
-                            // compute early returns
-                            if (Engine.getEntity(collider1.node.getEntityID()).get(DamageComponent.class) == null && Engine.getEntity(collider2.node.getEntityID()).get(DamageComponent.class) == null) {
-                                GameData.world.hitBoxColliderPairs.put(cp, false);
-                                continue;
-                            }
-                            LayerComponent layer1 = Engine.getEntity(collider1.node.getEntityID()).get(LayerComponent.class);
-                            LayerComponent layer2 = Engine.getEntity(collider2.node.getEntityID()).get(LayerComponent.class);
-                            // if they are on the same layer
-                            if (layer1 != null && layer2 != null && (layer1.layer.value() & layer2.layer.value()) != 0) {
-                                GameData.world.hitBoxColliderPairs.put(cp, true);
-                                continue;
-                            }
-                        } else if (!GameData.world.hitBoxColliderPairs.get(cp)) continue;
-                    }
+
 
                     var m = new Manifold(collider1.node, collider2.node);
                     if (!manifoldList.contains(m)) manifoldList.add(m);
