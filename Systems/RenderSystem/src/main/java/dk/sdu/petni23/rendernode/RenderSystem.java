@@ -234,6 +234,16 @@ public class RenderSystem implements IRenderSystem, IPluginService
     void drawPathFinding(GraphicsContext gc, RenderNode node, Vector2D pos) {
         if (node.pathFindingComponent == null) return;
         gc.setStroke(Color.BLUE);
+        double s = 64 * GameData.getTileRatio();
+
+        var cells = useVisionLine(GameWorld.toTileSpace(node.pathFindingComponent.path.points.get(0)), GameWorld.toTileSpace(node.pathFindingComponent.path.points.getLast()));
+        for (var cell : cells) {
+            var color = new Color(0,0,1,0.5);
+            cell = GameWorld.toWorldSpace(cell);
+            var cellPos = GameData.toScreenSpace(cell);
+            gc.setFill(color);
+            gc.fillRect(cellPos.x, cellPos.y, s, s);
+        }
 
         for (int i = 0; i < node.pathFindingComponent.path.points.size() - 1; i++) {
             var p0 = node.pathFindingComponent.path.points.get(i);
@@ -241,18 +251,10 @@ public class RenderSystem implements IRenderSystem, IPluginService
             var sp0 = GameData.toScreenSpace(p0);
             var sp1 = GameData.toScreenSpace(p1);
             gc.strokeLine(sp0.x, sp0.y, sp1.x, sp1.y );
-            var tp0 = GameWorld.toTileSpace(p0);
-            var tp1 = GameWorld.toTileSpace(p1);
-            var cells = useVisionLine(tp0, tp1);
-            double s = 64 * GameData.getTileRatio();
-            for (var cell : cells) {
-                var color = new Color(0,0,1,0.5);
-                var colliders = GameWorld.collisionGrid[(int)cell.y][(int)cell.x];
-                if (!colliders.isEmpty())
-                    color = new Color(1,0,0,0.5);
-                cell = GameWorld.toWorldSpace(cell);
-                var cellPos = GameData.toScreenSpace(cell);
 
+            for (var cell : node.pathFindingComponent.collisionCells) {
+                var color = new Color(1,0,0,0.5);
+                var cellPos = GameData.toScreenSpace(cell);
                 gc.setFill(color);
                 gc.fillRect(cellPos.x, cellPos.y, s, s);
             }
