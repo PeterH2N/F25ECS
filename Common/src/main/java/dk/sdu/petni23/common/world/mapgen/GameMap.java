@@ -1,10 +1,12 @@
 package dk.sdu.petni23.common.world.mapgen;
 
 import dk.sdu.petni23.common.GameData;
+import dk.sdu.petni23.common.components.ai.PathFindingComponent;
 import dk.sdu.petni23.common.components.collision.CollisionComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.components.rendering.DisplayComponent;
 import dk.sdu.petni23.common.shape.AABBShape;
+import dk.sdu.petni23.common.shape.OBShape;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.common.util.SimplexNoise;
 import dk.sdu.petni23.gameengine.entity.IEntitySPI;
@@ -180,14 +182,61 @@ public class GameMap
                             tile.placement = p;
                     }
                 }
-
-                if (coast(x, y))
-                {
-                    addEntity(BoxCollider(new Vector2D(x + 0.5, y - 0.5), 0.99, 0.99));
-                }
                 addFoam(x, y);
 
 
+            }
+        }
+
+        // water OBs
+        // first we scan each row
+        for (int y = (GameData.worldSize / 2); y > -GameData.worldSize / 2; y--) {
+            for (int x = (-GameData.worldSize / 2); x < GameData.worldSize / 2; x++) {
+                Tile tile = getTile(x, y);
+                if (tile == null) continue;
+                boolean sea = tile.type == Tile.Type.WATER;
+                int startX = x;
+                while (sea) {
+                    x++;
+                    tile = getTile(x, y);
+                    if (tile == null || tile.type != Tile.Type.WATER) {
+                        sea = false;
+                        double width = x - startX;
+                        if (width == 0) break;
+                        Entity ob = new Entity();
+                        Vector2D pos = new Vector2D(startX + width * 0.5, y - 0.5);
+                        ob.add(new PositionComponent(pos));
+                        ob.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
+                        OBShape obShape = new OBShape(OBShape.Direction.HORIZONTAL, width - 0.01, 0.99);
+                        ob.add(new CollisionComponent(obShape));
+                        Engine.addEntity(ob);
+                    }
+                }
+            }
+        }
+        // then we scan each column
+        for (int x = (-GameData.worldSize / 2); x < GameData.worldSize / 2; x++) {
+            for (int y = (GameData.worldSize / 2); y > -GameData.worldSize / 2; y--) {
+                Tile tile = getTile(x, y);
+                if (tile == null) continue;
+                boolean sea = tile.type == Tile.Type.WATER;
+                int startY = y;
+                while (sea) {
+                    y--;
+                    tile = getTile(x, y);
+                    if (tile == null || tile.type != Tile.Type.WATER) {
+                        sea = false;
+                        double height = startY - y;
+                        if (height == 0) break;
+                        Entity ob = new Entity();
+                        Vector2D pos = new Vector2D(x + 0.5, y + height * 0.5);
+                        ob.add(new PositionComponent(pos));
+                        ob.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
+                        OBShape obShape = new OBShape(OBShape.Direction.VERTICAL, 0.99, height - 0.01);
+                        ob.add(new CollisionComponent(obShape));
+                        Engine.addEntity(ob);
+                    }
+                }
             }
         }
     }
@@ -236,18 +285,6 @@ public class GameMap
         boolean east = eTile == null || eTile.type == Tile.Type.WATER;
         boolean west = wTile == null || wTile.type == Tile.Type.WATER;
         return !(north && south && east && west);
-    }
-
-    private Entity BoxCollider(Vector2D pos, double width, double height) {
-        Entity box = new Entity();
-        var pc = new PositionComponent();
-        pc.position.set(pos);
-        box.add(pc);
-        box.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
-        AABBShape aabb = new AABBShape(width, height);
-        box.add(new CollisionComponent(aabb));
-
-        return box;
     }
 
     private void generateMapImage() {

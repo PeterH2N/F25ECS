@@ -1,5 +1,6 @@
 dk/sdu/petni23/common/components/rendering/DisplayComponent.class
 dk/sdu/petni23/common/shape/AABBShape.class
+dk/sdu/petni23/common/shape/OBShape$Direction.class
 dk/sdu/petni23/common/components/movement/AngularMomentumComponent.class
 dk/sdu/petni23/common/components/health/HealthComponent.class
 dk/sdu/petni23/common/components/items/LootComponent.class
@@ -53,6 +54,7 @@ dk/sdu/petni23/common/shape/OvalShape.class
 dk/sdu/petni23/common/components/health/DurationComponent.class
 dk/sdu/petni23/common/misc/CollisionHelper.class
 dk/sdu/petni23/common/world/mapgen/Tile$Type.class
+dk/sdu/petni23/common/shape/OBShape.class
 dk/sdu/petni23/common/components/damage/AttackComponent.class
 dk/sdu/petni23/common/misc/GameKeys.class
 dk/sdu/petni23/common/components/shop/ShopComponent.class

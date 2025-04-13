@@ -6,6 +6,7 @@ import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.components.rendering.DisplayComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.common.shape.AABBShape;
+import dk.sdu.petni23.common.shape.OBShape;
 import dk.sdu.petni23.common.shape.OvalShape;
 import dk.sdu.petni23.common.shape.Shape;
 import dk.sdu.petni23.common.util.DebugOptions;
@@ -202,6 +203,21 @@ public class RenderSystem implements IRenderSystem, IPluginService
 
                 gc.strokeRect(x, y, width, height);
             }
+            case OBShape ob -> {
+                double width = ob.width * GameData.getPPM();
+                double height = ob.height * GameData.getPPM();
+                double x = pos.x - width * 0.5;
+                double y = pos.y - height * 0.5;
+
+
+                if (ob.direction == OBShape.Direction.HORIZONTAL) {
+                    gc.strokeLine(x, y, x, y + height);
+                    gc.strokeLine(x + width, y, x + width, y + height);
+                } else {
+                    gc.strokeLine(x, y, x + width, y);
+                    gc.strokeLine(x, y + height, x + width, y + height);
+                }
+            }
             default -> throw new IllegalStateException("Unexpected value: " + shape);
         }
     }
@@ -316,39 +332,6 @@ public class RenderSystem implements IRenderSystem, IPluginService
         }
     }
 
-    private List<Vector2D> bresenhamsLine(Vector2D start, Vector2D end) {
-        List<Vector2D> cells = new ArrayList<>();
-        int sx, sy;
-        int x0 = (int) start.x, y0 = (int) start.y;
-        int x1 = (int) end.x, y1 = (int) end.y;
-
-        int dx = Math.abs(x1 - x0);
-        if (x0 < x1) sx = 1;
-        else sx = -1;
-        int dy = -Math.abs(y1 - y0);
-        if (y0 < y1) sy = 1;
-        else sy = -1;
-
-        int e = dx + dy;
-
-        while(true) {
-            cells.add(new Vector2D(x0, y0));
-            if (x0 == x1 && y0 == y1) break;
-            int e2 = e+e;
-            if (e2 >= dy) {
-                if (x0 == x1) break;
-                e += dy;
-                x0 += sx;
-            }
-            else if (e2 <= dx) {
-                if (y0 == y1) break;
-                e += dx;
-                y0 += sy;
-            }
-        }
-        return cells;
-    }
-
     private List<Vector2D> useVisionLine(Vector2D p1, Vector2D p2) {
         List<Vector2D> cells = new ArrayList<>();
         int x1 = (int) Math.floor(p1.x), y1 = (int) Math.floor(p1.y), x2 = (int) Math.floor(p2.x), y2 = (int) Math.floor(p2.y);
@@ -416,84 +399,6 @@ public class RenderSystem implements IRenderSystem, IPluginService
                 cells.add(new Vector2D(x, y));
                 errorPrev = error;
             }
-        }
-        return cells;
-    }
-
-    private List<Vector2D> bresenhamsLineNew(Vector2D start, Vector2D end) {
-        List<Vector2D> cells = new ArrayList<>();
-        int sx, sy;
-        int x0 = (int) start.x, y0 = (int) start.y+1;
-        int x1 = (int) end.x, y1 = (int) end.y;
-
-        if (x0 < x1) sx = 1;
-        else sx = -1;
-        if (y0 < y1) sy = 1;
-        else sy = -1;
-
-        /*if (x1 - x0 > 0) x1++;
-        else if (x1 - x0 < 0) x1--;*/
-
-        int dx = Math.abs(x1 - x0);
-        int dy = Math.abs(y1 - y0);
-
-        if (dy < dx) {
-            y1++;
-            dy = Math.abs(y1 - y0);
-        }
-
-        int e = dx - dy;
-
-        while(true) {
-            cells.add(new Vector2D(x0, y0));
-            if (x0 == x1 && y0 == y1) break;
-            int e2 = 4*e;
-
-            if (dy > dx) {
-                if (e2 > -dy) {
-                    e -= dy;
-                    x0 += sx;
-                } else if (e2 < dx) {
-                    e += dx;
-                    y0 += sy;
-                }
-            } else {
-                if (e2 < dx) {
-                    e += dx;
-                    y0 += sy;
-                } else if (e2 > -dy) {
-                    e -= dy;
-                    x0 += sx;
-                }
-            }
-        }
-        return cells;
-    }
-
-    public List<Vector2D> lineNoDiag(Vector2D p0, Vector2D p1) {
-        List<Vector2D> cells = new ArrayList<>();
-        int x0 = (int) p0.x, y0 = (int) p0.y;
-        int x1 = (int) p1.x, y1 = (int) p1.y;
-        int xDist =  Math.abs(x1 - x0);
-        int yDist = -Math.abs(y1 - y0);
-        int xStep = (x0 < x1 ? +1 : -1);
-        int yStep = (y0 < y1 ? +1 : -1);
-        int error = xDist + yDist;
-
-        cells.add(new Vector2D(x0, y0));
-
-        while (x0 != x1 || y0 != y1) {
-            if (2*error - yDist > xDist - 2*error) {
-                // horizontal step
-                error += yDist;
-                x0 += xStep;
-            } else {
-                // vertical step
-                error += xDist;
-                y0 += yStep;
-            }
-
-            cells.add(new Vector2D(x0, y0));
         }
         return cells;
     }
