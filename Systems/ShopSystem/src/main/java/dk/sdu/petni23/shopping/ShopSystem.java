@@ -72,8 +72,8 @@ public class ShopSystem implements ISystem,IPluginService {
         try {
             FXMLLoader loader = new FXMLLoader(url);
             pane = loader.load();
-            StackPane.setAlignment(pane, Pos.CENTER);
-            controller = (ShopController) loader.getController();
+            StackPane.setAlignment(pane, Pos.BOTTOM_CENTER);
+            controller = loader.getController();
         } catch (IOException e) {
             e.printStackTrace();
         }

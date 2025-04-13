@@ -3,6 +3,7 @@ package dk.sdu.petni23.inputnode;
 import dk.sdu.petni23.common.GameData;
 
 import dk.sdu.petni23.gameengine.services.IPluginService;
+import javafx.scene.Camera;
 import javafx.scene.Scene;
 
 public class IOPlugin implements IPluginService
@@ -16,8 +17,8 @@ public class IOPlugin implements IPluginService
         scene.setOnKeyReleased(event -> GameData.gameKeys.setInput(event.getCode(), false));
 
         // update mouse click
-        scene.setOnMousePressed(event -> GameData.gameKeys.setInput(event.getButton(), true));
-        scene.setOnMouseReleased(event -> GameData.gameKeys.setInput(event.getButton(), false));
+        GameData.canvas.setOnMousePressed(event -> GameData.gameKeys.setInput(event.getButton(), true));
+        GameData.canvas.setOnMouseReleased(event -> GameData.gameKeys.setInput(event.getButton(), false));
 
         // update mouse position in screen space
         scene.setOnMouseMoved(event -> GameData.gameKeys.setMousePos(event.getSceneX(), event.getSceneY()));

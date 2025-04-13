@@ -5,10 +5,10 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 
-<AnchorPane prefHeight="800" prefWidth="800" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.sdu.petni23.shopping.ShopController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="129.0" prefWidth="340.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.sdu.petni23.shopping.ShopController">
     <children>
-        <ImageView fx:id="bannerImage" fitHeight="129" fitWidth="340" layoutX="230.0" layoutY="657.0" />
-        <HBox alignment="CENTER" layoutX="262.0" layoutY="692.0" spacing="12">
+        <ImageView fx:id="bannerImage" fitHeight="129" fitWidth="340" />
+        <HBox alignment="CENTER" layoutX="32.0" layoutY="34.5" spacing="12">
             <StackPane fx:id="tower1Pane" onMouseClicked="#selectTower1" style="-fx-cursor: hand;">
                 <ImageView fx:id="tower1Icon" fitHeight="60" fitWidth="60" />
             </StackPane>
