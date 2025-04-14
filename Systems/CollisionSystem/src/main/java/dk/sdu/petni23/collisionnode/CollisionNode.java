@@ -21,6 +21,5 @@ public class CollisionNode extends Node
     @Override
     public void onRemove() {
         GameData.world.collisionColliders.keySet().remove(this);
-        GameData.world.collisionColliderPairs.keySet().removeIf(cp -> cp.c1().node == this || cp.c2().node == this);
     }
 }

@@ -15,6 +15,8 @@ import dk.sdu.petni23.gameengine.services.ISystem;
 import java.util.*;
 
 public class AISystem implements ISystem {
+
+    static AINode nexus;
     static final Map<Integer, List<AINode>> nodes = new HashMap<>();
     static final double delay = 1;
     static double elapsedTime = 0;
@@ -27,6 +29,7 @@ public class AISystem implements ISystem {
     @Override
     public void update(double deltaTime) {
         elapsedTime += deltaTime;
+        if (elapsedTime < delay) return;
         for (var node : Engine.getNodes(AINode.class)) {
             if (node.layerComponent == null) continue;
             if (node.directionComponent == null) continue;
@@ -44,73 +47,67 @@ public class AISystem implements ISystem {
                 opps = targets;
                 break;
             }
-
-            double minDist = 0.3;
-            boolean isPerformingAction = false;
-            double dist = Double.MAX_VALUE;
-            AINode opp = null;
-
             inRange = opps != null;
+
+            AINode opp;
             if (inRange) {
                 // get closest opp
                 opp = getClosestDist(node, opps);
-                // vector between node and opp
-                var n = opp.positionComponent.position.getSubtracted(node.positionComponent.position).getNormalized();
-                // opp distance is most relevant in terms of the hit box
-                Vector2D oppPos = opp.positionComponent.position.getAdded(opp.hitBoxComponent.offset);
-                // subtract hit box from distance
-                double distOffset = Math.abs(n.x) > Math.abs(n.y) ? opp.hitBoxComponent.hitBox.aabb.hw : opp.hitBoxComponent.hitBox.aabb.hh;
-                dist = node.positionComponent.position.distance(oppPos) - distOffset;
+            } else {
+                opp = nexus; // the nexus is the default
+            }
+            if (opp == null) continue;
 
-                node.directionComponent.dir.set(n);
-                // attacks
-                if (node.actionSetComponent != null) {
-                    // check whether we are currently performing an action
-                    isPerformingAction = GameData.getCurrentMillis() <= node.actionSetComponent.lastActionTime + node.actionSetComponent.lastAction.duration;
-                    if (!isPerformingAction) {
-                        if (node.throwComponent != null) {
-                            minDist = node.throwComponent.range * 0.5;
-                            boolean canThrow = true;
-                            if (node.velocityComponent != null) {
-                                // if too close, move away from opp
-                                if (dist < minDist) {
-                                    node.velocityComponent.velocity.set(n.getMultiplied(-node.velocityComponent.speed));
-                                    canThrow = false;
-                                }
+            double minDist = 0.3;
+            boolean isPerformingAction = false;
+            // vector between node and opp
+            var n = opp.positionComponent.position.getSubtracted(node.positionComponent.position).getNormalized();
+            // opp distance is most relevant in terms of the hit box
+            Vector2D oppPos = opp.positionComponent.position.getAdded(opp.hitBoxComponent.offset);
+            // subtract hit box from distance
+            double distOffset = Math.abs(n.x) > Math.abs(n.y) ? opp.hitBoxComponent.hitBox.aabb.hw : opp.hitBoxComponent.hitBox.aabb.hh;
+            double dist = node.positionComponent.position.distance(oppPos) - distOffset;
+
+            node.directionComponent.dir.set(n);
+            // attacks
+            if (node.actionSetComponent != null) {
+                // check whether we are currently performing an action
+                isPerformingAction = GameData.getCurrentMillis() <= node.actionSetComponent.lastActionTime + node.actionSetComponent.lastAction.duration;
+                if (!isPerformingAction) {
+                    if (node.throwComponent != null) {
+                        minDist = node.throwComponent.range * 0.5;
+                        boolean canThrow = true;
+                        if (node.velocityComponent != null) {
+                            // if too close, move away from opp
+                            if (dist < minDist) {
+                                node.velocityComponent.velocity.set(n.getMultiplied(-node.velocityComponent.speed));
+                                canThrow = false;
                             }
-                            // if within throw range
-                            if (canThrow && dist + distOffset <= node.throwComponent.range && dist + distOffset > node.throwComponent.min) {
-                                node.throwComponent.distance = dist + distOffset;
-                                performAction(node.actionSetComponent, 0);
-                            }
-                        } else if (node.attackComponent != null) {
-                            // if within attack range
-                            if (dist <= node.attackComponent.range) {
-                                performAction(node.actionSetComponent, 0);
-                            }
+                        }
+                        // if within throw range
+                        if (canThrow && dist + distOffset <= node.throwComponent.range && dist + distOffset > node.throwComponent.min) {
+                            node.throwComponent.distance = dist + distOffset;
+                            performAction(node.actionSetComponent, 0);
+                        }
+                    } else if (node.attackComponent != null) {
+                        // if within attack range
+                        if (dist <= node.attackComponent.range) {
+                            performAction(node.actionSetComponent, 0);
                         }
                     }
                 }
             }
 
             if (node.pathFindingComponent != null && node.velocityComponent != null && node.positionComponent != null) {
-                if (elapsedTime < delay) continue;
-                if (!isPerformingAction) {
-                    if (inRange && dist >= minDist) {
-                        node.pathFindingComponent.keepPath = false;
-                        node.pathFindingComponent.path = new Path();
-                        var start = GameWorld.toTileSpace(node.positionComponent.position);
-                        var end = GameWorld.toTileSpace(opp.positionComponent.position);
-                        var startNode = new Path.Node(start);
-                        aStar(startNode, end, node.pathFindingComponent.path);
+                node.pathFindingComponent.keepPath = opp.velocityComponent == null; // if opp is static, we don't continually update path.
 
-                    } else if (!inRange) {
-                        // pathfind to nexus
+                if (!isPerformingAction) {
+                    if (dist >= minDist) {
                         if (!node.pathFindingComponent.keepPath || node.pathFindingComponent.path.closed.isEmpty()) {
-                            node.pathFindingComponent.keepPath = true;
+                            // find new path
                             node.pathFindingComponent.path = new Path();
                             var start = GameWorld.toTileSpace(node.positionComponent.position);
-                            var end = GameWorld.toTileSpace(Vector2D.ZERO);
+                            var end = GameWorld.toTileSpace(opp.positionComponent.position);
                             var startNode = new Path.Node(start);
                             aStar(startNode, end, node.pathFindingComponent.path);
                         }

@@ -27,6 +27,5 @@ public class HitBoxNode extends Node
     @Override
     public void onRemove() {
         GameData.world.hitBoxColliders.keySet().remove(this);
-        GameData.world.hitBoxColliderPairs.keySet().removeIf(cp -> cp.c1().node == this || cp.c2().node == this);
     }
 }

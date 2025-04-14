@@ -1,5 +1,6 @@
 package dk.sdu.petni23.structures.nexus;
 
+import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.components.ai.AIComponent;
 import dk.sdu.petni23.common.components.collision.CollisionComponent;
 import dk.sdu.petni23.common.components.collision.HitBoxComponent;
@@ -31,20 +32,21 @@ public class NexusPlugin implements IPluginService
     }
     public static Entity createNexus() {
         var nexus = new Entity();
+        GameData.world.nexus = nexus;
         nexus.add(new PositionComponent(new Vector2D(0,0)));
-        nexus.add(new HealthComponent(1000));
+        var health = nexus.add(new HealthComponent(1000));
+        health.onDeath = node -> GameData.world.nexus = null;
+
         var hitBoxShape = new AABBShape(4,1);
         Vector2D offset = new Vector2D(0,0.4);
         nexus.add(new HitBoxComponent(hitBoxShape, offset));
         nexus.add(new CollisionComponent(hitBoxShape, offset));
 
         nexus.add(new SpriteComponent(spriteSheet, new Vector2D(-0.5, -0.9)));
-        //nexus.add(new AnimationComponent());
         nexus.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
         nexus.add(new LayerComponent(LayerComponent.Layer.PLAYER));
         nexus.add(new AIComponent(AIComponent.Type.NEXUS, null, null));
         nexus.add(new HealthBarComponent(128, 10, Color.GREEN));
-
         return nexus;
     }
 

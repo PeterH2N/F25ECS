@@ -7,6 +7,8 @@ import dk.sdu.petni23.common.util.ColliderPair;
 import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.common.world.mapgen.GameMap;
 import dk.sdu.petni23.common.world.mapgen.MapGenOptions;
+import dk.sdu.petni23.gameengine.Engine;
+import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.node.Node;
 
 import java.util.ArrayList;
@@ -21,13 +23,10 @@ public class GameWorld
     public final Map<Node, Collider> collisionColliders = new HashMap<>();
     public final Map<Node, Collider> hitBoxColliders = new HashMap<>();
 
-    public final Map<ColliderPair, Boolean> collisionColliderPairs = new HashMap<>();
-    public final Map<ColliderPair, Boolean> hitBoxColliderPairs = new HashMap<>();
-
     public static final List<Collider>[][] collisionGrid = (ArrayList<Collider>[][])new ArrayList[(int) GameData.worldSize][(int) GameData.worldSize];
     public static final List<Collider>[][] hitBoxGrid = (ArrayList<Collider>[][])new ArrayList[(int) GameData.worldSize][(int) GameData.worldSize];
-
     public MapGenOptions mapGenOptions = new MapGenOptions();
+    public Entity nexus;
 
     public final GameMap map;
 

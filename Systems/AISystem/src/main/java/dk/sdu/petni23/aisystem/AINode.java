@@ -1,5 +1,6 @@
 package dk.sdu.petni23.aisystem;
 
+import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.components.ai.AIComponent;
 import dk.sdu.petni23.common.components.actions.ActionSetComponent;
 import dk.sdu.petni23.common.components.ai.PathFindingComponent;
@@ -35,11 +36,13 @@ public class AINode extends Node {
     public AINode(Entity entity) {
         super(entity);
         AISystem.nodes.get(layerComponent.layer.value()).add(this);
+        if (entity == GameData.world.nexus) AISystem.nexus = this;
     }
 
     @Override
     public void onRemove() {
         if (layerComponent == null) return;
         AISystem.nodes.get(layerComponent.layer.value()).remove(this);
+        if (AISystem.nexus != null && this.getEntityID() == AISystem.nexus.getEntityID()) AISystem.nexus = null;
     }
 }
