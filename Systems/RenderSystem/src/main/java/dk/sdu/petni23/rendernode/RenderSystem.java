@@ -3,6 +3,7 @@ package dk.sdu.petni23.rendernode;
 
 import dk.sdu.petni23.common.GameData;
 
+import dk.sdu.petni23.common.components.ai.Path;
 import dk.sdu.petni23.common.components.rendering.DisplayComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.common.shape.AABBShape;
@@ -144,7 +145,7 @@ public class RenderSystem implements IRenderSystem, IPluginService
             if (options.showHP.get()) drawHealth(gc, node, pos);
             drawAim(gc, node);
             drawDir(gc, node, pos);
-            drawPathFinding(gc, node, pos);
+            drawPathFinding(gc, node);
         }
         drawFrameTime(gc);
 
@@ -247,32 +248,32 @@ public class RenderSystem implements IRenderSystem, IPluginService
         gc.fillRoundRect(pos.x-20*r, pos.y-80*r, health/maxHealth * barWidth*r, barHeight*r, 3, 5);
     }
 
-    void drawPathFinding(GraphicsContext gc, RenderNode node, Vector2D pos) {
-        if (node.pathFindingComponent == null) return;
-        gc.setStroke(Color.BLUE);
+    void drawPathFinding(GraphicsContext gc, RenderNode node) {
+        if (node.pathFindingComponent == null || node.pathFindingComponent.path.closed.isEmpty()) return;
+        gc.setFill(new Color(0, 0, 1, 0.5));
+        double s = 64 * GameData.getTileRatio();
 
-        for (int i = 0; i < node.pathFindingComponent.path.points.size() - 1; i++) {
-            var p0 = node.pathFindingComponent.path.points.get(i);
-            var p1 = node.pathFindingComponent.path.points.get(i + 1);
-            var sp0 = GameData.toScreenSpace(p0);
-            var sp1 = GameData.toScreenSpace(p1);
-            gc.strokeLine(sp0.x, sp0.y, sp1.x, sp1.y );
-            var tp0 = GameWorld.toTileSpace(p0);
-            var tp1 = GameWorld.toTileSpace(p1);
-            var cells = useVisionLine(tp0, tp1);
-            double s = 64 * GameData.getTileRatio();
-            for (var cell : cells) {
-                var color = new Color(0,0,1,0.5);
-                var colliders = GameWorld.collisionGrid[(int)cell.y][(int)cell.x];
-                if (!colliders.isEmpty())
-                    color = new Color(1,0,0,0.5);
-                cell = GameWorld.toWorldSpace(cell);
-                var cellPos = GameData.toScreenSpace(cell);
-
-                gc.setFill(color);
-                gc.fillRect(cellPos.x, cellPos.y, s, s);
+        Path.Node pathNode = node.pathFindingComponent.path.closed.getLast();
+        while(pathNode != null) {
+            var pos = GameData.toScreenSpace(GameWorld.toWorldSpace(pathNode.cell));
+            if (pos.x < -s || pos.x > GameData.getDisplayWidth() || pos.y < -s || pos.y > GameData.getDisplayHeight()) {
+                pathNode = pathNode.parent;
+                continue;
             }
+
+            gc.fillRect(pos.x, pos.y, s, s);
+            pathNode = pathNode.parent;
         }
+        gc.setFill(new Color(0,0,1,0.2));
+        for(var openNode : node.pathFindingComponent.path.open) {
+            var pos = GameData.toScreenSpace(GameWorld.toWorldSpace(openNode.cell));
+            if (pos.x < -s || pos.x > GameData.getDisplayWidth() || pos.y < -s || pos.y > GameData.getDisplayHeight()) {
+                continue;
+            }
+
+            gc.fillRect(pos.x, pos.y, s, s);
+        }
+
     }
 
     void drawCollisionGrid(GraphicsContext gc) {

@@ -29,7 +29,7 @@ public class CollisionSystem implements IPhysicsSystem
     }
 
     private void resolveCollision(Manifold m) {
-        Vector2D pen = m.normal.getMultiplied(m.penetration);
+        Vector2D pen = m.normal.getMultiplied(m.penetration + 0.01);
         assert(m.a instanceof CollisionNode && m.b instanceof CollisionNode);
         CollisionNode a = (CollisionNode) m.a;
         CollisionNode b = (CollisionNode) m.b;

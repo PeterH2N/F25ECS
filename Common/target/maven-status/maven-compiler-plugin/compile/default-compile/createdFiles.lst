@@ -30,6 +30,7 @@ dk/sdu/petni23/common/components/Dispatch.class
 dk/sdu/petni23/common/components/actions/Action$Directionality.class
 dk/sdu/petni23/common/components/sound/SoundComponent.class
 dk/sdu/petni23/common/world/mapgen/GameMap.class
+dk/sdu/petni23/common/components/ai/Path$Node.class
 dk/sdu/petni23/common/components/health/HealthBarComponent.class
 dk/sdu/petni23/common/components/ControlComponent.class
 dk/sdu/petni23/common/components/movement/TrajectoryComponent.class
