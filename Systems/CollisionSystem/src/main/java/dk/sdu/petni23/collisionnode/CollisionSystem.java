@@ -4,6 +4,7 @@ import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.components.movement.VelocityComponent;
 import dk.sdu.petni23.common.misc.CollisionHelper;
 import dk.sdu.petni23.common.misc.Manifold;
+import dk.sdu.petni23.common.shape.OBShape;
 import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.services.IPhysicsSystem;
 
@@ -29,7 +30,7 @@ public class CollisionSystem implements IPhysicsSystem
     }
 
     private void resolveCollision(Manifold m) {
-        Vector2D pen = m.normal.getMultiplied(m.penetration + 0.01);
+        Vector2D pen = m.normal.getMultiplied(m.penetration);
         assert(m.a instanceof CollisionNode && m.b instanceof CollisionNode);
         CollisionNode a = (CollisionNode) m.a;
         CollisionNode b = (CollisionNode) m.b;

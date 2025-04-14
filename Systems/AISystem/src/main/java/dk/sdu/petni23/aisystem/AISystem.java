@@ -43,6 +43,7 @@ public class AISystem implements ISystem {
 
             // get closest opp
             var opp = getClosestDist(node, opps);
+            if (opp == null) return;
             // vector between node and opp
             var n = opp.positionComponent.position.getSubtracted(node.positionComponent.position).getNormalized();
             // set direction to point to opp
@@ -110,7 +111,7 @@ public class AISystem implements ISystem {
 
             if (node.pathFindingComponent != null && node.velocityComponent != null && node.positionComponent != null) {
                 if (!isPerformingAction) {
-                    if (inRange && dist >= minDist) {
+                    if (dist >= minDist) {
                         node.pathFindingComponent.path = new Path();
                         var start = GameWorld.toTileSpace(node.positionComponent.position);
                         var end = GameWorld.toTileSpace(opp.positionComponent.position);
