@@ -253,7 +253,7 @@ public class RenderSystem implements IRenderSystem, IPluginService
         gc.setFill(new Color(0, 0, 1, 0.5));
         double s = 64 * GameData.getTileRatio();
 
-        Path.Node pathNode = node.pathFindingComponent.path.closed.getLast();
+        Path.Node pathNode = node.pathFindingComponent.path.closed.getFirst();
         while(pathNode != null) {
             var pos = GameData.toScreenSpace(GameWorld.toWorldSpace(pathNode.cell));
             if (pos.x < -s || pos.x > GameData.getDisplayWidth() || pos.y < -s || pos.y > GameData.getDisplayHeight()) {
@@ -264,16 +264,6 @@ public class RenderSystem implements IRenderSystem, IPluginService
             gc.fillRect(pos.x, pos.y, s, s);
             pathNode = pathNode.parent;
         }
-        gc.setFill(new Color(0,0,1,0.2));
-        for(var openNode : node.pathFindingComponent.path.open) {
-            var pos = GameData.toScreenSpace(GameWorld.toWorldSpace(openNode.cell));
-            if (pos.x < -s || pos.x > GameData.getDisplayWidth() || pos.y < -s || pos.y > GameData.getDisplayHeight()) {
-                continue;
-            }
-
-            gc.fillRect(pos.x, pos.y, s, s);
-        }
-
     }
 
     void drawCollisionGrid(GraphicsContext gc) {

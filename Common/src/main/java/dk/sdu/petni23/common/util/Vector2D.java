@@ -5,7 +5,7 @@ import java.util.Objects;
 public class Vector2D
 {
     private static final double toDegrees = 180d / Math.PI;
-    public static Vector2D ZERO = new Vector2D(0,0);
+    public static final Vector2D ZERO = new Vector2D(0,0);
     public double x;
     public double y;
 

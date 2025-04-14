@@ -4,4 +4,5 @@ import dk.sdu.petni23.gameengine.Component;
 
 public class PathFindingComponent extends Component {
     public Path path = new Path();
+    public boolean keepPath = false;
 }

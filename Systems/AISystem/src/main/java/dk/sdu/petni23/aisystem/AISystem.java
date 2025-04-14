@@ -3,6 +3,7 @@ package dk.sdu.petni23.aisystem;
 import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.components.ControlComponent;
 import dk.sdu.petni23.common.components.actions.ActionSetComponent;
+import dk.sdu.petni23.common.components.ai.AIComponent;
 import dk.sdu.petni23.common.components.ai.Path;
 import dk.sdu.petni23.common.components.damage.LayerComponent;
 import dk.sdu.petni23.common.components.movement.VelocityComponent;
@@ -15,6 +16,8 @@ import java.util.*;
 
 public class AISystem implements ISystem {
     static final Map<Integer, List<AINode>> nodes = new HashMap<>();
+    static final double delay = 1;
+    static double elapsedTime = 0;
 
     static {
         for (var layer : LayerComponent.Layer.values()) {
@@ -23,44 +26,43 @@ public class AISystem implements ISystem {
     }
     @Override
     public void update(double deltaTime) {
+        elapsedTime += deltaTime;
         for (var node : Engine.getNodes(AINode.class)) {
             if (node.layerComponent == null) continue;
             if (node.directionComponent == null) continue;
             // if node is controlled, we don't control with AI. player has AIComponent so other AIs recognize it.
             if (Engine.getEntity(node.getEntityID()).get(ControlComponent.class) != null) continue;
             if (node.velocityComponent != null) node.velocityComponent.velocity.set(0,0); // reset movement
-            var opps = nodes.get(node.layerComponent.layer.opponent());
+            var allOpps = nodes.get(node.layerComponent.layer.opponent());
+            List<AINode> opps = null;
+            boolean inRange = true;
 
-            // get all nodes that fit the priority type, if none exist, move on to next.
+            // get all nodes that fit the priority type, and are in range. if none exist, move on to next.
             for (var type : node.aiComponent.TargetPriorityList) {
-                var targets = new ArrayList<>(opps);
-                targets.removeIf(aiNode -> aiNode.aiComponent.type != type);
+                var targets = getOppsInRange(node, type, allOpps);
                 if (targets.isEmpty()) continue;
                 opps = targets;
                 break;
             }
-            if (opps.isEmpty()) continue;
-
-            // get closest opp
-            var opp = getClosestDist(node, opps);
-            if (opp == null) return;
-            // vector between node and opp
-            var n = opp.positionComponent.position.getSubtracted(node.positionComponent.position).getNormalized();
-            // set direction to point to opp
-            node.directionComponent.dir.set(n);
-            // opp distance is most relevant in terms of the hit box
-            Vector2D oppPos = opp.positionComponent.position.getAdded(opp.hitBoxComponent.offset);
-            // subtract hit box from distance
-            double distOffset = Math.abs(n.x) > Math.abs(n.y) ? opp.hitBoxComponent.hitBox.aabb.hw : opp.hitBoxComponent.hitBox.aabb.hh;
-            double dist = node.positionComponent.position.distance(oppPos) - distOffset;
 
             double minDist = 0.3;
             boolean isPerformingAction = false;
+            double dist = Double.MAX_VALUE;
+            AINode opp = null;
 
-
-            // if closest opp is within range
-            boolean inRange = dist <= node.aiComponent.range;
+            inRange = opps != null;
             if (inRange) {
+                // get closest opp
+                opp = getClosestDist(node, opps);
+                // vector between node and opp
+                var n = opp.positionComponent.position.getSubtracted(node.positionComponent.position).getNormalized();
+                // opp distance is most relevant in terms of the hit box
+                Vector2D oppPos = opp.positionComponent.position.getAdded(opp.hitBoxComponent.offset);
+                // subtract hit box from distance
+                double distOffset = Math.abs(n.x) > Math.abs(n.y) ? opp.hitBoxComponent.hitBox.aabb.hw : opp.hitBoxComponent.hitBox.aabb.hh;
+                dist = node.positionComponent.position.distance(oppPos) - distOffset;
+
+                node.directionComponent.dir.set(n);
                 // attacks
                 if (node.actionSetComponent != null) {
                     // check whether we are currently performing an action
@@ -70,7 +72,8 @@ public class AISystem implements ISystem {
                             minDist = node.throwComponent.range * 0.5;
                             boolean canThrow = true;
                             if (node.velocityComponent != null) {
-                                if (dist< minDist) {
+                                // if too close, move away from opp
+                                if (dist < minDist) {
                                     node.velocityComponent.velocity.set(n.getMultiplied(-node.velocityComponent.speed));
                                     canThrow = false;
                                 }
@@ -87,47 +90,48 @@ public class AISystem implements ISystem {
                             }
                         }
                     }
-
-
                 }
-                // if node has velocity
-
             }
-            /*if (node.velocityComponent != null) {
-
-                // walk towards opp
-                if (!isPerformingAction) {
-                    if (inRange && dist >= minDist)
-                        node.velocityComponent.velocity.set(n.getMultiplied(node.velocityComponent.speed));
-                    else if (!inRange) {
-                        // walk towards nexus
-                        var dir = node.positionComponent.position.getNormalized();
-                        node.velocityComponent.velocity.set(dir.getMultiplied(-node.velocityComponent.speed));
-                        node.directionComponent.dir.set(dir);
-                    }
-                }
-
-            }*/
 
             if (node.pathFindingComponent != null && node.velocityComponent != null && node.positionComponent != null) {
+                if (elapsedTime < delay) continue;
                 if (!isPerformingAction) {
-                    if (dist >= minDist) {
+                    if (inRange && dist >= minDist) {
+                        node.pathFindingComponent.keepPath = false;
                         node.pathFindingComponent.path = new Path();
                         var start = GameWorld.toTileSpace(node.positionComponent.position);
                         var end = GameWorld.toTileSpace(opp.positionComponent.position);
                         var startNode = new Path.Node(start);
                         aStar(startNode, end, node.pathFindingComponent.path);
 
+                    } else if (!inRange) {
+                        // pathfind to nexus
+                        if (!node.pathFindingComponent.keepPath || node.pathFindingComponent.path.closed.isEmpty()) {
+                            node.pathFindingComponent.keepPath = true;
+                            node.pathFindingComponent.path = new Path();
+                            var start = GameWorld.toTileSpace(node.positionComponent.position);
+                            var end = GameWorld.toTileSpace(Vector2D.ZERO);
+                            var startNode = new Path.Node(start);
+                            aStar(startNode, end, node.pathFindingComponent.path);
+                        }
+                    }
 
+                    if (dist >= minDist) {
                         // move according to path
                         if (!node.pathFindingComponent.path.closed.isEmpty()) {
                             var destination = node.pathFindingComponent.path.closed.getLast();
-                            while (destination.parent != null && destination.parent.parent != null) {
-                                destination = destination.parent;
-                            }
                             var dest = GameWorld.toWorldSpace(destination.cell);
                             dest.x += 0.5;
                             dest.y -= 0.5;
+                            // if following set path
+                            if (node.pathFindingComponent.keepPath) {
+                                // if at immediate destination, remove destination from path
+                                var pos = node.positionComponent.position;
+                                if (Math.abs(pos.x - dest.x) < 0.1 && Math.abs(pos.y - dest.y) < 0.1) {
+                                    node.pathFindingComponent.path.closed.removeLast();
+                                }
+                            }
+
 
                             var dir = node.positionComponent.position.getSubtracted(dest).getNormalized();
                             node.velocityComponent.velocity.set(dir.getMultiplied(-node.velocityComponent.speed));
@@ -135,10 +139,25 @@ public class AISystem implements ISystem {
                         }
                     }
                 }
+
+
             }
+
+
         }
 
 
+    }
+
+    private static ArrayList<AINode> getOppsInRange(AINode node, AIComponent.Type type, List<AINode> opps) {
+        var targets = new ArrayList<>(opps);
+        targets.removeIf(aiNode -> {
+            if (aiNode.aiComponent.type != type) return true;
+            var dist = aiNode.positionComponent.position.distance(node.positionComponent.position);
+            // this opp is not within range
+            return dist > node.aiComponent.range;
+        });
+        return targets;
     }
 
     @Override
@@ -170,6 +189,17 @@ public class AISystem implements ISystem {
     private void aStar(Path.Node current, Vector2D end, Path path) {
         if (current.cell.equals(end) || path.closed.size() > 400) {
             path.closed.add(current);
+            // remove all irrelevant nodes
+            path.open.clear();
+            // only add chosen path to this list
+            List<Path.Node> closed = new ArrayList<>();
+            Path.Node node = path.closed.getLast();
+            while (node.parent != null) {
+                closed.add(node);
+                node = node.parent;
+            }
+            path.closed.clear();
+            path.closed.addAll(closed);
             return;
         }
         // add all adjacent squares
@@ -214,9 +244,9 @@ public class AISystem implements ISystem {
 
         // squares in open list are sorted, so we just take the last item
         var bestNode = path.open.poll();
-        if (bestNode == null) return;
 
         // go again
+        assert bestNode != null;
         aStar(bestNode, end, path);
     }
 
