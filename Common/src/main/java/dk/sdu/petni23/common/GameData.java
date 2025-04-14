@@ -162,7 +162,7 @@ public class GameData
     public static Vector2D randomWorldPos() {
         double x = Math.random() * GameData.worldSize - (double) GameData.worldSize / 2;
         double y = Math.random() * GameData.worldSize - (double) GameData.worldSize / 2;
-        if (world.map.getTile((int) x, (int) y).type != Tile.Type.GRASS) {
+        if (world.map.getTile((int) x, (int) y).type == Tile.Type.WATER) {
             return null;
         }
         else return new Vector2D(x, y);

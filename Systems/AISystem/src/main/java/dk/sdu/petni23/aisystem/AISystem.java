@@ -116,7 +116,6 @@ public class AISystem implements ISystem {
                         var start = GameWorld.toTileSpace(node.positionComponent.position);
                         var end = GameWorld.toTileSpace(opp.positionComponent.position);
                         var startNode = new Path.Node(start);
-                        node.pathFindingComponent.path.open.add(startNode);
                         aStar(startNode, end, node.pathFindingComponent.path);
 
 
@@ -169,7 +168,7 @@ public class AISystem implements ISystem {
     }
 
     private void aStar(Path.Node current, Vector2D end, Path path) {
-        if (current.cell.equals(end)) {
+        if (current.cell.equals(end) || path.closed.size() > 400) {
             path.closed.add(current);
             return;
         }
@@ -180,8 +179,8 @@ public class AISystem implements ISystem {
         int endY = (int) (current.cell.y + 1);
         if (startX < 0) startX = 0;
         if (startY < 0) startY = 0;
-        if (endX >= GameData.worldSize) endX = GameData.worldSize;
-        if (endY >= GameData.worldSize) endY = GameData.worldSize;
+        if (endX >= GameData.worldSize) endX = GameData.worldSize - 1;
+        if (endY >= GameData.worldSize) endY = GameData.worldSize - 1;
 
         for (int x = startX; x <= endX; x++) {
             for (int y = startY; y <= endY; y++) {
@@ -197,6 +196,7 @@ public class AISystem implements ISystem {
                 else adj.G = current.G + 1;
 
                 adj.H = manhattanDist(adj.cell, end);
+                adj.F = adj.H + adj.G;
 
                 // if node already exists in list
                 var openNode = path.open.stream().filter(node -> node.cell.equals(adj.cell)).findFirst().orElse(null);
@@ -204,29 +204,20 @@ public class AISystem implements ISystem {
                     path.open.add(adj);
                 } else {
                     if (adj.G < openNode.G) {
-                        openNode.G = adj.G;
-                        openNode.parent = adj.parent;
+                        path.open.remove(openNode);
+                        path.open.add(adj);
                     }
                 }
             }
         }
-        path.open.remove(current);
         path.closed.add(current);
 
-        // choose the square with the lowest F-cost
-        double lowestF = Double.MAX_VALUE;
-        Path.Node lowestNode = null;
-        for (var node : path.open) {
-            double F = node.F();
-            if (F < lowestF) {
-                lowestF = F;
-                lowestNode = node;
-            }
-        }
+        // squares in open list are sorted, so we just take the last item
+        var bestNode = path.open.poll();
+        if (bestNode == null) return;
 
-        if (lowestNode == null) return;
         // go again
-        aStar(lowestNode, end, path);
+        aStar(bestNode, end, path);
     }
 
     // to be used in tile space

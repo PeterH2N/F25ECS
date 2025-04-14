@@ -2,12 +2,13 @@ package dk.sdu.petni23.common.components.ai;
 
 import dk.sdu.petni23.common.util.Vector2D;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Path {
-    public final List<Node> open = new ArrayList<>();
+    public final PriorityQueue<Node> open = new PriorityQueue<>((o1, o2) -> {
+        if (o1.F == o2.F) return 0;
+        return o1.F > o2.F ? 1 : -1;
+    });
     public final List<Node> closed = new ArrayList<>();
 
     public static class Node {
@@ -16,9 +17,7 @@ public class Path {
         public double G = 0;
         public double H = 0;
 
-        public double F() {
-            return G + H;
-        }
+        public double F = 0;
 
         public Node(Vector2D cell) {
             this.cell = cell;
