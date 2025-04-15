@@ -184,7 +184,7 @@ public class AISystem implements ISystem {
     }
 
     private void aStar(Path.Node current, Vector2D end, Path path) {
-        if (current.cell.equals(end) || path.closed.size() > 400) {
+        if (current.cell.equals(end) || path.closed.size() > 200) {
             path.closed.add(current);
             // remove all irrelevant nodes
             path.open.clear();

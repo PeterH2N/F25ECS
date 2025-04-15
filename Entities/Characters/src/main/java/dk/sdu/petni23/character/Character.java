@@ -49,6 +49,7 @@ public class Character {
         character.add(health);
 
         health.onHurt = node -> {
+            if (damage_sound_path == null) return;
             Entity e = new Entity();
             e.add(new SoundComponent(damage_sound_path, 150, 0.5));
             Engine.addEntity(e);

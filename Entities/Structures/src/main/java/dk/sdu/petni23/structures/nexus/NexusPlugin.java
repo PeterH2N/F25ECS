@@ -34,7 +34,7 @@ public class NexusPlugin implements IPluginService
         var nexus = new Entity();
         GameData.world.nexus = nexus;
         nexus.add(new PositionComponent(new Vector2D(0,0)));
-        var health = nexus.add(new HealthComponent(1000));
+        var health = nexus.add(new HealthComponent(100000));
         health.onDeath = node -> GameData.world.nexus = null;
 
         var hitBoxShape = new AABBShape(4,1);

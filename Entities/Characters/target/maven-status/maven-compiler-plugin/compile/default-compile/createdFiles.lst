@@ -1,8 +1,9 @@
+dk/sdu/petni23/player/Archer.class
+dk/sdu/petni23/enemy/EnemyPlugin.class
+dk/sdu/petni23/enemy/TNTGoblin.class
+dk/sdu/petni23/player/Knight.class
 dk/sdu/petni23/character/Character.class
 dk/sdu/petni23/enemy/Sheep.class
 module-info.class
 dk/sdu/petni23/enemy/TorchGoblin.class
 dk/sdu/petni23/player/PlayerPlugin.class
-dk/sdu/petni23/enemy/EnemyPlugin.class
-dk/sdu/petni23/enemy/TNTGoblin.class
-dk/sdu/petni23/player/Knight.class

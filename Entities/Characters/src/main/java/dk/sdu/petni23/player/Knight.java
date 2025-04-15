@@ -34,7 +34,7 @@ public class Knight
     }
 
     public static Entity create(Vector2D pos) {
-        Entity knight = Character.create(pos, 100, "knight_hurt1");
+        Entity knight = Character.create(pos, 10000, "knight_hurt1");
 
         knight.get(VelocityComponent.class).speed = 3;
 

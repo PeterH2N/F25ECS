@@ -16,6 +16,7 @@ public interface IEntitySPI
         GOLD("gold"),
         DAMAGE("damage"),
         DYNAMITE("dynamite"),
+        ARROW("arrow"),
         MEAT("meat"),
         WOOD("wood"),
         STONE("stone"),

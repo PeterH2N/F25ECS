@@ -62,6 +62,10 @@ public class DynamiteSPI implements IEntitySPI {
         Vector2D end = pos.getAdded(dir.getMultiplied(distance));
         Vector2D start = pos.getAdded(dir.getMultiplied(0.25));
 
+        LayerComponent.Layer layer;
+        LayerComponent layerComponent = parent.get(LayerComponent.class);
+        layer = layerComponent == null ? LayerComponent.Layer.ALL : layerComponent.layer;
+
         var dynamite = createDynamite(pos);
         var am = dynamite.add(new AngularMomentumComponent());
         am.angularMomentum = dir.x > 0 ? -10 : 10;
@@ -69,8 +73,7 @@ public class DynamiteSPI implements IEntitySPI {
         var explosionSPI = Engine.getEntitySPI(Type.EXPLOSION_ANIMATION);
         Dispatch onEnd = node -> {
             var circle = new OvalShape(0.35, 0.35);
-            Engine.addEntity(
-                    DamageSPI.createDamageEntity(end, new HitBoxComponent(circle), LayerComponent.Layer.ALL, 10));
+            Engine.addEntity(DamageSPI.createDamageEntity(end, new HitBoxComponent(circle), layer, 15));
             assert explosionSPI != null;
             Engine.addEntity(explosionSPI.create(dynamite));
             Entity e = new Entity();
