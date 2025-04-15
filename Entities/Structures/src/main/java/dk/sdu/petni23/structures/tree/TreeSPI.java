@@ -12,9 +12,8 @@ import dk.sdu.petni23.common.components.health.HealthComponent;
 import dk.sdu.petni23.common.components.items.LootComponent;
 import dk.sdu.petni23.common.components.damage.LayerComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
-import dk.sdu.petni23.common.shape.AABB;
 import dk.sdu.petni23.common.shape.AABBShape;
-import dk.sdu.petni23.common.shape.OvalShape;
+import dk.sdu.petni23.common.sound.SoundEffect;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.Engine;
@@ -54,7 +53,7 @@ public class TreeSPI implements IEntitySPI
         health.onDeath = node -> Engine.addEntity(createStump(tree.get(PositionComponent.class).position));
         health.onHurt = node -> {
             Entity e = new Entity();
-            e.add(new SoundComponent("tree_hit1", 150, 0.5));
+            e.add(new SoundComponent(SoundEffect.TREE_HIT, position.position, 150));
             Engine.addEntity(e);
         };
 
@@ -62,7 +61,7 @@ public class TreeSPI implements IEntitySPI
         var loot = tree.add(new LootComponent(node -> {
             if (woodSPI != null) {
                 Entity sound = new Entity();
-                sound.add(new SoundComponent("wood_drop1", 50, 0.8));
+                sound.add(new SoundComponent(SoundEffect.WOOD_DROP, position.position, 50));
                 Engine.addEntity(sound);
                 Engine.addEntity(woodSPI.create(Engine.getEntity(node.getEntityID())));
             }

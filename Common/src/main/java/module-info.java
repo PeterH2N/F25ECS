@@ -26,5 +26,6 @@ module Common {
     exports dk.sdu.petni23.common.world.mapgen;
     exports dk.sdu.petni23.common.configreader;
     exports dk.sdu.petni23.common.components.ai;
+    exports dk.sdu.petni23.common.sound;
     uses IEntitySPI;
 }

@@ -6,6 +6,7 @@ import dk.sdu.petni23.common.components.movement.VelocityComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.common.components.sound.FootstepSoundComponent;
 import dk.sdu.petni23.common.components.damage.LayerComponent;
+import dk.sdu.petni23.common.sound.SoundEffect;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.entity.IEntitySPI;
@@ -28,7 +29,7 @@ public class Sheep {
     }
 
     public static Entity create(Vector2D pos) {
-        Entity sheep = Character.create(pos, 20, "sheep_hurt1");
+        Entity sheep = Character.create(pos, 20, SoundEffect.SHEEP_HURT);
 
         sheep.get(VelocityComponent.class).speed = 2.3;
 
@@ -44,7 +45,7 @@ public class Sheep {
         }));
         loot.maxDrop = 3;
 
-        sheep.add(new FootstepSoundComponent("sheep_walk1", Set.of(0)));
+        sheep.add(new FootstepSoundComponent(SoundEffect.SHEEP_WALK, Set.of(0)));
         //sheep.add(new HealthBarComponent(40, 5, Color.DARKGREEN));
 
         return sheep;

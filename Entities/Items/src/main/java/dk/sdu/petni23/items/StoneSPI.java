@@ -1,16 +1,14 @@
 package dk.sdu.petni23.items;
 
-import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.components.items.CurrencyComponent;
 import dk.sdu.petni23.common.components.items.ItemComponent;
-import dk.sdu.petni23.common.components.health.DurationComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.components.movement.TrajectoryComponent;
 import dk.sdu.petni23.common.components.movement.VelocityComponent;
-import dk.sdu.petni23.common.components.rendering.AnimationComponent;
 import dk.sdu.petni23.common.components.rendering.DisplayComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.common.components.sound.SoundComponent;
+import dk.sdu.petni23.common.sound.SoundEffect;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.entity.Entity;
@@ -19,7 +17,6 @@ import dk.sdu.petni23.common.util.Vector2D;
 import javafx.scene.image.Image;
 
 import java.util.Objects;
-import java.util.Vector;
 
 public class StoneSPI implements IEntitySPI {
     private static final SpriteSheet stoneSprite;
@@ -47,7 +44,7 @@ public class StoneSPI implements IEntitySPI {
         Vector2D start = parentPositionComponent.position;
         Vector2D end = start.getAdded(p);
         Entity sound = new Entity();
-        sound.add(new SoundComponent("stone_drop1", 50, 0.8));
+        sound.add(new SoundComponent(SoundEffect.STONE_DROP, start, 50));
         Engine.addEntity(sound);
 
         return spawnStone(start, end);
@@ -73,7 +70,7 @@ public class StoneSPI implements IEntitySPI {
         ItemComponent item = new ItemComponent(IEntitySPI.Type.STONE);
         item.onPickup = node -> {
             Entity soundEntity = new Entity();
-            soundEntity.add(new SoundComponent("stone_pickup1", 150, 0.5));
+            soundEntity.add(new SoundComponent(SoundEffect.STONE_PICKUP, positionComponent.position, 150));
             Engine.addEntity(soundEntity);
         };
         stone.add(item);

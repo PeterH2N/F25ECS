@@ -2,6 +2,7 @@ package dk.sdu.petni23.player;
 
 import dk.sdu.petni23.character.Character;
 import dk.sdu.petni23.common.components.ai.AIComponent;
+import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.components.movement.VelocityComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.common.components.sound.FootstepSoundComponent;
@@ -10,6 +11,7 @@ import dk.sdu.petni23.common.components.actions.Action;
 import dk.sdu.petni23.common.components.actions.ActionSetComponent;
 import dk.sdu.petni23.common.components.damage.LayerComponent;
 import dk.sdu.petni23.common.components.damage.AttackComponent;
+import dk.sdu.petni23.common.sound.SoundEffect;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.Engine;
@@ -34,9 +36,10 @@ public class Knight
     }
 
     public static Entity create(Vector2D pos) {
-        Entity knight = Character.create(pos, 10000, "knight_hurt1");
+        Entity knight = Character.create(pos, 10000, SoundEffect.KNIGHT_HURT);
 
         knight.get(VelocityComponent.class).speed = 3;
+        var position = knight.get(PositionComponent.class);
 
         var spriteComponent = new SpriteComponent(spriteSheet, new Vector2D(-0.5, -127d / 192));
         knight.add(spriteComponent);
@@ -51,7 +54,7 @@ public class Knight
             assert damageSPI != null;
             Entity damageEntity = damageSPI.create(Engine.getEntity(node.getEntityID()));
             Entity sound = new Entity();
-            sound.add(new SoundComponent("woosh1"));
+            sound.add(new SoundComponent(SoundEffect.WOOSH1, position.position));
             Engine.addEntity(sound);
             Engine.addEntity(damageEntity); // ✅ add the one you modified
         };
@@ -66,7 +69,7 @@ public class Knight
             Entity damageEntity = damageSPI.create(Engine.getEntity(node.getEntityID()));
             Engine.addEntity(damageEntity); // ✅ add the one you modified
             Entity sound = new Entity();
-            sound.add(new SoundComponent("woosh2",0,0.5));
+            sound.add(new SoundComponent(SoundEffect.WOOSH2, position.position));
             Engine.addEntity(sound);
         };
         actions.actions.add(action1);
@@ -75,7 +78,7 @@ public class Knight
 
         knight.add(new LayerComponent(LayerComponent.Layer.PLAYER));
 
-        knight.add(new FootstepSoundComponent("footstep_player", Set.of(1, 4)));
+        knight.add(new FootstepSoundComponent(SoundEffect.FOOTSTEP_PLAYER, Set.of(1, 4)));
 
         knight.add(new AttackComponent(5, 0.6));
 

@@ -10,6 +10,7 @@ import dk.sdu.petni23.common.components.rendering.AnimationComponent;
 import dk.sdu.petni23.common.components.rendering.DisplayComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.common.components.sound.SoundComponent;
+import dk.sdu.petni23.common.sound.SoundEffect;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.entity.Entity;
@@ -44,7 +45,7 @@ public class GoldSPI implements IEntitySPI {
         assert parentPositionComponent != null;
         Vector2D pos = parentPositionComponent.position.getAdded(p);
         Entity sound = new Entity();
-        sound.add(new SoundComponent("coin_bag_drop1", 50, 0.8));
+        sound.add(new SoundComponent(SoundEffect.COIN_BAG_DROP, pos, 50));
         Engine.addEntity(sound);
         return spawnGold(pos);
     }
@@ -69,7 +70,7 @@ public class GoldSPI implements IEntitySPI {
         ItemComponent item = new ItemComponent(IEntitySPI.Type.GOLD);
         item.onPickup = node -> {
             Entity e = new Entity();
-            e.add(new SoundComponent("coin_pickup1", 150, 0.5));
+            e.add(new SoundComponent(SoundEffect.COIN_PICKUP, positionComponent.position, 150));
             e.add(new DurationComponent(200, GameData.getCurrentMillis()));
             Engine.addEntity(e);
         };

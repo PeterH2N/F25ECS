@@ -10,6 +10,7 @@ import dk.sdu.petni23.common.components.rendering.AnimationComponent;
 import dk.sdu.petni23.common.components.rendering.DisplayComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.common.components.sound.SoundComponent;
+import dk.sdu.petni23.common.sound.SoundEffect;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.entity.Entity;
@@ -67,7 +68,7 @@ public class WoodSPI implements IEntitySPI {
         ItemComponent item = new ItemComponent(IEntitySPI.Type.WOOD);
         item.onPickup = node -> {
             Entity soundEntity = new Entity();
-            soundEntity.add(new SoundComponent("wood_pickup1", 150, 0.5));
+            soundEntity.add(new SoundComponent(SoundEffect.WOOD_PICKUP, positionComponent.position, 150));
             soundEntity.add(new DurationComponent(200, GameData.getCurrentMillis()));
             Engine.addEntity(soundEntity);
         };

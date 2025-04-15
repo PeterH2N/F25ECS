@@ -1,26 +1,24 @@
 package dk.sdu.petni23.common.components.sound;
 
+import dk.sdu.petni23.common.sound.SoundEffect;
+import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.Component;
 
 /**
  * IMPORTANT: Entities with sound components will be deleted after the sound is played.
  * */
 public class SoundComponent extends Component {
-    public String action;
-    public long playAt = 0; // delay in ms
-    public double volume = 1.0; // default full volume
+    public final SoundEffect soundEffect;
+    public final Vector2D position;
+    public int delay = 0; // delay in ms
 
-    public SoundComponent(String action) {
-        this(action, 0, 1.0);
+    public SoundComponent(SoundEffect soundEffect, Vector2D position) {
+        this(soundEffect, position, 0);
     }
 
-    public SoundComponent(String action, long delayMillis) {
-        this(action, delayMillis, 1.0);
-    }
-
-    public SoundComponent(String action, long delayMillis, double volume) {
-        this.action = action;
-        this.playAt = System.currentTimeMillis() + delayMillis;
-        this.volume = volume;
+    public SoundComponent(SoundEffect soundEffect, Vector2D position, int delayMillis) {
+        this.soundEffect = soundEffect;
+        this.position = new Vector2D(position);
+        this.delay = delayMillis;
     }
 }

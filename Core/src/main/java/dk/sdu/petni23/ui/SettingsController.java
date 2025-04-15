@@ -1,5 +1,6 @@
 package dk.sdu.petni23.ui;
 
+import dk.sdu.petni23.common.sound.SoundEffect;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,8 +11,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-
-import dk.sdu.petni23.common.util.Sound;
 
 public class SettingsController {
 
@@ -57,7 +56,7 @@ public class SettingsController {
         }
 
         button.setOnMousePressed(e -> {
-            UISound.play("click1");
+            SoundEffect.CLICK.play();
             updateImage(iconView, pressedIcon);
             updateImage(bgView, pressedBg);
         });

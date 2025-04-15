@@ -14,6 +14,7 @@ import dk.sdu.petni23.common.components.damage.LayerComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.shape.AABBShape;
 import dk.sdu.petni23.common.shape.OvalShape;
+import dk.sdu.petni23.common.sound.SoundEffect;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.Engine;
@@ -67,7 +68,7 @@ public class Mine {
             System.out.println("onHurt triggered");
 
             Entity sound = new Entity();
-            sound.add(new SoundComponent("mine_hit1", 150, 0.5));
+            sound.add(new SoundComponent(SoundEffect.MINE_HIT, position.position, 150));
             sound.add(new DurationComponent(200, GameData.getCurrentMillis()));
             Engine.addEntity(sound);
 

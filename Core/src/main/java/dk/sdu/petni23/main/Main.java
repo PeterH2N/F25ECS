@@ -1,6 +1,7 @@
 package dk.sdu.petni23.main;
 
 import dk.sdu.petni23.common.GameData;
+import dk.sdu.petni23.common.sound.SoundEffect;
 import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.Engine;
 import javafx.animation.AnimationTimer;
@@ -26,6 +27,8 @@ public class Main extends Application {
         GameData.getFocusedProperty().bind(stage.focusedProperty());
         stage.setOnCloseRequest(windowEvent -> System.exit(0));
 
+
+        SoundEffect.init();
         Engine.start();
 
         render();

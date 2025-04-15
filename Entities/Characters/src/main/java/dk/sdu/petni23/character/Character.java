@@ -3,23 +3,22 @@ package dk.sdu.petni23.character;
 import dk.sdu.petni23.common.components.rendering.AnimationComponent;
 import dk.sdu.petni23.common.components.rendering.DisplayComponent;
 import dk.sdu.petni23.common.components.sound.SoundComponent;
-import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.components.collision.CollisionComponent;
 import dk.sdu.petni23.common.components.collision.HitBoxComponent;
-import dk.sdu.petni23.common.components.health.DurationComponent;
 import dk.sdu.petni23.common.components.health.HealthComponent;
 import dk.sdu.petni23.common.components.movement.DirectionComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.components.movement.VelocityComponent;
 import dk.sdu.petni23.common.shape.AABBShape;
 import dk.sdu.petni23.common.shape.OvalShape;
+import dk.sdu.petni23.common.sound.SoundEffect;
 import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 
 public class Character {
-    public static Entity create(Vector2D pos, double maxHP, String damage_sound_path) {
+    public static Entity create(Vector2D pos, double maxHP, SoundEffect damageSound) {
         Entity character = new Entity();
         var position = new PositionComponent();
         position.position.set(pos);
@@ -49,9 +48,9 @@ public class Character {
         character.add(health);
 
         health.onHurt = node -> {
-            if (damage_sound_path == null) return;
+            if (damageSound == null) return;
             Entity e = new Entity();
-            e.add(new SoundComponent(damage_sound_path, 150, 0.5));
+            e.add(new SoundComponent(damageSound, position.position, 0));
             Engine.addEntity(e);
         };
 

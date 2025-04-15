@@ -11,6 +11,7 @@ import dk.sdu.petni23.common.components.rendering.AnimationComponent;
 import dk.sdu.petni23.common.components.rendering.DisplayComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.common.components.sound.SoundComponent;
+import dk.sdu.petni23.common.sound.SoundEffect;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.entity.Entity;
@@ -68,7 +69,7 @@ public class MeatSPI implements IEntitySPI {
         ItemComponent item = new ItemComponent(IEntitySPI.Type.MEAT);
         item.onPickup = node -> {
             Entity soundEntity = new Entity();
-            soundEntity.add(new SoundComponent("meat_pickup1", 150, 0.5));
+            soundEntity.add(new SoundComponent(SoundEffect.MEAT_PICKUP, positionComponent.position, 150));
             soundEntity.add(new DurationComponent(200, GameData.getCurrentMillis()));
             Engine.addEntity(soundEntity);
 
@@ -95,7 +96,7 @@ public class MeatSPI implements IEntitySPI {
         var duration = spawn.add(new DurationComponent(700, GameData.getCurrentMillis()));
         duration.onDeath = node -> Engine.addEntity(meat(pos));
         Entity sound = new Entity();
-        sound.add(new SoundComponent("meat_drop1", 50, 0.8));
+        sound.add(new SoundComponent(SoundEffect.MEAT_DROP, positionComponent.position, 50));
         Engine.addEntity(sound);
         return spawn;
     }

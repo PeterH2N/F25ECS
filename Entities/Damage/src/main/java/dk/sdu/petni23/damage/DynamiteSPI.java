@@ -1,9 +1,7 @@
 package dk.sdu.petni23.damage;
 
-import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.components.Dispatch;
 import dk.sdu.petni23.common.components.damage.ThrowComponent;
-import dk.sdu.petni23.common.components.health.DurationComponent;
 import dk.sdu.petni23.common.components.movement.AngularMomentumComponent;
 import dk.sdu.petni23.common.components.movement.TrajectoryComponent;
 import dk.sdu.petni23.common.components.collision.HitBoxComponent;
@@ -15,6 +13,7 @@ import dk.sdu.petni23.common.components.rendering.DisplayComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.common.components.sound.SoundComponent;
 import dk.sdu.petni23.common.shape.OvalShape;
+import dk.sdu.petni23.common.sound.SoundEffect;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.entity.Entity;
@@ -37,11 +36,7 @@ public class DynamiteSPI implements IEntitySPI {
     public static Entity createDynamite(Vector2D pos) {
         Entity tnt = new Entity();
 
-        Entity e = new Entity();
-        e.add(new SoundComponent("dynamite_throw1", 0, 0.4));
-        Engine.addEntity(e);
-
-        tnt.add(new PositionComponent(pos));
+        var position = tnt.add(new PositionComponent(pos));
         tnt.add(new DirectionComponent());
         tnt.add(new DirectionComponent());
         tnt.add(new DisplayComponent(DisplayComponent.Layer.EFFECT));
@@ -49,6 +44,10 @@ public class DynamiteSPI implements IEntitySPI {
         spriteCOmponent.rotateWithDirection = true;
         var animation = tnt.add(new AnimationComponent());
         animation.doMirrors = false;
+
+        Entity e = new Entity();
+        e.add(new SoundComponent(SoundEffect.DYNAMITE_THROW, position.position));
+        Engine.addEntity(e);
 
         return tnt;
     }
@@ -77,7 +76,7 @@ public class DynamiteSPI implements IEntitySPI {
             assert explosionSPI != null;
             Engine.addEntity(explosionSPI.create(dynamite));
             Entity e = new Entity();
-            e.add(new SoundComponent("throw_explosion1", 0, 0.4));
+            e.add(new SoundComponent(SoundEffect.THROW_EXPLOSION, end));
             Engine.addEntity(e);
         };
         dynamite.add(new TrajectoryComponent(start, end, distance * 0.33, onEnd));

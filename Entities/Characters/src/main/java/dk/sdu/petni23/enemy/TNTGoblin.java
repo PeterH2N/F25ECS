@@ -11,6 +11,7 @@ import dk.sdu.petni23.common.components.items.LootComponent;
 import dk.sdu.petni23.common.components.movement.VelocityComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.common.components.damage.LayerComponent;
+import dk.sdu.petni23.common.sound.SoundEffect;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.entity.IEntitySPI;
@@ -33,7 +34,7 @@ public class TNTGoblin
     }
 
     public static Entity create(Vector2D pos) {
-        Entity goblin = Character.create(pos, 20, "goblin_hurt1");
+        Entity goblin = Character.create(pos, 20, SoundEffect.GOBLIN_HURT);
 
         goblin.get(VelocityComponent.class).speed = 2.3;
 

@@ -2,6 +2,8 @@ package dk.sdu.petni23.ui;
 
 import java.io.IOException;
 import java.net.URL;
+
+import dk.sdu.petni23.common.sound.SoundEffect;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +13,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import dk.sdu.petni23.common.util.Sound;
 
 public class StartMenuController {
 
@@ -51,7 +52,7 @@ public class StartMenuController {
             String defaultIcon, String pressedIcon,
             String defaultBg, String pressedBg) {
         button.setOnMousePressed(e -> {
-            UISound.play("click1");
+            SoundEffect.CLICK.play();
             updateImage(iconView, pressedIcon);
             updateImage(bgView, pressedBg);
         });

@@ -7,15 +7,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.control.Button;
-import javafx.scene.Node;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.Enumeration;
-
-import dk.sdu.petni23.common.util.Sound;
 
 public class StartMenu extends Application {
 
