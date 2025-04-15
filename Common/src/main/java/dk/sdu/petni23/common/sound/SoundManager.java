@@ -65,6 +65,10 @@ class SoundManager {
         else
         {
             Clip clip = (Clip) AudioSystem.getLine(infos.elementAt(x));
+            clip.addLineListener(lineEvent -> {
+                if (lineEvent.getType() == LineEvent.Type.STOP)
+                    clip.close();
+            });
             clip.open(afs.elementAt(x), audios.elementAt(x), 0, sizes.elementAt(x));
             return clip;
         }

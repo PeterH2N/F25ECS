@@ -37,10 +37,6 @@ public class AISystem implements ISystem {
             if (node.aiComponent.TargetPriorityList == null) continue; // if we have no potential targets
             // if node is controlled, we don't control with AI. player has AIComponent so other AIs recognize it.
             if (Engine.getEntity(node.getEntityID()).get(ControlComponent.class) != null) continue;
-            if (node.aiComponent.type == null) {
-                System.out.println("here");
-            }
-
 
             if (node.velocityComponent != null) node.velocityComponent.velocity.set(0,0); // reset movement
             var allOpps = nodes.get(node.layerComponent.layer.opponent());

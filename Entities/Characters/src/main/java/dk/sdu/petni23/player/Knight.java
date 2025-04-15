@@ -2,6 +2,7 @@ package dk.sdu.petni23.player;
 
 import dk.sdu.petni23.character.Character;
 import dk.sdu.petni23.common.components.ai.AIComponent;
+import dk.sdu.petni23.common.components.health.HealthComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.components.movement.VelocityComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
@@ -40,6 +41,8 @@ public class Knight
 
         knight.get(VelocityComponent.class).speed = 3;
         var position = knight.get(PositionComponent.class);
+
+        knight.get(HealthComponent.class).invincible = true;
 
         var spriteComponent = new SpriteComponent(spriteSheet, new Vector2D(-0.5, -127d / 192));
         knight.add(spriteComponent);
