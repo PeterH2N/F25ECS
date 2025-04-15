@@ -13,7 +13,7 @@ public enum SoundEffect {
     DYNAMITE_THROW("dynamite_throw1.wav", 0.4),
     FOOTSTEP("footstep.wav"),
     FOOTSTEP_PLAYER("footstep_player.wav", 0.8),
-    GOBLIN_HURT("goblin_hurt1.wav", 0.5),
+    GOBLIN_HURT("goblin_hurt1.wav", 0.3),
     KNIGHT_HURT("knight_hurt1.wav", 0.5),
     MEAT_DROP("meat_drop1.wav", 0.8),
     MEAT_PICKUP("meat_pickup1.wav", 0.1),

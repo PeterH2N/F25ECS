@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.concurrent.*;
 
 public class SoundManager {
-    private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(4);
+    private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(10);
     private static final Map<String, ScheduledFuture<?>> loopingSounds = new ConcurrentHashMap<>();
 
     public static void playSound(SoundEffect soundEffect, int delayMillis, double volume) {
