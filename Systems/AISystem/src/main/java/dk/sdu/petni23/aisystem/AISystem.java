@@ -10,6 +10,7 @@ import dk.sdu.petni23.common.components.movement.VelocityComponent;
 import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.common.world.GameWorld;
 import dk.sdu.petni23.gameengine.Engine;
+import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.services.ISystem;
 
 import java.util.*;
@@ -43,17 +44,16 @@ public class AISystem implements ISystem {
 
             if (node.velocityComponent != null) node.velocityComponent.velocity.set(0,0); // reset movement
             var allOpps = nodes.get(node.layerComponent.layer.opponent());
-            List<AINode> opps = null;
+            List<AINode> opps = new ArrayList<>();
 
 
             // get all nodes that fit the priority type, and are in range. if none exist, move on to next.
             for (var type : node.aiComponent.TargetPriorityList) {
                 var targets = getOppsInRange(node, type, allOpps);
                 if (targets.isEmpty()) continue;
-                opps = targets;
-                break;
+                opps.addAll(targets);
             }
-            boolean inRange = opps != null;
+            boolean inRange = !opps.isEmpty();
 
             AINode opp;
             if (inRange) {
@@ -106,8 +106,9 @@ public class AISystem implements ISystem {
 
             if (node.pathFindingComponent != null && node.velocityComponent != null && node.positionComponent != null) {
                 if (!node.pathFindingComponent.keepPath) node.pathFindingComponent.path = new Path();
-                node.pathFindingComponent.keepPath = opp.velocityComponent == null; // if opp is static, we don't continually update path.
-
+                Entity oppE = Engine.getEntity(opp.getEntityID());
+                node.pathFindingComponent.keepPath = opp.velocityComponent == null && node.pathFindingComponent.opp == oppE; // if opp is static, and we have not updated the target, we do not update the path
+                node.pathFindingComponent.opp = oppE; // update opp
                 if (!isPerformingAction) {
                     if (dist >= minDist) {
                         if (!node.pathFindingComponent.keepPath || node.pathFindingComponent.path.closed.isEmpty()) {

@@ -50,7 +50,7 @@ public class InventoryController {
         meatIcon.setImage(load("/Inventory/Inventory_Meat.png"));
         woodIcon.setImage(load("/Inventory/Inventory_Wood.png"));
         goldIcon.setImage(load("/Inventory/Inventory_Gold.png"));
-        stoneIcon.setImage(load("/Inventory/Inventory_Stone.png")); // 🔥 your new image
+        stoneIcon.setImage(load("/Inventory/Inventory_Stone.png"));
     }
 
     private Image load(String path) {
@@ -65,8 +65,8 @@ public class InventoryController {
             Image img = digitImages.get(digit);
             if (img != null) {
                 ImageView view = new ImageView(img);
-                view.setFitWidth(18);  // scaled from 180 px
-                view.setFitHeight(22); // scaled from 228 px
+                view.setFitWidth(180d / 18);  // scaled from 180 px
+                view.setFitHeight(228d / 18); // scaled from 228 px
                 box.getChildren().add(view);
             }
         }

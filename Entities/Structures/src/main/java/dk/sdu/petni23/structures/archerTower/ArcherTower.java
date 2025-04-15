@@ -32,21 +32,24 @@ public class ArcherTower implements IEntitySPI {
     private static final double HITBOX_WIDTH = 1.2;
     private static final double HITBOX_HEIGHT = 0.9;
 
-    private static final SpriteSheet spriteSheet;
+    private static final SpriteSheet towerSpriteSheet;
+    private static final SpriteSheet destroyedTowerSpriteSheet;
 
     static {
         final int[] numFrames = {1};
         Image img = new Image(Objects.requireNonNull(ArcherTower.class.getResourceAsStream("/structuresprites/Tower_Purple.png")));
-        spriteSheet = new SpriteSheet(img, numFrames, new Vector2D(img.getWidth(), img.getHeight()));
+        towerSpriteSheet = new SpriteSheet(img, numFrames, new Vector2D(img.getWidth(), img.getHeight()));
+        img = new Image(Objects.requireNonNull(ArcherTower.class.getResourceAsStream("/structuresprites/Tower_Destroyed.png")));
+        destroyedTowerSpriteSheet = new SpriteSheet(img, numFrames, new Vector2D(img.getWidth(), img.getHeight()));
     }
 
     public static Entity create(Vector2D pos){
         Entity tower = new Entity();
 
-        tower.add(new PositionComponent(pos));
+        var positionComponent = tower.add(new PositionComponent(pos));
 
         var origin = new Vector2D(-0.5, -0.85);
-        var sprite = new SpriteComponent(spriteSheet, origin);
+        var sprite = new SpriteComponent(towerSpriteSheet, origin);
         tower.add(sprite);
 
         tower.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
@@ -78,12 +81,35 @@ public class ArcherTower implements IEntitySPI {
             archerE.get(SpriteComponent.class).effect = sprite.effect;
         };
         binding.bindings.put(archer, b);
-        healthComponent.onDeath = node -> Engine.removeEntity(archer);
+        healthComponent.onDeath = node -> {
+            Engine.removeEntity(archer);
+            Engine.addEntity(towerDestroyed(positionComponent.position));
+        };
 
         // band-aid solution for problem in placement system
         tower.add(new VelocityComponent());
         tower.add(new HealthBarComponent(80, 8, Color.GREEN, 3.3));
 
+        return tower;
+    }
+
+    static Entity towerDestroyed(Vector2D pos) {
+        Entity tower = new Entity();
+
+        tower.add(new PositionComponent(pos));
+
+        var origin = new Vector2D(-0.5, -0.85);
+        var sprite = new SpriteComponent(destroyedTowerSpriteSheet, origin);
+        tower.add(sprite);
+
+        tower.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
+        tower.add(new LayerComponent(LayerComponent.Layer.PLAYER));
+
+        Shape collisionShape = new OvalShape(0.85, 0.3);
+        var offset = new Vector2D(0, 0.2);
+
+        var collision = new CollisionComponent(collisionShape, offset);
+        tower.add(collision);
         return tower;
     }
 
