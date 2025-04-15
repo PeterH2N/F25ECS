@@ -17,7 +17,7 @@ public class SoundSystem implements ISystem {
             double volume = 1;
             double dist = GameData.camera.center.distance(soundComponent.position);
             if (dist > 1) {
-                volume /= (dist * 0.2);
+                volume = Math.min(volume * (1 / (dist * dist * 0.01)), 1);
             }
 
             System.out.println("🎧 Triggered sound: " +  soundComponent.soundEffect + " (volume: " + volume + ")");
