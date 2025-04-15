@@ -12,6 +12,7 @@
 /Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/misc/Viewport.java
 /Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/movement/PositionComponent.java
 /Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/util/SimplexNoise.java
+/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/Binding.java
 /Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/misc/GameKeys.java
 /Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/shape/OBShape.java
 /Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/misc/Manifold.java
@@ -31,6 +32,7 @@
 /Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/shape/AABBShape.java
 /Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/configreader/ConfigReader.java
 /Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/shape/Shape.java
+/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/BindingComponent.java
 /Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/ai/AIComponent.java
 /Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/ControlComponent.java
 /Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/movement/AngularMomentumComponent.java

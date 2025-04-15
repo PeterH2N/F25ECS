@@ -4,14 +4,16 @@ import dk.sdu.petni23.common.components.collision.HitBoxComponent;
 import dk.sdu.petni23.common.components.health.HealthComponent;
 import dk.sdu.petni23.gameengine.Component;
 
-public class PlacementComponent extends Component {
-    public final HitBoxComponent hitBoxComponent;
-    public final HealthComponent healthComponent;
+import java.util.HashMap;
+import java.util.Map;
 
-    public PlacementComponent(HitBoxComponent hitBoxComponent, HealthComponent healthComponent)
+public class PlacementComponent extends Component {
+    public final Map<Class<? extends Component>, Component> components = new HashMap<>();
+    public PlacementComponent(Component... components)
     {
-        this.hitBoxComponent = hitBoxComponent;
-        this.healthComponent = healthComponent;
+        for (Component component : components) {
+            this.components.put(component.getClass(), component);
+        }
     }
 
 

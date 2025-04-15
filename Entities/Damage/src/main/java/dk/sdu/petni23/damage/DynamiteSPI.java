@@ -72,7 +72,7 @@ public class DynamiteSPI implements IEntitySPI {
 
         var explosionSPI = Engine.getEntitySPI(Type.EXPLOSION_ANIMATION);
         Dispatch onEnd = node -> {
-            var circle = new OvalShape(0.35, 0.35);
+            var circle = new OvalShape(0.5, 0.5);
             Engine.addEntity(DamageSPI.createDamageEntity(end, new HitBoxComponent(circle), layer, 15));
             assert explosionSPI != null;
             Engine.addEntity(explosionSPI.create(dynamite));

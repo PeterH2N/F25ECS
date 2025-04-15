@@ -27,10 +27,10 @@ public class PlacementSystem implements ISystem {
     public void update(double deltaTime) {
 
         // Toggle between placing mode and regular mode when 'C' is pressed - For debug only
-        if (GameData.gameKeys.isPressed(KeyCode.C)) {
+        /*if (GameData.gameKeys.isPressed(KeyCode.C)) {
             GameMode newMode = (GameData.getGameMode() != GameMode.PLACING) ? GameMode.PLACING : GameMode.REGULAR;
             GameData.setGameMode(newMode);
-        }
+        }*/
         
         if (GameData.getGameMode()!=GameMode.PLACING || GameData.getHand() == null){
             return;
@@ -63,8 +63,9 @@ public class PlacementSystem implements ISystem {
                     // Add the collision and hitbox components to the entity, and remove velocity
                     collision.active = true;
                     entity.remove(VelocityComponent.class);
-                    entity.add(node.placementComponent.hitBoxComponent);
-                    entity.add(node.placementComponent.healthComponent);
+                    for (var component : node.placementComponent.components.values()) {
+                        entity.add(component);
+                    }
                     GameData.setHand(null);
                     GameData.setGameMode(GameMode.REGULAR);
                 }

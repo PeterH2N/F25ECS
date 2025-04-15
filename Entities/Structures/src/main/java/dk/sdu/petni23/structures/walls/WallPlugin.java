@@ -10,15 +10,15 @@ public class WallPlugin implements IPluginService {
 
     @Override
     public void start() {
-        Entity e = StoneWall.create(new Vector2D(50,50));
+        /*Entity e = StoneWall.create(new Vector2D(50,50));
         Engine.addEntity(e);
-        GameData.setHand(e);
+        GameData.setHand(e);*/
     }
 
     @Override
     public void stop() {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'stop'");
+        //throw new UnsupportedOperationException("Unimplemented method 'stop'");
     }
 
 }

@@ -20,9 +20,12 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
-public class Archer {
+import static dk.sdu.petni23.common.components.ai.AIComponent.Type.CHARACTER;
+
+public class Archer implements IEntitySPI {
     private static final SpriteSheet spriteSheet;
 
     static {
@@ -56,6 +59,18 @@ public class Archer {
         attack.strength = 1;
         archer.add(new HealthBarComponent(40, 5, Color.RED));
 
+        archer.add(new AIComponent(CHARACTER, List.of(CHARACTER), AIComponent.Priority.CLOSEST));
+
         return archer;
+    }
+
+    @Override
+    public Entity create(Entity parent) {
+        return create(new Vector2D(0,0));
+    }
+
+    @Override
+    public Type getType() {
+        return null;
     }
 }

@@ -24,7 +24,7 @@ public class PlayerPlugin implements IPluginService
     public void start()
     {
 
-        var player = Archer.create(new Vector2D(0,0));
+        var player = Knight.create(new Vector2D(0,0));
         var control = new ControlComponent();
         control.ULDR = new KeyCode[] { KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D };
         control.pointsToMouse = true;

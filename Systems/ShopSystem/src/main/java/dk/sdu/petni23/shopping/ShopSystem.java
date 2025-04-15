@@ -1,5 +1,6 @@
 package dk.sdu.petni23.shopping;
 
+import dk.sdu.petni23.common.components.PlacementComponent;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.services.IPluginService;
 import dk.sdu.petni23.gameengine.services.ISystem;
@@ -32,7 +33,7 @@ public class ShopSystem implements ISystem,IPluginService {
         if(shopNode == null){
             return;
         }
-        if(GameData.gameKeys.isPressed(KeyCode.B)){
+        if(GameData.gameKeys.isPressed(KeyCode.B) && GameData.getGameMode() != GameMode.PLACING){
             GameMode newMode = (GameData.getGameMode() != GameMode.SHOPPING) ? GameMode.SHOPPING : GameMode.REGULAR;
             GameData.setGameMode(newMode);
         }

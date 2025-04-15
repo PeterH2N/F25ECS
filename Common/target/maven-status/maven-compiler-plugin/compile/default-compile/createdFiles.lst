@@ -43,6 +43,8 @@ dk/sdu/petni23/common/components/items/CurrencyComponent.class
 dk/sdu/petni23/common/misc/Manifold.class
 dk/sdu/petni23/common/components/ai/AIComponent$Type.class
 dk/sdu/petni23/common/misc/GridNode.class
+dk/sdu/petni23/common/components/Binding.class
+dk/sdu/petni23/common/components/BindingComponent.class
 dk/sdu/petni23/common/util/Collider.class
 dk/sdu/petni23/common/util/ColliderPair.class
 dk/sdu/petni23/common/components/ai/AIComponent.class

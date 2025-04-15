@@ -33,12 +33,18 @@ public class AISystem implements ISystem {
         for (var node : Engine.getNodes(AINode.class)) {
             if (node.layerComponent == null) continue;
             if (node.directionComponent == null) continue;
+            if (node.aiComponent.TargetPriorityList == null) continue; // if we have no potential targets
             // if node is controlled, we don't control with AI. player has AIComponent so other AIs recognize it.
             if (Engine.getEntity(node.getEntityID()).get(ControlComponent.class) != null) continue;
+            if (node.aiComponent.type == null) {
+                System.out.println("here");
+            }
+
+
             if (node.velocityComponent != null) node.velocityComponent.velocity.set(0,0); // reset movement
             var allOpps = nodes.get(node.layerComponent.layer.opponent());
             List<AINode> opps = null;
-            boolean inRange = true;
+
 
             // get all nodes that fit the priority type, and are in range. if none exist, move on to next.
             for (var type : node.aiComponent.TargetPriorityList) {
@@ -47,15 +53,15 @@ public class AISystem implements ISystem {
                 opps = targets;
                 break;
             }
-            inRange = opps != null;
+            boolean inRange = opps != null;
 
             AINode opp;
             if (inRange) {
                 // get closest opp
                 opp = getClosestDist(node, opps);
-            } else {
+            } else if (node.layerComponent.layer != LayerComponent.Layer.PLAYER) {
                 opp = nexus; // the nexus is the default
-            }
+            } else opp = null;
             if (opp == null) continue;
 
             double minDist = 0.3;
@@ -73,39 +79,39 @@ public class AISystem implements ISystem {
             if (node.actionSetComponent != null) {
                 // check whether we are currently performing an action
                 isPerformingAction = GameData.getCurrentMillis() <= node.actionSetComponent.lastActionTime + node.actionSetComponent.lastAction.duration;
-                if (!isPerformingAction) {
-                    if (node.throwComponent != null) {
-                        minDist = node.throwComponent.range * 0.5;
-                        boolean canThrow = true;
-                        if (node.velocityComponent != null) {
-                            // if too close, move away from opp
-                            if (dist < minDist) {
-                                node.velocityComponent.velocity.set(n.getMultiplied(-node.velocityComponent.speed));
-                                canThrow = false;
-                            }
+                if (node.throwComponent != null) {
+                    minDist = node.throwComponent.range * 0.5;
+                    boolean canThrow = true;
+                    node.throwComponent.distance = Math.max(node.throwComponent.min, dist);
+                    if (node.velocityComponent != null) {
+                        // if too close, move away from opp
+                        if (dist < minDist) {
+                            node.velocityComponent.velocity.set(n.getMultiplied(-node.velocityComponent.speed));
+                            canThrow = false;
                         }
-                        // if within throw range
-                        if (canThrow && dist + distOffset <= node.throwComponent.range && dist + distOffset > node.throwComponent.min) {
-                            node.throwComponent.distance = dist + distOffset;
-                            performAction(node.actionSetComponent, 0);
-                        }
-                    } else if (node.attackComponent != null) {
-                        // if within attack range
-                        if (dist <= node.attackComponent.range) {
-                            performAction(node.actionSetComponent, 0);
-                        }
+                    }
+                    // if within throw range
+                    if (!isPerformingAction && canThrow && dist + distOffset <= node.throwComponent.range && dist + distOffset > node.throwComponent.min) {
+                        performAction(node.actionSetComponent, 0);
+                    }
+
+
+                } else if (node.attackComponent != null) {
+                    // if within attack range
+                    if (!isPerformingAction && dist <= node.attackComponent.range) {
+                        performAction(node.actionSetComponent, 0);
                     }
                 }
             }
 
             if (node.pathFindingComponent != null && node.velocityComponent != null && node.positionComponent != null) {
+                if (!node.pathFindingComponent.keepPath) node.pathFindingComponent.path = new Path();
                 node.pathFindingComponent.keepPath = opp.velocityComponent == null; // if opp is static, we don't continually update path.
 
                 if (!isPerformingAction) {
                     if (dist >= minDist) {
                         if (!node.pathFindingComponent.keepPath || node.pathFindingComponent.path.closed.isEmpty()) {
                             // find new path
-                            node.pathFindingComponent.path = new Path();
                             var start = GameWorld.toTileSpace(node.positionComponent.position);
                             var end = GameWorld.toTileSpace(opp.positionComponent.position);
                             var startNode = new Path.Node(start);
@@ -150,6 +156,7 @@ public class AISystem implements ISystem {
         var targets = new ArrayList<>(opps);
         targets.removeIf(aiNode -> {
             if (aiNode.aiComponent.type != type) return true;
+            if (aiNode.hitBoxComponent == null) return true; // if no hitbox, we cant do damage
             var dist = aiNode.positionComponent.position.distance(node.positionComponent.position);
             // this opp is not within range
             return dist > node.aiComponent.range;
@@ -184,7 +191,7 @@ public class AISystem implements ISystem {
     }
 
     private void aStar(Path.Node current, Vector2D end, Path path) {
-        if (current.cell.equals(end) || path.closed.size() > 200) {
+        if (current.cell.equals(end) || path.closed.size() > 400) {
             path.closed.add(current);
             // remove all irrelevant nodes
             path.open.clear();

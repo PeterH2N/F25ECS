@@ -10,6 +10,7 @@ public interface IEntitySPI
     enum Type {
         PLAYER("player"),
         ENEMY("enemy"),
+        ARCHER("archer"),
         ENVIRONMENT("environmennt"),
         DEATH_ANIMATION("death_animation"),
         FOAM_ANIMATION("foam_animation"),

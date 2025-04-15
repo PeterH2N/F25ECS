@@ -37,6 +37,7 @@
         <module>InventorySystem</module>
         <module>ShopSystem</module>
         <module>AISystem</module>
+        <module>BindingSystem</module>
     </modules>
 
     <dependencies>

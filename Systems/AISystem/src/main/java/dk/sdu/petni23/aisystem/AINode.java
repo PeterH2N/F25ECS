@@ -19,6 +19,7 @@ public class AINode extends Node {
     public AIComponent aiComponent;
     public PositionComponent positionComponent;
     public LayerComponent layerComponent;
+    @OptionalComponent
     public HitBoxComponent hitBoxComponent;
     @OptionalComponent
     public VelocityComponent velocityComponent;

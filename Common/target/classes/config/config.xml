@@ -8,6 +8,12 @@
         <price>
             <stone>2</stone>
         </price>
-        <health>50000</health>
+        <health>500</health>
     </stone_wall>
+    <tower_3>
+        <price>
+
+        </price>
+        <health>300</health>
+    </tower_3>
 </items_config>

@@ -52,8 +52,8 @@ public class ArrowSPI implements IEntitySPI {
         sprite.rotateWithDirection = true;
 
         Dispatch onEnd = node -> {
-            var circle = new OvalShape(0.1, 0.1);
-            Engine.addEntity(DamageSPI.createDamageEntity(end, new HitBoxComponent(circle), layer, 10));
+            var circle = new OvalShape(0.3, 0.3);
+            Engine.addEntity(DamageSPI.createDamageEntity(end, new HitBoxComponent(circle), layer, 5));
         };
         arrow.add(new TrajectoryComponent(start, end, distance * 0.1, 25, onEnd));
         return arrow;
