@@ -4,11 +4,9 @@ import dk.sdu.petni23.character.Character;
 import dk.sdu.petni23.common.components.actions.Action;
 import dk.sdu.petni23.common.components.actions.ActionSetComponent;
 import dk.sdu.petni23.common.components.ai.AIComponent;
-import dk.sdu.petni23.common.components.ai.PathFindingComponent;
 import dk.sdu.petni23.common.components.damage.LayerComponent;
 import dk.sdu.petni23.common.components.damage.ThrowComponent;
 import dk.sdu.petni23.common.components.health.HealthBarComponent;
-import dk.sdu.petni23.common.components.items.LootComponent;
 import dk.sdu.petni23.common.components.movement.VelocityComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
@@ -19,7 +17,6 @@ import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -57,7 +54,7 @@ public class Archer implements IEntitySPI {
             Engine.addEntity(arrowSPI.create(Engine.getEntity(node.getEntityID())));
         };
         attack.strength = 1;
-        archer.add(new HealthBarComponent(40, 5, Color.RED));
+        archer.add(new HealthBarComponent(40, 5, Color.RED, 1));
 
         archer.add(new AIComponent(CHARACTER, List.of(CHARACTER), AIComponent.Priority.CLOSEST));
 

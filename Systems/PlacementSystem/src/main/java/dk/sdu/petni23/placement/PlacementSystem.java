@@ -1,5 +1,6 @@
 package dk.sdu.petni23.placement;
 
+import dk.sdu.petni23.common.components.BindingComponent;
 import dk.sdu.petni23.common.components.collision.CollisionComponent;
 import dk.sdu.petni23.common.components.movement.VelocityComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
@@ -21,7 +22,6 @@ import java.util.List;
 
 public class PlacementSystem implements ISystem {
 
-    private final Effect red = new ColorAdjust(1, 0, 0, 0);
     private final ColorAdjust white = new ColorAdjust(0.0, -0.5, 0.5, 0);
     @Override
     public void update(double deltaTime) {
@@ -56,8 +56,9 @@ public class PlacementSystem implements ISystem {
                 }
                 var sprite = entity.get(SpriteComponent.class);
                 if (sprite != null) {
-                    sprite.effect = isColliding ? red : null;
+                    sprite.effect = isColliding ? white : null;
                 }
+
 
                 if (GameData.gameKeys.isDown(MouseButton.PRIMARY) && !isColliding) {
                     // Add the collision and hitbox components to the entity, and remove velocity

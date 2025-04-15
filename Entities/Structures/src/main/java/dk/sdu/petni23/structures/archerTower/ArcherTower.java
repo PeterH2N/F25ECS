@@ -1,13 +1,11 @@
 package dk.sdu.petni23.structures.archerTower;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 
 import dk.sdu.petni23.common.components.Binding;
 import dk.sdu.petni23.common.components.BindingComponent;
-import dk.sdu.petni23.common.components.ControlComponent;
 import dk.sdu.petni23.common.components.ai.AIComponent;
+import dk.sdu.petni23.common.components.health.HealthBarComponent;
 import dk.sdu.petni23.common.components.movement.VelocityComponent;
 import dk.sdu.petni23.common.components.rendering.DisplayComponent;
 import dk.sdu.petni23.common.components.PlacementComponent;
@@ -27,6 +25,7 @@ import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 
 public class ArcherTower implements IEntitySPI {
     // Variables for hitbox and sprite sizes
@@ -46,7 +45,7 @@ public class ArcherTower implements IEntitySPI {
 
         tower.add(new PositionComponent(pos));
 
-        var origin = new Vector2D(-0.5, -0.867);
+        var origin = new Vector2D(-0.5, -0.85);
         var sprite = new SpriteComponent(spriteSheet, origin);
         tower.add(sprite);
 
@@ -71,14 +70,19 @@ public class ArcherTower implements IEntitySPI {
         Entity archer = Archer.create();
         // ai component
         Engine.addEntity(archer);
-        // bind archer position to tower
+        // bind archer to tower
         var binding = tower.add(new BindingComponent());
         Binding b = (towerE, archerE) -> {
             var towerPos = towerE.get(PositionComponent.class).position;
             archerE.get(PositionComponent.class).position.set(towerPos.getAdded(new Vector2D(0, 1.85)));
+            archerE.get(SpriteComponent.class).effect = sprite.effect;
         };
         binding.bindings.put(archer, b);
         healthComponent.onDeath = node -> Engine.removeEntity(archer);
+
+        // band-aid solution for problem in placement system
+        tower.add(new VelocityComponent());
+        tower.add(new HealthBarComponent(80, 8, Color.GREEN, 3.3));
 
         return tower;
     }

@@ -250,7 +250,7 @@ public class AISystem implements ISystem {
         var bestNode = path.open.poll();
 
         // go again
-        assert bestNode != null;
+        if (bestNode == null) return;
         aStar(bestNode, end, path);
     }
 

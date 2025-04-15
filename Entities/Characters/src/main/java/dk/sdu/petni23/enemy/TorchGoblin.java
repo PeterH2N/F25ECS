@@ -71,9 +71,9 @@ public class TorchGoblin
         }));
         loot.minDrop = 2;
         loot.maxDrop = 5;
-        goblin.add(new HealthBarComponent(40, 5, Color.RED));
+        goblin.add(new HealthBarComponent(40, 5, Color.RED, 1.3));
 
-        goblin.add(new AIComponent(AIComponent.Type.CHARACTER, Arrays.asList(AIComponent.Type.CHARACTER, AIComponent.Type.TOWER, AIComponent.Type.NEXUS), AIComponent.Priority.CLOSEST));
+        goblin.add(new AIComponent(AIComponent.Type.CHARACTER, Arrays.asList(AIComponent.Type.TOWER, AIComponent.Type.CHARACTER, AIComponent.Type.NEXUS), AIComponent.Priority.CLOSEST));
         goblin.add(new PathFindingComponent());
 
         return goblin;

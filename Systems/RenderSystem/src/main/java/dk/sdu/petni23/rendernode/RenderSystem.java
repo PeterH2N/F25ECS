@@ -74,9 +74,6 @@ public class RenderSystem implements IRenderSystem, IPluginService
         drawMap(gc);
         drawSpritesByLayer(gc, DisplayComponent.Layer.FOREGROUND);
         drawSpritesByLayer(gc, DisplayComponent.Layer.EFFECT);
-        for (var node : Engine.getNodes(RenderNode.class)) {
-            drawHealthBar(gc, node, GameData.toScreenSpace(node.positionComponent.position));
-        }
     }
 
     void drawSpritesByLayer(GraphicsContext gc, DisplayComponent.Layer layer) {
@@ -130,6 +127,8 @@ public class RenderSystem implements IRenderSystem, IPluginService
         if (rotated) {
             gc.setTransform(r.getMxx(), r.getMyx(), r.getMxy(), r.getMyy(), r.getTx(), r.getTy());
         }
+
+        drawHealthBar(gc, node, pos);
     }
 
     void drawDebug(GraphicsContext gc) {
@@ -234,18 +233,24 @@ public class RenderSystem implements IRenderSystem, IPluginService
     }
 
     void drawHealthBar(GraphicsContext gc, RenderNode node, Vector2D pos) {
-        if (node.healthBarComponent == null) return;
+        if (node.healthBarComponent == null || node.healthComponent == null || node.spriteComponent == null) return;
         double r = GameData.getTileRatio();
         int barWidth = node.healthBarComponent.width;
         int barHeight = node.healthBarComponent.height;
         double health = node.healthComponent.health;
         double maxHealth = node.healthComponent.maxHealth;
+        var x = pos.x-barWidth*r*0.5;
+        var y = pos.y - node.healthBarComponent.offset * GameData.getPPM();
+        var width = barWidth * r;
+        var height = barHeight * r;
+
+
         gc.setStroke(Color.BLACK);
-        gc.strokeRoundRect(pos.x-20*r, pos.y-80*r, barWidth*r, barHeight*r, 3, 5);
+        gc.strokeRoundRect(x, y, width, height, 3, 5);
         gc.setFill(Color.LIGHTGRAY);
-        gc.fillRoundRect(pos.x-20*r, pos.y-80*r, barWidth*r, barHeight*r, 3, 5);
+        gc.fillRoundRect(x, y, width, height, 3, 5);
         gc.setFill(node.healthBarComponent.color);
-        gc.fillRoundRect(pos.x-20*r, pos.y-80*r, health/maxHealth * barWidth*r, barHeight*r, 3, 5);
+        gc.fillRoundRect(x, y, health/maxHealth * width, height, 3, 5);
     }
 
     void drawPathFinding(GraphicsContext gc, RenderNode node) {
@@ -321,77 +326,6 @@ public class RenderSystem implements IRenderSystem, IPluginService
                 gc.drawImage(img, x, y, width, height);
             }
         }
-    }
-
-    private List<Vector2D> useVisionLine(Vector2D p1, Vector2D p2) {
-        List<Vector2D> cells = new ArrayList<>();
-        int x1 = (int) Math.floor(p1.x), y1 = (int) Math.floor(p1.y), x2 = (int) Math.floor(p2.x), y2 = (int) Math.floor(p2.y);
-        int i;
-        int yStep, xStep;
-        int error;
-        int errorPrev;
-        int y = y1, x = x1;
-        int ddy, ddx;
-        int dx = x2 - x1;
-        int dy = y2 - y1;
-        cells.add(new Vector2D(x1, y1));
-
-        if (dy < 0) {
-            yStep = -1;
-            dy = -dy;
-        } else {
-            yStep = 1;
-        }
-        if (dx < 0) {
-            xStep = -1;
-            dx = -dx;
-        } else {
-            xStep = 1;
-        }
-        ddy = 2*dy;
-        ddx = 2*dx;
-        if (ddx >= ddy) {
-            errorPrev = error = dx;
-            for (i = 0; i < dx; i++) {
-                x += xStep;
-                error += ddy;
-                if (error > ddx) {
-                    y += yStep;
-                    error -= ddx;
-                    if (error + errorPrev < ddx)
-                        cells.add(new Vector2D(x, y - yStep));
-                    else if (error + errorPrev > ddx)
-                        cells.add(new Vector2D(x-xStep, y));
-                    else {
-                        cells.add(new Vector2D(x, y - yStep));
-                        cells.add(new Vector2D(x-xStep, y));
-                    }
-                }
-                cells.add(new Vector2D(x, y));
-                errorPrev = error;
-            }
-        } else {
-            errorPrev = error = dy;
-            for (i=0 ; i < dy ; i++){
-                y += yStep;
-                error += ddx;
-                if (error > ddy){
-                    x += xStep;
-                    error -= ddy;
-                    if (error + errorPrev < ddy)
-                        cells.add(new Vector2D(x-xStep, y));
-                    else if (error + errorPrev > ddy)
-                        cells.add(new Vector2D(x, y - yStep));
-                    else{
-                        cells.add(new Vector2D(x-xStep, y));
-                        cells.add(new Vector2D(x, y - yStep));
-                    }
-                }
-                cells.add(new Vector2D(x, y));
-                errorPrev = error;
-            }
-        }
-        return cells;
     }
 
     public Image getSprite(SpriteComponent spc) {

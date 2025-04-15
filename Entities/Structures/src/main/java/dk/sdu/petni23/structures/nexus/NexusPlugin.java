@@ -46,7 +46,7 @@ public class NexusPlugin implements IPluginService
         nexus.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
         nexus.add(new LayerComponent(LayerComponent.Layer.PLAYER));
         nexus.add(new AIComponent(AIComponent.Type.NEXUS, null, null));
-        nexus.add(new HealthBarComponent(128, 10, Color.GREEN));
+        nexus.add(new HealthBarComponent(192, 20, Color.GREEN, 3.5));
         return nexus;
     }
 

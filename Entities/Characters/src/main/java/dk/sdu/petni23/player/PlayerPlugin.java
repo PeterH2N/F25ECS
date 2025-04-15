@@ -12,9 +12,6 @@ import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.services.IPluginService;
 import dk.sdu.petni23.common.util.Vector2D;
-import dk.sdu.petni23.enemy.Sheep;
-import dk.sdu.petni23.enemy.TNTGoblin;
-import dk.sdu.petni23.enemy.TorchGoblin;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 
@@ -34,7 +31,7 @@ public class PlayerPlugin implements IPluginService
         pickup.range = 1.5;
         player.add(new InventoryComponent());
         Engine.addEntity(player);
-        player.add(new HealthBarComponent(40, 5, Color.GREEN));
+        player.add(new HealthBarComponent(40, 5, Color.GREEN, 1.4));
 
         // set the camera to track the player
         GameData.camera.following = player.get(PositionComponent.class);

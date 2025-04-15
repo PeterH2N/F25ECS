@@ -63,7 +63,7 @@ public class TNTGoblin
             Engine.addEntity(dynamiteSPI.create(Engine.getEntity(node.getEntityID())));
         };
         attack.strength = 1;
-        goblin.add(new HealthBarComponent(40, 5, Color.RED));
+        goblin.add(new HealthBarComponent(40, 5, Color.RED, 1.3));
 
         goblin.add(new AIComponent(AIComponent.Type.CHARACTER, Arrays.asList(AIComponent.Type.CHARACTER, AIComponent.Type.TOWER, AIComponent.Type.NEXUS), AIComponent.Priority.CLOSEST));
         goblin.add(new PathFindingComponent());
