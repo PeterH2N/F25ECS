@@ -12,8 +12,7 @@ public class SoundManager {
 
     public static void playSound(SoundEffect soundEffect, int delayMillis, double volume) {
         scheduler.schedule(() -> {
-            soundEffect.setVolume(soundEffect.volume * (float)volume * 0.02f);
-            soundEffect.play();
+            soundEffect.play(soundEffect.volume * (float)volume * 0.02f);
         }, delayMillis, TimeUnit.MILLISECONDS);
     }
 

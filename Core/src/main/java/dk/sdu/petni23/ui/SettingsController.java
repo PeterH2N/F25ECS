@@ -56,7 +56,7 @@ public class SettingsController {
         }
 
         button.setOnMousePressed(e -> {
-            SoundEffect.CLICK.play();
+            SoundEffect.CLICK.play(1);
             updateImage(iconView, pressedIcon);
             updateImage(bgView, pressedBg);
         });

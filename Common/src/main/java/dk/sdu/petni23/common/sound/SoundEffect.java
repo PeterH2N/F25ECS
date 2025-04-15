@@ -2,6 +2,7 @@ package dk.sdu.petni23.common.sound;
 import java.io.*;
 import java.net.URL;
 import java.util.Objects;
+import java.util.Vector;
 import javax.sound.sampled.*;
 import javax.sound.sampled.FloatControl;
 public enum SoundEffect {
@@ -31,24 +32,12 @@ public enum SoundEffect {
     WOOSH2("woosh2.wav");
 
     public final float volume;
-
-    private Clip clip;
+    private int index;
 
     SoundEffect(String soundFileName, double volume) {
         try {
-            // Use URL (instead of File) to read from disk and JAR.
-            URL url = Objects.requireNonNull(SoundEffect.class.getResource("/soundeffects/" + soundFileName));
-            // Set up an audio input stream piped from the sound file.
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(url);
-            // Get a clip resource.
-            clip = AudioSystem.getClip();
-            // Open audio clip and load samples from the audio input stream.
-            clip.open(audioInputStream);
-        } catch (UnsupportedAudioFileException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (LineUnavailableException e) {
+            index = SoundManager.addClip(soundFileName);
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();
         }
         this.volume = (float) volume;
@@ -59,20 +48,24 @@ public enum SoundEffect {
     }
 
     // Play or Re-play the sound effect from the beginning, by rewinding.
-    public void play() {
-        if (getVolume() < 0.0000001) return;
-        if (clip.isRunning())
-            clip.stop();   // Stop the player if it is still running
-        clip.setFramePosition(0); // rewind to the beginning
-        clip.start();     // Start playing
+    public void play(double volume) {
+        if (volume < 0.0000001) return;
+        try {
+            Clip clip = SoundManager.getClip(index);
+            if (clip == null) return;
+            setVolume((float)volume, clip);
+            clip.start();
+        } catch (LineUnavailableException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public float getVolume() {
+    public float getVolume(Clip clip) {
         FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
         return (float) Math.pow(10f, gainControl.getValue() / 20f);
     }
 
-    public void setVolume(float volume) {
+    public void setVolume(float volume, Clip clip) {
         if (volume < 0f || volume > 1f)
             throw new IllegalArgumentException("Volume not valid: " + volume);
         FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
