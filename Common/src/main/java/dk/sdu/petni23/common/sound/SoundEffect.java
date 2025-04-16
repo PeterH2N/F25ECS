@@ -47,7 +47,7 @@ public enum SoundEffect {
         this(soundFileName, 1);
     }
 
-    // Play or Re-play the sound effect from the beginning, by rewinding.
+    // Play the sound clip
     public void play(double volume) {
         if (volume < 0.0000001) return;
         try {

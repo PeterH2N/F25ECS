@@ -82,7 +82,7 @@ public class ArcherTower implements IEntitySPI {
         };
         binding.bindings.put(archer, b);
         healthComponent.onDeath = node -> {
-            Engine.removeEntity(archer);
+            binding.bindings.keySet().forEach(Engine::removeEntity);
             Engine.addEntity(towerDestroyed(positionComponent.position));
         };
 

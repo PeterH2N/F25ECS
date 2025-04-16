@@ -40,7 +40,8 @@ public class Archer implements IEntitySPI {
 
         archer.add(new LayerComponent(LayerComponent.Layer.ENEMY));
 
-        archer.add(new ThrowComponent(20));
+        var throwComponent = archer.add(new ThrowComponent(20));
+        throwComponent.min = 0;
 
         IEntitySPI arrowSPI = Engine.getEntitySPI(IEntitySPI.Type.ARROW);
         var actions = archer.add(new ActionSetComponent());

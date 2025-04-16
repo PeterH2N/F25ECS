@@ -45,7 +45,8 @@ public class Archer {
 
         archer.add(new LayerComponent(LayerComponent.Layer.PLAYER));
 
-        archer.add(new ThrowComponent(10));
+        var throwComponent = archer.add(new ThrowComponent(10));
+        throwComponent.min = 0;
 
         IEntitySPI arrowSPI = Engine.getEntitySPI(IEntitySPI.Type.ARROW);
         var actions = archer.add(new ActionSetComponent());

@@ -37,7 +37,7 @@ public class NexusPlugin implements IPluginService
         var nexus = new Entity();
         GameData.world.nexus = nexus;
         nexus.add(new PositionComponent(new Vector2D(0,0)));
-        var healthComponent = nexus.add(new HealthComponent(100000));
+        var healthComponent = nexus.add(new HealthComponent(5000));
         healthComponent.onDeath = node -> GameData.world.nexus = null;
 
         var hitBoxShape = new AABBShape(4,1);
@@ -72,7 +72,7 @@ public class NexusPlugin implements IPluginService
         binding.bindings.put(archer1, b1);
         binding.bindings.put(archer2, b2);
         healthComponent.onDeath = node -> {
-            Engine.removeEntity(archer1);
+            binding.bindings.keySet().forEach(Engine::removeEntity);
         };
 
         return nexus;
