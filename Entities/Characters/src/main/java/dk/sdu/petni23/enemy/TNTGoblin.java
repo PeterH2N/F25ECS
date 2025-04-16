@@ -5,6 +5,7 @@ import dk.sdu.petni23.common.components.ai.AIComponent;
 import dk.sdu.petni23.common.components.actions.Action;
 import dk.sdu.petni23.common.components.actions.ActionSetComponent;
 import dk.sdu.petni23.common.components.ai.PathFindingComponent;
+import dk.sdu.petni23.common.components.damage.AttackComponent;
 import dk.sdu.petni23.common.components.damage.ThrowComponent;
 import dk.sdu.petni23.common.components.health.HealthBarComponent;
 import dk.sdu.petni23.common.components.items.LootComponent;
@@ -65,6 +66,8 @@ public class TNTGoblin
         };
         attack.strength = 1;
         goblin.add(new HealthBarComponent(40, 5, Color.RED, 1.3));
+        var attackComponent = goblin.add(new AttackComponent(1, 1));
+        //attackComponent.speed = 3;
 
         goblin.add(new AIComponent(AIComponent.Type.CHARACTER, Arrays.asList(AIComponent.Type.CHARACTER, AIComponent.Type.TOWER, AIComponent.Type.NEXUS), AIComponent.Priority.CLOSEST));
         goblin.add(new PathFindingComponent());

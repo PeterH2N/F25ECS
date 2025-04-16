@@ -6,6 +6,7 @@ public class AttackComponent extends Component
 {
     public double strength = 1; // damage done is multiplied by this
     public double range = 1; // attack range
+    public double speed = 1;
 
     public AttackComponent(double strength, double range)
     {

@@ -83,7 +83,8 @@ public class Knight
 
         knight.add(new FootstepSoundComponent(SoundEffect.FOOTSTEP_PLAYER, Set.of(1, 4)));
 
-        knight.add(new AttackComponent(5, 0.6));
+        var attack = knight.add(new AttackComponent(5, 0.6));
+        attack.speed = 2;
 
         knight.add(new AIComponent(CHARACTER, null, null));
 

@@ -2,6 +2,7 @@ package dk.sdu.petni23.controlnode;
 
 import dk.sdu.petni23.common.components.ControlComponent;
 import dk.sdu.petni23.common.components.actions.ActionSetComponent;
+import dk.sdu.petni23.common.components.damage.AttackComponent;
 import dk.sdu.petni23.common.components.damage.ThrowComponent;
 import dk.sdu.petni23.common.components.movement.DirectionComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
@@ -19,6 +20,8 @@ public class ControlNode extends Node
     public VelocityComponent velocityComponent;
     @OptionalComponent
     public ActionSetComponent actionSetComponent;
+    @OptionalComponent
+    public AttackComponent attackComponent;
     @OptionalComponent
     public ThrowComponent throwComponent;
     public ControlNode(Entity entity)

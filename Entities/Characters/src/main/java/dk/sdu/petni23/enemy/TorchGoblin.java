@@ -60,7 +60,8 @@ public class TorchGoblin
         goblin.add(actionSet);
         
 
-        goblin.add(new AttackComponent(2, 0.6));
+        var attackComponent = goblin.add(new AttackComponent(2, 0.6));
+        //attackComponent.speed = 2;
 
 
         goblin.add(new LayerComponent(LayerComponent.Layer.ENEMY));

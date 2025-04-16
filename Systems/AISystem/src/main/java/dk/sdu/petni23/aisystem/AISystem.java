@@ -74,7 +74,9 @@ public class AISystem implements ISystem {
             // attacks
             if (node.actionSetComponent != null) {
                 // check whether we are currently performing an action
-                isPerformingAction = GameData.getCurrentMillis() <= node.actionSetComponent.lastActionTime + node.actionSetComponent.lastAction.duration;
+                double speed = 1;
+                if (node.attackComponent != null) speed = node.attackComponent.speed;
+                isPerformingAction = GameData.getCurrentMillis() <= node.actionSetComponent.lastActionTime + (node.actionSetComponent.lastAction.duration / speed);
                 if (node.throwComponent != null) {
                     minDist = node.throwComponent.range * 0.5;
                     boolean canThrow = true;
@@ -88,14 +90,14 @@ public class AISystem implements ISystem {
                     }
                     // if within throw range
                     if (!isPerformingAction && canThrow && dist + distOffset <= node.throwComponent.range && dist + distOffset > node.throwComponent.min) {
-                        performAction(node.actionSetComponent, 0);
+                        performAction(node.actionSetComponent, 0, speed);
                     }
 
 
                 } else if (node.attackComponent != null) {
                     // if within attack range
                     if (!isPerformingAction && dist <= node.attackComponent.range) {
-                        performAction(node.actionSetComponent, 0);
+                        performAction(node.actionSetComponent, 0, speed);
                     }
                 }
             }
@@ -179,8 +181,8 @@ public class AISystem implements ISystem {
         return closest;
     }
 
-    private void performAction(ActionSetComponent acs, int i) {
-        if (GameData.getCurrentMillis() <= acs.lastActionTime + acs.lastAction.duration) return;
+    private void performAction(ActionSetComponent acs, int i, double speed) {
+        if (GameData.getCurrentMillis() <= acs.lastActionTime + (acs.lastAction.duration / speed)) return;
 
         long now = GameData.getCurrentMillis();
         acs.lastAction = acs.actions.get(i);

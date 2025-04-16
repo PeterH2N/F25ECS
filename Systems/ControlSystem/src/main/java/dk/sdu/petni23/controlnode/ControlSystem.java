@@ -41,12 +41,13 @@ public class ControlSystem implements ISystem
             }
             if (node.actionSetComponent != null) {
                 if (GameData.gameKeys.isDown(MouseButton.PRIMARY) && GameData.getGameMode() != GameMode.PLACING) {
-
+                    double speed = 1;
+                    if (node.attackComponent != null) speed = node.attackComponent.speed;
                     // logic for secondary attack
-                    if (node.actionSetComponent.actions.size() > 1 && node.actionSetComponent.lastAction == node.actionSetComponent.actions.get(0) && GameData.getCurrentMillis() < node.actionSetComponent.lastActionTime + node.actionSetComponent.lastAction.duration + 50)
-                        performAction(node.actionSetComponent, 1);
+                    if (node.actionSetComponent.actions.size() > 1 && node.actionSetComponent.lastAction == node.actionSetComponent.actions.get(0) && GameData.getCurrentMillis() < node.actionSetComponent.lastActionTime + (node.actionSetComponent.lastAction.duration / speed) + 50)
+                        performAction(node.actionSetComponent, 1, speed);
                     else if (!node.actionSetComponent.actions.isEmpty())
-                        performAction(node.actionSetComponent, 0);
+                        performAction(node.actionSetComponent, 0, speed);
                 }
             }
             if (node.throwComponent != null) {
@@ -63,8 +64,8 @@ public class ControlSystem implements ISystem
         return Priority.PREPROCESSING.get();
     }
 
-    private void performAction(ActionSetComponent acs, int i) {
-        if (GameData.getCurrentMillis() <= acs.lastActionTime + acs.lastAction.duration) return;
+    private void performAction(ActionSetComponent acs, int i, double speed) {
+        if (GameData.getCurrentMillis() <= acs.lastActionTime + (acs.lastAction.duration / speed)) return;
 
         long now = GameData.getCurrentMillis();
         acs.lastAction = acs.actions.get(i);

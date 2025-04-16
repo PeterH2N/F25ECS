@@ -12,11 +12,13 @@ public class AnimationSystem implements ISystem
     {
         for (var node : Engine.getNodes(AnimationNode.class)) {
             node.spriteComponent.row = 0;
+            double speed = 1;
             doRegularAnimation(node);
-            doActionAnimation(node);
+            boolean isPerformingAction =  doActionAnimation(node, speed);
+            if (node.attackComponent != null && isPerformingAction) speed = node.attackComponent.speed;
 
             int numFrames = node.spriteComponent.spriteSheet.numFramesArray[node.spriteComponent.row];
-            int i = (int)((node.animationComponent.time / 100) % node.spriteComponent.spriteSheet.numFramesArray[node.spriteComponent.row]);
+            int i = (int)((node.animationComponent.time / (100 / speed)) % node.spriteComponent.spriteSheet.numFramesArray[node.spriteComponent.row]);
             if (node.animationComponent.reverse) i = (numFrames - 1) - i;
             node.spriteComponent.column = i;
         }
@@ -28,10 +30,10 @@ public class AnimationSystem implements ISystem
         return Priority.PREPROCESSING.get();
     }
 
-    private void doActionAnimation(AnimationNode node) {
-        if (node.actionSetComponent == null) return;
+    private boolean doActionAnimation(AnimationNode node, double speed) {
+        if (node.actionSetComponent == null) return false;
         long now = GameData.getCurrentMillis();
-        boolean isPerformingAction = now < node.actionSetComponent.lastActionTime + node.actionSetComponent.lastAction.duration;
+        boolean isPerformingAction = now < node.actionSetComponent.lastActionTime + (node.actionSetComponent.lastAction.duration / speed);
         if (isPerformingAction) {
             node.animationComponent.reverse = false;
             node.animationComponent.time = now - node.actionSetComponent.lastActionTime;
@@ -51,7 +53,9 @@ public class AnimationSystem implements ISystem
                     }
                 }
             }
+            return true;
         }
+        return false;
     }
 
     private void doRegularAnimation(AnimationNode node) {
