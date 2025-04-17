@@ -56,7 +56,7 @@ public class ArrowSPI implements IEntitySPI {
 
 
         var arrow = new Entity();
-        arrow.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
+        arrow.add(new DisplayComponent(DisplayComponent.Layer.EFFECT));
         var positionComponent = arrow.add(new PositionComponent(pos));
         arrow.add(new VelocityComponent());
         var directionComponent = arrow.add(new DirectionComponent());
@@ -71,7 +71,7 @@ public class ArrowSPI implements IEntitySPI {
         damage.onDoDamage = onDoDamage;
         arrow.add(new LayerComponent(layer));
 
-        var sprite = arrow.add(new SpriteComponent(spriteSheet, new Vector2D(-1, -0.5)));
+        var sprite = arrow.add(new SpriteComponent(spriteSheet, new Vector2D(-1, -0.546)));
         sprite.rotateWithDirection = true;
 
         Dispatch onEnd = node -> Engine.addEntity(landedArrow(positionComponent.position,directionComponent.dir));
@@ -85,7 +85,7 @@ public class ArrowSPI implements IEntitySPI {
         arrow.add(new PositionComponent(pos));
         var direction = arrow.add(new DirectionComponent());
         direction.dir.set(dir);
-        var sprite = arrow.add(new SpriteComponent(spriteSheet, new Vector2D(-0.9, -0.5)));
+        var sprite = arrow.add(new SpriteComponent(spriteSheet, new Vector2D(-0.765, -0.546)));
         sprite.row = 1;
         sprite.rotateWithDirection = true;
         arrow.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));

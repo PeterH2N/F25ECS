@@ -20,7 +20,6 @@ public class PlayerPlugin implements IPluginService
     @Override
     public void start()
     {
-
         var player = Knight.create(new Vector2D(0,0));
         var control = new ControlComponent();
         control.ULDR = new KeyCode[] { KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D };
