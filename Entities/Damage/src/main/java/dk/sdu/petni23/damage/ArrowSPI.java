@@ -1,12 +1,17 @@
 package dk.sdu.petni23.damage;
 
+import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.components.Dispatch;
 import dk.sdu.petni23.common.components.collision.HitBoxComponent;
+import dk.sdu.petni23.common.components.damage.AttackComponent;
+import dk.sdu.petni23.common.components.damage.DamageComponent;
 import dk.sdu.petni23.common.components.damage.LayerComponent;
 import dk.sdu.petni23.common.components.damage.ThrowComponent;
+import dk.sdu.petni23.common.components.health.DurationComponent;
 import dk.sdu.petni23.common.components.movement.DirectionComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.components.movement.TrajectoryComponent;
+import dk.sdu.petni23.common.components.movement.VelocityComponent;
 import dk.sdu.petni23.common.components.rendering.DisplayComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.common.shape.OvalShape;
@@ -35,27 +40,56 @@ public class ArrowSPI implements IEntitySPI {
         Vector2D pos = parent.get(PositionComponent.class).position;
         Vector2D dir = parent.get(DirectionComponent.class).dir;
         double distance = parent.get(ThrowComponent.class).distance;
+        Vector2D offset = parent.get(HitBoxComponent.class).offset;
         Vector2D end = pos.getAdded(dir.getMultiplied(distance));
-        Vector2D start = pos.getAdded(dir.getMultiplied(0.25));
+        Vector2D start = pos.getAdded(dir.getMultiplied(0.75)).getAdded(offset);
+
+        double dmg = 3;
+        var attackComponent = parent.get(AttackComponent.class);
+        if (attackComponent != null) dmg *= attackComponent.strength;
 
         LayerComponent.Layer layer;
         LayerComponent layerComponent = parent.get(LayerComponent.class);
         layer = layerComponent == null ? LayerComponent.Layer.ALL : layerComponent.layer;
 
+
+
         var arrow = new Entity();
         arrow.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
-        arrow.add(new PositionComponent(pos));
+        var positionComponent = arrow.add(new PositionComponent(pos));
+        arrow.add(new VelocityComponent());
         var directionComponent = arrow.add(new DirectionComponent());
         directionComponent.dir.set(dir);
 
-        var sprite = arrow.add(new SpriteComponent(spriteSheet, new Vector2D(-0.5, -0.5)));
+        var circle = new OvalShape(0.2, 0.2);
+        arrow.add(new HitBoxComponent(circle));
+        Dispatch onDoDamage = node -> {
+            Engine.removeEntity(arrow);
+        };
+        var damage = arrow.add(new DamageComponent(dmg));
+        damage.onDoDamage = onDoDamage;
+        arrow.add(new LayerComponent(layer));
+
+        var sprite = arrow.add(new SpriteComponent(spriteSheet, new Vector2D(-1, -0.5)));
         sprite.rotateWithDirection = true;
 
-        Dispatch onEnd = node -> {
-            var circle = new OvalShape(0.3, 0.3);
-            Engine.addEntity(DamageSPI.createDamageEntity(end, new HitBoxComponent(circle), layer, 5));
-        };
-        arrow.add(new TrajectoryComponent(start, end, distance * 0.1, 25, onEnd));
+        Dispatch onEnd = node -> Engine.addEntity(landedArrow(positionComponent.position,directionComponent.dir));
+        var traj = arrow.add(new TrajectoryComponent(start, end, distance * 0.1, 20, onEnd));
+        traj.rotateWithSlope = true;
+        return arrow;
+    }
+
+    private Entity landedArrow(Vector2D pos, Vector2D dir) {
+        Entity arrow = new Entity();
+        arrow.add(new PositionComponent(pos));
+        var direction = arrow.add(new DirectionComponent());
+        direction.dir.set(dir);
+        var sprite = arrow.add(new SpriteComponent(spriteSheet, new Vector2D(-0.9, -0.5)));
+        sprite.row = 1;
+        sprite.rotateWithDirection = true;
+        arrow.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
+        arrow.add(new DurationComponent(60000, GameData.getCurrentMillis()));
+
         return arrow;
     }
 

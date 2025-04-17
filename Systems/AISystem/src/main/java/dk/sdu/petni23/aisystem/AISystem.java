@@ -60,17 +60,18 @@ public class AISystem implements ISystem {
             } else opp = null;
             if (opp == null) continue;
 
-            double minDist = 0.3;
+            double minDist = 0;
             boolean isPerformingAction = false;
             // vector between node and opp
-            var n = opp.positionComponent.position.getSubtracted(node.positionComponent.position).getNormalized();
+            var n = opp.positionComponent.position.getSubtracted(node.positionComponent.position);
+            var normal = n.getNormalized();
             // opp distance is most relevant in terms of the hit box
             Vector2D oppPos = opp.positionComponent.position.getAdded(opp.hitBoxComponent.offset);
             // subtract hit box from distance
-            double distOffset = Math.abs(n.x) > Math.abs(n.y) ? opp.hitBoxComponent.hitBox.aabb.hw : opp.hitBoxComponent.hitBox.aabb.hh;
+            double distOffset = Math.abs(normal.x) > Math.abs(normal.y) ? opp.hitBoxComponent.hitBox.aabb.hw : opp.hitBoxComponent.hitBox.aabb.hh;
             double dist = node.positionComponent.position.distance(oppPos) - distOffset;
 
-            node.directionComponent.dir.set(n);
+            node.directionComponent.dir.set(normal);
             // attacks
             if (node.actionSetComponent != null) {
                 // check whether we are currently performing an action
@@ -80,11 +81,12 @@ public class AISystem implements ISystem {
                 if (node.throwComponent != null) {
                     minDist = node.throwComponent.range * 0.5;
                     boolean canThrow = true;
-                    node.throwComponent.distance = Math.max(node.throwComponent.min, dist);
+
+                    node.throwComponent.distance = Math.max(node.throwComponent.min, dist + distOffset);
                     if (node.velocityComponent != null) {
                         // if too close, move away from opp
                         if (dist < minDist) {
-                            node.velocityComponent.velocity.set(n.getMultiplied(-node.velocityComponent.speed));
+                            node.velocityComponent.velocity.set(normal.getMultiplied(-node.velocityComponent.speed));
                             canThrow = false;
                         }
                     }
@@ -116,9 +118,7 @@ public class AISystem implements ISystem {
                             var startNode = new Path.Node(start);
                             aStar(startNode, end, node.pathFindingComponent.path);
                         }
-                    }
 
-                    if (dist >= minDist) {
                         // move according to path
                         if (!node.pathFindingComponent.path.closed.isEmpty()) {
                             var destination = node.pathFindingComponent.path.closed.getLast();

@@ -4,6 +4,7 @@ import dk.sdu.petni23.character.Character;
 import dk.sdu.petni23.common.components.actions.Action;
 import dk.sdu.petni23.common.components.actions.ActionSetComponent;
 import dk.sdu.petni23.common.components.ai.AIComponent;
+import dk.sdu.petni23.common.components.damage.AttackComponent;
 import dk.sdu.petni23.common.components.damage.LayerComponent;
 import dk.sdu.petni23.common.components.damage.ThrowComponent;
 import dk.sdu.petni23.common.components.health.HealthBarComponent;
@@ -56,6 +57,8 @@ public class Archer implements IEntitySPI {
         };
         attack.strength = 1;
         archer.add(new HealthBarComponent(40, 5, Color.RED, 1));
+        var attackComponent = archer.add(new AttackComponent(1,1));
+        attackComponent.speed = 2;
 
         archer.add(new AIComponent(CHARACTER, List.of(CHARACTER), AIComponent.Priority.CLOSEST));
 

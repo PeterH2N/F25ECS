@@ -52,16 +52,13 @@ public class DamageSPI implements IEntitySPI
 
     public static Entity createDamageEntity(Vector2D pos, HitBoxComponent hitBoxComponent, LayerComponent.Layer layer, double dmg) {
         Entity dmgE = new Entity();
-        var duration = new DurationComponent(1, GameData.getCurrentMillis());
-        dmgE.add(duration);
-        var dmgComponent = dmgE.add(new DamageComponent());
-        dmgComponent.damage = dmg;
+        dmgE.add(new DurationComponent(1, GameData.getCurrentMillis()));
+        dmgE.add(new DamageComponent(dmg));
         dmgE.add(new PositionComponent(pos));
 
         dmgE.add(hitBoxComponent);
         dmgE.add(new LayerComponent(layer));
         dmgE.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
-
         return dmgE;
     }
 

@@ -35,6 +35,7 @@ public class DamageSystem implements ISystem
 
                 double dmg = node.damageComponent.damage;
                 hurt(node, healthComponent, dmg);
+                if (node.damageComponent.onDoDamage != null) node.damageComponent.onDoDamage.dispatch(cNode);
             }
         }
     }

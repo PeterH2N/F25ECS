@@ -3,6 +3,8 @@ package dk.sdu.petni23.structures.archerTower;
 import dk.sdu.petni23.common.components.actions.Action;
 import dk.sdu.petni23.common.components.actions.ActionSetComponent;
 import dk.sdu.petni23.common.components.ai.AIComponent;
+import dk.sdu.petni23.common.components.collision.HitBoxComponent;
+import dk.sdu.petni23.common.components.damage.AttackComponent;
 import dk.sdu.petni23.common.components.damage.LayerComponent;
 import dk.sdu.petni23.common.components.damage.ThrowComponent;
 import dk.sdu.petni23.common.components.movement.DirectionComponent;
@@ -10,6 +12,7 @@ import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.components.rendering.AnimationComponent;
 import dk.sdu.petni23.common.components.rendering.DisplayComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
+import dk.sdu.petni23.common.shape.AABBShape;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.Engine;
@@ -33,6 +36,9 @@ public class Archer {
         Entity archer = new Entity();
         var position = new PositionComponent(new Vector2D(-5,0));
         archer.add(position);
+
+        var rect = new AABBShape(0.6, 0.85);
+        archer.add(new HitBoxComponent(rect, new Vector2D(0, 0.4)));
 
         var direction = new DirectionComponent();
         archer.add(direction);
@@ -60,6 +66,8 @@ public class Archer {
             Engine.addEntity(arrowSPI.create(Engine.getEntity(node.getEntityID())));
         };
         attack.strength = 1;
+        var attackComponent = archer.add(new AttackComponent(1, 1));
+        attackComponent.speed = 1;
 
         archer.add(new AIComponent(null, List.of(AIComponent.Type.CHARACTER), AIComponent.Priority.CLOSEST));
 

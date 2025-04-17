@@ -2,12 +2,9 @@ package dk.sdu.petni23.damage;
 
 import dk.sdu.petni23.common.components.Dispatch;
 import dk.sdu.petni23.common.components.damage.ThrowComponent;
-import dk.sdu.petni23.common.components.movement.AngularMomentumComponent;
-import dk.sdu.petni23.common.components.movement.TrajectoryComponent;
+import dk.sdu.petni23.common.components.movement.*;
 import dk.sdu.petni23.common.components.collision.HitBoxComponent;
 import dk.sdu.petni23.common.components.damage.LayerComponent;
-import dk.sdu.petni23.common.components.movement.DirectionComponent;
-import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.components.rendering.AnimationComponent;
 import dk.sdu.petni23.common.components.rendering.DisplayComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
@@ -38,8 +35,8 @@ public class DynamiteSPI implements IEntitySPI {
 
         var position = tnt.add(new PositionComponent(pos));
         tnt.add(new DirectionComponent());
-        tnt.add(new DirectionComponent());
         tnt.add(new DisplayComponent(DisplayComponent.Layer.EFFECT));
+        tnt.add(new VelocityComponent());
         var spriteCOmponent = tnt.add(new SpriteComponent(spriteSheet, new Vector2D(-0.5, -0.5)));
         spriteCOmponent.rotateWithDirection = true;
         var animation = tnt.add(new AnimationComponent());

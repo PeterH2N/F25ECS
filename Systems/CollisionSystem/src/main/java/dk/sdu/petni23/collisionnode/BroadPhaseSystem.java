@@ -47,8 +47,8 @@ public class BroadPhaseSystem implements ISystem, IPluginService
     }
 
     private void clearGrid(List<Collider>[][] grid) {
-        for (int i = 0; i < collisionGrid.length; i++) {
-            for (int j = 0; j < collisionGrid[i].length; j++) {
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
                 grid[i][j].clear();
             }
         }
@@ -106,8 +106,6 @@ public class BroadPhaseSystem implements ISystem, IPluginService
             for (var cell : collider1.cells) {
                 for (Collider collider2 : grid[(int) cell.y][(int) cell.x]) {
                     if (collider1 == collider2) continue;
-
-
                     var m = new Manifold(collider1.node, collider2.node);
                     if (!manifoldList.contains(m)) manifoldList.add(m);
                 }

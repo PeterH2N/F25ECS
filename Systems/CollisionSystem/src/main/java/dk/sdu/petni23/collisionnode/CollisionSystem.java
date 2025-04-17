@@ -35,6 +35,7 @@ public class CollisionSystem implements IPhysicsSystem
         CollisionNode a = (CollisionNode) m.a;
         CollisionNode b = (CollisionNode) m.b;
         if (!a.collisionComponent.active || !b.collisionComponent.active) return;
+
         // if one object is static, only the other is moved
         if (a.velocityComponent == null) {
 

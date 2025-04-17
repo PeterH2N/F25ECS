@@ -17,6 +17,7 @@ public class TrajectoryComponent extends Component
     public final double d;
     public final double speed;
     public final Dispatch onEnd;
+    public boolean rotateWithSlope = false;
 
     public TrajectoryComponent(Vector2D start, Vector2D end, double height, double speed, Dispatch onEnd)
     {

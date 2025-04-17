@@ -1,6 +1,7 @@
 package dk.sdu.petni23.movenode;
 
 import dk.sdu.petni23.common.components.movement.TrajectoryComponent;
+import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.services.ISystem;
 
@@ -15,15 +16,23 @@ public class TrajectorySystem implements ISystem
                 node.trajectoryComponent.onEnd.dispatch(node);
                 Engine.removeEntity(node.getEntityID());
             }
+            var dir = node.trajectoryComponent.dir;
 
             node.trajectoryComponent.t += deltaTime * node.trajectoryComponent.speed;
 
             var start = node.trajectoryComponent.start;
 
-            var dir = node.trajectoryComponent.dir;
             node.positionComponent.position.set(start.getAdded(dir.getMultiplied(t)));
             node.positionComponent.position.y += y(node.trajectoryComponent);
 
+            if (node.trajectoryComponent.rotateWithSlope && node.directionComponent != null) {
+                double slope = slope(node.trajectoryComponent);
+                if (dir.x < 0) slope = -slope;
+                Vector2D slopeDir = new Vector2D(1, slope);
+                slopeDir.rotateBy(dir.getAngle());
+
+                node.directionComponent.dir.set(new Vector2D(dir.x, slopeDir.y).getNormalized());
+            }
 
         }
     }
@@ -45,6 +54,6 @@ public class TrajectorySystem implements ISystem
         double a = trajectoryComponent.a;
         double b = trajectoryComponent.b;
         double t = trajectoryComponent.t;
-        return a * t + b;
+        return 2 * a * t + b;
     }
 }
