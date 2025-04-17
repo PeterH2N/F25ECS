@@ -13,9 +13,9 @@ public class AnimationSystem implements ISystem
         for (var node : Engine.getNodes(AnimationNode.class)) {
             node.spriteComponent.row = 0;
             double speed = 1;
+            if (node.attackComponent != null) speed = node.attackComponent.speed;
             doRegularAnimation(node);
-            boolean isPerformingAction =  doActionAnimation(node, speed);
-            if (node.attackComponent != null && isPerformingAction) speed = node.attackComponent.speed;
+            if (!doActionAnimation(node, speed)) speed = 1;
 
             int numFrames = node.spriteComponent.spriteSheet.numFramesArray[node.spriteComponent.row];
             int i = (int)((node.animationComponent.time / (100 / speed)) % node.spriteComponent.spriteSheet.numFramesArray[node.spriteComponent.row]);

@@ -40,7 +40,8 @@ public class ArrowSPI implements IEntitySPI {
         Vector2D pos = parent.get(PositionComponent.class).position;
         Vector2D dir = parent.get(DirectionComponent.class).dir;
         double distance = parent.get(ThrowComponent.class).distance;
-        Vector2D offset = parent.get(HitBoxComponent.class).offset;
+        var hitBox = parent.get(HitBoxComponent.class);
+        Vector2D offset = hitBox != null ? hitBox.offset : Vector2D.ZERO;
         Vector2D end = pos.getAdded(dir.getMultiplied(distance));
         Vector2D start = pos.getAdded(dir.getMultiplied(0.75)).getAdded(offset);
 
