@@ -84,7 +84,7 @@ public class PlacementSystem implements ISystem {
                 double x = Math.floor(cameraPosX + rx);
                 double y = Math.floor(cameraPosY + (-1 * ry));
 
-                node.positionComponent.position.set(new Vector2D(x, y));
+                node.positionComponent.position.set(new Vector2D(x + 0.5, y));
 
             }
         }

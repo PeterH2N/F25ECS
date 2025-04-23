@@ -41,13 +41,16 @@ public class Engine
 
     public static void removeEntity(Entity entity) {
         if (entities.remove(entity.getId()) != null) {
+            List<Node> removedNodes = new ArrayList<>();
+
             nodes.removeIf(node -> {
                 if (node.getEntityID() == entity.getId()) {
-                    node.onRemove();
+                    removedNodes.add(node);
                     return true;
                 }
                 return false;
             });
+            removedNodes.forEach(Node::onRemove);
         }
     }
 
