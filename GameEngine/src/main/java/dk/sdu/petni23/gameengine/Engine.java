@@ -40,7 +40,7 @@ public class Engine
     }
 
     public static void removeEntity(Entity entity) {
-        if (entities.remove(entity.getId()) != null) {
+        if (entities.get(entity.getId()) != null) {
             List<Node> removedNodes = new ArrayList<>();
 
             nodes.removeIf(node -> {
@@ -51,6 +51,7 @@ public class Engine
                 return false;
             });
             removedNodes.forEach(Node::onRemove);
+            entities.remove(entity.getId());
         }
     }
 
