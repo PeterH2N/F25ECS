@@ -19,4 +19,9 @@ public class PickUpNode extends Node {
     public void onRemove() {
 
     }
+
+    @Override
+    public void onAdd() {
+
+    }
 }

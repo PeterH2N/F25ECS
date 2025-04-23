@@ -31,18 +31,19 @@ public class SpriteSheet
 
     public void init(Image img, int[] numFrames, int xOffset, Vector2D spriteSize, int[] order) {
         int numRows = numFrames.length;
+        int pixelsPerY = (int) (img.getHeight() / numRows);
 
         for (int i = 0; i < numRows; i++) {
             if (order == null)
-                sheet[i] = makeRow(img, i, xOffset, numFrames[i], spriteSize);
+                sheet[i] = makeRow(img, i, xOffset, pixelsPerY, numFrames[i], spriteSize);
             else
-                sheet[i] = makeRow(img, order[i], xOffset, numFrames[order[i]], spriteSize);
+                sheet[i] = makeRow(img, order[i], xOffset, pixelsPerY, numFrames[order[i]], spriteSize);
         }
     }
 
-    private Image[] makeRow(Image img, int yOffset, int xOffset, int numFrames, Vector2D spriteSize) {
+    private Image[] makeRow(Image img, int yOffset, int xOffset, int pixelsPerY, int numFrames, Vector2D spriteSize) {
         var r = new Image[numFrames];
-        int startY = (int) (yOffset * spriteSize.y);
+        int startY = (int) (yOffset * pixelsPerY);
         int j = 0;
         for (int i = 0; i < numFrames; i++) {
             int startX = (int) ((xOffset + j) * spriteSize.x);
@@ -51,6 +52,8 @@ public class SpriteSheet
                 startX = 0;
                 j = 0;
             }
+
+            if (startY + spriteSize.y > img.getHeight()) break;
 
             PixelReader pr = img.getPixelReader();
             Image sprite = new WritableImage(pr, startX, startY, (int) spriteSize.x, (int) spriteSize.y);

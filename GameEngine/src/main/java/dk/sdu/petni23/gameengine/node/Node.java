@@ -78,6 +78,7 @@ public abstract class Node
     }
 
     public abstract void onRemove();
+    public abstract  void onAdd();
 
     public long getEntityID()
     {

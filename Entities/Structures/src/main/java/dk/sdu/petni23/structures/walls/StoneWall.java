@@ -3,6 +3,7 @@ package dk.sdu.petni23.structures.walls;
 import java.util.Objects;
 
 import dk.sdu.petni23.common.components.movement.VelocityComponent;
+import dk.sdu.petni23.common.components.rendering.ConnectingSpriteComponent;
 import dk.sdu.petni23.common.components.rendering.DisplayComponent;
 import dk.sdu.petni23.common.components.PlacementComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
@@ -25,9 +26,9 @@ public class StoneWall implements IEntitySPI{
 
 
     static {
-        final int[] numFrames = {1};
-        Image img = new Image(Objects.requireNonNull(StoneWall.class.getResourceAsStream("/structuresprites/stone_wall_single.png")));
-        spriteSheet = new SpriteSheet(img, numFrames, new Vector2D(img.getWidth(), img.getHeight()));
+        final int[] numFrames = {4,4,4,4,4,4,4,4};
+        Image img = new Image(Objects.requireNonNull(StoneWall.class.getResourceAsStream("/structuresprites/Tilemap_Elevation.png")));
+        spriteSheet = new SpriteSheet(img, numFrames, new Vector2D(64, 128));
     }
 
     public static Entity create(Vector2D pos){
@@ -39,16 +40,18 @@ public class StoneWall implements IEntitySPI{
         stoneWall.add(position);
 
         //add sprite component
-        final var origin = new Vector2D(-0.5, -0.99);
+        final var origin = new Vector2D(-0.5, -1);
         dk.sdu.petni23.common.components.rendering.SpriteComponent sprite = new SpriteComponent(spriteSheet, origin);
         stoneWall.add(sprite);
+        sprite.column = 3;
+        sprite.row = 4;
 
         stoneWall.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
 
         stoneWall.add(new LayerComponent(LayerComponent.Layer.PLAYER));
 
-        Shape collisionShape = new AABBShape(2, 1);
-        Shape hitBoxShape = new AABBShape(2, 1);
+        Shape collisionShape = new AABBShape(1, 1);
+        Shape hitBoxShape = new AABBShape(1, 1);
         var offset = new Vector2D(0, 0.5);
 
         var collision = new CollisionComponent(collisionShape, offset);
@@ -56,9 +59,9 @@ public class StoneWall implements IEntitySPI{
         stoneWall.add(collision);
         var hitBox = new HitBoxComponent(hitBoxShape, offset);
         var health = new HealthComponent(ConfigReader.getItemHealth(Type.STONE_WALL.getValue()));
-        var placementComponent = new PlacementComponent(hitBox, health);
+        var connection = new ConnectingSpriteComponent(ConnectingSpriteComponent.Type.STONE_WALL);
+        var placementComponent = new PlacementComponent(hitBox, health, connection);
         stoneWall.add(placementComponent);
-
 
         // band-aid fix for problem in placement system
         stoneWall.add(new VelocityComponent());

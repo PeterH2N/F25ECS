@@ -19,4 +19,9 @@ public class PlacementNode extends Node{
 
     }
 
+    @Override
+    public void onAdd() {
+
+    }
+
 }

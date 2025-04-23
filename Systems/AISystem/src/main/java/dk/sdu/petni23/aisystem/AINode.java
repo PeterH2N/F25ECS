@@ -11,6 +11,7 @@ import dk.sdu.petni23.common.components.damage.ThrowComponent;
 import dk.sdu.petni23.common.components.movement.DirectionComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.components.movement.VelocityComponent;
+import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.node.Node;
 import dk.sdu.petni23.gameengine.node.OptionalComponent;
@@ -36,8 +37,6 @@ public class AINode extends Node {
 
     public AINode(Entity entity) {
         super(entity);
-        AISystem.nodes.get(layerComponent.layer.value()).add(this);
-        if (entity == GameData.world.nexus) AISystem.nexus = this;
     }
 
     @Override
@@ -45,5 +44,11 @@ public class AINode extends Node {
         if (layerComponent == null) return;
         AISystem.nodes.get(layerComponent.layer.value()).remove(this);
         if (AISystem.nexus != null && this.getEntityID() == AISystem.nexus.getEntityID()) AISystem.nexus = null;
+    }
+
+    @Override
+    public void onAdd() {
+        AISystem.nodes.get(layerComponent.layer.value()).add(this);
+        if (Engine.getEntity(getEntityID()) == GameData.world.nexus) AISystem.nexus = this;
     }
 }

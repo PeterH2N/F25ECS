@@ -18,4 +18,9 @@ public class ShopNode extends Node{
 
     }
 
+    @Override
+    public void onAdd() {
+
+    }
+
 }

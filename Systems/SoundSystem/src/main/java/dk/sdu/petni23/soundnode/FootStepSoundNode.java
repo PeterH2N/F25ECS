@@ -21,4 +21,9 @@ public class FootStepSoundNode extends Node
     public void onRemove() {
 
     }
+
+    @Override
+    public void onAdd() {
+
+    }
 }

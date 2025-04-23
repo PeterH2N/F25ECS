@@ -28,4 +28,9 @@ public class HitBoxNode extends Node
     public void onRemove() {
         GameData.world.hitBoxColliders.keySet().remove(this);
     }
+
+    @Override
+    public void onAdd() {
+
+    }
 }

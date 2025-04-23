@@ -16,4 +16,9 @@ public class SoundNode extends Node {
     public void onRemove() {
 
     }
+
+    @Override
+    public void onAdd() {
+
+    }
 }

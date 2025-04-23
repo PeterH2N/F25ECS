@@ -47,4 +47,9 @@ public class RenderNode extends Node
     public void onRemove() {
 
     }
+
+    @Override
+    public void onAdd() {
+
+    }
 }

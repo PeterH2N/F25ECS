@@ -22,4 +22,9 @@ public class TrajectoryNode extends Node
     public void onRemove() {
 
     }
+
+    @Override
+    public void onAdd() {
+
+    }
 }

@@ -27,7 +27,9 @@ public class Engine
         entities.put(entity.getId(), entity);
         for (var spi : nodeSPIs) {
             if (spi.requiredComponentsContained(entity.getComponentClasses())) {
-                nodes.add(spi.createNode(entity));
+                var node = spi.createNode(entity);
+                nodes.add(node);
+                node.onAdd();
             }
         }
         return entity;

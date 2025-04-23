@@ -32,4 +32,9 @@ public class AnimationNode extends Node
     public void onRemove() {
 
     }
+
+    @Override
+    public void onAdd() {
+
+    }
 }

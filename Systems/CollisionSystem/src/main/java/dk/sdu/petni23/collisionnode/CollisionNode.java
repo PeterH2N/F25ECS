@@ -22,4 +22,9 @@ public class CollisionNode extends Node
     public void onRemove() {
         GameData.world.collisionColliders.keySet().remove(this);
     }
+
+    @Override
+    public void onAdd() {
+
+    }
 }
