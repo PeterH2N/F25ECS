@@ -141,11 +141,7 @@ public class AISystem implements ISystem {
                         }
                     }
                 }
-
-
             }
-
-
         }
 
 

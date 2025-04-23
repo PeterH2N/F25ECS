@@ -43,7 +43,6 @@ public class Character {
         health.onDeath = node -> {
             assert deathAnimation != null;
             Engine.addEntity(deathAnimation.create(Engine.getEntity(node.getEntityID())));
-
         };
         character.add(health);
 
