@@ -88,6 +88,7 @@ public class ArcherTower implements IEntitySPI {
 
         // band-aid solution for problem in placement system
         tower.add(new VelocityComponent());
+        placement.toRemove.add(VelocityComponent.class);
         tower.add(new HealthBarComponent(80, 8, Color.GREEN, 3.3));
 
         return tower;

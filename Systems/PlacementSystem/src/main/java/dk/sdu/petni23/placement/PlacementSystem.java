@@ -63,9 +63,11 @@ public class PlacementSystem implements ISystem {
                 if (GameData.gameKeys.isDown(MouseButton.PRIMARY) && !isColliding) {
                     // Add the collision and hitbox components to the entity, and remove velocity
                     collision.active = true;
-                    entity.remove(VelocityComponent.class);
                     for (var component : node.placementComponent.components.values()) {
                         entity.add(component);
+                    }
+                    for (var c : node.placementComponent.toRemove) {
+                        entity.remove(c);
                     }
                     GameData.setHand(null);
                     GameData.setGameMode(GameMode.REGULAR);
