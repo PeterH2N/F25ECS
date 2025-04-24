@@ -16,6 +16,7 @@ import javafx.scene.input.MouseButton;
 
 import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.enums.GameMode;
+import dk.sdu.petni23.common.enums.MouseMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,7 @@ public class PlacementSystem implements ISystem {
             GameData.setGameMode(newMode);
         }*/
         
-        if (GameData.getGameMode()!=GameMode.PLACING || GameData.getHand() == null){
+        if (GameData.getMouseMode()!=MouseMode.PLACING || GameData.getHand() == null){
             return;
         }
 
@@ -43,7 +44,7 @@ public class PlacementSystem implements ISystem {
                 continue;
             }
 
-            if (GameData.getGameMode() == GameMode.PLACING) {
+            if (GameData.getMouseMode() == MouseMode.PLACING) {
 
                 var collision = entity.get(CollisionComponent.class);
                 boolean isColliding = false;
@@ -68,7 +69,7 @@ public class PlacementSystem implements ISystem {
                         entity.add(component);
                     }
                     GameData.setHand(null);
-                    GameData.setGameMode(GameMode.REGULAR);
+                    GameData.setMouseMode(MouseMode.REGULAR);
                 }
 
                 Vector2D mousePos = GameData.gameKeys.getMousePos();

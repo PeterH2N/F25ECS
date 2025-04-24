@@ -2,7 +2,7 @@ package dk.sdu.petni23.shopping;
 
 import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.configreader.ConfigReader;
-import dk.sdu.petni23.common.enums.GameMode;
+import dk.sdu.petni23.common.enums.MouseMode;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.entity.IEntitySPI;
@@ -89,7 +89,7 @@ public class ShopController {
             Entity entity = purchase(item);
             Engine.addEntity(entity);
             GameData.setHand(entity);
-            GameData.setGameMode(GameMode.PLACING);
+            GameData.setMouseMode(MouseMode.PLACING);
         }else{
             System.out.println("Insufficient funds.");
         }

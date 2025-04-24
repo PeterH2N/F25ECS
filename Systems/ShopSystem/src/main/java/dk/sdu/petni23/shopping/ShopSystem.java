@@ -14,7 +14,7 @@ import java.net.URL;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import dk.sdu.petni23.common.GameData;
-import dk.sdu.petni23.common.enums.GameMode;
+import dk.sdu.petni23.common.enums.MouseMode;
 
 public class ShopSystem implements ISystem,IPluginService {
     private static AnchorPane pane;
@@ -33,12 +33,12 @@ public class ShopSystem implements ISystem,IPluginService {
         if(shopNode == null){
             return;
         }
-        if(GameData.gameKeys.isPressed(KeyCode.B) && GameData.getGameMode() != GameMode.PLACING){
-            GameMode newMode = (GameData.getGameMode() != GameMode.SHOPPING) ? GameMode.SHOPPING : GameMode.REGULAR;
-            GameData.setGameMode(newMode);
+        if(GameData.gameKeys.isPressed(KeyCode.B) && GameData.getMouseMode() != MouseMode.PLACING){
+            MouseMode newMode = (GameData.getMouseMode() != MouseMode.SHOPPING) ? MouseMode.SHOPPING : MouseMode.REGULAR;
+            GameData.setMouseMode(newMode);
         }
 
-        if(GameData.getGameMode()!=GameMode.SHOPPING || !perimeter){
+        if(GameData.getMouseMode()!=MouseMode.SHOPPING || !perimeter){
             if(shopNode.shopComponent.visible){
                 shopNode.shopComponent.visible = false;
                 GameData.gameWindow.getChildren().remove(pane);
