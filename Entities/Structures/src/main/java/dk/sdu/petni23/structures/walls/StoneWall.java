@@ -32,7 +32,7 @@ public class StoneWall implements IEntitySPI{
     }
 
     public static Entity create(Vector2D pos){
-        Entity stoneWall = new Entity(null);
+        Entity stoneWall = new Entity(Type.STONE_WALL);
 
         //add positionn component to wall entity
         var position = new PositionComponent();

@@ -95,7 +95,7 @@ public class ArcherTower implements IEntitySPI {
     }
 
     static Entity towerDestroyed(Vector2D pos) {
-        Entity tower = new Entity(null);
+        Entity tower = new Entity(Type.TOWER_3);
 
         tower.add(new PositionComponent(pos));
 

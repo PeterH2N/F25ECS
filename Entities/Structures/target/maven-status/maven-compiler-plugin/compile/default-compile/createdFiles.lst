@@ -1,4 +1,3 @@
-dk/sdu/petni23/structures/nexus/NexusPlugin.class
 dk/sdu/petni23/structures/archerTower/Archer.class
 dk/sdu/petni23/structures/tower/House.class
 dk/sdu/petni23/structures/mine/Mine.class
@@ -9,4 +8,5 @@ dk/sdu/petni23/structures/tree/TreeSPI.class
 dk/sdu/petni23/structures/tower/HousePlugin.class
 dk/sdu/petni23/structures/shop/ShopPlugin.class
 dk/sdu/petni23/structures/shop/Shop.class
+dk/sdu/petni23/structures/nexus/Nexus.class
 dk/sdu/petni23/structures/archerTower/ArcherTower.class

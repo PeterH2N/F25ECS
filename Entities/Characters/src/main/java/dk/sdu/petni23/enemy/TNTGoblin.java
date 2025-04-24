@@ -24,7 +24,7 @@ import javafx.scene.paint.Color;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class TNTGoblin
+public class TNTGoblin implements IEntitySPI
 {
     private static final SpriteSheet spriteSheet;
 
@@ -73,5 +73,15 @@ public class TNTGoblin
         goblin.add(new PathFindingComponent());
 
         return goblin;
+    }
+
+    @Override
+    public Entity create(Entity parent) {
+        return create(Vector2D.ZERO);
+    }
+
+    @Override
+    public Type getType() {
+        return Type.TNT_GOBLIN;
     }
 }

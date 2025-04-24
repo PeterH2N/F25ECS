@@ -18,6 +18,7 @@ import dk.sdu.petni23.gameengine.node.Node;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -78,6 +79,9 @@ public class GameWorld
 
     public void load() {
         var userDir = System.getProperty("user.dir") + File.separator;
+        // remove all entities
+        Engine.getEntities().forEach(Engine::removeEntity);
+        GameData.world.map.genMap();
 
         try {
             String file = Files.readString(Paths.get(userDir + "/save/save.txt"));
@@ -91,7 +95,24 @@ public class GameWorld
             for (var entitySPI : Engine.getEntitySPIs()) {
                 var entitiesMap = save.get(entitySPI.getType());
                 if (entitiesMap != null) {
-                    System.out.println("here");
+                    entitiesMap.values().forEach(components -> {
+                        Entity entity = entitySPI.create(null);
+                        Engine.addEntity(entity);
+                        components.forEach(component -> {
+                            Component entityComponent = entity.get(component.getClass());
+                            var fields = component.getClass().getFields();
+                            Arrays.stream(fields).forEach(field -> {
+                                if (Modifier.isTransient(field.getModifiers())) return;
+                                field.setAccessible(true);
+                                try {
+                                    field.set(entityComponent, field.get(component));
+                                } catch (IllegalAccessException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            });
+                        });
+
+                    });
                 }
             }
 
@@ -130,14 +151,14 @@ public class GameWorld
         @Override
         public JsonElement serialize(Component component, Type type, JsonSerializationContext jsonSerializationContext) {
             JsonElement elem = new Gson().toJsonTree(component);
-            elem.getAsJsonObject().addProperty("type", component.getClass().getName());
+            elem.getAsJsonObject().addProperty("classType", component.getClass().getName());
             return elem;
         }
 
         @Override
         public Component deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
             JsonObject jsonObject = jsonElement.getAsJsonObject();
-            String typeName = jsonObject.get("type").getAsString();
+            String typeName = jsonObject.get("classType").getAsString();
 
             try {
                 Class<? extends Component> cls = (Class<? extends Component>) Class.forName(typeName);

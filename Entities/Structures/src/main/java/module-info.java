@@ -2,7 +2,7 @@
 import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 import dk.sdu.petni23.gameengine.services.IPluginService;
 import dk.sdu.petni23.structures.archerTower.ArcherTower;
-import dk.sdu.petni23.structures.nexus.NexusPlugin;
+import dk.sdu.petni23.structures.nexus.Nexus;
 import dk.sdu.petni23.structures.shop.ShopPlugin;
 import dk.sdu.petni23.structures.tower.HousePlugin;
 import dk.sdu.petni23.structures.walls.StoneWall;
@@ -13,6 +13,6 @@ module Structures {
     requires javafx.graphics;
     requires GameEngine;
     requires Common;
-    provides IPluginService with HousePlugin, NexusPlugin,MinePlugin,ShopPlugin;
-    provides IEntitySPI with TreeSPI, StoneWall, ArcherTower;
+    provides IPluginService with HousePlugin, Nexus,MinePlugin,ShopPlugin;
+    provides IEntitySPI with TreeSPI, StoneWall, ArcherTower, Nexus;
 }

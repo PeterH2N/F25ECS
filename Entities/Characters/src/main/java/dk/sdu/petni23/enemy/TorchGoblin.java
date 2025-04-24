@@ -23,7 +23,7 @@ import javafx.scene.paint.Color;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class TorchGoblin
+public class TorchGoblin implements IEntitySPI
 {
     private static final SpriteSheet spriteSheet;
 
@@ -79,5 +79,15 @@ public class TorchGoblin
         goblin.add(new PathFindingComponent());
 
         return goblin;
+    }
+
+    @Override
+    public Entity create(Entity parent) {
+        return create(Vector2D.ZERO);
+    }
+
+    @Override
+    public Type getType() {
+        return Type.TORCH_GOBLIN;
     }
 }
