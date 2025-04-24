@@ -204,6 +204,15 @@
                      </children></AnchorPane>
             </content>
           </Tab>
+            <Tab text="Save">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Button fx:id="saveButton" mnemonicParsing="false" text="Save World" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
         </tabs>
       </TabPane>
    </children>

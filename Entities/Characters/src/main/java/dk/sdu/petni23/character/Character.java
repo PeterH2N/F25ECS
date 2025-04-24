@@ -18,8 +18,8 @@ import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 
 public class Character {
-    public static Entity create(Vector2D pos, double maxHP, SoundEffect damageSound) {
-        Entity character = new Entity();
+    public static Entity create(Vector2D pos, double maxHP, SoundEffect damageSound, IEntitySPI.Type type) {
+        Entity character = new Entity(type);
         var position = new PositionComponent();
         position.position.set(pos);
         character.add(position);
@@ -48,7 +48,7 @@ public class Character {
 
         health.onHurt = node -> {
             if (damageSound == null) return;
-            Entity e = new Entity();
+            Entity e = new Entity(null);
             e.add(new SoundComponent(damageSound, position.position, 0));
             Engine.addEntity(e);
         };

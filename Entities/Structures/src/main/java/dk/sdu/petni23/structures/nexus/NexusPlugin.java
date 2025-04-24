@@ -34,7 +34,7 @@ public class NexusPlugin implements IPluginService
         spriteSheet = new SpriteSheet(img, numFrames, new Vector2D(img.getWidth(), img.getHeight()));
     }
     public static Entity createNexus() {
-        var nexus = new Entity();
+        var nexus = new Entity(null);
         GameData.world.nexus = nexus;
         nexus.add(new PositionComponent(new Vector2D(0,0)));
         var healthComponent = nexus.add(new HealthComponent(5000));

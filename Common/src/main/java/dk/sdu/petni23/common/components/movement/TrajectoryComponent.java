@@ -16,7 +16,7 @@ public class TrajectoryComponent extends Component
     public final double b;
     public final double d;
     public final double speed;
-    public final Dispatch onEnd;
+    public transient Dispatch onEnd = null;
     public boolean rotateWithSlope = false;
 
     public TrajectoryComponent(Vector2D start, Vector2D end, double height, double speed, Dispatch onEnd)
@@ -36,5 +36,9 @@ public class TrajectoryComponent extends Component
     }
     public TrajectoryComponent(Vector2D start, Vector2D end, double height, Dispatch onEnd) {
         this(start, end, height, 6, onEnd);
+    }
+
+    public TrajectoryComponent(Vector2D start, Vector2D end, double height) {
+        this(start, end, height, 6, null);
     }
 }

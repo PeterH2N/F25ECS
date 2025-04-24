@@ -44,7 +44,7 @@ public class ArcherTower implements IEntitySPI {
     }
 
     public static Entity create(Vector2D pos){
-        Entity tower = new Entity();
+        Entity tower = new Entity(null);
 
         var positionComponent = tower.add(new PositionComponent(pos));
 
@@ -95,7 +95,7 @@ public class ArcherTower implements IEntitySPI {
     }
 
     static Entity towerDestroyed(Vector2D pos) {
-        Entity tower = new Entity();
+        Entity tower = new Entity(null);
 
         tower.add(new PositionComponent(pos));
 

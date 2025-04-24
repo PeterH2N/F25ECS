@@ -25,8 +25,7 @@ import java.util.Set;
 
 import static dk.sdu.petni23.common.components.ai.AIComponent.Type.CHARACTER;
 
-public class Knight
-{
+public class Knight implements IEntitySPI {
     private static final SpriteSheet spriteSheet;
 
     static {
@@ -37,7 +36,11 @@ public class Knight
     }
 
     public static Entity create(Vector2D pos) {
-        Entity knight = Character.create(pos, 10000, SoundEffect.KNIGHT_HURT);
+        return create(pos, Type.KNIGHT);
+    }
+
+    public static Entity create(Vector2D pos, Type type) {
+        Entity knight = Character.create(pos, 10000, SoundEffect.KNIGHT_HURT, type);
 
         knight.get(VelocityComponent.class).speed = 3;
         var position = knight.get(PositionComponent.class);
@@ -56,7 +59,7 @@ public class Knight
         action1.onDispatch = node -> {
             assert damageSPI != null;
             Entity damageEntity = damageSPI.create(Engine.getEntity(node.getEntityID()));
-            Entity sound = new Entity();
+            Entity sound = new Entity(null);
             sound.add(new SoundComponent(SoundEffect.WOOSH1, position.position));
             Engine.addEntity(sound);
             Engine.addEntity(damageEntity); // ✅ add the one you modified
@@ -71,7 +74,7 @@ public class Knight
             assert damageSPI != null;
             Entity damageEntity = damageSPI.create(Engine.getEntity(node.getEntityID()));
             Engine.addEntity(damageEntity); // ✅ add the one you modified
-            Entity sound = new Entity();
+            Entity sound = new Entity(null);
             sound.add(new SoundComponent(SoundEffect.WOOSH2, position.position));
             Engine.addEntity(sound);
         };
@@ -89,5 +92,15 @@ public class Knight
         knight.add(new AIComponent(CHARACTER, null, null));
 
         return knight;
+    }
+
+    @Override
+    public Entity create(Entity parent) {
+        return create(new Vector2D(0,0));
+    }
+
+    @Override
+    public Type getType() {
+        return Type.KNIGHT;
     }
 }

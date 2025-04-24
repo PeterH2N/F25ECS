@@ -44,7 +44,7 @@ public class GoldSPI implements IEntitySPI {
         var parentPositionComponent = parent.get(PositionComponent.class);
         assert parentPositionComponent != null;
         Vector2D pos = parentPositionComponent.position.getAdded(p);
-        Entity sound = new Entity();
+        Entity sound = new Entity(null);
         sound.add(new SoundComponent(SoundEffect.COIN_BAG_DROP, pos, 50));
         Engine.addEntity(sound);
         return spawnGold(pos);
@@ -56,7 +56,7 @@ public class GoldSPI implements IEntitySPI {
     }
 
     Entity gold(Vector2D pos) {
-        Entity gold = new Entity();
+        Entity gold = new Entity(null);
         gold.add(new ItemComponent(IEntitySPI.Type.GOLD));
         var positionComponent = new PositionComponent();
         positionComponent.position.set(pos);
@@ -69,7 +69,7 @@ public class GoldSPI implements IEntitySPI {
 
         ItemComponent item = new ItemComponent(IEntitySPI.Type.GOLD);
         item.onPickup = node -> {
-            Entity e = new Entity();
+            Entity e = new Entity(null);
             e.add(new SoundComponent(SoundEffect.COIN_PICKUP, positionComponent.position, 150));
             e.add(new DurationComponent(200, GameData.getCurrentMillis()));
             Engine.addEntity(e);
@@ -80,7 +80,7 @@ public class GoldSPI implements IEntitySPI {
     }
 
     Entity spawnGold(Vector2D pos) {
-        Entity spawn = new Entity();
+        Entity spawn = new Entity(null);
         var positionComponent = new PositionComponent();
         positionComponent.position.set(pos);
         spawn.add(positionComponent);

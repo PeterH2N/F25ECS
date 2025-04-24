@@ -8,7 +8,6 @@ import dk.sdu.petni23.common.components.rendering.DisplayComponent;
 import dk.sdu.petni23.common.shape.OBShape;
 import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.common.world.GameWorld;
-import dk.sdu.petni23.common.world.mapgen.Tile;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.services.ISystem;
@@ -91,7 +90,7 @@ public class ConnectingSpriteSystem implements ISystem {
                             sea = false;
                             double width = x - startX;
                             if (width == 0) break;
-                            Entity ob = new Entity();
+                            Entity ob = new Entity(null);
                             Vector2D pos = new Vector2D(startX + width * 0.5, y + 0.5);
                             ob.add(new PositionComponent(pos));
                             ob.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
@@ -115,7 +114,7 @@ public class ConnectingSpriteSystem implements ISystem {
                             sea = false;
                             double height = startY - y;
                             if (height == 0) break;
-                            Entity ob = new Entity();
+                            Entity ob = new Entity(null);
                             Vector2D pos = new Vector2D(x + 0.5, y + height * 0.5 + 1);
                             ob.add(new PositionComponent(pos));
                             ob.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));

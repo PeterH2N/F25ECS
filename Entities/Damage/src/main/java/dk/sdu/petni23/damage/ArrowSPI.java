@@ -55,7 +55,7 @@ public class ArrowSPI implements IEntitySPI {
 
 
 
-        var arrow = new Entity();
+        var arrow = new Entity(null);
         arrow.add(new DisplayComponent(DisplayComponent.Layer.EFFECT));
         var positionComponent = arrow.add(new PositionComponent(pos));
         arrow.add(new VelocityComponent());
@@ -81,7 +81,7 @@ public class ArrowSPI implements IEntitySPI {
     }
 
     private Entity landedArrow(Vector2D pos, Vector2D dir) {
-        Entity arrow = new Entity();
+        Entity arrow = new Entity(null);
         arrow.add(new PositionComponent(pos));
         var direction = arrow.add(new DirectionComponent());
         direction.dir.set(dir);

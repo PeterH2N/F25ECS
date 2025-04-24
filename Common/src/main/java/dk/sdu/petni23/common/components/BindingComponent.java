@@ -9,5 +9,5 @@ import java.util.List;
 import java.util.Map;
 
 public class BindingComponent extends Component {
-    public final Map<Entity, Binding> bindings = new HashMap<>();
+    public transient final Map<Entity, Binding> bindings = new HashMap<>();
 }

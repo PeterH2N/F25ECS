@@ -1,11 +1,9 @@
 package dk.sdu.petni23.common.world.mapgen;
 
 import dk.sdu.petni23.common.GameData;
-import dk.sdu.petni23.common.components.ai.PathFindingComponent;
 import dk.sdu.petni23.common.components.collision.CollisionComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.components.rendering.DisplayComponent;
-import dk.sdu.petni23.common.shape.AABBShape;
 import dk.sdu.petni23.common.shape.OBShape;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.common.util.SimplexNoise;
@@ -21,6 +19,7 @@ import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class GameMap
 {
@@ -77,6 +76,7 @@ public class GameMap
     }
 
     private void generateMap() {
+        GameData.random = new Random(GameData.seed);
         Vector2D center = new Vector2D((double) GameData.worldSize / 2, (double) GameData.worldSize / 2);
         Tile[][] landMap = new Tile[GameData.worldSize][GameData.worldSize];
         double[][] noiseMap = new double[GameData.worldSize][GameData.worldSize];
@@ -203,7 +203,7 @@ public class GameMap
                         sea = false;
                         double width = x - startX;
                         if (width == 0) break;
-                        Entity ob = new Entity();
+                        Entity ob = new Entity(null);
                         Vector2D pos = new Vector2D(startX + width * 0.5, y - 0.5);
                         ob.add(new PositionComponent(pos));
                         ob.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
@@ -229,7 +229,7 @@ public class GameMap
                         sea = false;
                         double height = startY - y;
                         if (height == 0) break;
-                        Entity ob = new Entity();
+                        Entity ob = new Entity(null);
                         Vector2D pos = new Vector2D(x + 0.5, y + height * 0.5);
                         ob.add(new PositionComponent(pos));
                         ob.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));

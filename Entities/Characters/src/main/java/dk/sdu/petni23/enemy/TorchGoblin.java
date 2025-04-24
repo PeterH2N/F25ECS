@@ -36,7 +36,7 @@ public class TorchGoblin
 
     public static Entity create(Vector2D pos)
     {
-        Entity goblin = Character.create(pos, 30, SoundEffect.GOBLIN_HURT);
+        Entity goblin = Character.create(pos, 30, SoundEffect.GOBLIN_HURT, IEntitySPI.Type.TORCH_GOBLIN);
 
         goblin.get(VelocityComponent.class).speed = 2.5;
 

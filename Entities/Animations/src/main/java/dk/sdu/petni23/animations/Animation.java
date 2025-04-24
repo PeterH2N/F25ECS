@@ -12,7 +12,7 @@ public class Animation
 {
     // helper function for animation entities
     static Entity create(SpriteSheet spriteSheet, Vector2D origin, Vector2D pos, DisplayComponent.Layer layer) {
-        Entity animation = new Entity();
+        Entity animation = new Entity(null);
         animation.add(new DisplayComponent(layer));
         animation.add(new SpriteComponent(spriteSheet, origin));
         var position = new PositionComponent();

@@ -29,7 +29,7 @@ public class Sheep {
     }
 
     public static Entity create(Vector2D pos) {
-        Entity sheep = Character.create(pos, 20, SoundEffect.SHEEP_HURT);
+        Entity sheep = Character.create(pos, 20, SoundEffect.SHEEP_HURT, IEntitySPI.Type.SHEEP);
 
         sheep.get(VelocityComponent.class).speed = 2.3;
 

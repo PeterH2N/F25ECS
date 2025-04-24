@@ -11,17 +11,11 @@ import java.util.Map;
 public class Entity implements Serializable {
     private static long idCount = 0;
     private final Long id = idCount++;
+    private final IEntitySPI.Type type;
     private final Map<Class<? extends Component>, Component> components = new HashMap<>();
-    private boolean onMap;
 
-    private double rotation = 0.0;
-
-    public boolean isOnMap() {
-        return onMap;
-    }
-
-    public void addToMap() {
-        this.onMap = true;
+    public Entity(IEntitySPI.Type type) {
+        this.type = type;
     }
 
     // Add components to the entity
@@ -64,11 +58,7 @@ public class Entity implements Serializable {
         return id;
     }
 
-    public void setRotation(double rotation) {
-        this.rotation = rotation;
-    }
-
-    public double getRotation() {
-        return this.rotation;
+    public IEntitySPI.Type getType() {
+        return type;
     }
 }

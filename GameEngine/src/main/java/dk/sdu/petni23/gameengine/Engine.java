@@ -35,6 +35,10 @@ public class Engine
         return entity;
     }
 
+    public static List<Entity> getEntities() {
+        return entities.values().stream().toList();
+    }
+
     public static Entity getEntity(Long ID) {
         return entities.get(ID);
     }

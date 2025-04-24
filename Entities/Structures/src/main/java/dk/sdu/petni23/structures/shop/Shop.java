@@ -2,11 +2,9 @@ package dk.sdu.petni23.structures.shop;
 
 import java.util.Objects;
 
-import dk.sdu.petni23.common.components.PlacementComponent;
 import dk.sdu.petni23.common.components.collision.CollisionComponent;
 import dk.sdu.petni23.common.components.collision.HitBoxComponent;
 import dk.sdu.petni23.common.components.damage.LayerComponent;
-import dk.sdu.petni23.common.components.health.HealthComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.components.rendering.DisplayComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
@@ -30,7 +28,7 @@ public class Shop {
     }
 
     public static Entity create(Vector2D pos){
-        Entity shop = new Entity();
+        Entity shop = new Entity(null);
 
         //add positionn component to wall entity
         var position = new PositionComponent();

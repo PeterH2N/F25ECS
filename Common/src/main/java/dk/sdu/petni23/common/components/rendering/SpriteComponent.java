@@ -8,11 +8,11 @@ import javafx.scene.effect.Effect;
 public class SpriteComponent extends Component
 {
     public int column, row;
-    public final SpriteSheet spriteSheet;
+    public transient final SpriteSheet spriteSheet;
     public final Vector2D spriteOrigin;
     public boolean rotateWithDirection = false;
     public boolean mirror = false;
-    public Effect effect = null;
+    public transient Effect effect = null;
 
     public SpriteComponent(SpriteSheet spriteSheet, Vector2D spriteOrigin, int column, int row)
     {

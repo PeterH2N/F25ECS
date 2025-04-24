@@ -31,7 +31,7 @@ public class DynamiteSPI implements IEntitySPI {
     }
 
     public static Entity createDynamite(Vector2D pos) {
-        Entity tnt = new Entity();
+        Entity tnt = new Entity(null);
 
         var position = tnt.add(new PositionComponent(pos));
         tnt.add(new DirectionComponent());
@@ -42,7 +42,7 @@ public class DynamiteSPI implements IEntitySPI {
         var animation = tnt.add(new AnimationComponent());
         animation.doMirrors = false;
 
-        Entity e = new Entity();
+        Entity e = new Entity(null);
         e.add(new SoundComponent(SoundEffect.DYNAMITE_THROW, position.position));
         Engine.addEntity(e);
 
@@ -72,7 +72,7 @@ public class DynamiteSPI implements IEntitySPI {
             Engine.addEntity(DamageSPI.createDamageEntity(end, new HitBoxComponent(circle), layer, 15));
             assert explosionSPI != null;
             Engine.addEntity(explosionSPI.create(dynamite));
-            Entity e = new Entity();
+            Entity e = new Entity(null);
             e.add(new SoundComponent(SoundEffect.THROW_EXPLOSION, end));
             Engine.addEntity(e);
         };

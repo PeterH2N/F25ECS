@@ -54,7 +54,7 @@ public class WoodSPI implements IEntitySPI {
     }
 
     Entity wood(Vector2D pos) {
-        Entity wood = new Entity();
+        Entity wood = new Entity(null);
         wood.add(new ItemComponent(IEntitySPI.Type.WOOD));
         var positionComponent = new PositionComponent();
         positionComponent.position.set(pos);
@@ -67,7 +67,7 @@ public class WoodSPI implements IEntitySPI {
 
         ItemComponent item = new ItemComponent(IEntitySPI.Type.WOOD);
         item.onPickup = node -> {
-            Entity soundEntity = new Entity();
+            Entity soundEntity = new Entity(null);
             soundEntity.add(new SoundComponent(SoundEffect.WOOD_PICKUP, positionComponent.position, 150));
             soundEntity.add(new DurationComponent(200, GameData.getCurrentMillis()));
             Engine.addEntity(soundEntity);
@@ -78,7 +78,7 @@ public class WoodSPI implements IEntitySPI {
     }
 
     Entity spawnWood(Vector2D pos) {
-        Entity spawn = new Entity();
+        Entity spawn = new Entity(null);
         var positionComponent = new PositionComponent();
         positionComponent.position.set(pos);
         spawn.add(positionComponent);

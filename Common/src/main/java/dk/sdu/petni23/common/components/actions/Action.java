@@ -4,7 +4,7 @@ import dk.sdu.petni23.common.components.Dispatch;
 
 public class Action
 {
-    public Dispatch onDispatch = null;
+    public transient Dispatch onDispatch = null;
     public long delay = 0;
     public long duration = 0;
     public int animationIndex = 0;

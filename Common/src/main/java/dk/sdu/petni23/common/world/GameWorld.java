@@ -1,5 +1,7 @@
 package dk.sdu.petni23.common.world;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.util.Collider;
 import dk.sdu.petni23.common.misc.Manifold;
@@ -7,14 +9,18 @@ import dk.sdu.petni23.common.util.ColliderPair;
 import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.common.world.mapgen.GameMap;
 import dk.sdu.petni23.common.world.mapgen.MapGenOptions;
+import dk.sdu.petni23.gameengine.Component;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.entity.Entity;
+import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 import dk.sdu.petni23.gameengine.node.Node;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
 
 public class GameWorld
 {
@@ -61,5 +67,36 @@ public class GameWorld
     }
     public static Vector2D toWorldSpace(Vector2D v) {
         return toWorldSpace((int) v.x, (int) v.y);
+    }
+
+    public void save() {
+        var userDir = System.getProperty("user.dir") + File.separator;
+
+        var allEntities = Engine.getEntities();
+
+        Map<IEntitySPI.Type, Map<Long, Collection<? extends Component>>> savedEntities = new HashMap<>();
+
+        for (var entity : allEntities) {
+            if (entity.getType() != null) {
+                savedEntities.putIfAbsent(entity.getType(), new HashMap<>());
+                var entities = savedEntities.get(entity.getType());
+                entities.put(entity.getId(), entity.getComponents());
+            }
+        }
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+        String serialized = gson.toJson(savedEntities);
+
+        System.out.println(serialized);
+        try {
+            Files.write(Paths.get(userDir + "/save/save.txt"), Collections.singletonList(serialized), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void insertComponents(Entity entity, Collection<? extends Component> components) {
+
     }
 }

@@ -34,7 +34,7 @@ public class Mine {
     }
 
     public static Entity createMine(Vector2D pos) {
-        Entity mine = new Entity();
+        Entity mine = new Entity(null);
 
         var position = new PositionComponent();
         position.position.set(pos);
@@ -67,7 +67,7 @@ public class Mine {
         health.onHurt = node -> {
             System.out.println("onHurt triggered");
 
-            Entity sound = new Entity();
+            Entity sound = new Entity(null);
             sound.add(new SoundComponent(SoundEffect.MINE_HIT, position.position, 150));
             sound.add(new DurationComponent(200, GameData.getCurrentMillis()));
             Engine.addEntity(sound);

@@ -55,7 +55,7 @@ public class MeatSPI implements IEntitySPI {
     }
 
     Entity meat(Vector2D pos) {
-        Entity meat = new Entity();
+        Entity meat = new Entity(null);
         meat.add(new ItemComponent(IEntitySPI.Type.MEAT));
         var positionComponent = new PositionComponent();
         positionComponent.position.set(pos);
@@ -68,7 +68,7 @@ public class MeatSPI implements IEntitySPI {
 
         ItemComponent item = new ItemComponent(IEntitySPI.Type.MEAT);
         item.onPickup = node -> {
-            Entity soundEntity = new Entity();
+            Entity soundEntity = new Entity(null);
             soundEntity.add(new SoundComponent(SoundEffect.MEAT_PICKUP, positionComponent.position, 150));
             soundEntity.add(new DurationComponent(200, GameData.getCurrentMillis()));
             Engine.addEntity(soundEntity);
@@ -84,7 +84,7 @@ public class MeatSPI implements IEntitySPI {
     }
 
     Entity spawnMeat(Vector2D pos) {
-        Entity spawn = new Entity();
+        Entity spawn = new Entity(null);
         var positionComponent = new PositionComponent();
         positionComponent.position.set(pos);
         spawn.add(positionComponent);
@@ -95,7 +95,7 @@ public class MeatSPI implements IEntitySPI {
 
         var duration = spawn.add(new DurationComponent(700, GameData.getCurrentMillis()));
         duration.onDeath = node -> Engine.addEntity(meat(pos));
-        Entity sound = new Entity();
+        Entity sound = new Entity(null);
         sound.add(new SoundComponent(SoundEffect.MEAT_DROP, positionComponent.position, 50));
         Engine.addEntity(sound);
         return spawn;

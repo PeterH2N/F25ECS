@@ -39,7 +39,8 @@ public class GameData
     private static final BooleanProperty focusedProperty = new SimpleBooleanProperty();
     private static boolean paused = false;
     public static final DebugOptions debugOptions = new DebugOptions();
-    public static final Random random = new Random(984380);
+    public static final int seed = 984380;
+    public static Random random = new Random(seed);
     private static GameMode gameMode = GameMode.REGULAR;
     private static Entity hand;
 
