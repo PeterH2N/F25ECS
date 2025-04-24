@@ -24,6 +24,7 @@ public class Engine
     private final static List<IEntitySPI> entitySPIs = getServices(IEntitySPI.class);
 
     public static Entity addEntity(Entity entity) {
+        if (entity == null) return null;
         entities.put(entity.getId(), entity);
         for (var spi : nodeSPIs) {
             if (spi.requiredComponentsContained(entity.getComponentClasses())) {

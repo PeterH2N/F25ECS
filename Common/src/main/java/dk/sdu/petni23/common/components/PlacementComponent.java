@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 public class PlacementComponent extends Component {
-    public final Map<Class<? extends Component>, Component> components = new HashMap<>();
-    public final List<Class<? extends Component>> toRemove = new ArrayList<>();
+    public final transient Map<Class<? extends Component>, Component> components = new HashMap<>();
+    public final transient List<Class<? extends Component>> toRemove = new ArrayList<>();
     public PlacementComponent(Component... components)
     {
         for (Component component : components) {

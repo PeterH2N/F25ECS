@@ -43,7 +43,7 @@ public class TNTGoblin implements IEntitySPI
         goblin.add(spriteComponent);
 
         goblin.add(new LayerComponent(LayerComponent.Layer.ENEMY));
-        var goldSPI = Engine.getEntitySPI(IEntitySPI.Type.GOLD);
+        var goldSPI = Engine.getEntitySPI(Type.SPAWN_GOLD);
         var loot = goblin.add(new LootComponent(node -> {
             if (goldSPI != null) {
                 Engine.addEntity(goldSPI.create(Engine.getEntity(node.getEntityID())));

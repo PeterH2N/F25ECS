@@ -9,6 +9,7 @@ import dk.sdu.petni23.common.components.health.HealthBarComponent;
 import dk.sdu.petni23.common.components.inventory.InventoryComponent;
 import dk.sdu.petni23.common.components.inventory.PickUpComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
+import dk.sdu.petni23.common.components.shop.ShopComponent;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.entity.IEntitySPI;
@@ -43,6 +44,7 @@ public class Player implements IPluginService, IEntitySPI
         pickup.range = 1.5;
         player.add(new InventoryComponent());
         player.add(new HealthBarComponent(40, 5, Color.GREEN, 1.4));
+        player.add(new ShopComponent());
 
         // set the camera to track the player
         GameData.camera.following = player.get(PositionComponent.class);

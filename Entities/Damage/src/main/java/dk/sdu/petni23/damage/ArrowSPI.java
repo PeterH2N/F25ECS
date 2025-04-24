@@ -26,7 +26,7 @@ import java.util.Objects;
 
 public class ArrowSPI implements IEntitySPI {
 
-    private static final SpriteSheet spriteSheet;
+    static final SpriteSheet spriteSheet;
 
     static {
         final int[] numFrames = { 1 ,1 };
@@ -36,14 +36,23 @@ public class ArrowSPI implements IEntitySPI {
     }
     @Override
     public Entity create(Entity parent) {
-        assert parent != null;
-        Vector2D pos = parent.get(PositionComponent.class).position;
-        Vector2D dir = parent.get(DirectionComponent.class).dir;
-        double distance = parent.get(ThrowComponent.class).distance;
-        var hitBox = parent.get(HitBoxComponent.class);
-        Vector2D offset = hitBox != null ? hitBox.offset : Vector2D.ZERO;
-        Vector2D end = pos.getAdded(dir.getMultiplied(distance));
-        Vector2D start = pos.getAdded(dir.getMultiplied(0.75)).getAdded(offset);
+        Vector2D pos = Vector2D.ZERO;
+        Vector2D dir = Vector2D.ZERO;
+        double distance = 0;
+        Vector2D offset  = Vector2D.ZERO;
+        Vector2D end = Vector2D.ZERO;
+        Vector2D start = Vector2D.ZERO;
+
+        if (parent != null) {
+             pos = parent.get(PositionComponent.class).position;
+             dir = parent.get(DirectionComponent.class).dir;
+             distance = parent.get(ThrowComponent.class).distance;
+             var hitBox = parent.get(HitBoxComponent.class);
+             offset = hitBox != null ? hitBox.offset : Vector2D.ZERO;
+             end = pos.getAdded(dir.getMultiplied(distance));
+             start = pos.getAdded(dir.getMultiplied(0.75)).getAdded(offset);
+        }
+
 
         double dmg = 3;
         var attackComponent = parent.get(AttackComponent.class);
@@ -74,25 +83,13 @@ public class ArrowSPI implements IEntitySPI {
         var sprite = arrow.add(new SpriteComponent(spriteSheet, new Vector2D(-1, -0.546)));
         sprite.rotateWithDirection = true;
 
-        Dispatch onEnd = node -> Engine.addEntity(landedArrow(positionComponent.position,directionComponent.dir));
+        Dispatch onEnd = node -> Engine.addEntity(LandedArrowSPI.landedArrow(positionComponent.position,directionComponent.dir));
         var traj = arrow.add(new TrajectoryComponent(start, end, distance * 0.1, 20, onEnd));
         traj.rotateWithSlope = true;
         return arrow;
     }
 
-    private Entity landedArrow(Vector2D pos, Vector2D dir) {
-        Entity arrow = new Entity(null);
-        arrow.add(new PositionComponent(pos));
-        var direction = arrow.add(new DirectionComponent());
-        direction.dir.set(dir);
-        var sprite = arrow.add(new SpriteComponent(spriteSheet, new Vector2D(-0.765, -0.546)));
-        sprite.row = 1;
-        sprite.rotateWithDirection = true;
-        arrow.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
-        arrow.add(new DurationComponent(60000, GameData.getCurrentMillis()));
 
-        return arrow;
-    }
 
     @Override
     public Type getType() {

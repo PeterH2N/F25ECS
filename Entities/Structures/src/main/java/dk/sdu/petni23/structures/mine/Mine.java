@@ -24,7 +24,7 @@ import javafx.scene.image.Image;
 
 import java.util.Objects;
 
-public class Mine {
+public class Mine implements IEntitySPI{
     private static final SpriteSheet spriteSheet;
 
     static {
@@ -34,7 +34,7 @@ public class Mine {
     }
 
     public static Entity createMine(Vector2D pos) {
-        Entity mine = new Entity(null);
+        Entity mine = new Entity(Type.MINE);
 
         var position = new PositionComponent();
         position.position.set(pos);
@@ -55,7 +55,7 @@ public class Mine {
         mine.add(health);
 
         // Add LootComponent
-        var stoneSPI = Engine.getEntitySPI(IEntitySPI.Type.STONE);
+        var stoneSPI = Engine.getEntitySPI(IEntitySPI.Type.SPAWN_STONE);
         var loot = new LootComponent(node -> {
             if (stoneSPI != null) {
                 Engine.addEntity(stoneSPI.create(Engine.getEntity(node.getEntityID())));
@@ -90,5 +90,15 @@ public class Mine {
         mine.add(new AnimationComponent());
 
         return mine;
+    }
+
+    @Override
+    public Entity create(Entity parent) {
+        return createMine(Vector2D.ZERO);
+    }
+
+    @Override
+    public Type getType() {
+        return Type.MINE;
     }
 }

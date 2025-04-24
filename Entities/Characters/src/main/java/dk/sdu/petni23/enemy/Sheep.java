@@ -37,7 +37,7 @@ public class Sheep implements IEntitySPI {
         sheep.add(spriteComponent);
 
         sheep.add(new LayerComponent(LayerComponent.Layer.ENEMY));
-        var meatSPI = Engine.getEntitySPI(IEntitySPI.Type.MEAT);
+        var meatSPI = Engine.getEntitySPI(Type.SPAWN_MEAT);
         var loot = sheep.add(new LootComponent(node -> {
             if (meatSPI != null) {
                 Engine.addEntity(meatSPI.create(Engine.getEntity(node.getEntityID())));

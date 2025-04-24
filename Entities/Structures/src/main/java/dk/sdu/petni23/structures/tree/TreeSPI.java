@@ -57,7 +57,7 @@ public class TreeSPI implements IEntitySPI
             Engine.addEntity(e);
         };
 
-        var woodSPI = Engine.getEntitySPI(IEntitySPI.Type.WOOD);
+        var woodSPI = Engine.getEntitySPI(Type.SPAWN_WOOD);
         var loot = tree.add(new LootComponent(node -> {
             if (woodSPI != null) {
                 Entity sound = new Entity(null);

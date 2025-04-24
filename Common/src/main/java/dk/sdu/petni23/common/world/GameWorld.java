@@ -100,6 +100,7 @@ public class GameWorld
                         Engine.addEntity(entity);
                         components.forEach(component -> {
                             Component entityComponent = entity.get(component.getClass());
+                            if (entityComponent == null) return;
                             var fields = component.getClass().getFields();
                             Arrays.stream(fields).forEach(field -> {
                                 if (Modifier.isTransient(field.getModifiers())) return;

@@ -24,10 +24,15 @@ public class DeathAnimationSPI implements IEntitySPI
     @Override
     public Entity create(Entity parent)
     {
-        var pos = parent.get(PositionComponent.class);
-        assert pos != null;
+        var pos = Vector2D.ZERO;
+        if (parent != null) {
+            var positionComponent = parent.get(PositionComponent.class);
+            assert positionComponent != null;
+            pos = positionComponent.position;
+        }
 
-        Entity death = Animation.create(spriteSheet, new Vector2D(-0.5, -0.67), pos.position, DisplayComponent.Layer.FOREGROUND);
+
+        Entity death = Animation.create(spriteSheet, new Vector2D(-0.5, -0.67), pos, DisplayComponent.Layer.FOREGROUND, Type.DEATH_ANIMATION);
         death.add(new DurationComponent(1400, GameData.getCurrentMillis()));
         return death;
     }
