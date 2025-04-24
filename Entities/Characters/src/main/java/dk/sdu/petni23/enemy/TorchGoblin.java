@@ -9,6 +9,7 @@ import dk.sdu.petni23.common.components.items.LootComponent;
 import dk.sdu.petni23.common.components.actions.Action;
 import dk.sdu.petni23.common.components.actions.ActionSetComponent;
 import dk.sdu.petni23.common.components.damage.LayerComponent;
+import dk.sdu.petni23.common.components.gameflow.SpawnComponent;
 import dk.sdu.petni23.common.components.movement.VelocityComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.common.sound.SoundEffect;
@@ -52,7 +53,7 @@ public class TorchGoblin
             assert damageSPI != null;
             Entity damageEntity = damageSPI.create(Engine.getEntity(node.getEntityID()));
             //damageEntity.add(new SoundComponent("woosh1"));
-            Engine.addEntity(damageEntity); // ✅ add the one you modified
+            Engine.addEntity(damageEntity);
         };
         attack.strength = 1;
         var actionSet = new ActionSetComponent();
@@ -77,7 +78,7 @@ public class TorchGoblin
 
         goblin.add(new AIComponent(AIComponent.Type.CHARACTER, Arrays.asList(AIComponent.Type.TOWER, AIComponent.Type.CHARACTER, AIComponent.Type.NEXUS), AIComponent.Priority.CLOSEST));
         goblin.add(new PathFindingComponent());
-
+        goblin.add(new SpawnComponent(false,pos,false));
         return goblin;
     }
 }

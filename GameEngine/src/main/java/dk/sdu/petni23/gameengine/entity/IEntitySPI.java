@@ -27,7 +27,8 @@ public interface IEntitySPI
         STONE_WALL("stone_wall"),
         TOWER_1("tower_1"),
         TOWER_2("tower_2"),
-        TOWER_3("tower_3");
+        TOWER_3("tower_3"),
+        GOBLIN_HOUSE("goblin_house");
 
         private final String value;
 

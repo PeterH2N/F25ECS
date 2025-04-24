@@ -7,6 +7,7 @@ import dk.sdu.petni23.common.components.actions.ActionSetComponent;
 import dk.sdu.petni23.common.components.ai.PathFindingComponent;
 import dk.sdu.petni23.common.components.damage.AttackComponent;
 import dk.sdu.petni23.common.components.damage.ThrowComponent;
+import dk.sdu.petni23.common.components.gameflow.SpawnComponent;
 import dk.sdu.petni23.common.components.health.HealthBarComponent;
 import dk.sdu.petni23.common.components.items.LootComponent;
 import dk.sdu.petni23.common.components.movement.VelocityComponent;
@@ -71,6 +72,8 @@ public class TNTGoblin
 
         goblin.add(new AIComponent(AIComponent.Type.CHARACTER, Arrays.asList(AIComponent.Type.CHARACTER, AIComponent.Type.TOWER, AIComponent.Type.NEXUS), AIComponent.Priority.CLOSEST));
         goblin.add(new PathFindingComponent());
+
+        goblin.add(new SpawnComponent(false,pos,false));
 
         return goblin;
     }

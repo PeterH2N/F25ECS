@@ -1,5 +1,6 @@
 package dk.sdu.petni23.common;
 
+import dk.sdu.petni23.common.enums.GameMode;
 import dk.sdu.petni23.common.enums.MouseMode;
 import dk.sdu.petni23.common.misc.GameKeys;
 import dk.sdu.petni23.common.misc.Viewport;
@@ -41,6 +42,7 @@ public class GameData
     public static final DebugOptions debugOptions = new DebugOptions();
     public static final Random random = new Random(984380);
     private static MouseMode mouseMode = MouseMode.REGULAR;
+    private static GameMode gameMode = GameMode.WAIT;
     private static Entity hand;
 
     public static final MapGenOptions mapGenOptions = new MapGenOptions();
@@ -181,5 +183,13 @@ public class GameData
 
     public static void setHand(Entity entity){
         hand = entity;
+    }
+
+    public static void setGameMode(GameMode gameMode_in){
+        gameMode = gameMode_in;
+    }
+    
+    public static GameMode getGameMode(){
+        return gameMode;
     }
 }

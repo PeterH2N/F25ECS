@@ -1,6 +1,7 @@
 C:\Users\Marius-PC\Desktop\f25_2.0\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\rendering\DisplayComponent.java
 C:\Users\Marius-PC\Desktop\f25_2.0\F25ECS\Common\src\main\java\dk\sdu\petni23\common\configreader\ConfigReader.java
 C:\Users\Marius-PC\Desktop\f25_2.0\F25ECS\Common\src\main\java\dk\sdu\petni23\common\util\ColliderPair.java
+C:\Users\Marius-PC\Desktop\f25_2.0\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\gameflow\SpawnComponent.java
 C:\Users\Marius-PC\Desktop\f25_2.0\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\actions\ActionSetComponent.java
 C:\Users\Marius-PC\Desktop\f25_2.0\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\health\HealthBarComponent.java
 C:\Users\Marius-PC\Desktop\f25_2.0\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\collision\HitBoxComponent.java
@@ -29,6 +30,7 @@ C:\Users\Marius-PC\Desktop\f25_2.0\F25ECS\Common\src\main\java\dk\sdu\petni23\co
 C:\Users\Marius-PC\Desktop\f25_2.0\F25ECS\Common\src\main\java\dk\sdu\petni23\common\misc\Viewport.java
 C:\Users\Marius-PC\Desktop\f25_2.0\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\damage\AttackComponent.java
 C:\Users\Marius-PC\Desktop\f25_2.0\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\movement\PositionComponent.java
+C:\Users\Marius-PC\Desktop\f25_2.0\F25ECS\Common\src\main\java\dk\sdu\petni23\common\ISpawn.java
 C:\Users\Marius-PC\Desktop\f25_2.0\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\PlacementComponent.java
 C:\Users\Marius-PC\Desktop\f25_2.0\F25ECS\Common\src\main\java\dk\sdu\petni23\common\shape\OBShape.java
 C:\Users\Marius-PC\Desktop\f25_2.0\F25ECS\Common\src\main\java\dk\sdu\petni23\common\misc\CollisionHelper.java

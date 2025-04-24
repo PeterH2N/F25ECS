@@ -7,7 +7,9 @@ dk\sdu\petni23\structures\tower\HousePlugin.class
 dk\sdu\petni23\structures\tower\House.class
 dk\sdu\petni23\structures\tree\TreeSPI.class
 dk\sdu\petni23\structures\mine\MinePlugin.class
+dk\sdu\petni23\structures\enemyhouses\GoblinHouse.class
 dk\sdu\petni23\structures\walls\StoneWall.class
 dk\sdu\petni23\structures\shop\ShopPlugin.class
 dk\sdu\petni23\structures\archerTower\Archer.class
 dk\sdu\petni23\structures\shop\Shop.class
+dk\sdu\petni23\structures\enemyhouses\GoblinHousePlugin.class

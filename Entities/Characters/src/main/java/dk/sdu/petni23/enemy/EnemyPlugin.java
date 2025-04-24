@@ -1,23 +1,21 @@
 package dk.sdu.petni23.enemy;
 
+import java.util.ArrayList;
+
 import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.Engine;
-import dk.sdu.petni23.gameengine.services.IPluginService;
+import dk.sdu.petni23.common.ISpawn;
 
-public class EnemyPlugin implements IPluginService {
+public class EnemyPlugin implements ISpawn {
     @Override
-    public void start() {
-        for (int i = 0; i < 50; i++) {
-            Vector2D pos = GameData.randomWorldPos();
-            if (pos != null)
-                Engine.addEntity(TorchGoblin.create(pos));
-            pos = GameData.randomWorldPos();
-            if (pos != null)
-                Engine.addEntity(TNTGoblin.create(pos));
-            pos = GameData.randomWorldPos();
-            if (pos != null)
-                Engine.addEntity(Sheep.create(pos));
+    public void start(ArrayList<Vector2D> sources,int entitesPerSource) {
+        for (int i = 0;i<entitesPerSource;i++){
+            for (Vector2D s : sources){
+                Engine.addEntity(TNTGoblin.create(s));
+                Engine.addEntity(TorchGoblin.create(s));
+                //sheep removed for now
+            }
         }
     }
 

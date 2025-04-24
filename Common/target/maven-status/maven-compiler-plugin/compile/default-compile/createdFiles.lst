@@ -1,6 +1,7 @@
 dk\sdu\petni23\common\components\health\HealthBarComponent.class
 dk\sdu\petni23\common\components\ControlComponent.class
 dk\sdu\petni23\common\components\rendering\DisplayComponent$Layer.class
+dk\sdu\petni23\common\components\gameflow\SpawnComponent.class
 dk\sdu\petni23\common\shape\OvalShape.class
 dk\sdu\petni23\common\world\mapgen\MapGenOptions.class
 dk\sdu\petni23\common\components\actions\Action.class
@@ -19,6 +20,7 @@ dk\sdu\petni23\common\components\ai\AIComponent$Priority.class
 dk\sdu\petni23\common\components\rendering\SpriteComponent.class
 dk\sdu\petni23\common\components\ai\AIComponent$Type.class
 dk\sdu\petni23\common\components\sound\FootstepSoundComponent.class
+dk\sdu\petni23\common\ISpawn.class
 dk\sdu\petni23\common\misc\Viewport.class
 dk\sdu\petni23\common\components\rendering\DisplayComponent.class
 dk\sdu\petni23\common\misc\GameKeys.class
