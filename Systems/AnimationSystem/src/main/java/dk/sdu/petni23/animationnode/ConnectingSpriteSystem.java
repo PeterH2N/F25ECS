@@ -47,13 +47,13 @@ public class ConnectingSpriteSystem implements ISystem {
             // set their placement
             // get position in tile space
             var type = node.connectingSpriteComponent.type;
-            var pos = node.positionComponent.position;
+            var pos = GameWorld.toTileSpace(node.positionComponent.position);
             int x = (int) pos.x;
             int y = (int) pos.y;
-            ConnectingSpriteComponent.Type nType = getType(x, y-1);
-            ConnectingSpriteComponent.Type sType = getType(x, y+1);
-            ConnectingSpriteComponent.Type eType = getType(x+1, y);
-            ConnectingSpriteComponent.Type wType = getType(x-1, y);
+            ConnectingSpriteComponent.Type nType = getTypeTileSpace(x, y-1);
+            ConnectingSpriteComponent.Type sType = getTypeTileSpace(x, y+1);
+            ConnectingSpriteComponent.Type eType = getTypeTileSpace(x+1, y);
+            ConnectingSpriteComponent.Type wType = getTypeTileSpace(x-1, y);
 
             boolean north = nType != null && nType == type;
             boolean south = sType != null && sType == type;
@@ -136,6 +136,11 @@ public class ConnectingSpriteSystem implements ISystem {
         var tileSpace = GameWorld.toTileSpace(x, y);
         x = (int) tileSpace.x;
         y = (int) tileSpace.y;
+        if (x > GameData.worldSize - 1 || x < 0 || y > GameData.worldSize - 1 || y < 0) return ConnectingSpriteComponent.Type.NONE;
+        return connectGrid[y][x];
+    }
+
+    static ConnectingSpriteComponent.Type getTypeTileSpace(int x, int y) {
         if (x > GameData.worldSize - 1 || x < 0 || y > GameData.worldSize - 1 || y < 0) return ConnectingSpriteComponent.Type.NONE;
         return connectGrid[y][x];
     }
