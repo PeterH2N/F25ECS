@@ -47,7 +47,7 @@ public class ConnectingSpriteSystem implements ISystem {
             // set their placement
             // get position in tile space
             var type = node.connectingSpriteComponent.type;
-            var pos = GameWorld.toTileSpace(node.positionComponent.position);
+            var pos = node.positionComponent.position;
             int x = (int) pos.x;
             int y = (int) pos.y;
             ConnectingSpriteComponent.Type nType = getType(x, y-1);
