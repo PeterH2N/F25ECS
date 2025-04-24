@@ -5,6 +5,6 @@ import dk.sdu.petni23.gameengine.entity.Entity;
 
 public class PathFindingComponent extends Component {
     public transient Path path = new Path();
-    public Entity opp = null;
+    public transient Entity opp = null;
     public boolean keepPath = false;
 }

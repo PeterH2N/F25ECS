@@ -8,6 +8,7 @@ dk/sdu/petni23/common/components/damage/DamageComponent.class
 dk/sdu/petni23/common/enums/GameMode.class
 dk/sdu/petni23/common/components/actions/ActionSetComponent.class
 dk/sdu/petni23/common/shape/Shape.class
+dk/sdu/petni23/common/world/GameWorld$1.class
 dk/sdu/petni23/common/components/items/ItemComponent.class
 dk/sdu/petni23/common/configreader/ConfigReader.class
 dk/sdu/petni23/common/world/mapgen/Tile$Placement.class
@@ -53,6 +54,7 @@ dk/sdu/petni23/common/world/GameWorld.class
 dk/sdu/petni23/common/util/Util.class
 dk/sdu/petni23/common/components/rendering/DisplayComponent$Layer.class
 dk/sdu/petni23/common/components/damage/LayerComponent$Layer.class
+dk/sdu/petni23/common/world/GameWorld$ComponentTypeAdapter.class
 dk/sdu/petni23/common/components/sound/SoundComponent.class
 dk/sdu/petni23/common/components/ai/Path$Node.class
 dk/sdu/petni23/common/components/sound/FootstepSoundComponent.class

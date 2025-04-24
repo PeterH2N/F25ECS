@@ -1,8 +1,9 @@
 package dk.sdu.petni23.common.world;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
 import dk.sdu.petni23.common.GameData;
+import dk.sdu.petni23.common.shape.Shape;
 import dk.sdu.petni23.common.util.Collider;
 import dk.sdu.petni23.common.misc.Manifold;
 import dk.sdu.petni23.common.util.ColliderPair;
@@ -17,6 +18,7 @@ import dk.sdu.petni23.gameengine.node.Node;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -35,6 +37,11 @@ public class GameWorld
     public Entity nexus;
 
     public final GameMap map;
+
+    private final Gson gson = new GsonBuilder().setPrettyPrinting().
+            registerTypeHierarchyAdapter(Component.class, new ComponentTypeAdapter()).
+            //registerTypeHierarchyAdapter(Shape.class, new ShapeTypeAdapter()).
+            create();
 
     public GameWorld(MapGenOptions options)
     {
@@ -69,26 +76,49 @@ public class GameWorld
         return toWorldSpace((int) v.x, (int) v.y);
     }
 
+    public void load() {
+        var userDir = System.getProperty("user.dir") + File.separator;
+
+        try {
+            String file = Files.readString(Paths.get(userDir + "/save/save.txt"));
+            //System.out.println(file);
+
+            var type = new TypeToken<HashMap<IEntitySPI.Type, HashMap<Long, ArrayList<Component>>>>() {}.getType();
+
+            Map<IEntitySPI.Type, Map<Long, Collection<Component>>> save = gson.fromJson(file, type);
+
+
+            for (var entitySPI : Engine.getEntitySPIs()) {
+                var entitiesMap = save.get(entitySPI.getType());
+                if (entitiesMap != null) {
+                    System.out.println("here");
+                }
+            }
+
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void save() {
         var userDir = System.getProperty("user.dir") + File.separator;
 
         var allEntities = Engine.getEntities();
 
-        Map<IEntitySPI.Type, Map<Long, Collection<? extends Component>>> savedEntities = new HashMap<>();
+        Map<IEntitySPI.Type, Map<Long, Collection<Component>>> savedEntities = new HashMap<>();
 
         for (var entity : allEntities) {
             if (entity.getType() != null) {
                 savedEntities.putIfAbsent(entity.getType(), new HashMap<>());
                 var entities = savedEntities.get(entity.getType());
-                entities.put(entity.getId(), entity.getComponents());
+                entities.put(entity.getId(), entity.getComponents().values());
             }
         }
 
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
         String serialized = gson.toJson(savedEntities);
 
-        System.out.println(serialized);
+        //System.out.println(serialized);
         try {
             Files.write(Paths.get(userDir + "/save/save.txt"), Collections.singletonList(serialized), StandardCharsets.UTF_8);
         } catch (IOException e) {
@@ -96,7 +126,48 @@ public class GameWorld
         }
     }
 
-    private void insertComponents(Entity entity, Collection<? extends Component> components) {
+    static class ComponentTypeAdapter implements JsonSerializer<Component>, JsonDeserializer<Component> {
+        @Override
+        public JsonElement serialize(Component component, Type type, JsonSerializationContext jsonSerializationContext) {
+            JsonElement elem = new Gson().toJsonTree(component);
+            elem.getAsJsonObject().addProperty("type", component.getClass().getName());
+            return elem;
+        }
 
+        @Override
+        public Component deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+            JsonObject jsonObject = jsonElement.getAsJsonObject();
+            String typeName = jsonObject.get("type").getAsString();
+
+            try {
+                Class<? extends Component> cls = (Class<? extends Component>) Class.forName(typeName);
+                return new Gson().fromJson(jsonElement, cls);
+            } catch (ClassNotFoundException e) {
+                throw new JsonParseException(e);
+            }
+        }
     }
+
+    /*static class ShapeTypeAdapter implements JsonSerializer<Shape>, JsonDeserializer<Shape> {
+
+        @Override
+        public Shape deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+            JsonObject jsonObject = jsonElement.getAsJsonObject();
+            String typeName = jsonObject.get("type").getAsString();
+
+            try {
+                Class<? extends Shape> cls = (Class<? extends Shape>) Class.forName(typeName);
+                return new Gson().fromJson(jsonElement, cls);
+            } catch (ClassNotFoundException e) {
+                throw new JsonParseException(e);
+            }
+        }
+
+        @Override
+        public JsonElement serialize(Shape shape, Type type, JsonSerializationContext jsonSerializationContext) {
+            JsonElement elem = new Gson().toJsonTree(shape);
+            elem.getAsJsonObject().addProperty("type", shape.getClass().getName());
+            return elem;
+        }
+    }*/
 }

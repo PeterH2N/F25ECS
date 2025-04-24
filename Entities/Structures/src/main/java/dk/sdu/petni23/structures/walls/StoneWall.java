@@ -58,7 +58,7 @@ public class StoneWall implements IEntitySPI{
         collision.active = false;
         stoneWall.add(collision);
         var hitBox = new HitBoxComponent(hitBoxShape, offset);
-        var health = new HealthComponent(ConfigReader.getItemHealth(Type.STONE_WALL.getValue()));
+        var health = new HealthComponent(ConfigReader.getItemHealth(Type.STONE_WALL));
         var connection = new ConnectingSpriteComponent(ConnectingSpriteComponent.Type.STONE_WALL);
         var placementComponent = new PlacementComponent(hitBox, health, connection);
         stoneWall.add(placementComponent);

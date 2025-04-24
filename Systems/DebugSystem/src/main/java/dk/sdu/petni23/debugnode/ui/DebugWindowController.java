@@ -17,7 +17,7 @@ public class DebugWindowController
     @FXML
     private Text SandThresholdValue, GrassThresholdValue, FrequencyValue, islandRadiusValue, islandShapeAmplitudeValue, islandShapeFrequencyValue, islandShapeOffsetValue, islandCoastOffsetValue, landOffsetValue, coastAmplitudeValue, coastFrequencyValue, forestThresholdValue, forestFrequencyValue, forestOffsetValue, forestDensityValue;
     @FXML
-    private Button generateButton, saveButton;
+    private Button generateButton, saveButton, loadButton;
 
     @FXML
     public void initialize() {
@@ -94,6 +94,7 @@ public class DebugWindowController
         generateButton.setOnAction(actionEvent -> GameData.world.map.genMap());
 
         saveButton.setOnAction(event -> GameData.world.save());
+        loadButton.setOnAction(event -> GameData.world.load());
 
     }
 }

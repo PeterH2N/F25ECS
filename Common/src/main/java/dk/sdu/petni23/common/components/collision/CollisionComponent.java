@@ -6,7 +6,7 @@ import dk.sdu.petni23.common.util.Vector2D;
 
 public class CollisionComponent extends HasShapeComponent
 {
-    public Shape shape;
+    public transient Shape shape = null;
     public boolean active = true;
 
     public CollisionComponent(Shape shape, Vector2D offset) {
@@ -17,6 +17,7 @@ public class CollisionComponent extends HasShapeComponent
     public CollisionComponent(Shape shape) {
         this.shape = shape;
     }
+    public CollisionComponent() {}
     @Override
     public Shape getShape()
     {

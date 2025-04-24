@@ -49,8 +49,8 @@ public class Entity implements Serializable {
     }
 
     // Get all components
-    public Collection<Component> getComponents() {
-        return components.values();
+    public Map<Class<? extends Component>, Component> getComponents() {
+        return components;
     }
 
     // Get the entity's unique ID

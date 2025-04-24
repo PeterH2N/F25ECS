@@ -85,7 +85,7 @@ public class ShopController {
             shopNode = node;
         }
 
-        if(debit(ConfigReader.getItemPrices(item.getValue()))){
+        if(debit(ConfigReader.getItemPrices(item))){
             Entity entity = purchase(item);
             Engine.addEntity(entity);
             GameData.setHand(entity);

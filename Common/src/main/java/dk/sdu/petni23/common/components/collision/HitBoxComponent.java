@@ -6,7 +6,7 @@ import dk.sdu.petni23.common.util.Vector2D;
 
 public class HitBoxComponent extends HasShapeComponent
 {
-    public final Shape hitBox;
+    public transient Shape hitBox = null;
 
     public HitBoxComponent(Shape shape, Vector2D offset) {
         this.hitBox = shape;
@@ -15,6 +15,7 @@ public class HitBoxComponent extends HasShapeComponent
     public HitBoxComponent(Shape shape) {
         this.hitBox = shape;
     }
+    public HitBoxComponent(){}
     @Override
     public Shape getShape() {
         return hitBox;

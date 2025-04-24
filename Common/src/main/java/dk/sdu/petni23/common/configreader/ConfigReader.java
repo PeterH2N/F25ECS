@@ -12,6 +12,7 @@ import dk.sdu.petni23.gameengine.entity.IEntitySPI.Type;
 
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class ConfigReader {
@@ -37,9 +38,9 @@ public class ConfigReader {
     public static Document config_file;
 
     //fx ("woodenWall,gold")
-    public static Map<IEntitySPI.Type,Integer> getItemPrices(String item){
+    public static Map<IEntitySPI.Type,Integer> getItemPrices(IEntitySPI.Type item){
         Map<IEntitySPI.Type,Integer> result = new HashMap<>();
-        NodeList documentNodes = config_file.getElementsByTagName(item);
+        NodeList documentNodes = config_file.getElementsByTagName(item.toString().toLowerCase(Locale.ROOT));
         if(documentNodes.getLength()>0){
             Node itemNode = documentNodes.item(0);
 
@@ -57,8 +58,8 @@ public class ConfigReader {
             throw new RuntimeException("Document empty");
         }
     }
-    public static int getItemHealth(String item){
-        NodeList documentNodes = config_file.getElementsByTagName(item);
+    public static int getItemHealth(IEntitySPI.Type item){
+        NodeList documentNodes = config_file.getElementsByTagName(item.toString().toLowerCase(Locale.ROOT));
         if(documentNodes.getLength()>0){
             Node itemNode = documentNodes.item(0);
             return Integer.parseInt(((Element)itemNode).getElementsByTagName("health").item(0).getTextContent());

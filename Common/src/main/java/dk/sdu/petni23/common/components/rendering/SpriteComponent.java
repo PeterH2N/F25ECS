@@ -8,7 +8,7 @@ import javafx.scene.effect.Effect;
 public class SpriteComponent extends Component
 {
     public int column, row;
-    public transient final SpriteSheet spriteSheet;
+    public transient SpriteSheet spriteSheet;
     public final Vector2D spriteOrigin;
     public boolean rotateWithDirection = false;
     public boolean mirror = false;
@@ -24,5 +24,9 @@ public class SpriteComponent extends Component
 
     public SpriteComponent(SpriteSheet spriteSheet, Vector2D spriteOrigin) {
         this(spriteSheet, spriteOrigin, 0, 0);
+    }
+
+    public SpriteComponent(Vector2D spriteOrigin) {
+        this(null, spriteOrigin, 0, 0);
     }
 }
