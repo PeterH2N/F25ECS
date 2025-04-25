@@ -1,9 +1,10 @@
 <items_config>
-    <wooden_wall>
-        <gold>2</gold>
-        <wood>2</wood>
+    <wooden_fence>
+        <price>
+            <!--wood>2</wood-->
+        </price>
         <health>200</health>
-    </wooden_wall>
+    </wooden_fence>
     <stone_wall>
         <price>
             <!--stone>2</stone-->

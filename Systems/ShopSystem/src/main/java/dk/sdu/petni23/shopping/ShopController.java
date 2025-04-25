@@ -29,12 +29,13 @@ public class ShopController {
     @FXML private void selectTower2(MouseEvent e) { purchaseItem(Type.TOWER_2); }
     @FXML private void selectTower3(MouseEvent e) { purchaseItem(Type.TOWER_3); }
     @FXML private void selectWall(MouseEvent e)    { purchaseItem(Type.STONE_WALL); }
+    @FXML private void selectFence(MouseEvent e) { purchaseItem(Type.WOODEN_FENCE);}
     @FXML private AnchorPane pane;
 
-    @FXML private StackPane tower1Pane, tower2Pane, tower3Pane, wallPane;
+    @FXML private StackPane tower1Pane, tower2Pane, tower3Pane, wallPane, fencePane;
 
     @FXML private ImageView bannerImage;
-    @FXML private ImageView tower1Icon, tower2Icon, tower3Icon, wallIcon;
+    @FXML private ImageView tower1Icon, tower2Icon, tower3Icon, wallIcon, fenceIcon;
 
     @FXML
     public void initialize() {
@@ -43,6 +44,7 @@ public class ShopController {
         tower2Icon.setImage(load("/shop/Tower2.png"));
         tower3Icon.setImage(load("/shop/Tower3.png"));
         wallIcon.setImage(load("/shop/wall.png"));
+        fenceIcon.setImage(load("/shop/fence.png"));
         placeableEntities = getServices(IEntitySPI.class);
     }
 

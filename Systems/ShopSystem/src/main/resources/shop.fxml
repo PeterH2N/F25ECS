@@ -21,6 +21,9 @@
             <StackPane fx:id="wallPane" onMouseClicked="#selectWall" style="-fx-cursor: hand;">
                 <ImageView fx:id="wallIcon" fitHeight="60" fitWidth="60" />
             </StackPane>
+            <StackPane fx:id="fencePane" onMouseClicked="#selectFence" style="-fx-cursor: hand;">
+                <ImageView fx:id="fenceIcon" fitHeight="60" fitWidth="60"/>
+            </StackPane>
         </HBox>
     </children>
 </AnchorPane>

@@ -33,7 +33,7 @@ public interface IEntitySPI
         SPAWN_STONE,
         TREE,
         EXPLOSION_ANIMATION,
-        WOODEN_WALL,
+        WOODEN_FENCE,
         STONE_WALL,
         MINE,
         TOWER_1,

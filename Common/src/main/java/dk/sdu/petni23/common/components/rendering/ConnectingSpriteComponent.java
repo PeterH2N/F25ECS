@@ -12,5 +12,6 @@ public class ConnectingSpriteComponent extends Component {
     public enum Type {
         NONE,
         STONE_WALL,
+        WOODEN_FENCE
     }
 }
