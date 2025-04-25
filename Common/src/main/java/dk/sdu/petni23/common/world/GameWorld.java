@@ -97,10 +97,13 @@ public class GameWorld
                 if (entitiesMap != null) {
                     entitiesMap.values().forEach(components -> {
                         Entity entity = entitySPI.create(null);
-                        Engine.addEntity(entity);
+                        // add each component if not present, or update values if present
                         components.forEach(component -> {
                             Component entityComponent = entity.get(component.getClass());
-                            if (entityComponent == null) return;
+                            if (entityComponent == null) {
+                                entity.add(component);
+                                return;
+                            }
                             var fields = component.getClass().getFields();
                             Arrays.stream(fields).forEach(field -> {
                                 if (Modifier.isTransient(field.getModifiers())) return;
@@ -112,7 +115,16 @@ public class GameWorld
                                 }
                             });
                         });
+                        List<Class<? extends Component>> toRemove = new ArrayList<>();
+                        // remove components that are part of the entity, but not saved to file
+                        entity.getComponents().values().forEach(eComponent -> {
+                            if (components.stream().noneMatch(component -> eComponent.getClass().equals(component.getClass()))) {
+                                toRemove.add(eComponent.getClass());
+                            }
+                        });
+                        toRemove.forEach(entity::remove);
 
+                        Engine.addEntity(entity);
                     });
                 }
             }

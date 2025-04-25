@@ -14,11 +14,11 @@ public class InventoryNode extends Node
 
     @Override
     public void onRemove() {
-
+        InventorySystem.releasePlayerInventory();
     }
 
     @Override
     public void onAdd() {
-
+        InventorySystem.setPlayerInventory();
     }
 }

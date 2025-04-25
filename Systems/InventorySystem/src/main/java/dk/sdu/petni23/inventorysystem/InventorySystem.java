@@ -25,13 +25,11 @@ import java.util.Enumeration;
 
 public class InventorySystem implements ISystem, IPluginService {
     static AnchorPane pane;
-    InventoryNode playerInventory;
+    static InventoryNode playerInventory;
     static InventoryController playerController;
 
     @Override
     public void update(double deltaTime) {
-        setPlayerInventory();
-
         if (playerInventory != null) {
             // Toggle by key (E)
             if (GameData.gameKeys.isPressed(KeyCode.E)) {
@@ -58,7 +56,7 @@ public class InventorySystem implements ISystem, IPluginService {
         controller.updateInventoryValues(inventory.inventoryComponent.amounts);
     }
 
-    void setPlayerInventory() {
+    static void setPlayerInventory() {
         if (playerInventory != null)
             return;
         for (var node : Engine.getNodes(InventoryNode.class)) {
@@ -67,6 +65,18 @@ public class InventorySystem implements ISystem, IPluginService {
                 break;
             }
         }
+    }
+
+    static void releasePlayerInventory() {
+        if (playerInventory == null) return;
+        boolean foundPlayer = false;
+        for (var node : Engine.getNodes(InventoryNode.class)) {
+            if (Engine.getEntity(node.getEntityID()).get(ControlComponent.class) != null) {
+                foundPlayer = true;
+                break;
+            }
+        }
+        if (!foundPlayer) playerInventory = null;
     }
 
     @Override

@@ -44,7 +44,7 @@ public class ArcherTower implements IEntitySPI {
     }
 
     public static Entity create(Vector2D pos){
-        Entity tower = new Entity(null);
+        Entity tower = new Entity(Type.TOWER_3);
 
         var positionComponent = tower.add(new PositionComponent(pos));
 
@@ -63,8 +63,9 @@ public class ArcherTower implements IEntitySPI {
         collision.active = false;
         tower.add(collision);
         var hitBox = new HitBoxComponent(hitBoxShape, offset);
+        tower.add(hitBox);
         var healthComponent = new HealthComponent(ConfigReader.getItemHealth(Type.TOWER_3));
-        var placement = new PlacementComponent(hitBox, healthComponent);
+        var placement = new PlacementComponent(healthComponent);
         tower.add(placement);
 
         tower.add(new AIComponent(AIComponent.Type.TOWER, null, null));

@@ -66,7 +66,7 @@ public class RenderSystem implements IRenderSystem, IPluginService
         gc.setTextAlign(TextAlignment.RIGHT);
         gc.setFont(new Font(gc.getFont().getName(), 12));
         DecimalFormat df = new DecimalFormat("#0.000000");
-        gc.fillText(df.format((double)GameData.getFrameTime() / 1000000000), GameData.getDisplayWidth() - 10, 20);
+        gc.fillText(df.format((double)GameData.getFrameTime() / 1000000), GameData.getDisplayWidth() - 10, 20);
     }
 
     void drawNodes(GraphicsContext gc) {
