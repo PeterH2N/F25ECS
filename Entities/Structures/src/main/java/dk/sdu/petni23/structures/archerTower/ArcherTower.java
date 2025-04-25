@@ -63,9 +63,8 @@ public class ArcherTower implements IEntitySPI {
         collision.active = false;
         tower.add(collision);
         var hitBox = new HitBoxComponent(hitBoxShape, offset);
-        tower.add(hitBox);
         var healthComponent = new HealthComponent(ConfigReader.getItemHealth(Type.TOWER_3));
-        var placement = new PlacementComponent(healthComponent);
+        var placement = new PlacementComponent(hitBox, healthComponent);
         tower.add(placement);
 
         tower.add(new AIComponent(AIComponent.Type.TOWER, null, null));

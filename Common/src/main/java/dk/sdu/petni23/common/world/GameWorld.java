@@ -163,7 +163,8 @@ public class GameWorld
     static class ComponentTypeAdapter implements JsonSerializer<Component>, JsonDeserializer<Component> {
         @Override
         public JsonElement serialize(Component component, Type type, JsonSerializationContext jsonSerializationContext) {
-            JsonElement elem = new Gson().toJsonTree(component);
+
+            JsonElement elem = new GsonBuilder().registerTypeHierarchyAdapter(Shape.class, new ShapeTypeAdapter()).create().toJsonTree(component);
             elem.getAsJsonObject().addProperty("classType", component.getClass().getName());
             return elem;
         }
@@ -175,19 +176,19 @@ public class GameWorld
 
             try {
                 Class<? extends Component> cls = (Class<? extends Component>) Class.forName(typeName);
-                return new Gson().fromJson(jsonElement, cls);
+                return new GsonBuilder().registerTypeHierarchyAdapter(Shape.class, new ShapeTypeAdapter()).create().fromJson(jsonElement, cls);
             } catch (ClassNotFoundException e) {
                 throw new JsonParseException(e);
             }
         }
     }
 
-    /*static class ShapeTypeAdapter implements JsonSerializer<Shape>, JsonDeserializer<Shape> {
+    static class ShapeTypeAdapter implements JsonSerializer<Shape>, JsonDeserializer<Shape> {
 
         @Override
         public Shape deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
             JsonObject jsonObject = jsonElement.getAsJsonObject();
-            String typeName = jsonObject.get("type").getAsString();
+            String typeName = jsonObject.get("classType").getAsString();
 
             try {
                 Class<? extends Shape> cls = (Class<? extends Shape>) Class.forName(typeName);
@@ -200,8 +201,8 @@ public class GameWorld
         @Override
         public JsonElement serialize(Shape shape, Type type, JsonSerializationContext jsonSerializationContext) {
             JsonElement elem = new Gson().toJsonTree(shape);
-            elem.getAsJsonObject().addProperty("type", shape.getClass().getName());
+            elem.getAsJsonObject().addProperty("classType", shape.getClass().getName());
             return elem;
         }
-    }*/
+    }
 }
