@@ -38,6 +38,7 @@
         <module>ShopSystem</module>
         <module>AISystem</module>
         <module>BindingSystem</module>
+        <module>ConnectionSystem</module>
     </modules>
 
     <dependencies>

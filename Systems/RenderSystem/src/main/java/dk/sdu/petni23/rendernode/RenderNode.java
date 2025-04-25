@@ -36,7 +36,9 @@ public class RenderNode extends Node
     @OptionalComponent
     public PathFindingComponent pathFindingComponent;
     public double getY() {
-        return positionComponent.position.y;
+        double y = positionComponent.position.y;
+        if (spriteComponent != null) y -= spriteComponent.spriteOrigin.y;
+        return y;
     }
 
     public RenderNode(Entity entity) {

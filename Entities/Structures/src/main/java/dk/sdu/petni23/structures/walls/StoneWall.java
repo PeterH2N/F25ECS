@@ -2,6 +2,7 @@ package dk.sdu.petni23.structures.walls;
 
 import java.util.Objects;
 
+import dk.sdu.petni23.common.components.collision.ConnectingCollisionComponent;
 import dk.sdu.petni23.common.components.movement.VelocityComponent;
 import dk.sdu.petni23.common.components.rendering.ConnectingSpriteComponent;
 import dk.sdu.petni23.common.components.rendering.DisplayComponent;
@@ -59,9 +60,10 @@ public class StoneWall implements IEntitySPI{
         stoneWall.add(collision);
         var hitBox = new HitBoxComponent(hitBoxShape, offset);
         var health = new HealthComponent(ConfigReader.getItemHealth(Type.STONE_WALL));
-        var connection = new ConnectingSpriteComponent(ConnectingSpriteComponent.Type.STONE_WALL);
-        var placementComponent = new PlacementComponent(hitBox, health, connection);
+        var placementComponent = new PlacementComponent(hitBox, health);
         stoneWall.add(placementComponent);
+        stoneWall.add(new ConnectingCollisionComponent(Type.STONE_WALL));
+        stoneWall.add(new ConnectingSpriteComponent(Type.STONE_WALL));
 
         // band-aid fix for problem in placement system
         stoneWall.add(new VelocityComponent());

@@ -2,6 +2,7 @@ package dk.sdu.petni23.structures.walls;
 
 import dk.sdu.petni23.common.components.PlacementComponent;
 import dk.sdu.petni23.common.components.collision.CollisionComponent;
+import dk.sdu.petni23.common.components.collision.ConnectingCollisionComponent;
 import dk.sdu.petni23.common.components.collision.HitBoxComponent;
 import dk.sdu.petni23.common.components.damage.LayerComponent;
 import dk.sdu.petni23.common.components.health.HealthComponent;
@@ -33,22 +34,22 @@ public class WoodenFence implements IEntitySPI {
     }
     @Override
     public Entity create(Entity parent) {
-        Entity stoneWall = new Entity(Type.WOODEN_FENCE);
+        Entity woodenFence = new Entity(Type.WOODEN_FENCE);
 
         //add positionn component to wall entity
         var position = new PositionComponent();
-        stoneWall.add(position);
+        woodenFence.add(position);
 
         //add sprite component
-        final var origin = new Vector2D(-0.5, -1.3);
+        final var origin = new Vector2D(-0.485, -1.25);
         dk.sdu.petni23.common.components.rendering.SpriteComponent sprite = new SpriteComponent(spriteSheet, origin);
-        stoneWall.add(sprite);
+        woodenFence.add(sprite);
         sprite.column = 3;
         sprite.row = 4;
 
-        stoneWall.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
+        woodenFence.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
 
-        stoneWall.add(new LayerComponent(LayerComponent.Layer.PLAYER));
+        woodenFence.add(new LayerComponent(LayerComponent.Layer.PLAYER));
 
         Shape collisionShape = new AABBShape(0.3, 0.3);
         Shape hitBoxShape = new AABBShape(0.3, 0.3);
@@ -56,17 +57,19 @@ public class WoodenFence implements IEntitySPI {
 
         var collision = new CollisionComponent(collisionShape, offset);
         collision.active = false;
-        stoneWall.add(collision);
+        woodenFence.add(collision);
         var hitBox = new HitBoxComponent(hitBoxShape, offset);
         var health = new HealthComponent(ConfigReader.getItemHealth(Type.WOODEN_FENCE));
-        var connection = new ConnectingSpriteComponent(ConnectingSpriteComponent.Type.WOODEN_FENCE);
-        var placementComponent = new PlacementComponent(hitBox, health, connection);
-        stoneWall.add(placementComponent);
+        var placementComponent = new PlacementComponent(hitBox, health);
+        woodenFence.add(placementComponent);
+        woodenFence.add(new ConnectingSpriteComponent(Type.WOODEN_FENCE));
+        woodenFence.add(new ConnectingCollisionComponent(Type.WOODEN_FENCE));
+
 
         // band-aid fix for problem in placement system
-        stoneWall.add(new VelocityComponent());
+        woodenFence.add(new VelocityComponent());
         placementComponent.toRemove.add(VelocityComponent.class);
-        return stoneWall;
+        return woodenFence;
     }
 
     @Override

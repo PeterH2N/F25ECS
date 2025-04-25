@@ -19,7 +19,6 @@ dk/sdu/petni23/common/components/damage/ThrowComponent.class
 dk/sdu/petni23/common/sound/SoundManager.class
 dk/sdu/petni23/common/components/Dispatch.class
 dk/sdu/petni23/common/components/actions/Action$Directionality.class
-dk/sdu/petni23/common/components/rendering/ConnectingSpriteComponent$Type.class
 dk/sdu/petni23/common/world/mapgen/GameMap.class
 dk/sdu/petni23/common/components/health/HealthBarComponent.class
 dk/sdu/petni23/common/components/ControlComponent.class
@@ -65,6 +64,7 @@ dk/sdu/petni23/common/world/mapgen/Tile.class
 dk/sdu/petni23/common/misc/Manifold.class
 dk/sdu/petni23/common/misc/GridNode.class
 dk/sdu/petni23/common/components/BindingComponent.class
+dk/sdu/petni23/common/components/collision/ConnectingCollisionComponent.class
 dk/sdu/petni23/common/components/rendering/ConnectingSpriteComponent.class
 dk/sdu/petni23/common/util/ColliderPair.class
 dk/sdu/petni23/common/components/collision/HitBoxComponent.class

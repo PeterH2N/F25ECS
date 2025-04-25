@@ -1,9 +1,8 @@
-package dk.sdu.petni23.animationnode;
+package dk.sdu.petni23.connectionsystem;
 
 import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.components.rendering.ConnectingSpriteComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
-import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.node.Node;
 

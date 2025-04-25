@@ -8,6 +8,7 @@ public interface IEntitySPI
 
     Type getType();
     enum Type {
+        NONE,
         NEXUS,
         PLAYER,
         ENEMY,

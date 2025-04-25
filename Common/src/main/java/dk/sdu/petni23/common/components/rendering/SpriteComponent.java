@@ -9,7 +9,7 @@ public class SpriteComponent extends Component
 {
     public int column, row;
     public transient SpriteSheet spriteSheet;
-    public final Vector2D spriteOrigin;
+    public final transient Vector2D spriteOrigin;
     public boolean rotateWithDirection = false;
     public boolean mirror = false;
     public transient Effect effect = null;
