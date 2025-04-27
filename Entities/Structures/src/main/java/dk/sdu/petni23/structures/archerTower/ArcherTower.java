@@ -83,7 +83,7 @@ public class ArcherTower implements IEntitySPI {
         binding.bindings.put(archer, b);
         healthComponent.onDeath = node -> {
             binding.bindings.keySet().forEach(Engine::removeEntity);
-            Engine.addEntity(towerDestroyed(positionComponent.position));
+            //Engine.addEntity(towerDestroyed(positionComponent.position));
         };
 
         // band-aid solution for problem in placement system
