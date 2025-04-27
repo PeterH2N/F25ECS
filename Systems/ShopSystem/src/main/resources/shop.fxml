@@ -5,9 +5,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="129.0" prefWidth="425.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.sdu.petni23.shopping.ShopController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="129.0" prefWidth="510.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.sdu.petni23.shopping.ShopController">
     <children>
-        <ImageView fx:id="bannerImage" fitHeight="129" fitWidth="425.0" />
+        <ImageView fx:id="bannerImage" fitHeight="129" fitWidth="510.0" />
         <HBox alignment="CENTER" layoutX="32.0" layoutY="34.5" spacing="12">
             <StackPane fx:id="tower1Pane" onMouseClicked="#selectTower1" style="-fx-cursor: hand;">
                 <ImageView fx:id="tower1Icon" fitHeight="60" fitWidth="60" />
@@ -23,6 +23,9 @@
             </StackPane>
             <StackPane fx:id="fencePane" onMouseClicked="#selectFence" style="-fx-cursor: hand;">
                 <ImageView fx:id="fenceIcon" fitHeight="60" fitWidth="60" />
+            </StackPane>
+            <StackPane fx:id="removePane" onMouseClicked="#enterRemove" style="-fx-cursor: hand;">
+                <ImageView fx:id="removeIcon" fitHeight="60" fitWidth="60"/>
             </StackPane>
         </HBox>
     </children>

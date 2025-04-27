@@ -7,6 +7,7 @@ import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.components.movement.VelocityComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.common.misc.Manifold;
+import dk.sdu.petni23.common.world.GameWorld;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.services.ISystem;
@@ -38,11 +39,17 @@ public class PlacementSystem implements ISystem {
         if (GameData.getGameMode()!=GameMode.PLACING && GameData.getGameMode() != GameMode.REMOVING){
             return;
         }
-        if (GameData.getHand() == null) return;
 
         if (GameData.getGameMode() == GameMode.PLACING) {
+            // if we press escape, we simply exit placing mode and hand gets reset
+            if (GameData.gameKeys.isPressed(KeyCode.ESCAPE)) {
+                Engine.removeEntity(GameData.getHand());
+                GameData.setHand(null);
+                GameData.setGameMode(GameMode.REGULAR);
+            }
 
             var entity = GameData.getHand();
+            if (entity == null) return;
             var placementComponent = entity.get(PlacementComponent.class);
             if (placementComponent == null) return;
             var positionComponent = entity.get(PositionComponent.class);
@@ -63,7 +70,7 @@ public class PlacementSystem implements ISystem {
             }
 
 
-            if (GameData.gameKeys.isDown(MouseButton.PRIMARY) && !isColliding) {
+            if (GameData.gameKeys.isPressed(MouseButton.PRIMARY) && !isColliding) {
                 // Add the collision and hitbox components to the entity, and remove velocity
                 collision.active = true;
                 for (var component : placementComponent.components.values()) {
@@ -73,7 +80,7 @@ public class PlacementSystem implements ISystem {
                     entity.remove(c);
                 }
                 GameData.setHand(null);
-                GameData.setGameMode(GameMode.REGULAR);
+                GameData.setGameMode(GameMode.SHOPPING);
             }
 
             Vector2D mousePos = GameData.gameKeys.getMousePos();
@@ -90,6 +97,41 @@ public class PlacementSystem implements ISystem {
             double y = Math.floor(cameraPosY + (-1 * ry));
 
             positionComponent.position.set(new Vector2D(x + 0.5, y));
+
+        }
+
+        if (GameData.getGameMode() == GameMode.REMOVING) {
+            if (GameData.gameKeys.isPressed(KeyCode.ESCAPE)) {
+                GameData.setGameMode(GameMode.SHOPPING);
+            }
+            // we cant easily get intersection with sprite unfortunately
+            // we'll get all the entities that collide with the tile the mouse is currently hovering over
+            var mousePos = GameData.gameKeys.getMousePos();
+            // to world space, then tile space
+            var tilePos = GameWorld.toTileSpace(GameData.toWorldSpace(mousePos));
+            System.out.println(tilePos);
+            // get all colliders
+            var colliders = GameWorld.collisionGrid[(int) tilePos.y][(int) tilePos.x];
+            // find any colliders with a placementcomponent
+            Entity toRemove = null;
+            for (var collider : colliders) {
+                Entity r = Engine.getEntity(collider.node.getEntityID());
+                if (r.get(PlacementComponent.class) != null) {
+                    toRemove = r;
+                    break;
+                }
+            }
+            if (toRemove == null) return;
+
+            // set sprite effect
+            var sprite = toRemove.get(SpriteComponent.class);
+            if (sprite != null) {
+                sprite.effect = white;
+            }
+
+            if (GameData.gameKeys.isPressed(MouseButton.PRIMARY)) {
+                Engine.removeEntity(toRemove);
+            }
 
         }
     }

@@ -68,7 +68,7 @@ public class StoneWall implements IEntitySPI{
         // band-aid fix for problem in placement system
         stoneWall.add(new VelocityComponent());
         placementComponent.toRemove.add(VelocityComponent.class);
-        placementComponent.toRemove.add(CollisionComponent.class);
+        //placementComponent.toRemove.add(CollisionComponent.class);
         return stoneWall;
     }
 

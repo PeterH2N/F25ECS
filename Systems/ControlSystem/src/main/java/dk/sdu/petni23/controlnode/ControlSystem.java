@@ -40,7 +40,7 @@ public class ControlSystem implements ISystem
                 node.directionComponent.dir.set(toMousePos.getNormalized());
             }
             if (node.actionSetComponent != null) {
-                if (GameData.gameKeys.isDown(MouseButton.PRIMARY) && GameData.getGameMode() != GameMode.PLACING) {
+                if (GameData.gameKeys.isDown(MouseButton.PRIMARY) && GameData.getGameMode() != GameMode.PLACING && GameData.getGameMode() != GameMode.REMOVING) {
                     double speed = 1;
                     if (node.attackComponent != null) speed = node.attackComponent.speed;
                     // logic for secondary attack
