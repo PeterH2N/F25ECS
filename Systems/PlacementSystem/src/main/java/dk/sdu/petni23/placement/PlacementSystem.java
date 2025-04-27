@@ -22,6 +22,7 @@ import java.util.List;
 
 public class PlacementSystem implements ISystem {
 
+    static final List<Entity> placedEntities = new ArrayList<>();
     private final ColorAdjust white = new ColorAdjust(0.0, -0.5, 0.5, 0);
     @Override
     public void update(double deltaTime) {
