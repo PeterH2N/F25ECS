@@ -20,6 +20,7 @@ import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -109,7 +110,11 @@ public class RenderSystem implements IRenderSystem, IPluginService
         double x = pos.x + (width * o.x);
         double y = pos.y + (height * o.y);
         // effect
-        gc.setEffect(node.spriteComponent.effect);
+        Effect first = node.spriteComponent.effects.stream().findFirst().orElse(null);
+        for (int i = 0; i < node.spriteComponent.effects.size() - 1; i++) {
+            node.spriteComponent.effects.get(i).setInput(node.spriteComponent.effects.get(i+1));
+        }
+        gc.setEffect(first);
 
         boolean rotated = false;
         if (node.directionComponent != null && node.spriteComponent.rotateWithDirection) {
@@ -127,6 +132,7 @@ public class RenderSystem implements IRenderSystem, IPluginService
         if (rotated) {
             gc.setTransform(r.getMxx(), r.getMyx(), r.getMxy(), r.getMyy(), r.getTx(), r.getTy());
         }
+        node.spriteComponent.effects.clear();
 
         drawHealthBar(gc, node, pos);
     }

@@ -78,7 +78,7 @@ public class ArcherTower implements IEntitySPI {
         Binding b = (towerE, archerE) -> {
             var towerPos = towerE.get(PositionComponent.class).position;
             archerE.get(PositionComponent.class).position.set(towerPos.getAdded(new Vector2D(0, 1.85)));
-            archerE.get(SpriteComponent.class).effect = sprite.effect;
+            archerE.get(SpriteComponent.class).effects = sprite.effects;
         };
         binding.bindings.put(archer, b);
         healthComponent.onDeath = node -> {

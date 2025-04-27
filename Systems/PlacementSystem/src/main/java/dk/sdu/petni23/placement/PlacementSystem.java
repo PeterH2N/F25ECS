@@ -66,7 +66,7 @@ public class PlacementSystem implements ISystem {
             }
             var sprite = entity.get(SpriteComponent.class);
             if (sprite != null) {
-                sprite.effect = isColliding ? white : null;
+                if (isColliding) sprite.effects.add(white);
             }
 
 
@@ -126,7 +126,7 @@ public class PlacementSystem implements ISystem {
             // set sprite effect
             var sprite = toRemove.get(SpriteComponent.class);
             if (sprite != null) {
-                sprite.effect = white;
+                sprite.effects.add(white);
             }
 
             if (GameData.gameKeys.isPressed(MouseButton.PRIMARY)) {

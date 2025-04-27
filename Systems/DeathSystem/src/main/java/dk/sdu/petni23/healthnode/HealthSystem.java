@@ -17,8 +17,7 @@ public class HealthSystem implements ISystem
             var sprite = Engine.getEntity(node.getEntityID()).get(SpriteComponent.class);
             if (sprite != null) {
                 if (GameData.getCurrentMillis() <= node.healthComponent.lastHurtTime + 200)
-                    sprite.effect = white;
-                else sprite.effect = null;
+                    sprite.effects.add(white);
             }
 
             if (node.healthComponent.health <= 0) {
