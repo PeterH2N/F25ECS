@@ -110,11 +110,7 @@ public class RenderSystem implements IRenderSystem, IPluginService
         double x = pos.x + (width * o.x);
         double y = pos.y + (height * o.y);
         // effect
-        Effect first = node.spriteComponent.effects.stream().findFirst().orElse(null);
-        for (int i = 0; i < node.spriteComponent.effects.size() - 1; i++) {
-            node.spriteComponent.effects.get(i).setInput(node.spriteComponent.effects.get(i+1));
-        }
-        gc.setEffect(first);
+        gc.setEffect(node.spriteComponent.effect);
 
         boolean rotated = false;
         if (node.directionComponent != null && node.spriteComponent.rotateWithDirection) {
@@ -132,7 +128,7 @@ public class RenderSystem implements IRenderSystem, IPluginService
         if (rotated) {
             gc.setTransform(r.getMxx(), r.getMyx(), r.getMxy(), r.getMyy(), r.getTx(), r.getTy());
         }
-        node.spriteComponent.effects.clear();
+        node.spriteComponent.effect = null;
 
         drawHealthBar(gc, node, pos);
     }

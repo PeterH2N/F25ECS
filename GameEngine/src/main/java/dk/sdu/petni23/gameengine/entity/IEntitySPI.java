@@ -39,7 +39,8 @@ public interface IEntitySPI
         MINE,
         TOWER_1,
         TOWER_2,
-        TOWER_3;
+        TOWER_3,
+        GOBLIN_HOUSE;
 
         public static Type getTypeFromString(String input){
             for(Type type : Type.values()){

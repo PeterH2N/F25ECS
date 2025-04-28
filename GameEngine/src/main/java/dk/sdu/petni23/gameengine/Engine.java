@@ -46,6 +46,7 @@ public class Engine
 
     public static void removeEntity(Entity entity) {
         if (entities.get(entity.getId()) != null) {
+            // store removed nodes to call their onRemove method afterward
             List<Node> removedNodes = new ArrayList<>();
 
             nodes.removeIf(node -> {

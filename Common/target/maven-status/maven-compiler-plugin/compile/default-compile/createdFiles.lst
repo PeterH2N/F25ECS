@@ -28,6 +28,7 @@ dk/sdu/petni23/common/components/items/CurrencyComponent.class
 dk/sdu/petni23/common/components/ai/AIComponent$Type.class
 dk/sdu/petni23/common/components/Binding.class
 dk/sdu/petni23/common/util/Collider.class
+dk/sdu/petni23/common/components/gameflow/SpawnComponent.class
 dk/sdu/petni23/common/components/ai/AIComponent.class
 module-info.class
 dk/sdu/petni23/common/components/PlacementComponent.class
@@ -55,9 +56,11 @@ dk/sdu/petni23/common/util/Util.class
 dk/sdu/petni23/common/components/rendering/DisplayComponent$Layer.class
 dk/sdu/petni23/common/components/damage/LayerComponent$Layer.class
 dk/sdu/petni23/common/world/GameWorld$ComponentTypeAdapter.class
+dk/sdu/petni23/common/ISpawn.class
 dk/sdu/petni23/common/components/sound/SoundComponent.class
 dk/sdu/petni23/common/components/ai/Path$Node.class
 dk/sdu/petni23/common/components/sound/FootstepSoundComponent.class
+dk/sdu/petni23/common/enums/MouseMode.class
 dk/sdu/petni23/common/shape/AABB.class
 dk/sdu/petni23/common/GameData.class
 dk/sdu/petni23/common/world/mapgen/Tile.class

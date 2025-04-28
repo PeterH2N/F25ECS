@@ -1,6 +1,7 @@
 package dk.sdu.petni23.common;
 
 import dk.sdu.petni23.common.enums.GameMode;
+import dk.sdu.petni23.common.enums.MouseMode;
 import dk.sdu.petni23.common.misc.GameKeys;
 import dk.sdu.petni23.common.misc.Viewport;
 import dk.sdu.petni23.common.util.DebugOptions;
@@ -39,9 +40,10 @@ public class GameData
     private static final BooleanProperty focusedProperty = new SimpleBooleanProperty();
     private static boolean paused = false;
     public static final DebugOptions debugOptions = new DebugOptions();
+    private static MouseMode mouseMode = MouseMode.REGULAR;
+    private static GameMode gameMode = GameMode.WAIT;
     public static final int seed = 984380;
     public static Random random = new Random(seed);
-    private static GameMode gameMode = GameMode.REGULAR;
     private static Entity hand;
 
     public static final MapGenOptions mapGenOptions = new MapGenOptions();
@@ -168,12 +170,12 @@ public class GameData
         }
         else return new Vector2D(x, y);
     }
-    public static void setGameMode(GameMode gameMode){
-        GameData.gameMode = gameMode;
+    public static void setMouseMode(MouseMode mouseMode){
+        GameData.mouseMode = mouseMode;
     }
 
-    public static GameMode getGameMode(){
-        return GameData.gameMode;
+    public static MouseMode getMouseMode(){
+        return GameData.mouseMode;
     }
 
     public static Entity getHand(){
@@ -182,5 +184,13 @@ public class GameData
 
     public static void setHand(Entity entity){
         hand = entity;
+    }
+
+    public static void setGameMode(GameMode gameMode_in){
+        gameMode = gameMode_in;
+    }
+
+    public static GameMode getGameMode(){
+        return gameMode;
     }
 }

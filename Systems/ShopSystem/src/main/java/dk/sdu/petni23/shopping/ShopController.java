@@ -2,7 +2,7 @@ package dk.sdu.petni23.shopping;
 
 import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.configreader.ConfigReader;
-import dk.sdu.petni23.common.enums.GameMode;
+import dk.sdu.petni23.common.enums.MouseMode;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.entity.IEntitySPI;
@@ -30,7 +30,7 @@ public class ShopController {
     @FXML private void selectTower3(MouseEvent e) { purchaseItem(Type.TOWER_3); }
     @FXML private void selectWall(MouseEvent e)    { purchaseItem(Type.STONE_WALL); }
     @FXML private void selectFence(MouseEvent e) { purchaseItem(Type.WOODEN_FENCE);}
-    @FXML private void enterRemove(MouseEvent e) {GameData.setGameMode(GameMode.REMOVING);}
+    @FXML private void enterRemove(MouseEvent e) {GameData.setMouseMode(MouseMode.REMOVING);}
     @FXML private AnchorPane pane;
 
     @FXML private StackPane tower1Pane, tower2Pane, tower3Pane, wallPane, fencePane, removePane;
@@ -93,7 +93,7 @@ public class ShopController {
             Entity entity = purchase(item);
             Engine.addEntity(entity);
             GameData.setHand(entity);
-            GameData.setGameMode(GameMode.PLACING);
+            GameData.setMouseMode(MouseMode.PLACING);
         }else{
             System.out.println("Insufficient funds.");
         }

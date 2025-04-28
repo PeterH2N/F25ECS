@@ -1,4 +1,6 @@
 
+import dk.sdu.petni23.common.ISpawn;
+import dk.sdu.petni23.common.ISpawn;
 import dk.sdu.petni23.enemy.EnemyPlugin;
 import dk.sdu.petni23.enemy.Sheep;
 import dk.sdu.petni23.enemy.TNTGoblin;
@@ -15,6 +17,7 @@ module Character {
     requires GameEngine;
     opens dk.sdu.petni23.player to javafx.graphics;
     uses IEntitySPI;
-    provides IPluginService with Player, EnemyPlugin;
+    provides IPluginService with Player;
     provides IEntitySPI with Archer, Player, Knight, TNTGoblin, TorchGoblin, Sheep;
+    provides ISpawn with EnemyPlugin;
 }

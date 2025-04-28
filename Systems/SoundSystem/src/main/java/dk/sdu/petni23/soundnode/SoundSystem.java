@@ -21,7 +21,7 @@ public class SoundSystem implements ISystem {
                     volume = Math.min(volume * (1 / (dist * dist * 0.01)), 1);
                 }
 
-                System.out.println("🎧 Triggered sound: " +  soundComponent.soundEffect + " (volume: " + volume + ")");
+                //System.out.println("🎧 Triggered sound: " +  soundComponent.soundEffect + " (volume: " + volume + ")");
                 SoundManager.playSound(soundComponent.soundEffect, volume);
                 Engine.removeEntity(node.getEntityID());
             }
@@ -36,7 +36,7 @@ public class SoundSystem implements ISystem {
 
             if (footstep.lastFrame != currentFrame) {
                 if (footstep.triggerFrames.contains(currentFrame)) {
-                    System.out.println("👟 Triggering step sound: " + footstep.soundEffect);
+                    //System.out.println("👟 Triggering step sound: " + footstep.soundEffect);
                     SoundManager.playSound(footstep.soundEffect);
                 }
 

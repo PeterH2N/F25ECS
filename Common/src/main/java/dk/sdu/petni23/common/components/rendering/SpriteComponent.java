@@ -16,8 +16,7 @@ public class SpriteComponent extends Component
     public final transient Vector2D spriteOrigin;
     public boolean rotateWithDirection = false;
     public boolean mirror = false;
-    public transient List<ColorAdjust> effects = new ArrayList<>();
-    //public transient Effect effect = null;
+    public transient Effect effect = null;
 
     public SpriteComponent(SpriteSheet spriteSheet, Vector2D spriteOrigin, int column, int row)
     {

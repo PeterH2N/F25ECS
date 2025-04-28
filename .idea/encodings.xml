@@ -49,6 +49,8 @@
     <file url="file://$PROJECT_DIR$/Systems/DeathSystem/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Systems/DebugSystem/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Systems/DebugSystem/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Systems/GameFlowSystem/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Systems/GameFlowSystem/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Systems/InputSystem/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Systems/InputSystem/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Systems/InventorySystem/src/main/java" charset="UTF-8" />

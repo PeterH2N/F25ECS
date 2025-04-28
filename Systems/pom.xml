@@ -39,6 +39,7 @@
         <module>AISystem</module>
         <module>BindingSystem</module>
         <module>ConnectionSystem</module>
+        <module>GameFlowSystem</module>
     </modules>
 
     <dependencies>

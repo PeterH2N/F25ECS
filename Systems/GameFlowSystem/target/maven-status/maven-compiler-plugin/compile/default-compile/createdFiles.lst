@@ -1,0 +1,5 @@
+dk/sdu/petni23/gameflow/SpawnNode.class
+module-info.class
+dk/sdu/petni23/gameflow/SpawnNodeSPI.class
+dk/sdu/petni23/gameflow/GameFlowController.class
+dk/sdu/petni23/gameflow/GameFlowSystem.class

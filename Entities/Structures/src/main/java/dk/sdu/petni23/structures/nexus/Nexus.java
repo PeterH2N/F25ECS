@@ -63,12 +63,12 @@ public class Nexus implements IPluginService, IEntitySPI
         Binding b1 = (towerE, archerE) -> {
             var towerPos = towerE.get(PositionComponent.class).position;
             archerE.get(PositionComponent.class).position.set(towerPos.getAdded(new Vector2D(-1.5, 1.95)));
-            archerE.get(SpriteComponent.class).effects = sprite.effects;
+            archerE.get(SpriteComponent.class).effect = sprite.effect;
         };
         Binding b2 = (towerE, archerE) -> {
             var towerPos = towerE.get(PositionComponent.class).position;
             archerE.get(PositionComponent.class).position.set(towerPos.getAdded(new Vector2D(1.5, 1.95)));
-            archerE.get(SpriteComponent.class).effects = sprite.effects;
+            archerE.get(SpriteComponent.class).effect = sprite.effect;
         };
         binding.bindings.put(archer1, b1);
         binding.bindings.put(archer2, b2);
