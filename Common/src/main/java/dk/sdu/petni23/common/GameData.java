@@ -1,5 +1,6 @@
 package dk.sdu.petni23.common;
 
+import dk.sdu.petni23.common.components.inventory.InventoryComponent;
 import dk.sdu.petni23.common.enums.GameMode;
 import dk.sdu.petni23.common.enums.MouseMode;
 import dk.sdu.petni23.common.misc.GameKeys;
@@ -10,6 +11,7 @@ import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.common.world.GameWorld;
 import dk.sdu.petni23.common.world.mapgen.Tile;
+import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 import javafx.beans.property.*;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -45,6 +47,8 @@ public class GameData
     public static final int seed = 984380;
     public static Random random = new Random(seed);
     private static Entity hand;
+    private static IEntitySPI currentlyPlacing = null;
+    public static InventoryComponent playerInventory = null;
 
     public static final MapGenOptions mapGenOptions = new MapGenOptions();
     public static final GameWorld world = new GameWorld(mapGenOptions);
@@ -192,5 +196,13 @@ public class GameData
 
     public static GameMode getGameMode(){
         return gameMode;
+    }
+
+    public static IEntitySPI getCurrentlyPlacing() {
+        return currentlyPlacing;
+    }
+
+    public static void setCurrentlyPlacing(IEntitySPI currentlyPlacing) {
+        GameData.currentlyPlacing = currentlyPlacing;
     }
 }

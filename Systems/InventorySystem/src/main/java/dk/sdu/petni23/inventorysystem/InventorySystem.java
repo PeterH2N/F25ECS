@@ -25,24 +25,23 @@ import java.util.Enumeration;
 
 public class InventorySystem implements ISystem, IPluginService {
     static AnchorPane pane;
-    static InventoryNode playerInventory;
     static InventoryController playerController;
 
     @Override
     public void update(double deltaTime) {
-        if (playerInventory != null) {
+        if (GameData.playerInventory != null) {
             // Toggle by key (E)
             if (GameData.gameKeys.isPressed(KeyCode.E)) {
-                if (!playerInventory.inventoryComponent.visible) {
-                    playerInventory.inventoryComponent.visible = true;
+                if (!GameData.playerInventory.visible) {
+                    GameData.playerInventory.visible = true;
                     GameData.gameWindow.getChildren().add(pane);
                 } else {
-                    playerInventory.inventoryComponent.visible = false;
+                    GameData.playerInventory.visible = false;
                     GameData.gameWindow.getChildren().remove(pane);
                 }
             }
 
-            updateInventoryController(playerController, playerInventory);
+            updateInventoryController(playerController, GameData.playerInventory);
         }
     }
 
@@ -51,24 +50,24 @@ public class InventorySystem implements ISystem, IPluginService {
         return Priority.PROCESSING.get();
     }
 
-    void updateInventoryController(InventoryController controller, InventoryNode inventory) {
+    void updateInventoryController(InventoryController controller, InventoryComponent inventory) {
         // Update inventory values on the controller
-        controller.updateInventoryValues(inventory.inventoryComponent.amounts);
+        controller.updateInventoryValues(inventory.amounts);
     }
 
     static void setPlayerInventory() {
-        if (playerInventory != null)
+        if (GameData.playerInventory != null)
             return;
         for (var node : Engine.getNodes(InventoryNode.class)) {
             if (Engine.getEntity(node.getEntityID()).get(ControlComponent.class) != null) {
-                playerInventory = node;
+                GameData.playerInventory = node.inventoryComponent;
                 break;
             }
         }
     }
 
     static void releasePlayerInventory() {
-        if (playerInventory == null) return;
+        if (GameData.playerInventory == null) return;
         boolean foundPlayer = false;
         for (var node : Engine.getNodes(InventoryNode.class)) {
             if (Engine.getEntity(node.getEntityID()).get(ControlComponent.class) != null) {
@@ -76,7 +75,7 @@ public class InventorySystem implements ISystem, IPluginService {
                 break;
             }
         }
-        if (!foundPlayer) playerInventory = null;
+        if (!foundPlayer) GameData.playerInventory = null;
     }
 
     @Override

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -8,30 +9,33 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="129.0" prefWidth="510.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.sdu.petni23.shopping.ShopController">
     <children>
         <ImageView fx:id="bannerImage" fitHeight="129" fitWidth="510.0" />
-        <HBox alignment="CENTER" layoutX="32.0" layoutY="34.5" spacing="12">
+        <HBox alignment="CENTER" layoutX="45.0" layoutY="35.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="60.0" spacing="12">
             <StackPane fx:id="tower1Pane" onMouseClicked="#selectTower1" style="-fx-cursor: hand;">
-                <ImageView fx:id="tower1Frame" fitHeight="60" fitWidth="60" />
                 <ImageView fx:id="tower1Icon" fitHeight="60" fitWidth="60" />
+                <ImageView fx:id="tower1Frame" fitHeight="60" fitWidth="60" />
             </StackPane>
             <StackPane fx:id="tower2Pane" onMouseClicked="#selectTower2" style="-fx-cursor: hand;">
-                <ImageView fx:id="tower2Frame" fitHeight="60" fitWidth="60" />
                 <ImageView fx:id="tower2Icon" fitHeight="60" fitWidth="60" />
+                <ImageView fx:id="tower2Frame" fitHeight="60" fitWidth="60" />
             </StackPane>
             <StackPane fx:id="tower3Pane" onMouseClicked="#selectTower3" style="-fx-cursor: hand;">
-                <ImageView fx:id="tower3Frame" fitHeight="60" fitWidth="60" />
                 <ImageView fx:id="tower3Icon" fitHeight="60" fitWidth="60" />
+                <ImageView fx:id="tower3Frame" fitHeight="60" fitWidth="60" />
             </StackPane>
             <StackPane fx:id="wallPane" onMouseClicked="#selectWall" style="-fx-cursor: hand;">
+                <ImageView fx:id="wallIcon" fitHeight="40.0" fitWidth="40.0" />
                 <ImageView fx:id="wallFrame" fitHeight="60" fitWidth="60" />
-                <ImageView fx:id="wallIcon" fitHeight="60" fitWidth="60" />
             </StackPane>
             <StackPane fx:id="fencePane" onMouseClicked="#selectFence" style="-fx-cursor: hand;">
-                <ImageView fx:id="fenceFrame" fitHeight="60" fitWidth="60" />
                 <ImageView fx:id="fenceIcon" fitHeight="60" fitWidth="60" />
+                <ImageView fx:id="fenceFrame" fitHeight="60" fitWidth="60" />
             </StackPane>
             <StackPane fx:id="removePane" onMouseClicked="#selectRemove" style="-fx-cursor: hand;">
+                <ImageView fx:id="removeIcon" fitHeight="60" fitWidth="60">
+               <StackPane.margin>
+                  <Insets top="15.0" />
+               </StackPane.margin></ImageView>
                 <ImageView fx:id="removeFrame" fitHeight="60" fitWidth="60" />
-                <ImageView fx:id="removeIcon" fitHeight="60" fitWidth="60" />
             </StackPane>
         </HBox>
     </children>

@@ -37,7 +37,8 @@ public class ShopSystem implements ISystem,IPluginService {
             return;
         }
         if(GameData.gameKeys.isPressed(KeyCode.B) && GameData.getMouseMode() != MouseMode.PLACING){
-            if (GameData.getMouseMode() == MouseMode.REGULAR) shopNode.shopComponent.visible = !shopNode.shopComponent.visible;
+            shopNode.shopComponent.visible = !shopNode.shopComponent.visible;
+            GameData.setMouseMode(MouseMode.REGULAR);
             if (shopNode.shopComponent.visible) GameData.gameWindow.getChildren().add(pane);
             else GameData.gameWindow.getChildren().remove(pane);
         }

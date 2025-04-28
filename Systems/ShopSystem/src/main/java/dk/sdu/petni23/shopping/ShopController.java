@@ -25,12 +25,18 @@ public class ShopController {
 
     ImageView currentChoice = null;
 
-    @FXML private void selectTower1(MouseEvent e) { purchaseItem(Type.TOWER_1); currentChoice = tower1Frame;}
-    @FXML private void selectTower2(MouseEvent e) { purchaseItem(Type.TOWER_2); currentChoice = tower2Frame;}
-    @FXML private void selectTower3(MouseEvent e) { purchaseItem(Type.TOWER_3); currentChoice = tower3Frame;}
-    @FXML private void selectWall(MouseEvent e)    { purchaseItem(Type.STONE_WALL); currentChoice = wallFrame;}
-    @FXML private void selectFence(MouseEvent e) { purchaseItem(Type.WOODEN_FENCE); currentChoice = fenceFrame;}
-    @FXML private void selectRemove(MouseEvent e) {GameData.setMouseMode(MouseMode.REMOVING); currentChoice = removeFrame;}
+    @FXML private void selectTower1(MouseEvent e) { chooseType(Type.TOWER_1); currentChoice = tower1Frame;}
+    @FXML private void selectTower2(MouseEvent e) { chooseType(Type.TOWER_2); currentChoice = tower2Frame;}
+    @FXML private void selectTower3(MouseEvent e) { chooseType(Type.TOWER_3); currentChoice = tower3Frame;}
+    @FXML private void selectWall(MouseEvent e)    { chooseType(Type.STONE_WALL); currentChoice = wallFrame;}
+    @FXML private void selectFence(MouseEvent e) { chooseType(Type.WOODEN_FENCE); currentChoice = fenceFrame;}
+    @FXML private void selectRemove(MouseEvent e) {
+        GameData.setMouseMode(MouseMode.REMOVING);
+        currentChoice = removeFrame;
+        GameData.setCurrentlyPlacing(null);
+        Engine.removeEntity(GameData.getHand());
+        GameData.setHand(null);
+    }
     @FXML private AnchorPane pane;
 
     @FXML private StackPane tower1Pane, tower2Pane, tower3Pane, wallPane, fencePane, removePane;
@@ -83,6 +89,13 @@ public class ShopController {
             inventoryAmounts.put(resource,inventoryAmounts.get(resource)-prices.get(resource));
         }
         return true;
+    }
+
+    private void chooseType(IEntitySPI.Type type) {
+        Engine.removeEntity(GameData.getHand());
+        GameData.setHand(null);
+        GameData.setCurrentlyPlacing(Engine.getEntitySPI(type));
+        GameData.setMouseMode(MouseMode.PLACING);
     }
 
     private void purchaseItem(Type item) {

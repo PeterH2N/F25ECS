@@ -9,7 +9,7 @@ public class GoblinHousePlugin implements IPluginService{
 
     @Override
     public void start() {
-        for (int i = 0; i < GameData.worldSize / 6; i++) {
+        for (int i = 0; i < 5; i++) {
             Vector2D pos = GameData.randomWorldPos();
             if (pos != null)
                 Engine.addEntity(GoblinHouse.createGoblinHouse(pos));
