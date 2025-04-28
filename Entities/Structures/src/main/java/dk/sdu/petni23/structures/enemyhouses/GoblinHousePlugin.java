@@ -9,7 +9,7 @@ public class GoblinHousePlugin implements IPluginService{
 
     @Override
     public void start() {
-        for (int i = 0; i < GameData.worldSize / 4; i++) {
+        for (int i = 0; i < GameData.worldSize / 6; i++) {
             Vector2D pos = GameData.randomWorldPos();
             if (pos != null)
                 Engine.addEntity(GoblinHouse.createGoblinHouse(pos));
@@ -19,7 +19,7 @@ public class GoblinHousePlugin implements IPluginService{
     @Override
     public void stop() {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'stop'");
+        //throw new UnsupportedOperationException("Unimplemented method 'stop'");
     }
     
 }

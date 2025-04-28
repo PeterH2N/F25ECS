@@ -15,7 +15,7 @@ public class Engine
 {
     private static final int physicsSteps = 2;
     private final static Map<Long, Entity> entities = new HashMap<>();
-    private final static List<Node> nodes = new ArrayList<>();
+    private final static Set<Node> nodes = new HashSet<>();
     private final static List<ISystem> systems = getServices(ISystem.class);
     private final static List<IPhysicsSystem> physicsSystems = getServices(IPhysicsSystem.class);
     private final static List<IRenderSystem> renderingSystems = getServices(IRenderSystem.class);
@@ -45,6 +45,7 @@ public class Engine
     }
 
     public static void removeEntity(Entity entity) {
+        if (entity == null) return;
         if (entities.get(entity.getId()) != null) {
             // store removed nodes to call their onRemove method afterward
             List<Node> removedNodes = new ArrayList<>();

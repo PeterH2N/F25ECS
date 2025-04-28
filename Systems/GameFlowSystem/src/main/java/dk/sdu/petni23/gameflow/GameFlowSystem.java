@@ -17,7 +17,7 @@ public class GameFlowSystem implements ISystem {
     @Override
     public void update(double deltaTime) {
         if(GameData.getGameMode() == GameMode.WAIT){
-            System.out.println("Between rounds: " + Long.toString(System.currentTimeMillis()-roundEndTime));
+            //System.out.println("Between rounds: " + Long.toString(System.currentTimeMillis()-roundEndTime));
             if(System.currentTimeMillis()-roundEndTime>interval){
                 GameData.setGameMode(GameMode.IN_GAME);
                 controller.newRound();

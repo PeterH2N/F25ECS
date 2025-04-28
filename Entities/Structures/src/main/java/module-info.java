@@ -2,6 +2,7 @@
 import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 import dk.sdu.petni23.gameengine.services.IPluginService;
 import dk.sdu.petni23.structures.archerTower.ArcherTower;
+import dk.sdu.petni23.structures.enemyhouses.GoblinHouse;
 import dk.sdu.petni23.structures.enemyhouses.GoblinHousePlugin;
 import dk.sdu.petni23.structures.mine.Mine;
 import dk.sdu.petni23.structures.nexus.Nexus;
@@ -16,5 +17,5 @@ module Structures {
     requires GameEngine;
     requires Common;
     provides IPluginService with HousePlugin, Nexus,MinePlugin, GoblinHousePlugin;
-    provides IEntitySPI with TreeSPI, StoneWall, ArcherTower, Nexus, Mine, WoodenFence;
+    provides IEntitySPI with TreeSPI, StoneWall, ArcherTower, Nexus, Mine, WoodenFence, GoblinHouse;
 }

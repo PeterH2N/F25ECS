@@ -47,7 +47,7 @@ public class GameFlowController {
                 spawnPoints.add(node.getComponent(SpawnComponent.class).pos);
             }
         }
-        System.out.println(spawnPoints);
+        //System.out.println(spawnPoints);
         return spawnPoints;
     }
     private <T> ArrayList<T> getServices(Class<T> c) {

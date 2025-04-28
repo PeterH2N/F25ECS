@@ -16,27 +16,29 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.ServiceLoader;
+import java.util.*;
 
 public class ShopController {
     ArrayList<IEntitySPI> placeableEntities;
     private InventoryNode inventoryNode;
     ShopNode shopNode;
 
-    @FXML private void selectTower1(MouseEvent e) { purchaseItem(Type.TOWER_1); }
-    @FXML private void selectTower2(MouseEvent e) { purchaseItem(Type.TOWER_2); }
-    @FXML private void selectTower3(MouseEvent e) { purchaseItem(Type.TOWER_3); }
-    @FXML private void selectWall(MouseEvent e)    { purchaseItem(Type.STONE_WALL); }
-    @FXML private void selectFence(MouseEvent e) { purchaseItem(Type.WOODEN_FENCE);}
-    @FXML private void enterRemove(MouseEvent e) {GameData.setMouseMode(MouseMode.REMOVING);}
+    ImageView currentChoice = null;
+
+    @FXML private void selectTower1(MouseEvent e) { purchaseItem(Type.TOWER_1); currentChoice = tower1Frame;}
+    @FXML private void selectTower2(MouseEvent e) { purchaseItem(Type.TOWER_2); currentChoice = tower2Frame;}
+    @FXML private void selectTower3(MouseEvent e) { purchaseItem(Type.TOWER_3); currentChoice = tower3Frame;}
+    @FXML private void selectWall(MouseEvent e)    { purchaseItem(Type.STONE_WALL); currentChoice = wallFrame;}
+    @FXML private void selectFence(MouseEvent e) { purchaseItem(Type.WOODEN_FENCE); currentChoice = fenceFrame;}
+    @FXML private void selectRemove(MouseEvent e) {GameData.setMouseMode(MouseMode.REMOVING); currentChoice = removeFrame;}
     @FXML private AnchorPane pane;
 
     @FXML private StackPane tower1Pane, tower2Pane, tower3Pane, wallPane, fencePane, removePane;
 
     @FXML private ImageView bannerImage;
-    @FXML private ImageView tower1Icon, tower2Icon, tower3Icon, wallIcon, fenceIcon, removeIcon;
+    @FXML private ImageView tower1Icon, tower2Icon, tower3Icon, wallIcon, fenceIcon, removeIcon, tower1Frame, tower2Frame, tower3Frame, wallFrame, fenceFrame, removeFrame;
+
+    List<ImageView> frames;
 
     @FXML
     public void initialize() {
@@ -48,6 +50,8 @@ public class ShopController {
         fenceIcon.setImage(load("/shop/fence.png"));
         removeIcon.setImage(load("/shop/Cross.png"));
         placeableEntities = getServices(IEntitySPI.class);
+
+        frames = Arrays.asList(tower1Frame, tower2Frame, tower3Frame, wallFrame, fenceFrame, removeFrame);
     }
 
     private Image load(String path) {

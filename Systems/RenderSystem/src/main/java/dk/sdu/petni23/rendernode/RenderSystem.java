@@ -129,7 +129,6 @@ public class RenderSystem implements IRenderSystem, IPluginService
             gc.setTransform(r.getMxx(), r.getMyx(), r.getMxy(), r.getMyy(), r.getTx(), r.getTy());
         }
         node.spriteComponent.effect = null;
-
         drawHealthBar(gc, node, pos);
     }
 

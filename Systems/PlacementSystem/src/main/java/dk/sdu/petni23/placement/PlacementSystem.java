@@ -81,6 +81,7 @@ public class PlacementSystem implements ISystem {
                     entity.remove(c);
                 }
                 GameData.setHand(null);
+                GameData.setMouseMode(MouseMode.REGULAR);
             }
 
             Vector2D mousePos = GameData.gameKeys.getMousePos();

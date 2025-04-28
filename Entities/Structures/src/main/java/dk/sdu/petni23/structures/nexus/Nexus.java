@@ -55,25 +55,24 @@ public class Nexus implements IPluginService, IEntitySPI
         // add archer to tower
         Entity archer1 = Archer.create();
         Entity archer2 = Archer.create();
-        // ai component
-        Engine.addEntity(archer1);
-        Engine.addEntity(archer2);
+        //Engine.addEntity(archer1);
+        //Engine.addEntity(archer2);
         // bind archer to tower
         var binding = nexus.add(new BindingComponent());
         Binding b1 = (towerE, archerE) -> {
             var towerPos = towerE.get(PositionComponent.class).position;
             archerE.get(PositionComponent.class).position.set(towerPos.getAdded(new Vector2D(-1.5, 1.95)));
-            archerE.get(SpriteComponent.class).effect = sprite.effect;
+            archerE.get(SpriteComponent.class).effect = towerE.get(SpriteComponent.class).effect;
         };
         Binding b2 = (towerE, archerE) -> {
             var towerPos = towerE.get(PositionComponent.class).position;
             archerE.get(PositionComponent.class).position.set(towerPos.getAdded(new Vector2D(1.5, 1.95)));
-            archerE.get(SpriteComponent.class).effect = sprite.effect;
+            archerE.get(SpriteComponent.class).effect = towerE.get(SpriteComponent.class).effect;
         };
         binding.bindings.put(archer1, b1);
         binding.bindings.put(archer2, b2);
         healthComponent.onDeath = node -> {
-            binding.bindings.keySet().forEach(Engine::removeEntity);
+            //binding.bindings.keySet().forEach(Engine::removeEntity);
         };
 
         return nexus;
