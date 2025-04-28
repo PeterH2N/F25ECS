@@ -2,6 +2,7 @@ package dk.sdu.petni23.aisystem;
 
 import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.components.ControlComponent;
+import dk.sdu.petni23.common.components.PlacementComponent;
 import dk.sdu.petni23.common.components.actions.ActionSetComponent;
 import dk.sdu.petni23.common.components.ai.AIComponent;
 import dk.sdu.petni23.common.components.ai.Path;
@@ -216,7 +217,8 @@ public class AISystem implements ISystem {
                 var adj = new Path.Node(new Vector2D(x, y));
                 adj.parent = current;
                 if (adj.cell.equals(current.cell)) continue;
-                if (!adj.cell.equals(end) && GameWorld.collisionGrid[(int)adj.cell.y][(int)adj.cell.x].stream().anyMatch(collider -> collider.node.getComponent(VelocityComponent.class) == null)) continue;
+                var colliders = GameWorld.collisionGrid[(int)adj.cell.y][(int)adj.cell.x];
+                if (!adj.cell.equals(end) && colliders.stream().anyMatch(collider -> collider.node.getComponent(VelocityComponent.class) == null) && colliders.stream().allMatch(collider -> collider.node.getComponent(PlacementComponent.class) == null)) continue;
                 if (path.closed.contains(adj)) continue;
 
                 // if diagonal move

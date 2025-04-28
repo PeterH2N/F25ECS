@@ -36,7 +36,7 @@ public class ShopSystem implements ISystem,IPluginService {
         if(shopNode == null){
             return;
         }
-        if(GameData.gameKeys.isPressed(KeyCode.B) && GameData.getMouseMode() != MouseMode.PLACING){
+        if(GameData.gameKeys.isPressed(KeyCode.B) && GameData.getMouseMode() == MouseMode.REGULAR){
             shopNode.shopComponent.visible = !shopNode.shopComponent.visible;
             GameData.setMouseMode(MouseMode.REGULAR);
             if (shopNode.shopComponent.visible) GameData.gameWindow.getChildren().add(pane);
