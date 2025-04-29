@@ -40,6 +40,7 @@ public interface IEntitySPI
         TOWER_1,
         TOWER_2,
         TOWER_3,
+        WORKER,
         GOBLIN_HOUSE;
 
         public static Type getTypeFromString(String input){
