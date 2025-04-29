@@ -14,6 +14,7 @@ import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 import dk.sdu.petni23.gameengine.services.IPluginService;
+import dk.sdu.petni23.npc.Worker;
 import dk.sdu.petni23.common.util.Vector2D;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
@@ -34,7 +35,7 @@ public class Player implements IPluginService, IEntitySPI
 
     @Override
     public Entity create(Entity parent) {
-        var player = Knight.create(new Vector2D(0,0), Type.PLAYER);
+        var player = Worker.create(new Vector2D(0,0), Type.PLAYER);
         var control = new ControlComponent();
         control.ULDR = new KeyCode[] { KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D };
         control.pointsToMouse = true;
