@@ -18,7 +18,7 @@ public class GameFlowSystem implements ISystem,IPluginService {
     private static AnchorPane pane;
 
     ArrayList<IEntitySPI> placeableEntities;
-    private GameFlowController controller;
+    private GameFlowController controller = new GameFlowController();
     private final long interval = 10000;
     private long roundEndTime = System.currentTimeMillis();
 
@@ -30,7 +30,7 @@ public class GameFlowSystem implements ISystem,IPluginService {
                 controller.newRound();
                 controller.setScore("Enemies remaining: " + Integer.toString(controller.getCurrentEnemies()));
             }else{
-                controller.setScore(Long.toString(System.currentTimeMillis()-roundEndTime));
+                //controller.setScore(Long.toString(System.currentTimeMillis()-roundEndTime));
             }
         }else if(controller.endRoundIfAppropriate() && GameData.getGameMode() == GameMode.IN_GAME){
             GameData.setGameMode(GameMode.WAIT);
@@ -48,7 +48,7 @@ public class GameFlowSystem implements ISystem,IPluginService {
 
     @Override
     public void start() {
-
+        /* 
         URL url = getClass().getResource("/game_flow.fxml");
         if(url == null){
             System.out.println("FXML file for game flow not found...");
@@ -62,7 +62,7 @@ public class GameFlowSystem implements ISystem,IPluginService {
             GameData.gameWindow.getChildren().add(pane);
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
 
