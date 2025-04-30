@@ -2,6 +2,7 @@ package dk.sdu.petni23.structures.mine;
 
 import dk.sdu.petni23.common.components.rendering.DisplayComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
+import dk.sdu.petni23.common.components.ai.AIComponent;
 import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.components.rendering.AnimationComponent;
 import dk.sdu.petni23.common.components.health.DurationComponent;
@@ -24,7 +25,7 @@ import javafx.scene.image.Image;
 
 import java.util.Objects;
 
-public class Mine implements IEntitySPI{
+public class Mine implements IEntitySPI {
     private static final SpriteSheet spriteSheet;
 
     static {
@@ -88,6 +89,12 @@ public class Mine implements IEntitySPI{
         mine.add(new LayerComponent(LayerComponent.Layer.ALL));
 
         mine.add(new AnimationComponent());
+
+        mine.add(new AIComponent(
+                AIComponent.Type.MINE, // hvad minen er
+                null, // miner leder ikke efter noget
+                null // ingen prioritet nødvendig
+        ));
 
         return mine;
     }

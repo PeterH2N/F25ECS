@@ -2,6 +2,8 @@ package dk.sdu.petni23.npc;
 
 import dk.sdu.petni23.character.Character;
 import dk.sdu.petni23.common.components.ai.AIComponent;
+import dk.sdu.petni23.common.components.ai.JobComponent;
+import dk.sdu.petni23.common.components.ai.PathFindingComponent;
 import dk.sdu.petni23.common.components.health.HealthComponent;
 import dk.sdu.petni23.common.components.inventory.InventoryComponent;
 import dk.sdu.petni23.common.components.inventory.PickUpComponent;
@@ -22,6 +24,7 @@ import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 import javafx.scene.image.Image;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -48,6 +51,8 @@ public class Worker implements IEntitySPI {
         var position = worker.get(PositionComponent.class);
 
         worker.get(HealthComponent.class).invincible = true;
+
+        worker.add(new JobComponent());
 
         var spriteComponent = new SpriteComponent(spriteSheet, new Vector2D(-0.5, -127d / 192));
         worker.add(spriteComponent);
@@ -85,7 +90,15 @@ public class Worker implements IEntitySPI {
 
         worker.add(new AIComponent(CHARACTER, null, null));
 
+        worker.add(new AIComponent(
+                AIComponent.Type.CHARACTER, // hvad worker selv er
+                List.of(AIComponent.Type.MINE), // hvad den leder efter
+                AIComponent.Priority.CLOSEST // hvordan den vælger mål
+        ));
+        worker.add(new PathFindingComponent());
+
         return worker;
+
     }
 
     @Override

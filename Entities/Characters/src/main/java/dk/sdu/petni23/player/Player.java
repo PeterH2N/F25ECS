@@ -35,7 +35,7 @@ public class Player implements IPluginService, IEntitySPI
 
     @Override
     public Entity create(Entity parent) {
-        var player = Worker.create(new Vector2D(0,0), Type.PLAYER);
+        var player = Knight.create(new Vector2D(0,0), Type.PLAYER);
         var control = new ControlComponent();
         control.ULDR = new KeyCode[] { KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D };
         control.pointsToMouse = true;

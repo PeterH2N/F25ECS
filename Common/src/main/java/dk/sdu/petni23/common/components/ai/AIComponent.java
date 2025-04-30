@@ -27,6 +27,7 @@ public class AIComponent extends Component
         TOWER,
         NEXUS,
         TREE,
+        MINE,
         ALL; // only for target
     }
 }
