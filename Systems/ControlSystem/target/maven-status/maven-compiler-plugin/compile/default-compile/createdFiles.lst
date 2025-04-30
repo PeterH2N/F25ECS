@@ -1,4 +1,4 @@
-dk/sdu/petni23/controlnode/ControlSystem.class
-dk/sdu/petni23/controlnode/ControlNodeSPI.class
+dk\sdu\petni23\controlnode\ControlNode.class
+dk\sdu\petni23\controlnode\ControlNodeSPI.class
 module-info.class
-dk/sdu/petni23/controlnode/ControlNode.class
+dk\sdu\petni23\controlnode\ControlSystem.class

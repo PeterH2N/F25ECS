@@ -1,5 +1,5 @@
-dk/sdu/petni23/inventorysystem/InventoryNodeSPI.class
-dk/sdu/petni23/inventorysystem/InventoryNode.class
-dk/sdu/petni23/inventorysystem/InventorySystem.class
-dk/sdu/petni23/inventorysystem/InventoryController.class
+dk\sdu\petni23\inventorysystem\InventoryController.class
+dk\sdu\petni23\inventorysystem\InventorySystem.class
+dk\sdu\petni23\inventorysystem\InventoryNodeSPI.class
 module-info.class
+dk\sdu\petni23\inventorysystem\InventoryNode.class

@@ -21,6 +21,7 @@ import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import dk.sdu.petni23.common.components.score.ScoreComponent;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -67,6 +68,7 @@ public class TNTGoblin implements IEntitySPI
         };
         attack.strength = 1;
         goblin.add(new HealthBarComponent(40, 5, Color.RED, 1.3));
+        goblin.add(new ScoreComponent(100)); // 100 points for tnt goblinen
         var attackComponent = goblin.add(new AttackComponent(1, 1));
         //attackComponent.speed = 3;
 

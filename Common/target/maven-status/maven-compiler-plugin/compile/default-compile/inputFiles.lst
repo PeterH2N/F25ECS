@@ -1,68 +1,70 @@
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/collision/HasShapeComponent.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/ai/PathFindingComponent.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/world/mapgen/GameMap.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/sound/FootstepSoundComponent.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/world/mapgen/Tile.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/rendering/DisplayComponent.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/collision/HitBoxComponent.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/damage/ThrowComponent.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/damage/DamageComponent.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/damage/AttackComponent.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/world/mapgen/MapGenOptions.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/misc/Viewport.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/movement/PositionComponent.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/util/SimplexNoise.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/Binding.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/misc/GameKeys.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/shape/OBShape.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/misc/Manifold.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/movement/DirectionComponent.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/inventory/PickUpComponent.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/misc/CollisionHelper.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/gameflow/SpawnComponent.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/spritesystem/SpriteSheet.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/rendering/SpriteComponent.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/items/ItemComponent.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/util/Vector2D.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/enums/GameMode.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/util/Util.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/collision/CollisionComponent.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/health/HealthBarComponent.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/ai/Path.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/shape/AABBShape.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/configreader/ConfigReader.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/rendering/ConnectingSpriteComponent.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/sound/SoundManager.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/shape/Shape.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/BindingComponent.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/ai/AIComponent.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/ControlComponent.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/movement/AngularMomentumComponent.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/rendering/AnimationComponent.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/health/DurationComponent.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/GameData.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/shop/ShopComponent.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/util/DebugOptions.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/actions/Action.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/ISpawn.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/inventory/InventoryComponent.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/shape/OvalShape.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/collision/ConnectingCollisionComponent.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/util/Collider.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/shape/AABB.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/movement/TrajectoryComponent.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/misc/GridNode.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/util/ColliderPair.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/items/LootComponent.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/movement/VelocityComponent.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/damage/LayerComponent.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/world/GameWorld.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/Dispatch.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/sound/SoundComponent.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/actions/ActionSetComponent.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/module-info.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/items/CurrencyComponent.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/health/HealthComponent.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/sound/SoundEffect.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/PlacementComponent.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/enums/MouseMode.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\actions\ActionSetComponent.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\damage\AttackComponent.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\Dispatch.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\sound\SoundManager.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\damage\DamageComponent.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\sound\SoundComponent.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\items\LootComponent.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\shape\OvalShape.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\util\ColliderPair.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\util\Collider.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\BindingComponent.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\ai\Path.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\score\ScoreManager.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\items\CurrencyComponent.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\gameflow\SpawnComponent.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\world\GameWorld.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\ControlComponent.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\score\ScoreComponent.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\util\Vector2D.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\health\DurationComponent.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\damage\ThrowComponent.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\rendering\ConnectingSpriteComponent.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\movement\PositionComponent.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\ai\AIComponent.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\sound\FootstepSoundComponent.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\world\mapgen\Tile.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\collision\ConnectingCollisionComponent.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\rendering\SpriteComponent.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\items\ItemComponent.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\ISpawn.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\rendering\AnimationComponent.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\enums\MouseMode.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\damage\LayerComponent.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\actions\Action.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\shop\ShopComponent.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\misc\GameKeys.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\collision\CollisionComponent.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\movement\AngularMomentumComponent.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\movement\VelocityComponent.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\world\mapgen\MapGenOptions.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\inventory\InventoryComponent.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\movement\TrajectoryComponent.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\sound\SoundEffect.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\shape\AABBShape.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\Binding.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\util\DebugOptions.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\misc\Manifold.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\enums\GameMode.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\misc\CollisionHelper.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\shape\OBShape.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\health\HealthComponent.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\collision\HitBoxComponent.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\health\HealthBarComponent.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\PlacementComponent.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\shape\AABB.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\collision\HasShapeComponent.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\movement\DirectionComponent.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\misc\GridNode.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\shape\Shape.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\configreader\ConfigReader.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\util\SimplexNoise.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\ai\PathFindingComponent.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\GameData.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\util\Util.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\world\mapgen\GameMap.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\rendering\DisplayComponent.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\spritesystem\SpriteSheet.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\misc\Viewport.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\module-info.java
+C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Common\src\main\java\dk\sdu\petni23\common\components\inventory\PickUpComponent.java

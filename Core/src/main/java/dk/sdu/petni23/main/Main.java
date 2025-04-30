@@ -2,11 +2,10 @@ package dk.sdu.petni23.main;
 
 import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.sound.SoundEffect;
-import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.Engine;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.scene.Scene;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -27,9 +26,19 @@ public class Main extends Application {
         GameData.getFocusedProperty().bind(stage.focusedProperty());
         stage.setOnCloseRequest(windowEvent -> System.exit(0));
 
-
         SoundEffect.init();
         Engine.start();
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ScoreUI.fxml"));
+            Pane scoreUI = loader.load();
+            scoreUI.setLayoutX(20);
+            scoreUI.setLayoutY(20);
+            scoreUI.setMouseTransparent(true);
+            GameData.gameWindow.getChildren().add(scoreUI);
+        } catch (IOException e) {
+            System.err.println("Failed to load Score UI: " + e.getMessage());
+        }
 
         render();
         stage.setTitle("Hello!");
@@ -51,7 +60,7 @@ public class Main extends Application {
                 GameData.setTime(now);
                 if (!GameData.isPaused())
                     Engine.update(GameData.getDeltaTime());
-                GameData.setFrameTime(java.lang.System.nanoTime() - now);
+                GameData.setFrameTime(System.nanoTime() - now);
             }
         }.start();
     }
