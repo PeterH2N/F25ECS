@@ -6,6 +6,8 @@ module Common {
     requires java.desktop;
     requires java.xml;
     requires com.google.gson;
+    requires javafx.fxml;
+    requires javafx.controls;
     exports dk.sdu.petni23.common.shape;
     exports dk.sdu.petni23.common.util;
     exports dk.sdu.petni23.common;
@@ -29,6 +31,8 @@ module Common {
     exports dk.sdu.petni23.common.configreader;
     exports dk.sdu.petni23.common.components.ai;
     exports dk.sdu.petni23.common.sound;
+    exports dk.sdu.petni23.common.score;
+    exports dk.sdu.petni23.common.components.score;
     opens dk.sdu.petni23.common.components.collision to com.google.gson;
     opens dk.sdu.petni23.common.components.movement to com.google.gson;
     opens dk.sdu.petni23.common.components.actions to com.google.gson;

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.sdu.petni23.ui.ScoreUIController">
+
+    <children>
+      <ImageView fitHeight="50.0" fitWidth="148.0" layoutX="113.0" layoutY="-3.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Ribbons/Ribbon_Blue_3Slides.png" />
+         </image>
+      </ImageView>
+        <Text fx:id="scoreText" layoutX="152.0" layoutY="22.0" style="-fx-font-size: 20px; -fx-fill: black;" text="Score: 0" AnchorPane.rightAnchor="39.41015625" AnchorPane.topAnchor="0.41796875" />
+    </children>
+</AnchorPane>
