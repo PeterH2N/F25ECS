@@ -12,8 +12,10 @@ public class LayerComponent extends Component
     }
 
     public enum Layer {
-        PLAYER(0b01, 0b10),
-        ENEMY(0b10, PLAYER.layer),
+        PLAYER(0b0001, 0b10),
+        ENEMY(0b0010, PLAYER.layer),
+        NPC(0b0100, PLAYER.layer),
+        NPC_TARGET(PLAYER.layer, NPC.layer),
         ALL(0, Integer.MAX_VALUE),
         NONE(Integer.MAX_VALUE, Integer.MAX_VALUE);
 

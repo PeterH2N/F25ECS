@@ -11,6 +11,7 @@ public interface IEntitySPI
         NONE,
         NEXUS,
         PLAYER,
+        WORKER,
         ENEMY,
         KNIGHT,
         ARCHER,

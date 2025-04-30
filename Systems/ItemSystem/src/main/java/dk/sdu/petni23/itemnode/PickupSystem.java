@@ -46,7 +46,7 @@ public class PickupSystem implements ISystem
             var type = item.itemComponent.itemType;
             var amount = pickup.inventoryComponent.amounts.get(type);
             if (amount == null) amount = 0;
-            if (amount == 999) amount--; // hard cap on how many items can be carried
+            if (amount >= 999) amount = 998; // hard cap on how many items can be carried
             pickup.inventoryComponent.amounts.put(type, amount + 1);
             item.itemComponent.onPickup.dispatch(pickup);
             Engine.removeEntity(item.getEntityID());

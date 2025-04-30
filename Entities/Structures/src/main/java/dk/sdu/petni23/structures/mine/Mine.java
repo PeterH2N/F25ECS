@@ -1,5 +1,6 @@
 package dk.sdu.petni23.structures.mine;
 
+import dk.sdu.petni23.common.components.ai.AIComponent;
 import dk.sdu.petni23.common.components.rendering.DisplayComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.common.GameData;
@@ -85,9 +86,10 @@ public class Mine implements IEntitySPI{
         var hitBox = new HitBoxComponent(rect, new Vector2D(0, 0.5)); // a bit higher
         mine.add(hitBox);
 
-        mine.add(new LayerComponent(LayerComponent.Layer.ALL));
+        mine.add(new LayerComponent(LayerComponent.Layer.NPC_TARGET));
 
         mine.add(new AnimationComponent());
+        mine.add(new AIComponent(AIComponent.Type.MINE, null, null));
 
         return mine;
     }

@@ -1,5 +1,7 @@
 dk/sdu/petni23/player/Player.class
+dk/sdu/petni23/npc/Worker.class
 dk/sdu/petni23/player/Archer.class
+dk/sdu/petni23/npc/WorkerPlugin.class
 dk/sdu/petni23/enemy/EnemyPlugin.class
 dk/sdu/petni23/enemy/TNTGoblin.class
 dk/sdu/petni23/player/Knight.class

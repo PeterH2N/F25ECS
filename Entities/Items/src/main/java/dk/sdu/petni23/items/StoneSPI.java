@@ -1,5 +1,7 @@
 package dk.sdu.petni23.items;
 
+import dk.sdu.petni23.common.components.ai.AIComponent;
+import dk.sdu.petni23.common.components.damage.LayerComponent;
 import dk.sdu.petni23.common.components.items.CurrencyComponent;
 import dk.sdu.petni23.common.components.items.ItemComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
@@ -44,6 +46,7 @@ public class StoneSPI implements IEntitySPI {
         stone.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
         stone.add(new VelocityComponent());
         stone.add(new CurrencyComponent());
+        stone.add(new LayerComponent(LayerComponent.Layer.NPC_TARGET));
 
         ItemComponent item = new ItemComponent(IEntitySPI.Type.STONE);
         item.onPickup = node -> {
@@ -52,6 +55,7 @@ public class StoneSPI implements IEntitySPI {
             Engine.addEntity(soundEntity);
         };
         stone.add(item);
+        stone.add(new AIComponent(AIComponent.Type.STONE, null, null));
 
         return stone;
     }

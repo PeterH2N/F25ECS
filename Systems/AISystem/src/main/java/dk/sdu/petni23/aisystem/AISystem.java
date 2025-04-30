@@ -49,6 +49,7 @@ public class AISystem implements ISystem {
                 var targets = getOppsInRange(node, type, allOpps);
                 if (targets.isEmpty()) continue;
                 opps.addAll(targets);
+                break;
             }
             boolean inRange = !opps.isEmpty();
 
@@ -56,7 +57,7 @@ public class AISystem implements ISystem {
             if (inRange) {
                 // get closest opp
                 opp = getClosestDist(node, opps);
-            } else if (node.layerComponent.layer != LayerComponent.Layer.PLAYER) {
+            } else if (node.layerComponent.layer == LayerComponent.Layer.ENEMY) {
                 opp = nexus; // the nexus is the default
             } else opp = null;
             if (opp == null) continue;
@@ -67,14 +68,19 @@ public class AISystem implements ISystem {
             var n = opp.positionComponent.position.getSubtracted(node.positionComponent.position);
             var normal = n.getNormalized();
             // opp distance is most relevant in terms of the hit box
-            Vector2D oppPos = opp.positionComponent.position.getAdded(opp.hitBoxComponent.offset);
-            // subtract hit box from distance
-            double distOffset = Math.abs(normal.x) > Math.abs(normal.y) ? opp.hitBoxComponent.hitBox.aabb.hw : opp.hitBoxComponent.hitBox.aabb.hh;
+            var oppPos = new Vector2D(opp.positionComponent.position);
+            double distOffset = 0;
+            if (opp.hitBoxComponent != null) {
+                oppPos.add(opp.hitBoxComponent.offset);
+                // subtract hit box from distance
+                distOffset = Math.abs(normal.x) > Math.abs(normal.y) ? opp.hitBoxComponent.hitBox.aabb.hw : opp.hitBoxComponent.hitBox.aabb.hh;
+            }
+
             double dist = node.positionComponent.position.distance(oppPos) - distOffset;
 
             node.directionComponent.dir.set(normal);
             // attacks
-            if (node.actionSetComponent != null) {
+            if (node.actionSetComponent != null && opp.hitBoxComponent != null) {
                 // check whether we are currently performing an action
                 double speed = 1;
                 if (node.attackComponent != null) speed = node.attackComponent.speed;
@@ -152,7 +158,7 @@ public class AISystem implements ISystem {
         var targets = new ArrayList<>(opps);
         targets.removeIf(aiNode -> {
             if (aiNode.aiComponent.type != type) return true;
-            if (aiNode.hitBoxComponent == null) return true; // if no hitbox, we cant do damage
+            //if (aiNode.hitBoxComponent == null) return true; // if no hitbox, we cant do damage
             var dist = aiNode.positionComponent.position.distance(node.positionComponent.position);
             // this opp is not within range
             return dist > node.aiComponent.range;

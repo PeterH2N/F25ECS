@@ -59,6 +59,8 @@
     <file url="file://$PROJECT_DIR$/Systems/ItemSystem/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Systems/MoveSystem/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Systems/MoveSystem/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Systems/NpcSystem/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Systems/NpcSystem/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Systems/PlacementSystem/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Systems/PlacementSystem/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Systems/RenderSystem/src/main/java" charset="UTF-8" />
