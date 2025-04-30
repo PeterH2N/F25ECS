@@ -69,7 +69,6 @@ dk/sdu/petni23/common/misc/GridNode.class
 dk/sdu/petni23/common/components/BindingComponent.class
 dk/sdu/petni23/common/components/collision/ConnectingCollisionComponent.class
 dk/sdu/petni23/common/components/rendering/ConnectingSpriteComponent.class
-dk/sdu/petni23/common/util/ColliderPair.class
 dk/sdu/petni23/common/components/collision/HitBoxComponent.class
 dk/sdu/petni23/common/util/DebugOptions.class
 dk/sdu/petni23/common/components/collision/CollisionComponent.class

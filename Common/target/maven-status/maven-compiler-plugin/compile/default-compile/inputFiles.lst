@@ -52,7 +52,6 @@
 /Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/shape/AABB.java
 /Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/movement/TrajectoryComponent.java
 /Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/misc/GridNode.java
-/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/util/ColliderPair.java
 /Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/items/LootComponent.java
 /Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/movement/VelocityComponent.java
 /Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/damage/LayerComponent.java
