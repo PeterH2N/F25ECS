@@ -12,7 +12,6 @@ import dk.sdu.petni23.common.components.movement.VelocityComponent;
 import dk.sdu.petni23.common.util.Collider;
 import dk.sdu.petni23.common.misc.Manifold;
 import dk.sdu.petni23.common.shape.Shape;
-import dk.sdu.petni23.common.util.ColliderPair;
 import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.common.world.GameWorld;
 import dk.sdu.petni23.gameengine.Engine;
