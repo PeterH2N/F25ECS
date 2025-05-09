@@ -43,6 +43,7 @@
 /Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/GameData.java
 /Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/shop/ShopComponent.java
 /Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/util/DebugOptions.java
+/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/score/ScoreManager.java
 /Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/actions/Action.java
 /Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/ISpawn.java
 /Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/inventory/InventoryComponent.java
@@ -56,6 +57,8 @@
 /Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/movement/VelocityComponent.java
 /Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/damage/LayerComponent.java
 /Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/world/GameWorld.java
+/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/score/ScoreComponent.java
+/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/ai/WorkerComponent.java
 /Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/Dispatch.java
 /Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/sound/SoundComponent.java
 /Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/actions/ActionSetComponent.java

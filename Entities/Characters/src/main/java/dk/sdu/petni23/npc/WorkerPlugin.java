@@ -13,7 +13,7 @@ public class WorkerPlugin implements IPluginService {
     public void start() {
         System.out.println("✅ WorkerPlugin start() called");
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 0; i++) {
             Vector2D offset = new Vector2D(-5, i * 1.5); // forskyd X med 1.5
             Engine.addEntity(Worker.create(new Vector2D(0, 0).getAdded(offset)));
         }

@@ -4,10 +4,8 @@ import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.configreader.ConfigReader;
 import dk.sdu.petni23.common.enums.MouseMode;
 import dk.sdu.petni23.gameengine.Engine;
-import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 import dk.sdu.petni23.gameengine.entity.IEntitySPI.Type;
-import dk.sdu.petni23.inventorysystem.InventoryNode;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -25,7 +23,7 @@ public class ShopController {
     ImageView currentChoice = null;
 
     @FXML private void selectTower1(MouseEvent e) { if (chooseType(Type.TOWER_1)) currentChoice = tower1Frame;}
-    @FXML private void selectTower2(MouseEvent e) { if (chooseType(Type.TOWER_2)) currentChoice = tower2Frame;}
+    @FXML private void selectHut2(MouseEvent e) { if (chooseType(Type.WORKER_HUT)) currentChoice = hut2Frame;}
     @FXML private void selectTower3(MouseEvent e) { if (chooseType(Type.TOWER_3)) currentChoice = tower3Frame;}
     @FXML private void selectWall(MouseEvent e)    { if (chooseType(Type.STONE_WALL)) currentChoice = wallFrame;}
     @FXML private void selectFence(MouseEvent e) { if (chooseType(Type.WOODEN_FENCE)) currentChoice = fenceFrame;}
@@ -41,7 +39,7 @@ public class ShopController {
     @FXML private StackPane tower1Pane, tower2Pane, tower3Pane, wallPane, fencePane, removePane;
 
     @FXML private ImageView bannerImage;
-    @FXML private ImageView tower1Icon, tower2Icon, tower3Icon, wallIcon, fenceIcon, removeIcon, tower1Frame, tower2Frame, tower3Frame, wallFrame, fenceFrame, removeFrame;
+    @FXML private ImageView tower1Icon, tower2Icon, tower3Icon, wallIcon, fenceIcon, removeIcon, tower1Frame, hut2Frame, tower3Frame, wallFrame, fenceFrame, removeFrame;
 
     List<ImageView> frames;
 
@@ -56,7 +54,7 @@ public class ShopController {
         removeIcon.setImage(load("/shop/Cross.png"));
         placeableEntities = getServices(IEntitySPI.class);
 
-        frames = Arrays.asList(tower1Frame, tower2Frame, tower3Frame, wallFrame, fenceFrame, removeFrame);
+        frames = Arrays.asList(tower1Frame, hut2Frame, tower3Frame, wallFrame, fenceFrame, removeFrame);
     }
 
     private Image load(String path) {

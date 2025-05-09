@@ -14,9 +14,9 @@
                 <ImageView fx:id="tower1Icon" fitHeight="60" fitWidth="60" />
                 <ImageView fx:id="tower1Frame" fitHeight="60" fitWidth="60" />
             </StackPane>
-            <StackPane fx:id="tower2Pane" onMouseClicked="#selectTower2" style="-fx-cursor: hand;">
+            <StackPane fx:id="tower2Pane" onMouseClicked="#selectHut2" style="-fx-cursor: hand;">
                 <ImageView fx:id="tower2Icon" fitHeight="60" fitWidth="60" />
-                <ImageView fx:id="tower2Frame" fitHeight="60" fitWidth="60" />
+                <ImageView fx:id="hut2Frame" fitHeight="60" fitWidth="60" />
             </StackPane>
             <StackPane fx:id="tower3Pane" onMouseClicked="#selectTower3" style="-fx-cursor: hand;">
                 <ImageView fx:id="tower3Icon" fitHeight="60" fitWidth="60" />

@@ -3,6 +3,7 @@ package dk.sdu.petni23.npc;
 import dk.sdu.petni23.character.Character;
 import dk.sdu.petni23.common.components.ai.AIComponent;
 import dk.sdu.petni23.common.components.ai.PathFindingComponent;
+import dk.sdu.petni23.common.components.ai.WorkerComponent;
 import dk.sdu.petni23.common.components.health.HealthComponent;
 import dk.sdu.petni23.common.components.inventory.InventoryComponent;
 import dk.sdu.petni23.common.components.inventory.PickUpComponent;
@@ -78,7 +79,7 @@ public class Worker implements IEntitySPI {
         worker.add(new FootstepSoundComponent(SoundEffect.FOOTSTEP_PLAYER, Set.of(1, 4))); // Same sound as knight is
                                                                                            // fine.
 
-        worker.add(new InventoryComponent());
+        worker.add(new InventoryComponent(3, Type.STONE));
 
         var pickup = worker.add(new PickUpComponent());
         pickup.range = 1.0;
@@ -93,6 +94,7 @@ public class Worker implements IEntitySPI {
         ));
         ai.range = 1000;
         worker.add(new PathFindingComponent());
+        worker.add(new WorkerComponent());
 
         return worker;
 

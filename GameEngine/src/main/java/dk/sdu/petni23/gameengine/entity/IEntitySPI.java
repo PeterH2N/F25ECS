@@ -41,7 +41,8 @@ public interface IEntitySPI
         TOWER_1,
         TOWER_2,
         TOWER_3,
-        GOBLIN_HOUSE;
+        GOBLIN_HOUSE,
+        WORKER_HUT;
 
         public static Type getTypeFromString(String input){
             for(Type type : Type.values()){

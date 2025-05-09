@@ -1,9 +1,11 @@
-C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Entities\Characters\src\main\java\dk\sdu\petni23\enemy\EnemyPlugin.java
-C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Entities\Characters\src\main\java\dk\sdu\petni23\enemy\TorchGoblin.java
-C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Entities\Characters\src\main\java\dk\sdu\petni23\player\Knight.java
-C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Entities\Characters\src\main\java\dk\sdu\petni23\player\Archer.java
-C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Entities\Characters\src\main\java\dk\sdu\petni23\enemy\Sheep.java
-C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Entities\Characters\src\main\java\dk\sdu\petni23\character\Character.java
-C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Entities\Characters\src\main\java\module-info.java
-C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Entities\Characters\src\main\java\dk\sdu\petni23\enemy\TNTGoblin.java
-C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Entities\Characters\src\main\java\dk\sdu\petni23\player\Player.java
+/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Entities/Characters/src/main/java/dk/sdu/petni23/player/Player.java
+/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Entities/Characters/src/main/java/dk/sdu/petni23/character/Character.java
+/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Entities/Characters/src/main/java/dk/sdu/petni23/npc/WorkerPlugin.java
+/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Entities/Characters/src/main/java/dk/sdu/petni23/player/Knight.java
+/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Entities/Characters/src/main/java/module-info.java
+/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Entities/Characters/src/main/java/dk/sdu/petni23/npc/Worker.java
+/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Entities/Characters/src/main/java/dk/sdu/petni23/enemy/Sheep.java
+/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Entities/Characters/src/main/java/dk/sdu/petni23/enemy/TorchGoblin.java
+/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Entities/Characters/src/main/java/dk/sdu/petni23/enemy/TNTGoblin.java
+/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Entities/Characters/src/main/java/dk/sdu/petni23/player/Archer.java
+/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Entities/Characters/src/main/java/dk/sdu/petni23/enemy/EnemyPlugin.java

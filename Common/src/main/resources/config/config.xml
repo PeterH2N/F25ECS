@@ -19,4 +19,9 @@
         </price>
         <health>300</health>
     </tower_3>
+    <worker_hut>
+        <price>
+
+        </price>
+    </worker_hut>
 </items_config>

@@ -42,7 +42,7 @@ public class Player implements IPluginService, IEntitySPI
         player.add(new LayerComponent(LayerComponent.Layer.PLAYER));
         var pickup = player.add(new PickUpComponent());
         pickup.range = 1.5;
-        player.add(new InventoryComponent());
+        player.add(new InventoryComponent(999, Type.GOLD, Type.WOOD, Type.STONE, Type.MEAT));
         player.add(new HealthBarComponent(40, 5, Color.GREEN, 1.4));
         player.add(new ShopComponent());
 

@@ -11,11 +11,12 @@ import dk.sdu.petni23.structures.walls.StoneWall;
 import dk.sdu.petni23.structures.mine.MinePlugin;
 import dk.sdu.petni23.structures.tree.TreeSPI;
 import dk.sdu.petni23.structures.walls.WoodenFence;
+import dk.sdu.petni23.structures.workerHut.WorkerHut;
 
 module Structures {
     requires javafx.graphics;
     requires GameEngine;
     requires Common;
     provides IPluginService with HousePlugin, Nexus,MinePlugin, GoblinHousePlugin;
-    provides IEntitySPI with TreeSPI, StoneWall, ArcherTower, Nexus, Mine, WoodenFence, GoblinHouse;
+    provides IEntitySPI with TreeSPI, StoneWall, ArcherTower, Nexus, Mine, WoodenFence, GoblinHouse, WorkerHut;
 }

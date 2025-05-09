@@ -1,7 +1,7 @@
-C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Systems\ConnectionSystem\src\main\java\dk\sdu\petni23\connectionsystem\ConnectingCollisionSystem.java
-C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Systems\ConnectionSystem\src\main\java\module-info.java
-C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Systems\ConnectionSystem\src\main\java\dk\sdu\petni23\connectionsystem\ConnectingSpriteSystem.java
-C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Systems\ConnectionSystem\src\main\java\dk\sdu\petni23\connectionsystem\ConnectingCollisionNodeSPI.java
-C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Systems\ConnectionSystem\src\main\java\dk\sdu\petni23\connectionsystem\ConnectingCollisionNode.java
-C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Systems\ConnectionSystem\src\main\java\dk\sdu\petni23\connectionsystem\ConnectingSpriteNode.java
-C:\Users\nicol\OneDrive\Skrivebord\Skole\4 semester entity structure\F25ECS\Systems\ConnectionSystem\src\main\java\dk\sdu\petni23\connectionsystem\ConnectingSpriteNodeSPI.java
+/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Systems/ConnectionSystem/src/main/java/dk/sdu/petni23/connectionsystem/ConnectingCollisionSystem.java
+/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Systems/ConnectionSystem/src/main/java/dk/sdu/petni23/connectionsystem/ConnectingSpriteNodeSPI.java
+/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Systems/ConnectionSystem/src/main/java/dk/sdu/petni23/connectionsystem/ConnectingSpriteNode.java
+/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Systems/ConnectionSystem/src/main/java/module-info.java
+/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Systems/ConnectionSystem/src/main/java/dk/sdu/petni23/connectionsystem/ConnectingSpriteSystem.java
+/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Systems/ConnectionSystem/src/main/java/dk/sdu/petni23/connectionsystem/ConnectingCollisionNode.java
+/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Systems/ConnectionSystem/src/main/java/dk/sdu/petni23/connectionsystem/ConnectingCollisionNodeSPI.java

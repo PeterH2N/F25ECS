@@ -79,6 +79,10 @@ public class AISystem implements ISystem {
             double dist = node.positionComponent.position.distance(oppPos) - distOffset;
 
             node.directionComponent.dir.set(normal);
+
+            // worker behavior
+
+
             // attacks
             if (node.actionSetComponent != null && opp.hitBoxComponent != null) {
                 // check whether we are currently performing an action
@@ -111,6 +115,7 @@ public class AISystem implements ISystem {
                 }
             }
 
+            // pathfinding
             if (node.pathFindingComponent != null && node.velocityComponent != null && node.positionComponent != null) {
                 if (!node.pathFindingComponent.keepPath) node.pathFindingComponent.path = new Path();
                 Entity oppE = Engine.getEntity(opp.getEntityID());
@@ -151,6 +156,10 @@ public class AISystem implements ISystem {
             }
         }
 
+
+    }
+
+    private void attack(AINode node, AINode opp) {
 
     }
 

@@ -1,14 +1,11 @@
 package dk.sdu.petni23.placement;
 
-import dk.sdu.petni23.common.components.BindingComponent;
 import dk.sdu.petni23.common.components.PlacementComponent;
 import dk.sdu.petni23.common.components.collision.CollisionComponent;
 import dk.sdu.petni23.common.components.health.HealthComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
-import dk.sdu.petni23.common.components.movement.VelocityComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.common.configreader.ConfigReader;
-import dk.sdu.petni23.common.misc.Manifold;
 import dk.sdu.petni23.common.world.GameWorld;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.entity.Entity;
@@ -16,12 +13,10 @@ import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 import dk.sdu.petni23.gameengine.services.ISystem;
 import dk.sdu.petni23.common.util.Vector2D;
 import javafx.scene.effect.ColorAdjust;
-import javafx.scene.effect.Effect;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 
 import dk.sdu.petni23.common.GameData;
-import dk.sdu.petni23.common.enums.GameMode;
 import dk.sdu.petni23.common.enums.MouseMode;
 
 import java.util.ArrayList;
@@ -84,10 +79,11 @@ public class PlacementSystem implements ISystem {
 
             if (GameData.gameKeys.isReleased(MouseButton.PRIMARY) && !isColliding) {
                 if (purchase(ConfigReader.getItemPrices(entity.getType()))) {
-                    System.out.println("entities:" + Engine.getEntities().size());
                     // add
+                    if (placementComponent.onPlace != null)
+                        placementComponent.onPlace.dispatch(null);
                     collision.active = true;
-                    for (var component : placementComponent.components.values()) {
+                    for (var component : placementComponent.toAdd.values()) {
                         entity.add(component);
                     }
                     for (var c : placementComponent.toRemove) {
