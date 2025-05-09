@@ -1,6 +1,7 @@
 package dk.sdu.petni23.animationnode;
 
 import dk.sdu.petni23.common.GameData;
+import dk.sdu.petni23.common.components.ai.WorkerComponent;
 import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.services.ISystem;
@@ -14,8 +15,10 @@ public class AnimationSystem implements ISystem
             node.spriteComponent.row = 0;
             double speed = 1;
             if (node.attackComponent != null) speed = node.attackComponent.speed;
+            doWorkerAnimation(node);
             doRegularAnimation(node);
             if (!doActionAnimation(node, speed)) speed = 1;
+
 
             int numFrames = node.spriteComponent.spriteSheet.numFramesArray[node.spriteComponent.row];
             int i = (int)((node.animationComponent.time / (100 / speed)) % node.spriteComponent.spriteSheet.numFramesArray[node.spriteComponent.row]);
@@ -58,6 +61,14 @@ public class AnimationSystem implements ISystem
         return false;
     }
 
+    private void doWorkerAnimation(AnimationNode node) {
+        if (node.workerComponent == null) return;
+        if (node.workerComponent.state == WorkerComponent.State.RETURNING)
+            node.spriteComponent.row = 4;
+        else
+            node.spriteComponent.row = 0;
+    }
+
     private void doRegularAnimation(AnimationNode node) {
         long now = GameData.getCurrentMillis();
         node.animationComponent.time = now - node.animationComponent.createdAt;
@@ -79,8 +90,6 @@ public class AnimationSystem implements ISystem
 
         if (moving) {
             node.spriteComponent.row++;
-
-
         }
     }
 

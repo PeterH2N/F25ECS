@@ -1,6 +1,8 @@
 package dk.sdu.petni23.animationnode;
 
+import dk.sdu.petni23.common.components.ai.WorkerComponent;
 import dk.sdu.petni23.common.components.damage.AttackComponent;
+import dk.sdu.petni23.common.components.inventory.InventoryComponent;
 import dk.sdu.petni23.common.components.rendering.AnimationComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.common.components.actions.ActionSetComponent;
@@ -23,6 +25,8 @@ public class AnimationNode extends Node
     public ActionSetComponent actionSetComponent;
     @OptionalComponent
     public AttackComponent attackComponent;
+    @OptionalComponent
+    public WorkerComponent workerComponent;
 
     public AnimationNode(Entity entity) {
         super(entity);

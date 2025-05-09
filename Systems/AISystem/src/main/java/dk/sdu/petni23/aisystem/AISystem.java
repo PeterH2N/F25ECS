@@ -6,19 +6,21 @@ import dk.sdu.petni23.common.components.PlacementComponent;
 import dk.sdu.petni23.common.components.actions.ActionSetComponent;
 import dk.sdu.petni23.common.components.ai.AIComponent;
 import dk.sdu.petni23.common.components.ai.Path;
+import dk.sdu.petni23.common.components.ai.WorkerComponent;
+import dk.sdu.petni23.common.components.collision.HitBoxComponent;
 import dk.sdu.petni23.common.components.damage.LayerComponent;
+import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.components.movement.VelocityComponent;
 import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.common.world.GameWorld;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.entity.Entity;
+import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 import dk.sdu.petni23.gameengine.services.ISystem;
 
 import java.util.*;
 
 public class AISystem implements ISystem {
-
-    static AINode nexus;
     static final Map<Integer, List<AINode>> nodes = new HashMap<>();
     static final double delay = 1;
     static double elapsedTime = 0;
@@ -40,51 +42,64 @@ public class AISystem implements ISystem {
             if (Engine.getEntity(node.getEntityID()).get(ControlComponent.class) != null) continue;
 
             if (node.velocityComponent != null) node.velocityComponent.velocity.set(0,0); // reset movement
+            int actionIndex = 0;
             var allOpps = nodes.get(node.layerComponent.layer.opponent());
             List<AINode> opps = new ArrayList<>();
+            Entity opp = null;
+            // if entity is a worker, we change behavior
+            if (node.workerComponent != null) {
+                // first, change status depending on inventory
+                if (node.inventoryComponent.amounts.get(IEntitySPI.Type.STONE) >= node.inventoryComponent.maxAmount)
+                    node.workerComponent.state = WorkerComponent.State.RETURNING;
+                if (node.inventoryComponent.amounts.get(IEntitySPI.Type.STONE) <= 0)
+                    node.workerComponent.state = WorkerComponent.State.COLLECTING;
 
+                if (node.workerComponent.state == WorkerComponent.State.RETURNING) {
+                    opp = node.workerComponent.home;
+                    actionIndex = 1;
+                }
+            }
 
             // get all nodes that fit the priority type, and are in range. if none exist, move on to next.
-            for (var type : node.aiComponent.TargetPriorityList) {
-                var targets = getOppsInRange(node, type, allOpps);
-                if (targets.isEmpty()) continue;
-                opps.addAll(targets);
-                break;
+            if (opp == null)
+            {
+                for (var type : node.aiComponent.TargetPriorityList) {
+                    var targets = getOppsInRange(node, type, allOpps);
+                    if (targets.isEmpty()) continue;
+                    opps.addAll(targets);
+                    break;
+                }
+                boolean inRange = !opps.isEmpty();
+                if (inRange) {
+                    // get closest opp
+                    opp = getClosestDist(node, opps);
+                } else if (node.layerComponent.layer == LayerComponent.Layer.ENEMY) {
+                    opp = GameData.world.nexus; // the nexus is the default
+                }
             }
-            boolean inRange = !opps.isEmpty();
-
-            AINode opp;
-            if (inRange) {
-                // get closest opp
-                opp = getClosestDist(node, opps);
-            } else if (node.layerComponent.layer == LayerComponent.Layer.ENEMY) {
-                opp = nexus; // the nexus is the default
-            } else opp = null;
             if (opp == null) continue;
 
             double minDist = 0;
             boolean isPerformingAction = false;
             // vector between node and opp
-            var n = opp.positionComponent.position.getSubtracted(node.positionComponent.position);
+            var n = opp.get(PositionComponent.class).position.getSubtracted(node.positionComponent.position);
             var normal = n.getNormalized();
             // opp distance is most relevant in terms of the hit box
-            var oppPos = new Vector2D(opp.positionComponent.position);
+            var oppPos = new Vector2D(opp.get(PositionComponent.class).position);
             double distOffset = 0;
-            if (opp.hitBoxComponent != null) {
-                oppPos.add(opp.hitBoxComponent.offset);
+            if (opp.get(HitBoxComponent.class) != null) {
+                oppPos.add(opp.get(HitBoxComponent.class).offset);
                 // subtract hit box from distance
-                distOffset = Math.abs(normal.x) > Math.abs(normal.y) ? opp.hitBoxComponent.hitBox.aabb.hw : opp.hitBoxComponent.hitBox.aabb.hh;
+                distOffset = Math.abs(normal.x) > Math.abs(normal.y) ? opp.get(HitBoxComponent.class).hitBox.aabb.hw : opp.get(HitBoxComponent.class).hitBox.aabb.hh;
             }
 
             double dist = node.positionComponent.position.distance(oppPos) - distOffset;
 
             node.directionComponent.dir.set(normal);
 
-            // worker behavior
-
 
             // attacks
-            if (node.actionSetComponent != null && opp.hitBoxComponent != null) {
+            if (node.actionSetComponent != null && opp.get(HitBoxComponent.class) != null) {
                 // check whether we are currently performing an action
                 double speed = 1;
                 if (node.attackComponent != null) speed = node.attackComponent.speed;
@@ -103,14 +118,14 @@ public class AISystem implements ISystem {
                     }
                     // if within throw range
                     if (!isPerformingAction && canThrow && dist + distOffset <= node.throwComponent.range && dist + distOffset > node.throwComponent.min) {
-                        performAction(node.actionSetComponent, 0, speed);
+                        performAction(node.actionSetComponent, actionIndex, speed);
                     }
 
 
                 } else if (node.attackComponent != null) {
                     // if within attack range
                     if (!isPerformingAction && dist <= node.attackComponent.range) {
-                        performAction(node.actionSetComponent, 0, speed);
+                        performAction(node.actionSetComponent, actionIndex, speed);
                     }
                 }
             }
@@ -118,17 +133,16 @@ public class AISystem implements ISystem {
             // pathfinding
             if (node.pathFindingComponent != null && node.velocityComponent != null && node.positionComponent != null) {
                 if (!node.pathFindingComponent.keepPath) node.pathFindingComponent.path = new Path();
-                Entity oppE = Engine.getEntity(opp.getEntityID());
-                node.pathFindingComponent.keepPath = opp.velocityComponent == null && node.pathFindingComponent.opp == oppE; // if opp is static, and we have not updated the target, we do not update the path
-                node.pathFindingComponent.opp = oppE; // update opp
+                node.pathFindingComponent.keepPath = opp.get(VelocityComponent.class) == null && node.pathFindingComponent.opp == opp; // if opp is static, and we have not updated the target, we do not update the path
+                node.pathFindingComponent.opp = opp; // update opp
                 if (!isPerformingAction) {
                     if (dist >= minDist) {
                         if (!node.pathFindingComponent.keepPath || node.pathFindingComponent.path.closed.isEmpty()) {
                             // find new path
                             var start = GameWorld.toTileSpace(node.positionComponent.position);
-                            var end = GameWorld.toTileSpace(opp.positionComponent.position);
+                            var end = GameWorld.toTileSpace(opp.get(PositionComponent.class).position);
                             var startNode = new Path.Node(start);
-                            aStar(startNode, end, node.pathFindingComponent.path);
+                            aStar(startNode, end, node.pathFindingComponent.path, node);
                         }
 
                         // move according to path
@@ -159,10 +173,6 @@ public class AISystem implements ISystem {
 
     }
 
-    private void attack(AINode node, AINode opp) {
-
-    }
-
     private static ArrayList<AINode> getOppsInRange(AINode node, AIComponent.Type type, List<AINode> opps) {
         var targets = new ArrayList<>(opps);
         targets.removeIf(aiNode -> {
@@ -180,7 +190,7 @@ public class AISystem implements ISystem {
         return Priority.PROCESSING.get();
     }
 
-    private AINode getClosestDist(AINode node, List<AINode> opps) {
+    private Entity getClosestDist(AINode node, List<AINode> opps) {
         double closestDist = GameData.worldSize;
         AINode closest = null;
         for (var opp : opps) {
@@ -190,7 +200,8 @@ public class AISystem implements ISystem {
                 closest = opp;
             }
         }
-        return closest;
+        if (closest == null) return null;
+        return Engine.getEntity(closest.getEntityID());
     }
 
     private void performAction(ActionSetComponent acs, int i, double speed) {
@@ -201,7 +212,7 @@ public class AISystem implements ISystem {
         acs.lastActionTime = now;
     }
 
-    private void aStar(Path.Node current, Vector2D end, Path path) {
+    private void aStar(Path.Node current, Vector2D end, Path path, AINode aiNode) {
         if (current.cell.equals(end) || path.closed.size() > 400) {
             path.closed.add(current);
             // remove all irrelevant nodes
@@ -233,7 +244,7 @@ public class AISystem implements ISystem {
                 adj.parent = current;
                 if (adj.cell.equals(current.cell)) continue;
                 var colliders = GameWorld.collisionGrid[(int)adj.cell.y][(int)adj.cell.x];
-                if (!adj.cell.equals(end) && colliders.stream().anyMatch(collider -> collider.node.getComponent(VelocityComponent.class) == null) && colliders.stream().allMatch(collider -> collider.node.getComponent(PlacementComponent.class) == null)) continue;
+                if (!adj.cell.equals(end) && colliders.stream().anyMatch(collider -> collider.node.getComponent(VelocityComponent.class) == null) && (aiNode.layerComponent.layer == LayerComponent.Layer.NPC || colliders.stream().allMatch(collider -> collider.node.getComponent(PlacementComponent.class) == null))) continue;
                 if (path.closed.contains(adj)) continue;
 
                 // if diagonal move
@@ -263,7 +274,7 @@ public class AISystem implements ISystem {
 
         // go again
         if (bestNode == null) return;
-        aStar(bestNode, end, path);
+        aStar(bestNode, end, path, aiNode);
     }
 
     // to be used in tile space

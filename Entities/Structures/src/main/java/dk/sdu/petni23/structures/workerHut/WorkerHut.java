@@ -3,8 +3,10 @@ package dk.sdu.petni23.structures.workerHut;
 import dk.sdu.petni23.common.components.Binding;
 import dk.sdu.petni23.common.components.BindingComponent;
 import dk.sdu.petni23.common.components.PlacementComponent;
+import dk.sdu.petni23.common.components.ai.AIComponent;
 import dk.sdu.petni23.common.components.ai.WorkerComponent;
 import dk.sdu.petni23.common.components.collision.CollisionComponent;
+import dk.sdu.petni23.common.components.collision.HitBoxComponent;
 import dk.sdu.petni23.common.components.inventory.InventoryComponent;
 import dk.sdu.petni23.common.components.inventory.PickUpComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
@@ -44,18 +46,16 @@ public class WorkerHut implements IEntitySPI {
 
         var rect = new AABBShape((21d * 0.5) / 8, (9d * 0.5) / 8);
         var collision = new CollisionComponent(rect, new Vector2D(0, 0.45));
+        var hitBox = hut.add(new HitBoxComponent(rect, new Vector2D(0, 0.45)));
         collision.active = false;
         hut.add(collision);
 
-
-
         //worker
-        var worker = Objects.requireNonNull(Engine.getEntitySPI(Type.WORKER)).create(null);
-        Binding binding = (hutE, workerE) -> {
-            workerE.get(WorkerComponent.class).home.set(positionComponent.position);
-        };
+        var worker = Worker.create();
+        Binding binding = (hutE, workerE) -> {};
         var bindingComponent = new BindingComponent();
         bindingComponent.bindings.put(worker, binding);
+        worker.get(WorkerComponent.class).home = hut;
 
         // not adding binding util hut is places.
         var placementComponent = hut.add(new PlacementComponent(bindingComponent));

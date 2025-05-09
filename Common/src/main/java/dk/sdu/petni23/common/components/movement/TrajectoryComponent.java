@@ -7,7 +7,7 @@ import dk.sdu.petni23.common.util.Vector2D;
 public class TrajectoryComponent extends Component
 {
     public final Vector2D start;
-    public final Vector2D end;
+    public Vector2D end;
 
     public final Vector2D dir;
     public double height;

@@ -13,6 +13,7 @@ public class PickupSystem implements ISystem
         var pickupNodes = Engine.getNodes(PickUpNode.class);
         for (var item : Engine.getNodes(ItemNode.class)) {
             Vector2D itemPos = item.positionComponent.position;
+            item.velocityComponent.velocity.set(0,0);
             double closestDist = Double.MAX_VALUE;
             PickUpNode closest = null;
             for (var pickupNode : pickupNodes) {

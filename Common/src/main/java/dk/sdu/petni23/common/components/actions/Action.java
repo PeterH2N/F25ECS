@@ -19,6 +19,7 @@ public class Action
     }
 
     public enum Directionality {
+        MONO(1),
         BI(2),
         QUAD(4),
         OCT(8);
