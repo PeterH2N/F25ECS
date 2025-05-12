@@ -71,7 +71,7 @@ public class ShopController {
         Map<IEntitySPI.Type,Integer> inventoryAmounts = GameData.playerInventory.amounts;
         for(IEntitySPI.Type resource : prices.keySet()){
             if(inventoryAmounts.get(resource)==null || inventoryAmounts.get(resource)<prices.get(resource)){
-                System.out.println("Not enough of resource in inventory");
+                GameData.gameLog.write("Cannot afford this item");
                 return false;
             }
         }

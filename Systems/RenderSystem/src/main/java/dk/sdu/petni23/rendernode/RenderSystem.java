@@ -6,6 +6,7 @@ import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.components.ai.Path;
 import dk.sdu.petni23.common.components.rendering.DisplayComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
+import dk.sdu.petni23.common.gamelogging.GameLog;
 import dk.sdu.petni23.common.shape.AABBShape;
 import dk.sdu.petni23.common.shape.OBShape;
 import dk.sdu.petni23.common.shape.OvalShape;
@@ -24,11 +25,13 @@ import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.transform.Rotate;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 
@@ -60,6 +63,7 @@ public class RenderSystem implements IRenderSystem, IPluginService
 
         drawNodes(gc);
         drawDebug(gc);
+        drawGameLog(gc);
     }
 
     void drawFrameTime(GraphicsContext gc) {
@@ -326,6 +330,30 @@ public class RenderSystem implements IRenderSystem, IPluginService
                 if (x + width < 0 || x > GameData.getDisplayWidth() || y + height < 0 || y > GameData.getDisplayHeight()) continue;
                 gc.drawImage(img, x, y, width, height);
             }
+        }
+    }
+
+    void drawGameLog(GraphicsContext gc) {
+        double fontSize = GameData.logFont.getSize();
+        gc.setFont(GameData.logFont);
+        var messages = GameData.gameLog.getMessages(5);
+        double maxWidth = 450;
+        double yOffset = fontSize + 5;
+        double yPadding = 110;
+        double xPadding = 20;
+        for (int i = 0; i < messages.size(); i++) {
+            var message = messages.get(i);
+            double fade = 1;
+            long fadeMillis = message.createdAt() + GameData.gameLog.getTimeVisible() - GameData.getCurrentMillis();
+            if (fadeMillis <= 500) {
+                fade = (double) fadeMillis / 500d;
+            }
+            double y = GameData.getDisplayHeight() - yOffset * i - yPadding;
+            double x = xPadding;
+            gc.setFill(new Color(0,0,0,0.5 * fade));
+            gc.fillRect(x - 5, y - yOffset + 5, maxWidth + 10, yOffset);
+            gc.setFill(new Color(1,1,1, fade));
+            gc.fillText(message.msg(), x, y, maxWidth);
         }
     }
 

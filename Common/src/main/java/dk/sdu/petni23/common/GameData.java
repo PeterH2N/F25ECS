@@ -3,6 +3,7 @@ package dk.sdu.petni23.common;
 import dk.sdu.petni23.common.components.inventory.InventoryComponent;
 import dk.sdu.petni23.common.enums.GameMode;
 import dk.sdu.petni23.common.enums.MouseMode;
+import dk.sdu.petni23.common.gamelogging.GameLog;
 import dk.sdu.petni23.common.misc.GameKeys;
 import dk.sdu.petni23.common.misc.Viewport;
 import dk.sdu.petni23.common.util.DebugOptions;
@@ -16,6 +17,7 @@ import javafx.beans.property.*;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.util.Random;
@@ -49,6 +51,9 @@ public class GameData
     private static Entity hand;
     private static IEntitySPI currentlyPlacing = null;
     public static InventoryComponent playerInventory = null;
+    public static final GameLog gameLog = new GameLog();
+
+    public static final Font logFont = Font.loadFont(GameData.class.getResourceAsStream("/fonts/Fleftex_M.ttf"), 16);
 
     public static final MapGenOptions mapGenOptions = new MapGenOptions();
     public static final GameWorld world = new GameWorld(mapGenOptions);
