@@ -1,9 +1,9 @@
 package dk.sdu.petni23.structures.workerHut;
 
+import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.components.Binding;
 import dk.sdu.petni23.common.components.BindingComponent;
 import dk.sdu.petni23.common.components.PlacementComponent;
-import dk.sdu.petni23.common.components.ai.AIComponent;
 import dk.sdu.petni23.common.components.ai.WorkerComponent;
 import dk.sdu.petni23.common.components.collision.CollisionComponent;
 import dk.sdu.petni23.common.components.collision.HitBoxComponent;
@@ -14,14 +14,16 @@ import dk.sdu.petni23.common.components.movement.VelocityComponent;
 import dk.sdu.petni23.common.components.rendering.AnimationComponent;
 import dk.sdu.petni23.common.components.rendering.DisplayComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
+import dk.sdu.petni23.common.components.ui.HoverInteractComponent;
 import dk.sdu.petni23.common.shape.AABBShape;
-import dk.sdu.petni23.common.shape.OvalShape;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.common.util.Vector2D;
-import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.entity.IEntitySPI;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 
 import java.util.Objects;
 
@@ -41,7 +43,7 @@ public class WorkerHut implements IEntitySPI {
         hut.add(new SpriteComponent(spriteSheet, new Vector2D(-0.5, -0.9)));
         hut.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
         hut.add(new AnimationComponent());
-        hut.add(new InventoryComponent(999, Type.STONE));
+        var inventory = hut.add(new InventoryComponent(999, Type.STONE));
         hut.add(new PickUpComponent());
 
         var rect = new AABBShape((21d * 0.5) / 8, (9d * 0.5) / 8);
@@ -65,6 +67,19 @@ public class WorkerHut implements IEntitySPI {
         // band-aid fix for problem in placement system
         hut.add(new VelocityComponent());
         placementComponent.toRemove.add(VelocityComponent.class);
+
+        Button b = new Button();
+        b.setText("Collect");
+        b.setOnAction(actionEvent -> {
+            int amount = inventory.amounts.get(Type.STONE);
+            amount += GameData.playerInventory.amounts.get(Type.STONE);
+            if (amount > GameData.playerInventory.maxAmount) amount = GameData.playerInventory.maxAmount;
+            GameData.playerInventory.amounts.put(Type.STONE, amount);
+            inventory.amounts.put(Type.STONE, 0);
+        });
+        double w = 96;
+        double h = 128;
+        placementComponent.toAdd.put(HoverInteractComponent.class, new HoverInteractComponent(b, w, h, new Vector2D(0,1)));
 
         return hut;
     }

@@ -15,6 +15,7 @@ import dk.sdu.petni23.structures.workerHut.WorkerHut;
 
 module Structures {
     requires javafx.graphics;
+    requires javafx.controls;
     requires GameEngine;
     requires Common;
     provides IPluginService with HousePlugin, Nexus,MinePlugin, GoblinHousePlugin;

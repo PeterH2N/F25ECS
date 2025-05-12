@@ -33,6 +33,7 @@ module Common {
     exports dk.sdu.petni23.common.sound;
     exports dk.sdu.petni23.common.score;
     exports dk.sdu.petni23.common.components.score;
+    exports dk.sdu.petni23.common.components.ui;
     exports dk.sdu.petni23.common.gamelogging;
     opens dk.sdu.petni23.common.components.collision to com.google.gson;
     opens dk.sdu.petni23.common.components.movement to com.google.gson;

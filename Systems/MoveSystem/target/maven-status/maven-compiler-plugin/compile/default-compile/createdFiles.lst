@@ -1,1 +1,10 @@
+dk/sdu/petni23/movenode/RotateNodeSPI.class
+dk/sdu/petni23/movenode/MoveNode.class
+dk/sdu/petni23/movenode/MoveSystem.class
 module-info.class
+dk/sdu/petni23/movenode/TrajectoryNodeSPI.class
+dk/sdu/petni23/movenode/TrajectorySystem.class
+dk/sdu/petni23/movenode/TrajectoryNode.class
+dk/sdu/petni23/movenode/RotationSystem.class
+dk/sdu/petni23/movenode/RotateNode.class
+dk/sdu/petni23/movenode/MoveNodeSPI.class

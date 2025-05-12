@@ -244,7 +244,7 @@ public class AISystem implements ISystem {
                 adj.parent = current;
                 if (adj.cell.equals(current.cell)) continue;
                 var colliders = GameWorld.collisionGrid[(int)adj.cell.y][(int)adj.cell.x];
-                if (!adj.cell.equals(end) && colliders.stream().anyMatch(collider -> collider.node.getComponent(VelocityComponent.class) == null) && (aiNode.layerComponent.layer == LayerComponent.Layer.NPC || colliders.stream().allMatch(collider -> collider.node.getComponent(PlacementComponent.class) == null))) continue;
+                if (!adj.cell.equals(end) && colliders.stream().anyMatch(collider -> collider.node.getComponent(VelocityComponent.class) == null)) continue;
                 if (path.closed.contains(adj)) continue;
 
                 // if diagonal move

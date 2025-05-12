@@ -19,9 +19,7 @@ import javafx.scene.input.MouseButton;
 import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.enums.MouseMode;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class PlacementSystem implements ISystem {
 
@@ -50,9 +48,13 @@ public class PlacementSystem implements ISystem {
         if (GameData.getMouseMode() == MouseMode.PLACING) {
 
             if (GameData.getCurrentlyPlacing() != null && GameData.getHand() == null) {
-                var e = GameData.getCurrentlyPlacing().create(null);
-                Engine.addEntity(e);
-                GameData.setHand(e);
+                if (canAfford(ConfigReader.getItemPrices(GameData.getCurrentlyPlacing().getType()))) {
+                    var e = GameData.getCurrentlyPlacing().create(null);
+                    Engine.addEntity(e);
+                    GameData.setHand(e);
+                } else {
+                    GameData.setMouseMode(MouseMode.REGULAR);
+                }
             }
 
             var entity = GameData.getHand();
@@ -77,19 +79,23 @@ public class PlacementSystem implements ISystem {
             }
 
 
-            if (GameData.gameKeys.isReleased(MouseButton.PRIMARY) && !isColliding) {
-                if (purchase(ConfigReader.getItemPrices(entity.getType()))) {
-                    // add
-                    if (placementComponent.onPlace != null)
-                        placementComponent.onPlace.dispatch(null);
-                    collision.active = true;
-                    for (var component : placementComponent.toAdd.values()) {
-                        entity.add(component);
+            if (GameData.gameKeys.isReleased(MouseButton.PRIMARY)) {
+                if (isColliding)
+                    GameData.gameLog.write("Cannot place here");
+                else {
+                    if (purchase(ConfigReader.getItemPrices(entity.getType()))) {
+                        // add
+                        if (placementComponent.onPlace != null)
+                            placementComponent.onPlace.dispatch(null);
+                        collision.active = true;
+                        for (var component : placementComponent.toAdd.values()) {
+                            entity.add(component);
+                        }
+                        for (var c : placementComponent.toRemove) {
+                            entity.remove(c);
+                        }
+                        GameData.setHand(null);
                     }
-                    for (var c : placementComponent.toRemove) {
-                        entity.remove(c);
-                    }
-                    GameData.setHand(null);
                 }
             }
 
@@ -141,12 +147,21 @@ public class PlacementSystem implements ISystem {
         }
     }
 
+    private boolean canAfford(Map<IEntitySPI.Type, Integer> prices) {
+        Map<IEntitySPI.Type,Integer> inventoryAmounts = GameData.playerInventory.amounts;
+        for(IEntitySPI.Type resource : prices.keySet()){
+            if(inventoryAmounts.get(resource)==null || inventoryAmounts.get(resource) < prices.get(resource)){
+                return false;
+            }
+        }
+        return true;
+    }
+
     private boolean purchase(Map<IEntitySPI.Type, Integer> prices) {
 
         Map<IEntitySPI.Type,Integer> inventoryAmounts = GameData.playerInventory.amounts;
         for(IEntitySPI.Type resource : prices.keySet()){
             if(inventoryAmounts.get(resource)==null || inventoryAmounts.get(resource) < prices.get(resource)) {
-                System.out.println("No such resource in inventory");
                 return false;
             }
         }

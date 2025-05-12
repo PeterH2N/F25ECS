@@ -17,8 +17,8 @@ public class IOPlugin implements IPluginService
         scene.setOnKeyReleased(event -> GameData.gameKeys.setInput(event.getCode(), false));
 
         // update mouse click
-        GameData.canvas.setOnMousePressed(event -> GameData.gameKeys.setInput(event.getButton(), true));
-        GameData.canvas.setOnMouseReleased(event -> GameData.gameKeys.setInput(event.getButton(), false));
+        GameData.uiPane.setOnMousePressed(event -> GameData.gameKeys.setInput(event.getButton(), true));
+        GameData.uiPane.setOnMouseReleased(event -> GameData.gameKeys.setInput(event.getButton(), false));
 
         // update mouse position in screen space
         scene.setOnMouseMoved(event -> GameData.gameKeys.setMousePos(event.getSceneX(), event.getSceneY()));

@@ -2,6 +2,7 @@
 /Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/ai/PathFindingComponent.java
 /Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/world/mapgen/GameMap.java
 /Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/sound/FootstepSoundComponent.java
+/Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/ui/HoverInteractComponent.java
 /Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/world/mapgen/Tile.java
 /Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/rendering/DisplayComponent.java
 /Users/phhnielsen/Code/Semesterprojekt/F25ECS/Common/src/main/java/dk/sdu/petni23/common/components/collision/HitBoxComponent.java

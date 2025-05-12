@@ -16,6 +16,8 @@ import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 import javafx.beans.property.*;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -32,6 +34,7 @@ public class GameData
     private static final DoubleProperty displayRatioProperty = new SimpleDoubleProperty();
     private static final DoubleProperty tileRatioProperty = new SimpleDoubleProperty();
     public static final StackPane gameWindow = new StackPane();
+    public static final Pane uiPane = new Pane();
     public static final Scene scene = new Scene(gameWindow);
     public static Stage stage;
     public static final Canvas canvas = new Canvas();
@@ -64,6 +67,8 @@ public class GameData
         tileRatioProperty.bind(ppmProperty.multiply(1.0 / 64.0)); // reciprocal of 64 (tilesize in pixels) multiplied by pixels per tile
         displayWidth.bind(gameWindow.widthProperty());
         displayHeight.bind(gameWindow.heightProperty());
+        gameWindow.getChildren().add(canvas);
+        gameWindow.getChildren().add(uiPane);
     }
     public static Entity getShop(){
         return shop;

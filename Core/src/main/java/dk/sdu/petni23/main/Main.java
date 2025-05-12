@@ -5,8 +5,6 @@ import dk.sdu.petni23.common.sound.SoundEffect;
 import dk.sdu.petni23.gameengine.Engine;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -29,19 +27,8 @@ public class Main extends Application {
         SoundEffect.init();
         Engine.start();
 
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ScoreUI.fxml"));
-            Pane scoreUI = loader.load();
-            scoreUI.setLayoutX(20);
-            scoreUI.setLayoutY(20);
-            scoreUI.setMouseTransparent(true);
-            GameData.gameWindow.getChildren().add(scoreUI);
-        } catch (IOException e) {
-            System.err.println("Failed to load Score UI: " + e.getMessage());
-        }
-
         render();
-        stage.setTitle("Hello!");
+        stage.setTitle("Tiny Swords");
         stage.setScene(GameData.scene);
         stage.show();
     }

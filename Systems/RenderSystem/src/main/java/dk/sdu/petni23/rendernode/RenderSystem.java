@@ -44,7 +44,7 @@ public class RenderSystem implements IRenderSystem, IPluginService
     @Override
     public void start()
     {
-        GameData.gameWindow.getChildren().add(canvas);
+        //GameData.gameWindow.getChildren().add(canvas);
         canvas.getGraphicsContext2D().setImageSmoothing(false);
         canvas.widthProperty().bind(GameData.displayWidthProperty());
         canvas.heightProperty().bind(GameData.displayHeightProperty());
@@ -353,6 +353,7 @@ public class RenderSystem implements IRenderSystem, IPluginService
             gc.setFill(new Color(0,0,0,0.5 * fade));
             gc.fillRect(x - 5, y - yOffset + 5, maxWidth + 10, yOffset);
             gc.setFill(new Color(1,1,1, fade));
+            gc.setTextAlign(TextAlignment.LEFT);
             gc.fillText(message.msg(), x, y, maxWidth);
         }
     }

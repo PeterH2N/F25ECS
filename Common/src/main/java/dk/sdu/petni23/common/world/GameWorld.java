@@ -3,6 +3,7 @@ package dk.sdu.petni23.common.world;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import dk.sdu.petni23.common.GameData;
+import dk.sdu.petni23.common.components.PlacementComponent;
 import dk.sdu.petni23.common.shape.Shape;
 import dk.sdu.petni23.common.util.Collider;
 import dk.sdu.petni23.common.misc.Manifold;
@@ -112,6 +113,11 @@ public class GameWorld
                                 }
                             });
                         });
+                        // all entities with placement components need these added
+                        var placement = entity.get(PlacementComponent.class);
+                        if (placement != null) {
+                            placement.toAdd.values().forEach(entity::add);
+                        }
                         List<Class<? extends Component>> toRemove = new ArrayList<>();
                         // remove components that are part of the entity, but not saved to file
                         entity.getComponents().values().forEach(eComponent -> {

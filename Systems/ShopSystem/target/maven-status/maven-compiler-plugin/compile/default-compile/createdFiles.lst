@@ -1,1 +1,5 @@
+dk/sdu/petni23/shopping/ShopNodeSPI.class
 module-info.class
+dk/sdu/petni23/shopping/ShopSystem.class
+dk/sdu/petni23/shopping/ShopController.class
+dk/sdu/petni23/shopping/ShopNode.class

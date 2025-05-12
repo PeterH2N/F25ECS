@@ -1,1 +1,6 @@
+dk/sdu/petni23/itemnode/PickupSystem.class
+dk/sdu/petni23/itemnode/ItemNode.class
+dk/sdu/petni23/itemnode/ItemNodeSPI.class
 module-info.class
+dk/sdu/petni23/itemnode/PickUpNode.class
+dk/sdu/petni23/itemnode/PickUpNodeSPI.class

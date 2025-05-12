@@ -1,13 +1,17 @@
 package dk.sdu.petni23.gameflow;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.enums.GameMode;
 import dk.sdu.petni23.gameengine.entity.IEntitySPI;
+import dk.sdu.petni23.gameengine.services.IPluginService;
 import dk.sdu.petni23.gameengine.services.ISystem;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.layout.Pane;
 
-public class GameFlowSystem implements ISystem {
+public class GameFlowSystem implements ISystem, IPluginService {
 
     ArrayList<IEntitySPI> placeableEntities;
     private GameFlowController controller = new GameFlowController();
@@ -35,5 +39,24 @@ public class GameFlowSystem implements ISystem {
     @Override
     public int getPriority() {
         return Priority.PREPROCESSING.get();
+    }
+
+    @Override
+    public void start() {
+        try {
+            FXMLLoader loader = new FXMLLoader(GameFlowSystem.class.getResource("/ScoreUI.fxml"));
+            Pane scoreUI = loader.load();
+            scoreUI.setLayoutX(20);
+            scoreUI.setLayoutY(20);
+            scoreUI.setMouseTransparent(true);
+            GameData.gameWindow.getChildren().add(scoreUI);
+        } catch (IOException e) {
+            System.err.println("Failed to load Score UI: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void stop() {
+
     }
 }

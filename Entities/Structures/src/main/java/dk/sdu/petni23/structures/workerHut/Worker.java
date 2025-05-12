@@ -82,7 +82,7 @@ public class Worker{
         worker.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
         worker.add(new AnimationComponent());
 
-        worker.get(VelocityComponent.class).speed = 3;
+        worker.get(VelocityComponent.class).speed = 1.5;
 
         worker.get(HealthComponent.class).invincible = true;
 
@@ -121,9 +121,9 @@ public class Worker{
         var spawnStoneSPI = Engine.getEntitySPI(IEntitySPI.Type.SPAWN_STONE);
         var stoneSPI = Engine.getEntitySPI(IEntitySPI.Type.STONE);
         var action2 = new Action(Action.Directionality.MONO);
-        action2.animationIndex = 0;
-        action2.duration = 200;
-        action2.delay = 100;
+        action2.animationIndex = 4;
+        action2.duration = 400;
+        action2.delay = 200;
         action2.onDispatch = node -> {
             if (spawnStoneSPI == null || stoneSPI == null) return;
             var amount = inventory.amounts.get(IEntitySPI.Type.STONE);
@@ -149,7 +149,7 @@ public class Worker{
 
 
         var attack = worker.add(new AttackComponent(2, 0.8));
-        attack.speed = 1;
+        attack.speed = 0.75;
 
         var ai = worker.add(new AIComponent(
                 AIComponent.Type.WORKER, // hvad worker selv er

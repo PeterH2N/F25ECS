@@ -40,6 +40,7 @@
         <module>BindingSystem</module>
         <module>ConnectionSystem</module>
         <module>GameFlowSystem</module>
+        <module>UISystem</module>
     </modules>
 
     <dependencies>

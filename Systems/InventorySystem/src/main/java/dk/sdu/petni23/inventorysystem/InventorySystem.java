@@ -30,8 +30,8 @@ public class InventorySystem implements ISystem, IPluginService {
     @Override
     public void update(double deltaTime) {
         if (GameData.playerInventory != null) {
-            // Toggle by key (E)
-            if (GameData.gameKeys.isPressed(KeyCode.E)) {
+            // Toggle by key (E)  - REMOVED FEATURE
+            /*if (GameData.gameKeys.isPressed(KeyCode.E)) {
                 if (!GameData.playerInventory.visible) {
                     GameData.playerInventory.visible = true;
                     GameData.gameWindow.getChildren().add(pane);
@@ -39,7 +39,7 @@ public class InventorySystem implements ISystem, IPluginService {
                     GameData.playerInventory.visible = false;
                     GameData.gameWindow.getChildren().remove(pane);
                 }
-            }
+            }*/
 
             updateInventoryController(playerController, GameData.playerInventory);
         }
@@ -105,7 +105,9 @@ public class InventorySystem implements ISystem, IPluginService {
             FXMLLoader loader = new FXMLLoader(fxmlLocation);
             pane = loader.load();
             StackPane.setAlignment(pane, Pos.TOP_LEFT);
-            playerController = (InventoryController) loader.getController();
+            playerController = loader.getController();
+            GameData.gameWindow.getChildren().add(pane);
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
