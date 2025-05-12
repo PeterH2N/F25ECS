@@ -70,8 +70,15 @@ public class ShopController {
     private boolean canAfford(Map<IEntitySPI.Type, Integer> prices) {
         Map<IEntitySPI.Type,Integer> inventoryAmounts = GameData.playerInventory.amounts;
         for(IEntitySPI.Type resource : prices.keySet()){
-            if(inventoryAmounts.get(resource)==null || inventoryAmounts.get(resource)<prices.get(resource)){
-                GameData.gameLog.write("Cannot afford this item");
+            if(inventoryAmounts.get(resource)==null || inventoryAmounts.get(resource) < prices.get(resource)){
+                StringBuilder msg = new StringBuilder("Requires ");
+                for (Iterator<Type> it = prices.keySet().iterator(); it.hasNext(); ) {
+                    var res = it.next();
+                    msg.append(prices.get(res)).append(" ");
+                    msg.append(res.name().toLowerCase(Locale.ROOT));
+                    if (it.hasNext()) msg.append(", ");
+                }
+                GameData.gameLog.write(msg.toString());
                 return false;
             }
         }
