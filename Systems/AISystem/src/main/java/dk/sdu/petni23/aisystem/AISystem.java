@@ -181,10 +181,14 @@ public class AISystem implements ISystem {
         var targets = new ArrayList<>(opps);
         targets.removeIf(aiNode -> {
             if (aiNode.aiComponent.type != type) return true;
+            // bad fix for workers
+            double range = node.aiComponent.range;
+            if (node.workerComponent != null && aiNode.aiComponent.type == AIComponent.Type.STONE)
+                range = 5;
             //if (aiNode.hitBoxComponent == null) return true; // if no hitbox, we cant do damage
             var dist = aiNode.positionComponent.position.distance(node.positionComponent.position);
             // this opp is not within range
-            return dist > node.aiComponent.range;
+            return dist > range;
         });
         return targets;
     }

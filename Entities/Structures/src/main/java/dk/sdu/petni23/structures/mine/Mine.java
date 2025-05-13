@@ -82,8 +82,8 @@ public class Mine implements IEntitySPI{
             }
         };
 
-        var rect = new AABBShape(1.5, 1); // slightly shorter
-        var hitBox = new HitBoxComponent(rect, new Vector2D(0, 0.5)); // a bit higher
+        var rect = new AABBShape(1.5, 1.5); // slightly shorter
+        var hitBox = new HitBoxComponent(rect, new Vector2D(0, 0.25)); // a bit higher
         mine.add(hitBox);
 
         mine.add(new LayerComponent(LayerComponent.Layer.NPC_TARGET));

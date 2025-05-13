@@ -122,7 +122,7 @@ public class Worker{
         var inventory = worker.add(new InventoryComponent(3, IEntitySPI.Type.STONE));
 
         var pickup = worker.add(new PickUpComponent());
-        pickup.range = 1.2;
+        pickup.range = 1.5;
         var workerComponent = worker.add(new WorkerComponent());
 
         // logic for adding stone sprite the worker is carrying

@@ -47,7 +47,7 @@ public class ShopController {
     public void initialize() {
         bannerImage.setImage(load("/shop/Shop_Banner.png"));
         tower1Icon.setImage(load("/shop/Tower1.png"));
-        tower2Icon.setImage(load("/shop/Tower2.png"));
+        tower2Icon.setImage(load("/shop/Worker_Hut.png"));
         tower3Icon.setImage(load("/shop/Tower3.png"));
         wallIcon.setImage(load("/shop/wall.png"));
         fenceIcon.setImage(load("/shop/fence.png"));

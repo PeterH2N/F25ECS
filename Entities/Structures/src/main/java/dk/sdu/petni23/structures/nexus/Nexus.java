@@ -38,7 +38,7 @@ public class Nexus implements IPluginService, IEntitySPI
         var nexus = new Entity(Type.NEXUS);
         GameData.world.nexus = nexus;
         nexus.add(new PositionComponent(new Vector2D(0,0)));
-        var healthComponent = nexus.add(new HealthComponent(5000));
+        var healthComponent = nexus.add(new HealthComponent(2000));
         healthComponent.onDeath = node -> GameData.world.nexus = null;
 
         var hitBoxShape = new AABBShape(4,1);

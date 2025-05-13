@@ -19,7 +19,7 @@ public class MapGenOptions
     public DoubleProperty sandThreshold = new SimpleDoubleProperty(0.24);
     public DoubleProperty grassThreshold = new SimpleDoubleProperty(0.30);
     public DoubleProperty landFrequency = new SimpleDoubleProperty(0.03);
-    public IntegerProperty landOffset = new SimpleIntegerProperty(29);
+    public IntegerProperty landOffset = new SimpleIntegerProperty(511);
 
     public DoubleProperty forestThreshold = new SimpleDoubleProperty(0.65);
     public DoubleProperty forestFrequency = new SimpleDoubleProperty(0.02);

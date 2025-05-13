@@ -40,12 +40,12 @@ public class Knight implements IEntitySPI {
     }
 
     public static Entity create(Vector2D pos, Type type) {
-        Entity knight = Character.create(pos, 10000, SoundEffect.KNIGHT_HURT, type);
+        Entity knight = Character.create(pos, 500, SoundEffect.KNIGHT_HURT, type);
 
         knight.get(VelocityComponent.class).speed = 3;
         var position = knight.get(PositionComponent.class);
 
-        knight.get(HealthComponent.class).invincible = true;
+        //knight.get(HealthComponent.class).invincible = true;
 
         var spriteComponent = new SpriteComponent(spriteSheet, new Vector2D(-0.5, -127d / 192));
         knight.add(spriteComponent);
@@ -87,7 +87,7 @@ public class Knight implements IEntitySPI {
         knight.add(new FootstepSoundComponent(SoundEffect.FOOTSTEP_PLAYER, Set.of(1, 4)));
 
         var attack = knight.add(new AttackComponent(5, 0.6));
-        attack.speed = 2;
+        attack.speed = 1.3;
 
         knight.add(new AIComponent(CHARACTER, null, null));
 

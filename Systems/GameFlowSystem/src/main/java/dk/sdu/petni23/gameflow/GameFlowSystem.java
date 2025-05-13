@@ -9,11 +9,13 @@ import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 import dk.sdu.petni23.gameengine.services.IPluginService;
 import dk.sdu.petni23.gameengine.services.ISystem;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 
 public class GameFlowSystem implements ISystem, IPluginService {
-
-    ArrayList<IEntitySPI> placeableEntities;
+    private static AnchorPane pane;
     private GameFlowController controller = new GameFlowController();
     private final long interval = 10000;
     private long roundEndTime = System.currentTimeMillis();
@@ -45,11 +47,9 @@ public class GameFlowSystem implements ISystem, IPluginService {
     public void start() {
         try {
             FXMLLoader loader = new FXMLLoader(GameFlowSystem.class.getResource("/ScoreUI.fxml"));
-            Pane scoreUI = loader.load();
-            scoreUI.setLayoutX(20);
-            scoreUI.setLayoutY(20);
-            scoreUI.setMouseTransparent(true);
-            GameData.gameWindow.getChildren().add(scoreUI);
+            pane = loader.load();
+            StackPane.setAlignment(pane, Pos.TOP_RIGHT);
+            GameData.gameWindow.getChildren().add(pane);
         } catch (IOException e) {
             System.err.println("Failed to load Score UI: " + e.getMessage());
         }

@@ -8,9 +8,11 @@ import dk.sdu.petni23.gameflow.SpawnNodeSPI;
 module GameFlowSystem {
     requires javafx.graphics;
     requires javafx.fxml;
+    requires javafx.controls;
     requires Common;
     requires GameEngine;
     uses ISpawn;
+    opens dk.sdu.petni23.gameflow.ui to javafx.fxml;
     provides IPluginService with GameFlowSystem;
     provides ISystem with GameFlowSystem;
     provides INodeSPI with SpawnNodeSPI;

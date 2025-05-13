@@ -21,6 +21,7 @@
     </tower_3>
     <worker_hut>
         <price>
+            <wood>20</wood>
         </price>
     </worker_hut>
 </items_config>

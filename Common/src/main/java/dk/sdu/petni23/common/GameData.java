@@ -23,6 +23,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.util.Random;
+import java.util.function.Consumer;
 
 public class GameData
 {
@@ -49,6 +50,7 @@ public class GameData
     public static final DebugOptions debugOptions = new DebugOptions();
     private static MouseMode mouseMode = MouseMode.REGULAR;
     private static GameMode gameMode = GameMode.WAIT;
+    public static Consumer<GameMode> onGameModeChanged;
     public static final int seed = 984380;
     public static Random random = new Random(seed);
     private static Entity hand;
@@ -202,6 +204,7 @@ public class GameData
 
     public static void setGameMode(GameMode gameMode_in){
         gameMode = gameMode_in;
+        if (onGameModeChanged != null) onGameModeChanged.accept(gameMode_in);
     }
 
     public static GameMode getGameMode(){
