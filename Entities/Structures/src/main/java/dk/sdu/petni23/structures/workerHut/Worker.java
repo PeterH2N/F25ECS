@@ -1,5 +1,7 @@
 package dk.sdu.petni23.structures.workerHut;
 
+import dk.sdu.petni23.common.components.Binding;
+import dk.sdu.petni23.common.components.BindingComponent;
 import dk.sdu.petni23.common.components.Dispatch;
 import dk.sdu.petni23.common.components.actions.Action;
 import dk.sdu.petni23.common.components.actions.ActionSetComponent;
@@ -38,16 +40,21 @@ import java.util.Set;
 
 public class Worker{
     private static final SpriteSheet spriteSheet;
+    private static final SpriteSheet stoneSpriteSheet;
 
     static {
         final int[] numFrames = { 6, 6, 6, 6, 6, 6 };
-        final int[] order = { 0, 1, 2, 3, 4, 5 };
+        //final int[] order = { 0, 1, 2, 3, 4, 5 };
         Image img = new Image(Objects.requireNonNull(Worker.class.getResourceAsStream("/charactersprites/Worker.png")));
-        spriteSheet = new SpriteSheet(img, numFrames, new Vector2D(img.getWidth() / 6, img.getHeight() / 6), order);
+        spriteSheet = new SpriteSheet(img, numFrames, new Vector2D(img.getWidth() / 6, img.getHeight() / 6));
+        img = new Image(Objects.requireNonNull(Worker.class.getResourceAsStream("/miscsprites/Stone_Idle.png")));
+        stoneSpriteSheet = new SpriteSheet(img, new int[]{1}, new Vector2D(img.getWidth(), img.getHeight()));
     }
 
+
+
     public static Entity create() {
-        Entity worker = new Entity(IEntitySPI.Type.WORKER);
+        Entity worker = new Entity(null);
         var position = new PositionComponent();
         worker.add(position);
 
@@ -115,8 +122,20 @@ public class Worker{
         var inventory = worker.add(new InventoryComponent(3, IEntitySPI.Type.STONE));
 
         var pickup = worker.add(new PickUpComponent());
-        pickup.range = 1.0;
+        pickup.range = 1.2;
         var workerComponent = worker.add(new WorkerComponent());
+
+        // logic for adding stone sprite the worker is carrying
+        Entity carryStone = new Entity(null);
+        var stonePosition = carryStone.add(new PositionComponent());
+        carryStone.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
+        carryStone.add(new SpriteComponent(stoneSpriteSheet, new Vector2D(-0.5, -1.5)));
+        Binding b = (sEntity, wEntity) -> stonePosition.position.set(position.position.getSubtracted(0, 0.1));
+        var binding = carryStone.add(new BindingComponent());
+        binding.bindings.put(null, b);
+
+        workerComponent.onReturning = (node) -> Engine.addEntity(carryStone);
+        workerComponent.onCollecting = (node) -> Engine.removeEntity(carryStone);
 
         var spawnStoneSPI = Engine.getEntitySPI(IEntitySPI.Type.SPAWN_STONE);
         var stoneSPI = Engine.getEntitySPI(IEntitySPI.Type.STONE);

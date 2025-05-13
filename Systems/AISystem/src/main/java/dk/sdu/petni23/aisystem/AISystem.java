@@ -49,10 +49,14 @@ public class AISystem implements ISystem {
             // if entity is a worker, we change behavior
             if (node.workerComponent != null) {
                 // first, change status depending on inventory
-                if (node.inventoryComponent.amounts.get(IEntitySPI.Type.STONE) >= node.inventoryComponent.maxAmount)
+                if (node.inventoryComponent.amounts.get(IEntitySPI.Type.STONE) >= node.inventoryComponent.maxAmount && node.workerComponent.state != WorkerComponent.State.RETURNING) {
                     node.workerComponent.state = WorkerComponent.State.RETURNING;
-                if (node.inventoryComponent.amounts.get(IEntitySPI.Type.STONE) <= 0)
+                    if (node.workerComponent.onReturning != null) node.workerComponent.onReturning.dispatch(node);
+                }
+                if (node.inventoryComponent.amounts.get(IEntitySPI.Type.STONE) <= 0 && node.workerComponent.state != WorkerComponent.State.COLLECTING) {
                     node.workerComponent.state = WorkerComponent.State.COLLECTING;
+                    if (node.workerComponent.onCollecting != null) node.workerComponent.onCollecting.dispatch(node);
+                }
 
                 if (node.workerComponent.state == WorkerComponent.State.RETURNING) {
                     opp = node.workerComponent.home;
