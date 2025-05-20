@@ -12,6 +12,7 @@ import dk.sdu.petni23.common.components.damage.LayerComponent;
 import dk.sdu.petni23.common.components.gameflow.SpawnComponent;
 import dk.sdu.petni23.common.components.movement.VelocityComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
+import dk.sdu.petni23.common.components.score.ScoreComponent;
 import dk.sdu.petni23.common.sound.SoundEffect;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.common.util.Vector2D;
@@ -24,7 +25,7 @@ import javafx.scene.paint.Color;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class TorchGoblin
+public class TorchGoblin implements IEntitySPI
 {
     private static final SpriteSheet spriteSheet;
 
@@ -37,7 +38,7 @@ public class TorchGoblin
 
     public static Entity create(Vector2D pos)
     {
-        Entity goblin = Character.create(pos, 30, SoundEffect.GOBLIN_HURT);
+        Entity goblin = Character.create(pos, 30, SoundEffect.GOBLIN_HURT, IEntitySPI.Type.TORCH_GOBLIN);
 
         goblin.get(VelocityComponent.class).speed = 2.5;
 
@@ -66,7 +67,7 @@ public class TorchGoblin
 
 
         goblin.add(new LayerComponent(LayerComponent.Layer.ENEMY));
-        var goldSPI = Engine.getEntitySPI(IEntitySPI.Type.GOLD);
+        var goldSPI = Engine.getEntitySPI(Type.SPAWN_GOLD);
         var loot = goblin.add(new LootComponent(node -> {
             if (goldSPI != null) {
                 Engine.addEntity(goldSPI.create(Engine.getEntity(node.getEntityID())));
@@ -75,10 +76,21 @@ public class TorchGoblin
         loot.minDrop = 2;
         loot.maxDrop = 5;
         goblin.add(new HealthBarComponent(40, 5, Color.RED, 1.3));
+        goblin.add(new ScoreComponent(125)); // 125 points for melee goblin
 
         goblin.add(new AIComponent(AIComponent.Type.CHARACTER, Arrays.asList(AIComponent.Type.TOWER, AIComponent.Type.CHARACTER, AIComponent.Type.NEXUS), AIComponent.Priority.CLOSEST));
         goblin.add(new PathFindingComponent());
         goblin.add(new SpawnComponent(false,pos,false));
         return goblin;
+    }
+
+    @Override
+    public Entity create(Entity parent) {
+        return create(Vector2D.ZERO);
+    }
+
+    @Override
+    public Type getType() {
+        return Type.TORCH_GOBLIN;
     }
 }

@@ -15,7 +15,7 @@ public class Engine
 {
     private static final int physicsSteps = 2;
     private final static Map<Long, Entity> entities = new HashMap<>();
-    private final static List<Node> nodes = new ArrayList<>();
+    private final static Set<Node> nodes = new HashSet<>();
     private final static List<ISystem> systems = getServices(ISystem.class);
     private final static List<IPhysicsSystem> physicsSystems = getServices(IPhysicsSystem.class);
     private final static List<IRenderSystem> renderingSystems = getServices(IRenderSystem.class);
@@ -24,6 +24,7 @@ public class Engine
     private final static List<IEntitySPI> entitySPIs = getServices(IEntitySPI.class);
 
     public static Entity addEntity(Entity entity) {
+        if (entity == null) return null;
         entities.put(entity.getId(), entity);
         for (var spi : nodeSPIs) {
             if (spi.requiredComponentsContained(entity.getComponentClasses())) {
@@ -35,12 +36,18 @@ public class Engine
         return entity;
     }
 
+    public static List<Entity> getEntities() {
+        return entities.values().stream().toList();
+    }
+
     public static Entity getEntity(Long ID) {
         return entities.get(ID);
     }
 
     public static void removeEntity(Entity entity) {
-        if (entities.remove(entity.getId()) != null) {
+        if (entity == null) return;
+        if (entities.get(entity.getId()) != null) {
+            // store removed nodes to call their onRemove method afterward
             List<Node> removedNodes = new ArrayList<>();
 
             nodes.removeIf(node -> {
@@ -51,6 +58,7 @@ public class Engine
                 return false;
             });
             removedNodes.forEach(Node::onRemove);
+            entities.remove(entity.getId());
         }
     }
 

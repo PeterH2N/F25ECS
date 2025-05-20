@@ -31,7 +31,7 @@ public class DynamiteSPI implements IEntitySPI {
     }
 
     public static Entity createDynamite(Vector2D pos) {
-        Entity tnt = new Entity();
+        Entity tnt = new Entity(Type.DYNAMITE);
 
         var position = tnt.add(new PositionComponent(pos));
         tnt.add(new DirectionComponent());
@@ -42,7 +42,7 @@ public class DynamiteSPI implements IEntitySPI {
         var animation = tnt.add(new AnimationComponent());
         animation.doMirrors = false;
 
-        Entity e = new Entity();
+        Entity e = new Entity(null);
         e.add(new SoundComponent(SoundEffect.DYNAMITE_THROW, position.position));
         Engine.addEntity(e);
 
@@ -51,15 +51,26 @@ public class DynamiteSPI implements IEntitySPI {
 
     @Override
     public Entity create(Entity parent) {
-        assert parent != null;
-        Vector2D pos = parent.get(PositionComponent.class).position;
-        Vector2D dir = parent.get(DirectionComponent.class).dir;
-        double distance = parent.get(ThrowComponent.class).distance;
-        Vector2D end = pos.getAdded(dir.getMultiplied(distance));
-        Vector2D start = pos.getAdded(dir.getMultiplied(0.25));
+        Vector2D pos = Vector2D.ZERO;
+        Vector2D dir = Vector2D.ZERO;
+        double distance = 0;
+        Vector2D end;
+        Vector2D start = Vector2D.ZERO;
+        LayerComponent layerComponent = null;
+
+        if (parent != null) {
+            pos = parent.get(PositionComponent.class).position;
+            dir = parent.get(DirectionComponent.class).dir;
+            distance = parent.get(ThrowComponent.class).distance;
+            end = pos.getAdded(dir.getMultiplied(distance));
+            start = pos.getAdded(dir.getMultiplied(0.25));
+            layerComponent = parent.get(LayerComponent.class);
+        } else {
+            end = Vector2D.ZERO;
+        }
+
 
         LayerComponent.Layer layer;
-        LayerComponent layerComponent = parent.get(LayerComponent.class);
         layer = layerComponent == null ? LayerComponent.Layer.ALL : layerComponent.layer;
 
         var dynamite = createDynamite(pos);
@@ -72,7 +83,7 @@ public class DynamiteSPI implements IEntitySPI {
             Engine.addEntity(DamageSPI.createDamageEntity(end, new HitBoxComponent(circle), layer, 15));
             assert explosionSPI != null;
             Engine.addEntity(explosionSPI.create(dynamite));
-            Entity e = new Entity();
+            Entity e = new Entity(null);
             e.add(new SoundComponent(SoundEffect.THROW_EXPLOSION, end));
             Engine.addEntity(e);
         };

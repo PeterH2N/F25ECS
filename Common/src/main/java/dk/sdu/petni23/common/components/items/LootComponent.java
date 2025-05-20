@@ -7,10 +7,12 @@ public class LootComponent extends Component
 {
     public int maxDrop = 1;
     public int minDrop = 1;
-    public final Dispatch drop;
+    public transient Dispatch drop = null;
 
     public LootComponent(Dispatch drop)
     {
         this.drop = drop;
     }
+
+    public LootComponent() {}
 }

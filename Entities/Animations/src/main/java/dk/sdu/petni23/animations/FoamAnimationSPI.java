@@ -20,7 +20,7 @@ public class FoamAnimationSPI implements IEntitySPI
         spriteSheet = new SpriteSheet(img, numFrames, new Vector2D(img.getWidth() / 8, img.getHeight()));
     }
     public static Entity create() {
-        Entity foam = Animation.create(spriteSheet, new Vector2D(-0.5, -0.5), Vector2D.ZERO, DisplayComponent.Layer.BACKGROUND);
+        Entity foam = Animation.create(spriteSheet, new Vector2D(-0.5, -0.5), Vector2D.ZERO, DisplayComponent.Layer.BACKGROUND, null);
         foam.get(AnimationComponent.class).createdAt -= (long) (Math.random() * 800);
         return foam;
     }

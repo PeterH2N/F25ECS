@@ -1,7 +1,4 @@
-dk\sdu\petni23\animationnode\ConnectingSpriteSystem.class
-dk\sdu\petni23\animationnode\AnimationNodeSPI.class
 module-info.class
-dk\sdu\petni23\animationnode\AnimationNode.class
-dk\sdu\petni23\animationnode\ConnectingSpriteNodeSPI.class
-dk\sdu\petni23\animationnode\AnimationSystem.class
-dk\sdu\petni23\animationnode\ConnectingSpriteNode.class
+dk/sdu/petni23/animationnode/AnimationSystem.class
+dk/sdu/petni23/animationnode/AnimationNode.class
+dk/sdu/petni23/animationnode/AnimationNodeSPI.class

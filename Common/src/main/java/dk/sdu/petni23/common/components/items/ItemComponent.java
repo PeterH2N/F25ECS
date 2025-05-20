@@ -6,7 +6,7 @@ import dk.sdu.petni23.gameengine.Component;
 import dk.sdu.petni23.gameengine.entity.IEntitySPI;  // Import the IEntitySPI interface
 
 public class ItemComponent extends Component {
-    public Dispatch onPickup;
+    public transient Dispatch onPickup = null;
     public IEntitySPI.Type itemType;  // Use IEntitySPI.Type to refer to the enum
 
     // Constructor to set the item type

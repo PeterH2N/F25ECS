@@ -22,8 +22,6 @@ import javafx.scene.image.Image;
 import java.util.List;
 import java.util.Objects;
 
-import static dk.sdu.petni23.common.components.ai.AIComponent.Type.CHARACTER;
-
 public class Archer {
     private static final SpriteSheet spriteSheet;
 
@@ -33,7 +31,7 @@ public class Archer {
         spriteSheet = new SpriteSheet(img, numFrames, new Vector2D(img.getWidth() / 8, img.getHeight() / 7));
     }
     public static Entity create() {
-        Entity archer = new Entity();
+        Entity archer = new Entity(null);
         var position = new PositionComponent(new Vector2D(-5,0));
         archer.add(position);
 

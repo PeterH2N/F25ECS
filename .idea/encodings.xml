@@ -39,6 +39,8 @@
     <file url="file://$PROJECT_DIR$/Systems/BindingSystem/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Systems/CollisionSystem/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Systems/CollisionSystem/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Systems/ConnectionSystem/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Systems/ConnectionSystem/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Systems/ControlSystem/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Systems/ControlSystem/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Systems/DamageSystem/src/main/java" charset="UTF-8" />
@@ -47,6 +49,8 @@
     <file url="file://$PROJECT_DIR$/Systems/DeathSystem/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Systems/DebugSystem/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Systems/DebugSystem/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Systems/GameFlowSystem/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Systems/GameFlowSystem/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Systems/InputSystem/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Systems/InputSystem/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Systems/InventorySystem/src/main/java" charset="UTF-8" />
@@ -55,6 +59,8 @@
     <file url="file://$PROJECT_DIR$/Systems/ItemSystem/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Systems/MoveSystem/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Systems/MoveSystem/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Systems/NpcSystem/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Systems/NpcSystem/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Systems/PlacementSystem/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Systems/PlacementSystem/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Systems/RenderSystem/src/main/java" charset="UTF-8" />
@@ -63,6 +69,8 @@
     <file url="file://$PROJECT_DIR$/Systems/ShopSystem/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Systems/SoundSystem/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Systems/SoundSystem/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Systems/UISystem/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Systems/UISystem/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Systems/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Systems/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />

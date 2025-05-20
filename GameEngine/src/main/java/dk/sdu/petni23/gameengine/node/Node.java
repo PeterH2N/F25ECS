@@ -29,7 +29,7 @@ public abstract class Node
     }
 
     public static <T extends Node> void initNode(Entity entity, T node) {
-        var components = entity.getComponents();
+        var components = entity.getComponents().values();
         var fields = node.getClass().getFields();
         for (Component component : components) {
             for (Field field : fields) {

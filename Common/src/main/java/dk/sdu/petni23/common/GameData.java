@@ -1,7 +1,9 @@
 package dk.sdu.petni23.common;
 
+import dk.sdu.petni23.common.components.inventory.InventoryComponent;
 import dk.sdu.petni23.common.enums.GameMode;
 import dk.sdu.petni23.common.enums.MouseMode;
+import dk.sdu.petni23.common.gamelogging.GameLog;
 import dk.sdu.petni23.common.misc.GameKeys;
 import dk.sdu.petni23.common.misc.Viewport;
 import dk.sdu.petni23.common.util.DebugOptions;
@@ -10,13 +12,18 @@ import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.common.world.GameWorld;
 import dk.sdu.petni23.common.world.mapgen.Tile;
+import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 import javafx.beans.property.*;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.util.Random;
+import java.util.function.Consumer;
 
 public class GameData
 {
@@ -28,6 +35,7 @@ public class GameData
     private static final DoubleProperty displayRatioProperty = new SimpleDoubleProperty();
     private static final DoubleProperty tileRatioProperty = new SimpleDoubleProperty();
     public static final StackPane gameWindow = new StackPane();
+    public static final Pane uiPane = new Pane();
     public static final Scene scene = new Scene(gameWindow);
     public static Stage stage;
     public static final Canvas canvas = new Canvas();
@@ -40,10 +48,17 @@ public class GameData
     private static final BooleanProperty focusedProperty = new SimpleBooleanProperty();
     private static boolean paused = false;
     public static final DebugOptions debugOptions = new DebugOptions();
-    public static final Random random = new Random(984380);
     private static MouseMode mouseMode = MouseMode.REGULAR;
     private static GameMode gameMode = GameMode.WAIT;
+    public static Consumer<GameMode> onGameModeChanged;
+    public static final int seed = 984380;
+    public static Random random = new Random(seed);
     private static Entity hand;
+    private static IEntitySPI currentlyPlacing = null;
+    public static InventoryComponent playerInventory = null;
+    public static final GameLog gameLog = new GameLog();
+
+    public static final Font logFont = Font.loadFont(GameData.class.getResourceAsStream("/fonts/Fleftex_M.ttf"), 16);
 
     public static final MapGenOptions mapGenOptions = new MapGenOptions();
     public static final GameWorld world = new GameWorld(mapGenOptions);
@@ -54,6 +69,8 @@ public class GameData
         tileRatioProperty.bind(ppmProperty.multiply(1.0 / 64.0)); // reciprocal of 64 (tilesize in pixels) multiplied by pixels per tile
         displayWidth.bind(gameWindow.widthProperty());
         displayHeight.bind(gameWindow.heightProperty());
+        gameWindow.getChildren().add(canvas);
+        gameWindow.getChildren().add(uiPane);
     }
     public static Entity getShop(){
         return shop;
@@ -187,9 +204,18 @@ public class GameData
 
     public static void setGameMode(GameMode gameMode_in){
         gameMode = gameMode_in;
+        if (onGameModeChanged != null) onGameModeChanged.accept(gameMode_in);
     }
-    
+
     public static GameMode getGameMode(){
         return gameMode;
+    }
+
+    public static IEntitySPI getCurrentlyPlacing() {
+        return currentlyPlacing;
+    }
+
+    public static void setCurrentlyPlacing(IEntitySPI currentlyPlacing) {
+        GameData.currentlyPlacing = currentlyPlacing;
     }
 }

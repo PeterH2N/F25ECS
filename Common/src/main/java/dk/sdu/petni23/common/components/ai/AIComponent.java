@@ -6,7 +6,7 @@ import java.util.List;
 
 public class AIComponent extends Component
 {
-    public final double range = 10;
+    public double range = 10;
     public final Type type;
     public final List<Type> TargetPriorityList;
     public final Priority priority;
@@ -25,8 +25,11 @@ public class AIComponent extends Component
     public enum Type {
         CHARACTER,
         TOWER,
+        WORKER,
         NEXUS,
         TREE,
+        MINE,
+        STONE,
         ALL; // only for target
     }
 }

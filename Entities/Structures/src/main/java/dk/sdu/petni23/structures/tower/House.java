@@ -21,7 +21,7 @@ public class House
         spriteSheet = new SpriteSheet(img, numFrames, new Vector2D(img.getWidth(), img.getHeight()));
     }
     static Entity create(Vector2D pos) {
-        Entity house = new Entity();
+        Entity house = new Entity(null);
         var posC = new PositionComponent();
         posC.position.set(pos);
         house.add(posC);

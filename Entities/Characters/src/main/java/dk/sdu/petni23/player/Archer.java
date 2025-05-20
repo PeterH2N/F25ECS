@@ -32,7 +32,7 @@ public class Archer implements IEntitySPI {
         spriteSheet = new SpriteSheet(img, numFrames, new Vector2D(img.getWidth() / 8, img.getHeight() / 7));
     }
     public static Entity create(Vector2D pos) {
-        Entity archer = Character.create(pos, 20, null);
+        Entity archer = Character.create(pos, 20, null, Type.ARCHER);
 
         archer.get(VelocityComponent.class).speed = 4;
 
@@ -72,6 +72,6 @@ public class Archer implements IEntitySPI {
 
     @Override
     public Type getType() {
-        return null;
+        return Type.ARCHER;
     }
 }

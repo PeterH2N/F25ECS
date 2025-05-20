@@ -2,6 +2,7 @@ package dk.sdu.petni23.structures.walls;
 
 import java.util.Objects;
 
+import dk.sdu.petni23.common.components.collision.ConnectingCollisionComponent;
 import dk.sdu.petni23.common.components.movement.VelocityComponent;
 import dk.sdu.petni23.common.components.rendering.ConnectingSpriteComponent;
 import dk.sdu.petni23.common.components.rendering.DisplayComponent;
@@ -32,7 +33,7 @@ public class StoneWall implements IEntitySPI{
     }
 
     public static Entity create(Vector2D pos){
-        Entity stoneWall = new Entity();
+        Entity stoneWall = new Entity(Type.STONE_WALL);
 
         //add positionn component to wall entity
         var position = new PositionComponent();
@@ -58,14 +59,15 @@ public class StoneWall implements IEntitySPI{
         collision.active = false;
         stoneWall.add(collision);
         var hitBox = new HitBoxComponent(hitBoxShape, offset);
-        var health = new HealthComponent(ConfigReader.getItemHealth(Type.STONE_WALL.getValue()));
-        var connection = new ConnectingSpriteComponent(ConnectingSpriteComponent.Type.STONE_WALL);
-        var placementComponent = new PlacementComponent(hitBox, health, connection);
+        var health = new HealthComponent(ConfigReader.getItemHealth(Type.STONE_WALL));
+        var placementComponent = new PlacementComponent(hitBox, health);
         stoneWall.add(placementComponent);
+        stoneWall.add(new ConnectingCollisionComponent(Type.STONE_WALL));
+        stoneWall.add(new ConnectingSpriteComponent(Type.STONE_WALL));
 
         // band-aid fix for problem in placement system
         stoneWall.add(new VelocityComponent());
-
+        placementComponent.toRemove.add(VelocityComponent.class);
         return stoneWall;
     }
 

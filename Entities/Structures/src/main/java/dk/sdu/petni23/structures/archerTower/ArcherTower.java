@@ -44,7 +44,7 @@ public class ArcherTower implements IEntitySPI {
     }
 
     public static Entity create(Vector2D pos){
-        Entity tower = new Entity();
+        Entity tower = new Entity(Type.TOWER_3);
 
         var positionComponent = tower.add(new PositionComponent(pos));
 
@@ -63,7 +63,7 @@ public class ArcherTower implements IEntitySPI {
         collision.active = false;
         tower.add(collision);
         var hitBox = new HitBoxComponent(hitBoxShape, offset);
-        var healthComponent = new HealthComponent(ConfigReader.getItemHealth(Type.TOWER_3.getValue()));
+        var healthComponent = new HealthComponent(ConfigReader.getItemHealth(Type.TOWER_3));
         var placement = new PlacementComponent(hitBox, healthComponent);
         tower.add(placement);
 
@@ -71,30 +71,30 @@ public class ArcherTower implements IEntitySPI {
 
         // add archer to tower
         Entity archer = Archer.create();
-        // ai component
-        Engine.addEntity(archer);
+        //Engine.addEntity(archer);
         // bind archer to tower
         var binding = tower.add(new BindingComponent());
         Binding b = (towerE, archerE) -> {
             var towerPos = towerE.get(PositionComponent.class).position;
             archerE.get(PositionComponent.class).position.set(towerPos.getAdded(new Vector2D(0, 1.85)));
-            archerE.get(SpriteComponent.class).effect = sprite.effect;
+            archerE.get(SpriteComponent.class).effect = towerE.get(SpriteComponent.class).effect;
         };
         binding.bindings.put(archer, b);
         healthComponent.onDeath = node -> {
-            binding.bindings.keySet().forEach(Engine::removeEntity);
-            Engine.addEntity(towerDestroyed(positionComponent.position));
+            //binding.bindings.keySet().forEach(Engine::removeEntity);
+            //Engine.addEntity(towerDestroyed(positionComponent.position));
         };
 
         // band-aid solution for problem in placement system
         tower.add(new VelocityComponent());
+        placement.toRemove.add(VelocityComponent.class);
         tower.add(new HealthBarComponent(80, 8, Color.GREEN, 3.3));
 
         return tower;
     }
 
     static Entity towerDestroyed(Vector2D pos) {
-        Entity tower = new Entity();
+        Entity tower = new Entity(Type.TOWER_3);
 
         tower.add(new PositionComponent(pos));
 

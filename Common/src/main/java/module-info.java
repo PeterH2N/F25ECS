@@ -5,6 +5,9 @@ module Common {
     requires GameEngine;
     requires java.desktop;
     requires java.xml;
+    requires com.google.gson;
+    requires javafx.fxml;
+    requires javafx.controls;
     exports dk.sdu.petni23.common.shape;
     exports dk.sdu.petni23.common.util;
     exports dk.sdu.petni23.common;
@@ -28,5 +31,23 @@ module Common {
     exports dk.sdu.petni23.common.configreader;
     exports dk.sdu.petni23.common.components.ai;
     exports dk.sdu.petni23.common.sound;
+    exports dk.sdu.petni23.common.score;
+    exports dk.sdu.petni23.common.components.score;
+    exports dk.sdu.petni23.common.components.ui;
+    exports dk.sdu.petni23.common.gamelogging;
+    opens dk.sdu.petni23.common.components.collision to com.google.gson;
+    opens dk.sdu.petni23.common.components.movement to com.google.gson;
+    opens dk.sdu.petni23.common.components.actions to com.google.gson;
+    opens dk.sdu.petni23.common.components to com.google.gson;
+    opens dk.sdu.petni23.common.components.health to com.google.gson;
+    opens dk.sdu.petni23.common.components.rendering to com.google.gson;
+    opens dk.sdu.petni23.common.components.sound to com.google.gson;
+    opens dk.sdu.petni23.common.components.items to com.google.gson;
+    opens dk.sdu.petni23.common.components.inventory to com.google.gson;
+    opens dk.sdu.petni23.common.components.damage to com.google.gson;
+    opens dk.sdu.petni23.common.components.shop to com.google.gson;
+    opens dk.sdu.petni23.common.world.mapgen to com.google.gson;
+    opens dk.sdu.petni23.common.configreader to com.google.gson;
+    opens dk.sdu.petni23.common.components.ai to com.google.gson;
     uses IEntitySPI;
 }

@@ -1,5 +1,9 @@
-dk\sdu\petni23\items\WoodSPI.class
+dk/sdu/petni23/items/SpawnStoneSPI.class
+dk/sdu/petni23/items/SpawnGoldSPI.class
+dk/sdu/petni23/items/StoneSPI.class
+dk/sdu/petni23/items/GoldSPI.class
 module-info.class
-dk\sdu\petni23\items\MeatSPI.class
-dk\sdu\petni23\items\StoneSPI.class
-dk\sdu\petni23\items\GoldSPI.class
+dk/sdu/petni23/items/SpawnWoodSPI.class
+dk/sdu/petni23/items/MeatSPI.class
+dk/sdu/petni23/items/WoodSPI.class
+dk/sdu/petni23/items/SpawnMeatSPI.class

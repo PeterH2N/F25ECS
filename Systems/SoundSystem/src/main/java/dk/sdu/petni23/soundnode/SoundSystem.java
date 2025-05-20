@@ -14,15 +14,17 @@ public class SoundSystem implements ISystem {
         // Handle regular SoundComponents
         for (SoundNode node : Engine.getNodes(SoundNode.class)) {
             SoundComponent soundComponent = node.soundComponent;
-            double volume = 1;
-            double dist = GameData.camera.center.distance(soundComponent.position);
-            if (dist > 1) {
-                volume = Math.min(volume * (1 / (dist * dist * 0.01)), 1);
-            }
+            if (GameData.getCurrentMillis() >= soundComponent.playAt) {
+                double volume = 1;
+                double dist = GameData.camera.center.distance(soundComponent.position);
+                if (dist > 1) {
+                    volume = Math.min(volume * (1 / (dist * dist * 0.01)), 1);
+                }
 
-            System.out.println("🎧 Triggered sound: " +  soundComponent.soundEffect + " (volume: " + volume + ")");
-            SoundManager.playSound(soundComponent.soundEffect, soundComponent.delay, volume);
-            Engine.removeEntity(node.getEntityID());
+                //System.out.println("🎧 Triggered sound: " +  soundComponent.soundEffect + " (volume: " + volume + ")");
+                SoundManager.playSound(soundComponent.soundEffect, volume);
+                Engine.removeEntity(node.getEntityID());
+            }
         }
 
         for (FootStepSoundNode node : Engine.getNodes(FootStepSoundNode.class)) {
@@ -34,8 +36,8 @@ public class SoundSystem implements ISystem {
 
             if (footstep.lastFrame != currentFrame) {
                 if (footstep.triggerFrames.contains(currentFrame)) {
-                    System.out.println("👟 Triggering step sound: " + footstep.soundEffect);
-                    SoundManager.playSound(footstep.soundEffect, 0);
+                    //System.out.println("👟 Triggering step sound: " + footstep.soundEffect);
+                    SoundManager.playSound(footstep.soundEffect);
                 }
 
                 footstep.lastFrame = currentFrame;
@@ -46,7 +48,7 @@ public class SoundSystem implements ISystem {
 
     @Override
     public int getPriority() {
-        return 5; // Adjust priority if needed
+        return Priority.PROCESSING.get(); // Adjust priority if needed
     }
 
 }

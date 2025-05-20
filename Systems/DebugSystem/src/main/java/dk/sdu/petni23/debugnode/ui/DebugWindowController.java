@@ -1,6 +1,7 @@
 package dk.sdu.petni23.debugnode.ui;
 
 import dk.sdu.petni23.common.GameData;
+import dk.sdu.petni23.common.world.GameWorld;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -16,7 +17,7 @@ public class DebugWindowController
     @FXML
     private Text SandThresholdValue, GrassThresholdValue, FrequencyValue, islandRadiusValue, islandShapeAmplitudeValue, islandShapeFrequencyValue, islandShapeOffsetValue, islandCoastOffsetValue, landOffsetValue, coastAmplitudeValue, coastFrequencyValue, forestThresholdValue, forestFrequencyValue, forestOffsetValue, forestDensityValue;
     @FXML
-    private Button generateButton;
+    private Button generateButton, saveButton, loadButton;
 
     @FXML
     public void initialize() {
@@ -90,9 +91,10 @@ public class DebugWindowController
         forestOffsetValue.textProperty().bind(forestOffset.valueProperty().asString());
         forestDensityValue.textProperty().bind(forestDensity.valueProperty().asString());
 
-        generateButton.setOnAction(actionEvent -> {
-            GameData.world.map.genMap();
-        });
+        generateButton.setOnAction(actionEvent -> GameData.world.map.genMap());
+
+        saveButton.setOnAction(event -> GameData.world.save());
+        loadButton.setOnAction(event -> GameData.world.load());
 
     }
 }

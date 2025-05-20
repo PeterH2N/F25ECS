@@ -12,7 +12,6 @@ import dk.sdu.petni23.common.components.movement.VelocityComponent;
 import dk.sdu.petni23.common.util.Collider;
 import dk.sdu.petni23.common.misc.Manifold;
 import dk.sdu.petni23.common.shape.Shape;
-import dk.sdu.petni23.common.util.ColliderPair;
 import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.common.world.GameWorld;
 import dk.sdu.petni23.gameengine.Engine;
@@ -46,7 +45,7 @@ public class BroadPhaseSystem implements ISystem, IPluginService
         return Priority.POSTPROCESSING.get();
     }
 
-    private void clearGrid(List<Collider>[][] grid) {
+    private static void clearGrid(List<Collider>[][] grid) {
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
                 grid[i][j].clear();
@@ -54,7 +53,7 @@ public class BroadPhaseSystem implements ISystem, IPluginService
         }
     }
 
-    private void addNodeToGrid(Node node, List<Collider>[][] grid, Class<? extends HasShapeComponent> c, Map<Node, Collider> colliderMap) {
+    private static void addNodeToGrid(Node node, List<Collider>[][] grid, Class<? extends HasShapeComponent> c, Map<Node, Collider> colliderMap) {
         PositionComponent positionComponent = node.getComponent(PositionComponent.class);
         if (positionComponent == null) return;
         Collider collider = colliderMap.get(node);
@@ -93,13 +92,13 @@ public class BroadPhaseSystem implements ISystem, IPluginService
         }
     }
 
-    private void populateGrid(Class<? extends Node> c, List<Collider>[][] grid, Class<? extends HasShapeComponent> cc, Map<Node, Collider> colliderMap) {
+    static void populateGrid(Class<? extends Node> c, List<Collider>[][] grid, Class<? extends HasShapeComponent> cc, Map<Node, Collider> colliderMap) {
         for (Node node : Engine.getNodes(c)) {
             addNodeToGrid(node, grid, cc, colliderMap);
         }
     }
 
-    private void populateManifoldList(List<Collider>[][] grid, List<Manifold> manifoldList,Map<Node, Collider> colliderMap) {
+    private static void populateManifoldList(List<Collider>[][] grid, List<Manifold> manifoldList,Map<Node, Collider> colliderMap) {
         for (var collider1 : colliderMap.values()) {
             if (grid == collisionGrid && Engine.getEntity(collider1.node.getEntityID()).get(VelocityComponent.class) == null) continue;
             if (grid == hitBoxGrid && Engine.getEntity(collider1.node.getEntityID()).get(DamageComponent.class) == null) continue;

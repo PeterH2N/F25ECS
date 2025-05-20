@@ -54,7 +54,7 @@ public class Decoration
     {
         // randomly create one of the 18 different types of decorations
         int t = (int) (Math.random() * numSprites);
-        Entity decoration = new Entity();
+        Entity decoration = new Entity(null);
         PositionComponent positionComponent = new PositionComponent();
         decoration.add(positionComponent);
         positionComponent.position.set(pos);

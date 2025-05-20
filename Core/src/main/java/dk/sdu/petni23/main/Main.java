@@ -2,12 +2,9 @@ package dk.sdu.petni23.main;
 
 import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.sound.SoundEffect;
-import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.Engine;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -27,12 +24,11 @@ public class Main extends Application {
         GameData.getFocusedProperty().bind(stage.focusedProperty());
         stage.setOnCloseRequest(windowEvent -> System.exit(0));
 
-
         SoundEffect.init();
         Engine.start();
 
         render();
-        stage.setTitle("Hello!");
+        stage.setTitle("Tiny Swords");
         stage.setScene(GameData.scene);
         stage.show();
     }
@@ -51,7 +47,7 @@ public class Main extends Application {
                 GameData.setTime(now);
                 if (!GameData.isPaused())
                     Engine.update(GameData.getDeltaTime());
-                GameData.setFrameTime(java.lang.System.nanoTime() - now);
+                GameData.setFrameTime(System.nanoTime() - now);
             }
         }.start();
     }

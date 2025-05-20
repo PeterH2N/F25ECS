@@ -10,6 +10,7 @@ module GameEngine {
     exports dk.sdu.petni23.gameengine.services;
     exports dk.sdu.petni23.gameengine.node;
     exports dk.sdu.petni23.gameengine.entity;
+    opens dk.sdu.petni23.gameengine.entity to com.google.gson;
     uses INodeSPI;
     uses ISystem;
     uses IPhysicsSystem;

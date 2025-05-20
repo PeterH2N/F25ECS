@@ -34,7 +34,7 @@ public class TreeSPI implements IEntitySPI
     }
 
     public static Entity createTree(Vector2D pos) {
-        Entity tree = new Entity();
+        Entity tree = new Entity(null);
 
         var position = new PositionComponent();
         position.position.set(pos);
@@ -52,15 +52,15 @@ public class TreeSPI implements IEntitySPI
         var health = new HealthComponent(20);
         health.onDeath = node -> Engine.addEntity(createStump(tree.get(PositionComponent.class).position));
         health.onHurt = node -> {
-            Entity e = new Entity();
+            Entity e = new Entity(null);
             e.add(new SoundComponent(SoundEffect.TREE_HIT, position.position, 150));
             Engine.addEntity(e);
         };
 
-        var woodSPI = Engine.getEntitySPI(IEntitySPI.Type.WOOD);
+        var woodSPI = Engine.getEntitySPI(Type.SPAWN_WOOD);
         var loot = tree.add(new LootComponent(node -> {
             if (woodSPI != null) {
-                Entity sound = new Entity();
+                Entity sound = new Entity(null);
                 sound.add(new SoundComponent(SoundEffect.WOOD_DROP, position.position, 50));
                 Engine.addEntity(sound);
                 Engine.addEntity(woodSPI.create(Engine.getEntity(node.getEntityID())));
@@ -82,7 +82,7 @@ public class TreeSPI implements IEntitySPI
     }
 
     public static Entity createStump(Vector2D pos) {
-        Entity stump = new Entity();
+        Entity stump = new Entity(null);
 
         var position = new PositionComponent();
         position.position.set(pos);

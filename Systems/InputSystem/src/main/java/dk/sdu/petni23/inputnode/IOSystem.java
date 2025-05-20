@@ -4,6 +4,8 @@ import dk.sdu.petni23.common.GameData;
 
 import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.services.ISystem;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseButton;
 
 public class IOSystem implements ISystem
 {
@@ -16,7 +18,6 @@ public class IOSystem implements ISystem
         // camera
         zoom();
         updateCameraPos();
-
         GameData.gameKeys.update();
     }
 

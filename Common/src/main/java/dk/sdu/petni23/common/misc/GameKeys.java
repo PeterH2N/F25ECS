@@ -32,6 +32,9 @@ public class GameKeys
         for (KeyCode keyCode : keyCodes) {
             pinputs.put(keyCode, inputs.get(keyCode));
         }
+        for (MouseButton mouseButton : mouseButtons) {
+            pinputs.put(mouseButton, inputs.get(mouseButton));
+        }
         scrollDeltaY = 0;
     }
 
@@ -45,6 +48,10 @@ public class GameKeys
 
     public boolean isPressed(Enum k) {
         return inputs.get(k) && !pinputs.get(k);
+    }
+
+    public boolean isReleased(Enum k) {
+        return !inputs.get(k) && pinputs.get(k);
     }
 
     public Vector2D getMousePos() {

@@ -24,10 +24,14 @@ public class ExplosionAnimationSPI implements IEntitySPI
     @Override
     public Entity create(Entity parent)
     {
-        var pos = parent.get(PositionComponent.class);
-        assert pos != null;
+        var pos = Vector2D.ZERO;
+        if (parent != null) {
+            var positionComponent = parent.get(PositionComponent.class);
+            assert positionComponent != null;
+            pos = positionComponent.position;
+        }
 
-        Entity explosion = Animation.create(spriteSheet, new Vector2D(-0.5, -0.5), pos.position, DisplayComponent.Layer.FOREGROUND);
+        Entity explosion = Animation.create(spriteSheet, new Vector2D(-0.5, -0.5), pos, DisplayComponent.Layer.FOREGROUND, Type.EXPLOSION_ANIMATION);
         explosion.add(new DurationComponent(900, GameData.getCurrentMillis()));
         explosion.add(new DisplayComponent(DisplayComponent.Layer.EFFECT));
         return explosion;

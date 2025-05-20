@@ -4,7 +4,7 @@ import dk.sdu.petni23.common.components.Dispatch;
 
 public class Action
 {
-    public Dispatch onDispatch = null;
+    public transient Dispatch onDispatch = null;
     public long delay = 0;
     public long duration = 0;
     public int animationIndex = 0;
@@ -19,6 +19,7 @@ public class Action
     }
 
     public enum Directionality {
+        MONO(1),
         BI(2),
         QUAD(4),
         OCT(8);

@@ -17,7 +17,7 @@ import javafx.scene.image.Image;
 import java.util.Objects;
 import java.util.Set;
 
-public class Sheep {
+public class Sheep implements IEntitySPI {
     private static final SpriteSheet spriteSheet;
 
     static {
@@ -29,7 +29,7 @@ public class Sheep {
     }
 
     public static Entity create(Vector2D pos) {
-        Entity sheep = Character.create(pos, 20, SoundEffect.SHEEP_HURT);
+        Entity sheep = Character.create(pos, 20, SoundEffect.SHEEP_HURT, IEntitySPI.Type.SHEEP);
 
         sheep.get(VelocityComponent.class).speed = 2.3;
 
@@ -37,7 +37,7 @@ public class Sheep {
         sheep.add(spriteComponent);
 
         sheep.add(new LayerComponent(LayerComponent.Layer.ENEMY));
-        var meatSPI = Engine.getEntitySPI(IEntitySPI.Type.MEAT);
+        var meatSPI = Engine.getEntitySPI(Type.SPAWN_MEAT);
         var loot = sheep.add(new LootComponent(node -> {
             if (meatSPI != null) {
                 Engine.addEntity(meatSPI.create(Engine.getEntity(node.getEntityID())));
@@ -49,5 +49,15 @@ public class Sheep {
         //sheep.add(new HealthBarComponent(40, 5, Color.DARKGREEN));
 
         return sheep;
+    }
+
+    @Override
+    public Entity create(Entity parent) {
+        return create(Vector2D.ZERO);
+    }
+
+    @Override
+    public Type getType() {
+        return Type.SHEEP;
     }
 }

@@ -38,7 +38,9 @@
         <module>ShopSystem</module>
         <module>AISystem</module>
         <module>BindingSystem</module>
+        <module>ConnectionSystem</module>
         <module>GameFlowSystem</module>
+        <module>UISystem</module>
     </modules>
 
     <dependencies>

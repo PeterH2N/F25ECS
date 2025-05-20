@@ -1,5 +1,6 @@
 package dk.sdu.petni23.structures.mine;
 
+import dk.sdu.petni23.common.components.ai.AIComponent;
 import dk.sdu.petni23.common.components.rendering.DisplayComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
 import dk.sdu.petni23.common.GameData;
@@ -24,7 +25,7 @@ import javafx.scene.image.Image;
 
 import java.util.Objects;
 
-public class Mine {
+public class Mine implements IEntitySPI{
     private static final SpriteSheet spriteSheet;
 
     static {
@@ -34,7 +35,7 @@ public class Mine {
     }
 
     public static Entity createMine(Vector2D pos) {
-        Entity mine = new Entity();
+        Entity mine = new Entity(Type.MINE);
 
         var position = new PositionComponent();
         position.position.set(pos);
@@ -55,7 +56,7 @@ public class Mine {
         mine.add(health);
 
         // Add LootComponent
-        var stoneSPI = Engine.getEntitySPI(IEntitySPI.Type.STONE);
+        var stoneSPI = Engine.getEntitySPI(IEntitySPI.Type.SPAWN_STONE);
         var loot = new LootComponent(node -> {
             if (stoneSPI != null) {
                 Engine.addEntity(stoneSPI.create(Engine.getEntity(node.getEntityID())));
@@ -67,7 +68,7 @@ public class Mine {
         health.onHurt = node -> {
             System.out.println("onHurt triggered");
 
-            Entity sound = new Entity();
+            Entity sound = new Entity(null);
             sound.add(new SoundComponent(SoundEffect.MINE_HIT, position.position, 150));
             sound.add(new DurationComponent(200, GameData.getCurrentMillis()));
             Engine.addEntity(sound);
@@ -81,14 +82,25 @@ public class Mine {
             }
         };
 
-        var rect = new AABBShape(1.5, 1); // slightly shorter
-        var hitBox = new HitBoxComponent(rect, new Vector2D(0, 0.5)); // a bit higher
+        var rect = new AABBShape(1.5, 1.5); // slightly shorter
+        var hitBox = new HitBoxComponent(rect, new Vector2D(0, 0.25)); // a bit higher
         mine.add(hitBox);
 
-        mine.add(new LayerComponent(LayerComponent.Layer.ALL));
+        mine.add(new LayerComponent(LayerComponent.Layer.NPC_TARGET));
 
         mine.add(new AnimationComponent());
+        mine.add(new AIComponent(AIComponent.Type.MINE, null, null));
 
         return mine;
+    }
+
+    @Override
+    public Entity create(Entity parent) {
+        return createMine(Vector2D.ZERO);
+    }
+
+    @Override
+    public Type getType() {
+        return Type.MINE;
     }
 }

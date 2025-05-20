@@ -15,9 +15,10 @@ import dk.sdu.petni23.common.shape.OvalShape;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.entity.Entity;
+import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 import javafx.scene.image.Image;
 
-public class GoblinHouse {
+public class GoblinHouse implements IEntitySPI {
     private static final SpriteSheet spriteSheet;
 
     static{
@@ -27,33 +28,34 @@ public class GoblinHouse {
     }
 
     public static Entity createGoblinHouse(Vector2D pos){
-        Entity goblinHouse = new Entity();
+        Entity goblinHouse = new Entity(IEntitySPI.Type.GOBLIN_HOUSE);
         var position = new PositionComponent();
         position.position.set(pos);
         goblinHouse.add(position);
 
-        var sprite = new SpriteComponent(spriteSheet, new Vector2D(0,0));
+        var sprite = new SpriteComponent(spriteSheet, new Vector2D(-0.5,-(149d / 192d)));
         goblinHouse.add(sprite);
 
         goblinHouse.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
 
-        var oval = new OvalShape((38d * 0.5) / 16, (10d * 0.5) / 16);
-        var collision = new CollisionComponent(oval, new Vector2D(0, 0)); 
+        var oval = new OvalShape((21d * 0.5) / 16, (9d * 0.5) / 16);
+        var collision = new CollisionComponent(oval, new Vector2D(0, 0.1));
         goblinHouse.add(collision);
-
-        var health = new HealthComponent(10000);
-        health.invincible = true;
-        goblinHouse.add(health);
-
-        var rect = new AABBShape(1.5, 1);
-        var hitBox = new HitBoxComponent(rect, new Vector2D(0, 0.5));
-        goblinHouse.add(hitBox);
-        goblinHouse.add(new LayerComponent(LayerComponent.Layer.ALL));
 
         var spawn = new SpawnComponent(true,pos,true);
         goblinHouse.add(spawn);
 
         return goblinHouse;
+    }
+
+    @Override
+    public Entity create(Entity parent) {
+        return createGoblinHouse(Vector2D.ZERO);
+    }
+
+    @Override
+    public Type getType() {
+        return Type.GOBLIN_HOUSE;
     }
 }
 

@@ -8,7 +8,7 @@ public class DurationComponent extends Component
     public long lifetime;
     public long createdAt;
 
-    public Dispatch onDeath;
+    public transient Dispatch onDeath = null;
 
     public DurationComponent(long lifetime, long createdAt) {
         this.lifetime = lifetime;

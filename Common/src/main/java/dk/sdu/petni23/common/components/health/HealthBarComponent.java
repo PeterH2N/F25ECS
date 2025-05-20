@@ -7,7 +7,7 @@ public class HealthBarComponent extends Component {
 
     public int width;
     public int height;
-    public Color color;
+    public transient Color color;
     public final double offset;
 
     public HealthBarComponent(int width, int height, Color color, double offset) {

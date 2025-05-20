@@ -1,4 +1,4 @@
-dk\sdu\petni23\rendernode\RenderNode.class
-dk\sdu\petni23\rendernode\RenderSystem.class
-dk\sdu\petni23\rendernode\RenderNodeSPI.class
+dk/sdu/petni23/rendernode/RenderNode.class
 module-info.class
+dk/sdu/petni23/rendernode/RenderNodeSPI.class
+dk/sdu/petni23/rendernode/RenderSystem.class

@@ -7,12 +7,13 @@ import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.entity.Entity;
+import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 
 public class Animation
 {
     // helper function for animation entities
-    static Entity create(SpriteSheet spriteSheet, Vector2D origin, Vector2D pos, DisplayComponent.Layer layer) {
-        Entity animation = new Entity();
+    static Entity create(SpriteSheet spriteSheet, Vector2D origin, Vector2D pos, DisplayComponent.Layer layer, IEntitySPI.Type type) {
+        Entity animation = new Entity(type);
         animation.add(new DisplayComponent(layer));
         animation.add(new SpriteComponent(spriteSheet, origin));
         var position = new PositionComponent();
