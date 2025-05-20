@@ -5,8 +5,7 @@ import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.services.ISystem;
 
-public class TrajectorySystem implements ISystem
-{
+public class TrajectorySystem extends ISystem {
     @Override
     public void update(double deltaTime)
     {

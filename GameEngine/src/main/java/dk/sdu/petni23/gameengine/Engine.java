@@ -22,6 +22,9 @@ public class Engine
     private final static Collection<? extends IPluginService> plugins = getServices(IPluginService.class);
     private final static Collection<? extends INodeSPI> nodeSPIs = getServices(INodeSPI.class);
     private final static List<IEntitySPI> entitySPIs = getServices(IEntitySPI.class);
+    public static List<ISystem> getSystems() {
+        return systems;
+    }
 
     public static Entity addEntity(Entity entity) {
         if (entity == null) return null;
@@ -86,7 +89,10 @@ public class Engine
 
     public static void update(double deltaTime) {
         for (var system : systems) {
+            long startTime = System.nanoTime();
+            system.iterations++;
             system.update(deltaTime);
+            system.setAvgDuration((System.nanoTime() - startTime));
         }
 
         for (var system : renderingSystems) {

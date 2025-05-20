@@ -24,7 +24,7 @@ import java.util.*;
 import static dk.sdu.petni23.common.world.GameWorld.collisionGrid;
 import static dk.sdu.petni23.common.world.GameWorld.hitBoxGrid;
 
-public class BroadPhaseSystem implements ISystem, IPluginService
+public class BroadPhaseSystem extends ISystem implements IPluginService
 {
     @Override
     public void update(double deltaTime)
@@ -46,9 +46,9 @@ public class BroadPhaseSystem implements ISystem, IPluginService
     }
 
     private static void clearGrid(List<Collider>[][] grid) {
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[i].length; j++) {
-                grid[i][j].clear();
+        for (List<Collider>[] lists : grid) {
+            for (List<Collider> list : lists) {
+                list.clear();
             }
         }
     }

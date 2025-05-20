@@ -1,12 +1,18 @@
 package dk.sdu.petni23.debugnode.ui;
 
 import dk.sdu.petni23.common.GameData;
-import dk.sdu.petni23.common.world.GameWorld;
+import dk.sdu.petni23.gameengine.Engine;
+import dk.sdu.petni23.gameengine.services.ISystem;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Slider;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class DebugWindowController
 {
@@ -18,6 +24,10 @@ public class DebugWindowController
     private Text SandThresholdValue, GrassThresholdValue, FrequencyValue, islandRadiusValue, islandShapeAmplitudeValue, islandShapeFrequencyValue, islandShapeOffsetValue, islandCoastOffsetValue, landOffsetValue, coastAmplitudeValue, coastFrequencyValue, forestThresholdValue, forestFrequencyValue, forestOffsetValue, forestDensityValue;
     @FXML
     private Button generateButton, saveButton, loadButton;
+    @FXML
+    public VBox systemsVBox;
+
+    public final Map<Class<? extends ISystem>, Text> systemDurationTexts = new HashMap<>();
 
     @FXML
     public void initialize() {
@@ -95,6 +105,7 @@ public class DebugWindowController
 
         saveButton.setOnAction(event -> GameData.world.save());
         loadButton.setOnAction(event -> GameData.world.load());
+
 
     }
 }

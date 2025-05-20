@@ -1,10 +1,21 @@
 package dk.sdu.petni23.gameengine.services;
 
-public interface ISystem
+public abstract class ISystem
 {
-    void update(double deltaTime);
-    int getPriority();
-    enum Priority {
+    private long avgDuration = 0;
+    public int iterations = 0;
+    public abstract void update(double deltaTime);
+    public abstract int getPriority();
+
+    public long getAvgDuration() {
+        return avgDuration;
+    }
+
+    public void setAvgDuration(long avgDuration) {
+        this.avgDuration = avgDuration;
+    }
+
+    protected enum Priority {
         PREPROCESSING(0),
         PROCESSING(1),
         POSTPROCESSING(2);
@@ -16,4 +27,6 @@ public interface ISystem
             this.index = index;
         }
     }
+
+
 }

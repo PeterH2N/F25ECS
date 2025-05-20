@@ -13,8 +13,7 @@ import javafx.scene.effect.ColorAdjust;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DamageSystem implements ISystem
-{
+public class DamageSystem extends ISystem {
     @Override
     public void update(double deltaTime)
     {

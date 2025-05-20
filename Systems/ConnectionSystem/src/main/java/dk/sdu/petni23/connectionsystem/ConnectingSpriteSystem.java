@@ -16,7 +16,7 @@ import dk.sdu.petni23.gameengine.services.ISystem;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConnectingSpriteSystem implements ISystem {
+public class ConnectingSpriteSystem extends ISystem {
 
     private static final IEntitySPI.Type[][] connectGrid = new IEntitySPI.Type[GameData.worldSize][GameData.worldSize];
     private static final List<Entity> entities = new ArrayList<>();

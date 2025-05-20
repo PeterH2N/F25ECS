@@ -14,7 +14,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
-public class GameFlowSystem implements ISystem, IPluginService {
+public class GameFlowSystem extends ISystem implements IPluginService {
     private static AnchorPane pane;
     private GameFlowController controller = new GameFlowController();
     private final long interval = 10000;

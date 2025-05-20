@@ -4,8 +4,7 @@ import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.services.ISystem;
 import dk.sdu.petni23.common.util.Vector2D;
 
-public class PickupSystem implements ISystem
-{
+public class PickupSystem extends ISystem {
     double pickupDistance = 0.3;
     @Override
     public void update(double deltaTime)

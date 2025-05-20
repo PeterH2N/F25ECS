@@ -10,8 +10,7 @@ import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.services.ISystem;
 import javafx.scene.input.MouseButton;
 
-public class ControlSystem implements ISystem
-{
+public class ControlSystem extends ISystem {
 
     @Override
     public void update(double deltaTime)

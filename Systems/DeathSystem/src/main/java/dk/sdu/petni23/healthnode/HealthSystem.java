@@ -9,8 +9,7 @@ import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.services.ISystem;
 import javafx.scene.effect.ColorAdjust;
 
-public class HealthSystem implements ISystem
-{
+public class HealthSystem extends ISystem {
     private final ColorAdjust white = new ColorAdjust(0.0, -0.5, 0.5, 0);
 
     @Override

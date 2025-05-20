@@ -7,8 +7,7 @@ import dk.sdu.petni23.gameengine.services.ISystem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 
-public class IOSystem implements ISystem
-{
+public class IOSystem extends ISystem {
     private static final double minZoom = 4;
     private static final double maxZoom = GameData.worldSize;
     private static final double scrollMagnitude = -1.0 / 20.0;

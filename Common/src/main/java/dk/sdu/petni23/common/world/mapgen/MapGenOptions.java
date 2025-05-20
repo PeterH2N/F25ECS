@@ -8,7 +8,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public class MapGenOptions
 {
-    public DoubleProperty islandRadius = new SimpleDoubleProperty(88);
+    public DoubleProperty islandRadius = new SimpleDoubleProperty(((double) GameData.worldSize / 2) - 6);
     public DoubleProperty islandShapeAmplitude = new SimpleDoubleProperty(30);
     public DoubleProperty islandShapeFrequency = new SimpleDoubleProperty(0.0545);
     public DoubleProperty coastAmplitude = new SimpleDoubleProperty(5);

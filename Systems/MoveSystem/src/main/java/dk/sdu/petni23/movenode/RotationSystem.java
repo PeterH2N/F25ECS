@@ -3,8 +3,7 @@ package dk.sdu.petni23.movenode;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.services.ISystem;
 
-public class RotationSystem implements ISystem
-{
+public class RotationSystem extends ISystem {
     @Override
     public void update(double deltaTime)
     {

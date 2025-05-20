@@ -4,7 +4,7 @@ import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.services.ISystem;
 
-public class ActionSystem implements ISystem
+public class ActionSystem extends ISystem
 {
     @Override
     public void update(double deltaTime)

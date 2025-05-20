@@ -4,7 +4,7 @@ import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.services.ISystem;
 
-public class HoverSystem implements ISystem {
+public class HoverSystem extends ISystem {
 
     @Override
     public void update(double deltaTime) {

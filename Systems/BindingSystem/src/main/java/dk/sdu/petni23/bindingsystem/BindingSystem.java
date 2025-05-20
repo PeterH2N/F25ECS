@@ -4,7 +4,7 @@ import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.services.ISystem;
 
-public class BindingSystem implements ISystem {
+public class BindingSystem extends ISystem {
     @Override
     public void update(double deltaTime) {
         for (BindingNode node : Engine.getNodes(BindingNode.class)) {

@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Enumeration;
 
-public class InventorySystem implements ISystem, IPluginService {
+public class InventorySystem extends ISystem implements IPluginService {
     static AnchorPane pane;
     static InventoryController playerController;
 

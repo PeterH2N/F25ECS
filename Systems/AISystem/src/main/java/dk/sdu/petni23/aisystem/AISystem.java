@@ -20,7 +20,7 @@ import dk.sdu.petni23.gameengine.services.ISystem;
 
 import java.util.*;
 
-public class AISystem implements ISystem {
+public class AISystem extends ISystem {
     static final Map<Integer, List<AINode>> nodes = new HashMap<>();
     static final double delay = 1;
     static double elapsedTime = 0;

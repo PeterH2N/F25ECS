@@ -6,8 +6,9 @@ import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.services.ISystem;
 
-public class AnimationSystem implements ISystem
-{
+public class AnimationSystem extends ISystem {
+
+
     @Override
     public void update(double deltaTime)
     {
@@ -44,6 +45,7 @@ public class AnimationSystem implements ISystem
 
             if (node.directionComponent != null) {
                 // direction
+
                 var dir = node.directionComponent.dir;
                 double dr = Math.abs(dir.getRotatedBy(-Math.PI * 0.5).getAngle());
                 int numDirections = node.actionSetComponent.lastAction.directionality.value();

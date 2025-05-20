@@ -21,7 +21,7 @@ import dk.sdu.petni23.common.enums.MouseMode;
 
 import java.util.*;
 
-public class PlacementSystem implements ISystem {
+public class PlacementSystem extends ISystem {
 
     static final List<Entity> placedEntities = new ArrayList<>();
     private final ColorAdjust white = new ColorAdjust(0.0, -0.5, 0.5, 0);

@@ -20,7 +20,7 @@ import javafx.geometry.Pos;
 import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.enums.MouseMode;
 
-public class ShopSystem implements ISystem,IPluginService {
+public class ShopSystem extends ISystem implements IPluginService {
     private static AnchorPane pane;
     private ShopNode shopNode;
     private static ShopController controller;

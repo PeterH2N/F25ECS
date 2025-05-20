@@ -6,7 +6,7 @@ import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.common.components.sound.SoundComponent;
 import dk.sdu.petni23.gameengine.services.ISystem;
 
-public class SoundSystem implements ISystem {
+public class SoundSystem extends ISystem {
 
     @Override
     public void update(double deltaTime) {
