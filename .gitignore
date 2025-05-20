@@ -11,7 +11,7 @@ type/
 *.iws
 *.iml
 *.ipr
-!**/target
+**/target/
 
 ### Eclipse ###
 .apt_generated

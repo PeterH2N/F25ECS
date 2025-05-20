@@ -1,5 +1,5 @@
+dk\sdu\petni23\animations\FoamAnimationSPI.class
+dk\sdu\petni23\animations\ExplosionAnimationSPI.class
 module-info.class
-dk/sdu/petni23/animations/ExplosionAnimationSPI.class
-dk/sdu/petni23/animations/Animation.class
-dk/sdu/petni23/animations/FoamAnimationSPI.class
-dk/sdu/petni23/animations/DeathAnimationSPI.class
+dk\sdu\petni23\animations\Animation.class
+dk\sdu\petni23\animations\DeathAnimationSPI.class

@@ -1,7 +1,7 @@
-dk/sdu/petni23/durationnode/DurationNodeSPI.class
-dk/sdu/petni23/healthnode/HealthNodeSPI.class
-dk/sdu/petni23/healthnode/HealthNode.class
+dk\sdu\petni23\healthnode\HealthNodeSPI.class
+dk\sdu\petni23\durationnode\DurationSystem.class
+dk\sdu\petni23\healthnode\HealthNode.class
+dk\sdu\petni23\healthnode\HealthSystem.class
 module-info.class
-dk/sdu/petni23/healthnode/HealthSystem.class
-dk/sdu/petni23/durationnode/DurationNode.class
-dk/sdu/petni23/durationnode/DurationSystem.class
+dk\sdu\petni23\durationnode\DurationNode.class
+dk\sdu\petni23\durationnode\DurationNodeSPI.class
