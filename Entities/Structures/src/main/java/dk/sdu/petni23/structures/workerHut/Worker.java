@@ -129,7 +129,8 @@ public class Worker{
         Entity carryStone = new Entity(null);
         var stonePosition = carryStone.add(new PositionComponent());
         carryStone.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
-        carryStone.add(new SpriteComponent(stoneSpriteSheet, new Vector2D(-0.5, -1.5)));
+        var sprite = carryStone.add(new SpriteComponent(stoneSpriteSheet, new Vector2D(-0.5, -1.5)));
+        sprite.useOffset = false;
         Binding b = (sEntity, wEntity) -> stonePosition.position.set(position.position.getSubtracted(0, 0.1));
         var binding = carryStone.add(new BindingComponent());
         binding.bindings.put(null, b);

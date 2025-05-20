@@ -17,6 +17,7 @@ public class SpriteComponent extends Component
     public boolean rotateWithDirection = false;
     public boolean mirror = false;
     public transient Effect effect = null;
+    public boolean useOffset = true;
 
     public SpriteComponent(SpriteSheet spriteSheet, Vector2D spriteOrigin, int column, int row)
     {

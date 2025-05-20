@@ -40,7 +40,7 @@ public class Knight implements IEntitySPI {
     }
 
     public static Entity create(Vector2D pos, Type type) {
-        Entity knight = Character.create(pos, 500, SoundEffect.KNIGHT_HURT, type);
+        Entity knight = Character.create(pos, 1000, SoundEffect.KNIGHT_HURT, type);
 
         knight.get(VelocityComponent.class).speed = 3;
         var position = knight.get(PositionComponent.class);
