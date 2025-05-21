@@ -9,13 +9,11 @@ import dk.sdu.petni23.common.ISpawn;
 
 public class EnemyPlugin implements ISpawn {
     @Override
-    public void start(ArrayList<Vector2D> sources,int entitesPerSource) {
-        for (int i = 0;i<entitesPerSource;i++){
-            for (Vector2D s : sources){
-                Engine.addEntity(TNTGoblin.create(s));
-                Engine.addEntity(TorchGoblin.create(s));
-                //sheep removed for now
-            }
+    public void start(Vector2D pos) {
+        if(Math.random()>0.5){
+            Engine.addEntity(TNTGoblin.create(pos));
+        }else{
+            Engine.addEntity(TorchGoblin.create(pos));
         }
     }
 

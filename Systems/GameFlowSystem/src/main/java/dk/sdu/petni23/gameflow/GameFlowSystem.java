@@ -1,9 +1,17 @@
 package dk.sdu.petni23.gameflow;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import dk.sdu.petni23.common.GameData;
+import dk.sdu.petni23.common.configreader.ConfigReader;
 import dk.sdu.petni23.common.enums.GameMode;
 import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 import dk.sdu.petni23.gameengine.services.IPluginService;
@@ -19,6 +27,7 @@ public class GameFlowSystem extends ISystem implements IPluginService {
     private GameFlowController controller = new GameFlowController();
     private final long interval = 10000;
     private long roundEndTime = System.currentTimeMillis();
+    public static GameFlow settings;
 
     @Override
     public void update(double deltaTime) {
@@ -45,6 +54,15 @@ public class GameFlowSystem extends ISystem implements IPluginService {
 
     @Override
     public void start() {
+        InputStream in = ConfigReader.getConfigInputStream();
+        try(InputStreamReader inputStreamReader = new InputStreamReader(in)) {
+            JsonObject root = JsonParser.parseReader(inputStreamReader).getAsJsonObject();
+            JsonElement gameFlowElement = root.get("gameFlowSettings");
+            Gson gson = new Gson();
+            settings = gson.fromJson(gameFlowElement, GameFlow.class);
+        } catch(IOException e) {
+            e.printStackTrace();;
+        }
         try {
             FXMLLoader loader = new FXMLLoader(GameFlowSystem.class.getResource("/ScoreUI.fxml"));
             pane = loader.load();

@@ -9,22 +9,23 @@ import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.common.ISpawn;
+import dk.sdu.petni23.gameflow.GameFlowSystem;
 
 public class GameFlowController {
 
     private ArrayList<ISpawn> services;
     private ArrayList<Vector2D> spawnPoints;
+    private double roundIndex = 0;
     private void initRound(){
         services = getServices(ISpawn.class);
         spawnPoints = getSpawnPoints();
     }
 
     public boolean endRoundIfAppropriate(){
-        for (SpawnNode n : Engine.getNodes(SpawnNode.class)){
-            if(!n.spawnComponent.sustainableAfterRoundEnd){
-                return false;
-            }
+        if(getCurrentEnemies()>0){
+            return false;
         }
+        roundIndex++;
         return true;
     }
 
@@ -33,9 +34,27 @@ public class GameFlowController {
         spawnEntites();
     }
 
+    public int getCurrentEnemies(){
+        int amount = 0;
+        for(SpawnNode n : Engine.getNodes(SpawnNode.class)){
+            if(!n.spawnComponent.sustainableAfterRoundEnd){
+                amount++;
+            }
+        }
+        return amount;
+    }
+
     private void spawnEntites(){
-        for (ISpawn s : services){
-            s.start(spawnPoints,1);
+        int entities = (int)calculatePopulation(roundIndex);
+        int j = 0;
+        for(ISpawn s : services){
+            for (int i = 0;i<entities;i++){
+                if(j!=0){
+                    j = j % spawnPoints.size();
+                }
+                s.start(spawnPoints.get(j));
+                j++;
+            }
         }
     }
 
@@ -47,10 +66,13 @@ public class GameFlowController {
                 spawnPoints.add(node.getComponent(SpawnComponent.class).pos);
             }
         }
-        //System.out.println(spawnPoints);
         return spawnPoints;
     }
     private <T> ArrayList<T> getServices(Class<T> c) {
         return new ArrayList<>(ServiceLoader.load(c).stream().map(ServiceLoader.Provider::get).toList()) ;
+    }
+
+    private double calculatePopulation(double index){
+        return Math.floor(GameFlowSystem.settings.populationLimit/(1+((GameFlowSystem.settings.populationLimit-GameFlowSystem.settings.initialPopulation)/GameFlowSystem.settings.initialPopulation)*Math.pow(Math.E, -GameFlowSystem.settings.growthRate*index)));
     }
 }

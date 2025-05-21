@@ -1,0 +1,10 @@
+{
+    "gameFlowSettings":{
+        "initialPopulation" : 4,
+        "growthRate" : 0.5,
+        "populationLimit" : 100
+    },
+    "otherSettings": {
+        
+    }
+}

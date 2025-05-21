@@ -9,6 +9,7 @@ module GameFlowSystem {
     requires javafx.graphics;
     requires javafx.fxml;
     requires javafx.controls;
+    requires com.google.gson;
     requires Common;
     requires GameEngine;
     uses ISpawn;

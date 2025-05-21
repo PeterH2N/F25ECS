@@ -13,6 +13,7 @@ public class GoblinHousePlugin implements IPluginService{
             Vector2D pos = GameData.randomWorldPos();
             if (pos != null)
                 Engine.addEntity(GoblinHouse.createGoblinHouse(pos));
+                System.out.println(pos);
         }
     }
 

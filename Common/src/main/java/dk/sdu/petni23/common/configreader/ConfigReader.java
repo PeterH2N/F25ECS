@@ -34,6 +34,14 @@ public class ConfigReader {
         
     }
 
+    public static InputStream getConfigInputStream(){
+        InputStream in = ConfigReader.class.getResourceAsStream("/config/config.json");
+        if (in == null){
+            throw new RuntimeException("Config not found");
+        }
+        return in;
+    }
+
     public static Document config_file;
 
     //fx ("woodenWall,gold")
