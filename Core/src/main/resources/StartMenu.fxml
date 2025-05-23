@@ -12,7 +12,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
    prefHeight="400.0" prefWidth="600.0"
    style="-fx-background-image: url('Background.png'); -fx-background-size: cover; -fx-cursor: url('Pointers/01.png'), auto;"
-   xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+   xmlns="http://javafx.com/javafx/21.0.2" xmlns:fx="http://javafx.com/fxml/1"
    fx:controller="dk.sdu.petni23.ui.StartMenuController">
    <children>
       <!-- Background Banner -->
