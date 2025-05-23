@@ -27,6 +27,8 @@ public class Main extends Application {
         SoundEffect.init();
         Engine.start();
 
+        GameData.setPaused(false);
+
         render();
         stage.setTitle("Tiny Swords");
         stage.setScene(GameData.scene);

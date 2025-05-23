@@ -137,17 +137,4 @@ public class Engine {
         }
         return null;
     }
-
-    public static void clear() {
-        // Fjern alle nodes og kald onRemove
-        for (Node node : new HashSet<>(nodes)) {
-            node.onRemove();
-        }
-        nodes.clear();
-
-        // Fjern alle entities
-        entities.clear();
-        ;
-    }
-
 }
