@@ -54,13 +54,15 @@ public class Player implements IPluginService, IEntitySPI {
 
         health.onDeath = node -> {
             var entity = Engine.getEntity(node.getEntityID());
-            var respawnComp = entity.get(RespawnComponent.class);
-
-            if (respawnComp != null && !respawnComp.alreadyDead) {
-                System.out.println("☠ Player died");
-                respawnComp.active = true;
-                respawnComp.countdown = 10f;
-                respawnComp.alreadyDead = true;
+            if (entity.getType() == IEntitySPI.Type.PLAYER) {
+                var pos = entity.get(PositionComponent.class);
+                if (pos != null) {
+                    GameData.pendingRespawns.add(new GameData.RespawnRequest(
+                            IEntitySPI.Type.PLAYER,
+                            pos.position.clone(),
+                            10f));
+                    System.out.println("☠ Player died, respawn scheduled");
+                }
             }
         };
 

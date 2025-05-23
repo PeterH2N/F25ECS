@@ -18,11 +18,10 @@ public class RespawnNode extends Node {
 
     @Override
     public void onAdd() {
-        System.out.println("🔁 RespawnNode added for entity: " + getEntityID());
     }
 
     @Override
     public void onRemove() {
-        System.out.println("🗑️ RespawnNode removed for entity: " + getEntityID());
     }
+
 }

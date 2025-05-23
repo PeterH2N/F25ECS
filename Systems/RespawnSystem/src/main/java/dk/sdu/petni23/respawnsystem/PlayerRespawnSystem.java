@@ -1,51 +1,71 @@
 package dk.sdu.petni23.respawnsystem;
 
 import dk.sdu.petni23.common.GameData;
+import dk.sdu.petni23.common.GameData.RespawnRequest;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
+import dk.sdu.petni23.common.util.Vector2D;
 import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 import dk.sdu.petni23.gameengine.services.ISystem;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
 public class PlayerRespawnSystem extends ISystem {
+
+    private final LinkedList<TimerEntry> activeRespawns = new LinkedList<>();
+
+    private record TimerEntry(double timeLeft, IEntitySPI.Type type, Vector2D spawnPosition) {
+        TimerEntry tick(double delta) {
+            return new TimerEntry(timeLeft - delta, type, spawnPosition);
+        }
+    }
 
     @Override
     public void update(double deltaTime) {
-        for (RespawnNode node : Engine.getNodes(RespawnNode.class)) {
-            var respawn = node.respawnComponent;
+        // Tilføj nye respawn requests fra GameData
+        while (!GameData.pendingRespawns.isEmpty()) {
+            var r = GameData.pendingRespawns.poll();
+            if (r != null) {
+                activeRespawns.add(new TimerEntry(r.delay(), r.type(), r.position()));
+                System.out.println("⏳ Scheduled respawn in " + (int) r.delay() + "s at " + r.position());
+            }
+        }
 
-            if (!respawn.active)
-                continue;
+        // Opdater respawn timers
+        List<TimerEntry> toRespawn = new ArrayList<>();
+        List<TimerEntry> stillWaiting = new ArrayList<>();
 
-            respawn.countdown -= deltaTime;
-            System.out.println("⏳ Respawning in: " + (int) Math.ceil(respawn.countdown));
+        for (TimerEntry entry : activeRespawns) {
+            var updated = entry.tick(deltaTime);
+            if (updated.timeLeft <= 0) {
+                toRespawn.add(updated);
+            } else {
+                stillWaiting.add(updated);
+            }
+        }
 
-            if (respawn.countdown <= 0) {
-                if (GameData.world.nexus != null) {
-                    System.out.println("✅ Nexus is alive. Respawning...");
+        activeRespawns.clear();
+        activeRespawns.addAll(stillWaiting);
 
-                    // Remove old entity
-                    long oldId = node.getEntityID();
-                    Engine.removeEntity(oldId);
-                    System.out.println("❌ Removed old entity: " + oldId);
+        // Udfør selve respawn
+        for (TimerEntry entry : toRespawn) {
+            if (GameData.world.nexus != null) {
+                System.out.println("✅ Respawning entity of type: " + entry.type);
 
-                    // Create new player and add to engine
-                    Entity newPlayer = Engine.getEntitySPI(IEntitySPI.Type.PLAYER).create(null);
-                    var posComponent = newPlayer.get(PositionComponent.class);
-                    if (posComponent != null && respawn.spawnPosition != null) {
-                        posComponent.position.set(respawn.spawnPosition.clone());
-                    }
-
-                    Engine.addEntity(newPlayer);
-                    System.out.println("✅ New player entity created and added");
-
-                } else {
-                    System.out.println("💀 Nexus is destroyed. Game Over.");
-                    Engine.removeEntity(node.getEntityID());
+                Entity newEntity = Engine.getEntitySPI(entry.type).create(null);
+                var pos = newEntity.get(PositionComponent.class);
+                if (pos != null) {
+                    pos.position.set(entry.spawnPosition.clone());
                 }
 
-                respawn.active = false;
-                respawn.countdown = -1;
+                Engine.addEntity(newEntity);
+                System.out.println("✅ Entity added at " + entry.spawnPosition);
+            } else {
+                System.out.println("💀 Nexus is destroyed. Skipping respawn.");
             }
         }
     }

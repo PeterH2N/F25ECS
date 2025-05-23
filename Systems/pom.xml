@@ -42,6 +42,7 @@
         <module>GameFlowSystem</module>
         <module>UISystem</module>
         <module>RespawnSystem</module>
+        <module>GameoverSystem</module>
     </modules>
 
     <dependencies>

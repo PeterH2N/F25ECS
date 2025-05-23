@@ -16,6 +16,7 @@ public class StartMenu extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
+
         URL fxmlLocation = getClass().getResource("/StartMenu.fxml");
 
         if (fxmlLocation == null) {
@@ -38,7 +39,6 @@ public class StartMenu extends Application {
 
         Parent root = FXMLLoader.load(fxmlLocation);
         Scene scene = new Scene(root, 600, 400);
-        
 
         // Set custom cursor
         Image cursorImage = new Image(getClass().getResourceAsStream("/Pointers/01.png"), 64, 64, true, true);

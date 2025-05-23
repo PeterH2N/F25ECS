@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+    fx:controller="dk.sdu.petni23.gameoversystem.GameOverController">
+    <Label text="Game Over!" layoutX="150" layoutY="100" style="-fx-font-size: 36px;" />
+    <Button text="Quit" layoutX="175" layoutY="200" onAction="#onQuit" />
+</AnchorPane>

@@ -11,8 +11,7 @@ import dk.sdu.petni23.gameengine.services.ISystem;
 
 import java.util.*;
 
-public class Engine
-{
+public class Engine {
     private static final int physicsSteps = 2;
     private final static Map<Long, Entity> entities = new HashMap<>();
     private final static Set<Node> nodes = new HashSet<>();
@@ -22,12 +21,14 @@ public class Engine
     private final static Collection<? extends IPluginService> plugins = getServices(IPluginService.class);
     private final static Collection<? extends INodeSPI> nodeSPIs = getServices(INodeSPI.class);
     private final static List<IEntitySPI> entitySPIs = getServices(IEntitySPI.class);
+
     public static List<ISystem> getSystems() {
         return systems;
     }
 
     public static Entity addEntity(Entity entity) {
-        if (entity == null) return null;
+        if (entity == null)
+            return null;
         entities.put(entity.getId(), entity);
         for (var spi : nodeSPIs) {
             if (spi.requiredComponentsContained(entity.getComponentClasses())) {
@@ -48,7 +49,8 @@ public class Engine
     }
 
     public static void removeEntity(Entity entity) {
-        if (entity == null) return;
+        if (entity == null)
+            return;
         if (entities.get(entity.getId()) != null) {
             // store removed nodes to call their onRemove method afterward
             List<Node> removedNodes = new ArrayList<>();
@@ -110,8 +112,8 @@ public class Engine
     public static <T extends Node> List<T> getNodes(Class<T> nodeType) {
         List<T> r = new ArrayList<>();
         for (Node node : nodes) {
-                if (nodeType.isInstance(node))
-                    r.add((T)node);
+            if (nodeType.isInstance(node))
+                r.add((T) node);
         }
         return r;
     }
@@ -121,12 +123,10 @@ public class Engine
     }
 
     private static <T> ArrayList<T> getServices(Class<T> c) {
-        return new ArrayList<>(ServiceLoader.load(c).stream().map(ServiceLoader.Provider::get).toList()) ;
+        return new ArrayList<>(ServiceLoader.load(c).stream().map(ServiceLoader.Provider::get).toList());
     }
 
-
-    public static List<IEntitySPI> getEntitySPIs()
-    {
+    public static List<IEntitySPI> getEntitySPIs() {
         return entitySPIs;
     }
 
@@ -137,4 +137,17 @@ public class Engine
         }
         return null;
     }
+
+    public static void clear() {
+        // Fjern alle nodes og kald onRemove
+        for (Node node : new HashSet<>(nodes)) {
+            node.onRemove();
+        }
+        nodes.clear();
+
+        // Fjern alle entities
+        entities.clear();
+        ;
+    }
+
 }
