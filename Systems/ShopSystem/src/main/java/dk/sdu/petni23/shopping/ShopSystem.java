@@ -24,6 +24,11 @@ public class ShopSystem extends ISystem implements IPluginService {
     private static AnchorPane pane;
     private ShopNode shopNode;
     private static ShopController controller;
+    private URL url;
+
+    public URL getURL(){
+        return this.url;
+    }
 
     private static final Image selected = new Image(Objects.requireNonNull(ShopSystem.class.getResourceAsStream("/shop/Frame.png")));
 
@@ -64,7 +69,7 @@ public class ShopSystem extends ISystem implements IPluginService {
     @Override
     public void start() {
         
-        URL url = getClass().getResource("/shop.fxml");
+        this.url = getClass().getResource("/shop.fxml");
         if(url == null){
             System.out.println("shop FXML file not found");
         }

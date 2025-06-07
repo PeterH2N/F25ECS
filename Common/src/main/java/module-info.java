@@ -1,4 +1,5 @@
 import dk.sdu.petni23.gameengine.entity.IEntitySPI;
+import dk.sdu.petni23.gameengine.services.IPluginService;
 
 module Common {
     requires javafx.graphics;

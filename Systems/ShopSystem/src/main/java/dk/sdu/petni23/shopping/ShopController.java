@@ -19,14 +19,14 @@ import java.util.*;
 public class ShopController {
     ArrayList<IEntitySPI> placeableEntities;
     ShopNode shopNode;
-
+    ShopLogic shopLogic = new ShopLogic();
     ImageView currentChoice = null;
 
-    @FXML private void selectTower1(MouseEvent e) { if (chooseType(Type.TOWER_1)) currentChoice = tower1Frame;}
-    @FXML private void selectHut2(MouseEvent e) { if (chooseType(Type.WORKER_HUT)) currentChoice = hut2Frame;}
-    @FXML private void selectTower3(MouseEvent e) { if (chooseType(Type.TOWER_3)) currentChoice = tower3Frame;}
-    @FXML private void selectWall(MouseEvent e)    { if (chooseType(Type.STONE_WALL)) currentChoice = wallFrame;}
-    @FXML private void selectFence(MouseEvent e) { if (chooseType(Type.WOODEN_FENCE)) currentChoice = fenceFrame;}
+    @FXML private void selectTower1(MouseEvent e) { if (shopLogic.chooseType(Type.TOWER_1)) currentChoice = tower1Frame;}
+    @FXML private void selectHut2(MouseEvent e) { if (shopLogic.chooseType(Type.WORKER_HUT)) currentChoice = hut2Frame;}
+    @FXML private void selectTower3(MouseEvent e) { if (shopLogic.chooseType(Type.TOWER_3)) currentChoice = tower3Frame;}
+    @FXML private void selectWall(MouseEvent e)    { if (shopLogic.chooseType(Type.STONE_WALL)) currentChoice = wallFrame;}
+    @FXML private void selectFence(MouseEvent e) { if (shopLogic.chooseType(Type.WOODEN_FENCE)) currentChoice = fenceFrame;}
     @FXML private void selectRemove(MouseEvent e) {
         GameData.setMouseMode(MouseMode.REMOVING);
         currentChoice = removeFrame;
@@ -67,24 +67,6 @@ public class ShopController {
         }
     }
 
-    private boolean canAfford(Map<IEntitySPI.Type, Integer> prices) {
-        Map<IEntitySPI.Type,Integer> inventoryAmounts = GameData.playerInventory.amounts;
-        for(IEntitySPI.Type resource : prices.keySet()){
-            if(inventoryAmounts.get(resource)==null || inventoryAmounts.get(resource) < prices.get(resource)){
-                StringBuilder msg = new StringBuilder("Requires ");
-                for (Iterator<Type> it = prices.keySet().iterator(); it.hasNext(); ) {
-                    var res = it.next();
-                    msg.append(prices.get(res)).append(" ");
-                    msg.append(res.name().toLowerCase(Locale.ROOT));
-                    if (it.hasNext()) msg.append(", ");
-                }
-                GameData.gameLog.write(msg.toString());
-                return false;
-            }
-        }
-        return true;
-    }
-
 
     /*private boolean debit(Map<IEntitySPI.Type, Integer> prices) {
         if (inventoryNode == null) {
@@ -104,15 +86,6 @@ public class ShopController {
         }
         return true;
     }*/
-
-    private boolean chooseType(IEntitySPI.Type type) {
-        if (!canAfford(ConfigReader.getItemPrices(type))) return false;
-        Engine.removeEntity(GameData.getHand());
-        GameData.setHand(null);
-        GameData.setCurrentlyPlacing(Engine.getEntitySPI(type));
-        GameData.setMouseMode(MouseMode.PLACING);
-        return true;
-    }
 
     /*private void purchaseItem(Type item) {
         for (InventoryNode node : Engine.getNodes(InventoryNode.class)) {
