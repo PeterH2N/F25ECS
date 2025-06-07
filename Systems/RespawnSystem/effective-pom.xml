@@ -8,7 +8,7 @@
 <!-- ====================================================================== -->
 <!--                                                                        -->
 <!-- Effective POM for project                                              -->
-<!-- 'dk.sdu.petni23:AnimationSystem:jar:1.0-SNAPSHOT'                      -->
+<!-- 'dk.sdu.petni23:RespawnSystem:jar:1.0-SNAPSHOT'                        -->
 <!--                                                                        -->
 <!-- ====================================================================== -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -19,9 +19,9 @@
     <version>1.0-SNAPSHOT</version>
   </parent>
   <groupId>dk.sdu.petni23</groupId>
-  <artifactId>AnimationSystem</artifactId>
+  <artifactId>RespawnSystem</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>AnimationSystem</name>
+  <name>RespawnSystem</name>
   <properties>
     <Dprism.order>sw</Dprism.order>
     <java>java</java>
@@ -100,23 +100,23 @@
     </pluginRepository>
   </pluginRepositories>
   <build>
-    <sourceDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\AnimationSystem\src\main\java</sourceDirectory>
-    <scriptSourceDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\AnimationSystem\src\main\scripts</scriptSourceDirectory>
-    <testSourceDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\AnimationSystem\src\test\java</testSourceDirectory>
-    <outputDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\AnimationSystem\target\classes</outputDirectory>
-    <testOutputDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\AnimationSystem\target\test-classes</testOutputDirectory>
+    <sourceDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\RespawnSystem\src\main\java</sourceDirectory>
+    <scriptSourceDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\RespawnSystem\src\main\scripts</scriptSourceDirectory>
+    <testSourceDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\RespawnSystem\src\test\java</testSourceDirectory>
+    <outputDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\RespawnSystem\target\classes</outputDirectory>
+    <testOutputDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\RespawnSystem\target\test-classes</testOutputDirectory>
     <resources>
       <resource>
-        <directory>c:\Users\Julius\Desktop\F25ECS\Systems\AnimationSystem\src\main\resources</directory>
+        <directory>c:\Users\Julius\Desktop\F25ECS\Systems\RespawnSystem\src\main\resources</directory>
       </resource>
     </resources>
     <testResources>
       <testResource>
-        <directory>c:\Users\Julius\Desktop\F25ECS\Systems\AnimationSystem\src\test\resources</directory>
+        <directory>c:\Users\Julius\Desktop\F25ECS\Systems\RespawnSystem\src\test\resources</directory>
       </testResource>
     </testResources>
-    <directory>c:\Users\Julius\Desktop\F25ECS\Systems\AnimationSystem\target</directory>
-    <finalName>AnimationSystem-1.0-SNAPSHOT</finalName>
+    <directory>c:\Users\Julius\Desktop\F25ECS\Systems\RespawnSystem\target</directory>
+    <finalName>RespawnSystem-1.0-SNAPSHOT</finalName>
     <pluginManagement>
       <plugins>
         <plugin>
@@ -162,8 +162,8 @@
               <goal>compile</goal>
             </goals>
             <configuration>
-              <source>10</source>
-              <target>10</target>
+              <source>16</source>
+              <target>16</target>
               <fork>true</fork>
             </configuration>
           </execution>
@@ -174,15 +174,15 @@
               <goal>testCompile</goal>
             </goals>
             <configuration>
-              <source>10</source>
-              <target>10</target>
+              <source>16</source>
+              <target>16</target>
               <fork>true</fork>
             </configuration>
           </execution>
         </executions>
         <configuration>
-          <source>10</source>
-          <target>10</target>
+          <source>16</source>
+          <target>16</target>
           <fork>true</fork>
         </configuration>
       </plugin>
@@ -205,7 +205,7 @@
               <artifactItems>
                 <artifactItem>
                   <groupId>dk.sdu.petni23</groupId>
-                  <artifactId>AnimationSystem</artifactId>
+                  <artifactId>RespawnSystem</artifactId>
                   <version>1.0-SNAPSHOT</version>
                   <type>jar</type>
                 </artifactItem>
@@ -298,7 +298,7 @@
               <goal>site</goal>
             </goals>
             <configuration>
-              <outputDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\AnimationSystem\target\site</outputDirectory>
+              <outputDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\RespawnSystem\target\site</outputDirectory>
               <reportPlugins>
                 <reportPlugin>
                   <groupId>org.apache.maven.plugins</groupId>
@@ -314,7 +314,7 @@
               <goal>deploy</goal>
             </goals>
             <configuration>
-              <outputDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\AnimationSystem\target\site</outputDirectory>
+              <outputDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\RespawnSystem\target\site</outputDirectory>
               <reportPlugins>
                 <reportPlugin>
                   <groupId>org.apache.maven.plugins</groupId>
@@ -325,7 +325,7 @@
           </execution>
         </executions>
         <configuration>
-          <outputDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\AnimationSystem\target\site</outputDirectory>
+          <outputDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\RespawnSystem\target\site</outputDirectory>
           <reportPlugins>
             <reportPlugin>
               <groupId>org.apache.maven.plugins</groupId>
@@ -337,6 +337,6 @@
     </plugins>
   </build>
   <reporting>
-    <outputDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\AnimationSystem\target\site</outputDirectory>
+    <outputDirectory>c:\Users\Julius\Desktop\F25ECS\Systems\RespawnSystem\target\site</outputDirectory>
   </reporting>
 </project>

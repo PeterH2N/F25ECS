@@ -46,6 +46,7 @@ public class GoldSPI implements IEntitySPI {
         gold.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
         gold.add(new VelocityComponent());
         gold.add(new CurrencyComponent());
+        gold.add(new DurationComponent(60000 * 5, GameData.getCurrentMillis()));
 
         ItemComponent item = new ItemComponent(IEntitySPI.Type.GOLD);
         item.onPickup = node -> {

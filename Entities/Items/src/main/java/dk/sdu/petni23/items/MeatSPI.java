@@ -47,6 +47,7 @@ public class MeatSPI implements IEntitySPI {
         meat.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
         meat.add(new VelocityComponent());
         meat.add(new CurrencyComponent());
+        meat.add(new DurationComponent(60000 * 5, GameData.getCurrentMillis()));
 
         ItemComponent item = new ItemComponent(IEntitySPI.Type.MEAT);
         item.onPickup = node -> {

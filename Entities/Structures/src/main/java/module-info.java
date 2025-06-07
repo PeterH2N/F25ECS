@@ -18,6 +18,7 @@ module Structures {
     requires javafx.controls;
     requires GameEngine;
     requires Common;
+    requires javafx.fxml;
     provides IPluginService with HousePlugin, Nexus,MinePlugin, GoblinHousePlugin;
     provides IEntitySPI with TreeSPI, StoneWall, ArcherTower, Nexus, Mine, WoodenFence, GoblinHouse, WorkerHut;
 }

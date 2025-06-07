@@ -22,11 +22,12 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Random;
 import java.util.function.Consumer;
 
-public class GameData
-{
+public class GameData {
 
     private static final DoubleProperty displayWidth = new SimpleDoubleProperty(800);
     private static final DoubleProperty displayHeight = new SimpleDoubleProperty(600);
@@ -66,34 +67,36 @@ public class GameData
     static {
         ppmProperty.bind(displayWidth.divide(camera.widthProperty));
         displayRatioProperty.bind(displayHeight.divide(displayWidth));
-        tileRatioProperty.bind(ppmProperty.multiply(1.0 / 64.0)); // reciprocal of 64 (tilesize in pixels) multiplied by pixels per tile
+        tileRatioProperty.bind(ppmProperty.multiply(1.0 / 64.0)); // reciprocal of 64 (tilesize in pixels) multiplied by
+                                                                  // pixels per tile
         displayWidth.bind(gameWindow.widthProperty());
         displayHeight.bind(gameWindow.heightProperty());
         gameWindow.getChildren().add(canvas);
         gameWindow.getChildren().add(uiPane);
     }
-    public static Entity getShop(){
+
+    public static Entity getShop() {
         return shop;
     }
 
-    public static void setShop(Entity e){
-        shop=e;
+    public static void setShop(Entity e) {
+        shop = e;
     }
 
     public static DoubleProperty displayWidthProperty() {
         return displayWidth;
     }
+
     public static DoubleProperty displayHeightProperty() {
         return displayHeight;
     }
-    public static int getDisplayWidth()
-    {
-        return (int)displayWidth.get();
+
+    public static int getDisplayWidth() {
+        return (int) displayWidth.get();
     }
 
-    public static int getDisplayHeight()
-    {
-        return (int)displayHeight.get();
+    public static int getDisplayHeight() {
+        return (int) displayHeight.get();
     }
 
     public static double getDisplayRatio() {
@@ -103,6 +106,7 @@ public class GameData
     public static DoubleProperty getDisplayRatioProperty() {
         return displayRatioProperty;
     }
+
     public static double getPPM() {
         return ppmProperty.get();
     }
@@ -114,16 +118,15 @@ public class GameData
     public static void setTime(long now) {
         long prevTime = currentTime;
         currentTime = now;
-        deltaTime = (double)(currentTime - prevTime) / 1000000000;
+        deltaTime = (double) (currentTime - prevTime) / 1000000000;
         currentMillis = now / 1000000;
     }
-    public static long getFrameTime()
-    {
+
+    public static long getFrameTime() {
         return frameTime;
     }
 
-    public static void setFrameTime(long frameTime)
-    {
+    public static void setFrameTime(long frameTime) {
         GameData.frameTime = frameTime;
     }
 
@@ -131,18 +134,15 @@ public class GameData
         return currentMillis;
     }
 
-    public static double getDeltaTime()
-    {
+    public static double getDeltaTime() {
         return deltaTime;
     }
 
-    public static void setPaused(boolean paused)
-    {
+    public static void setPaused(boolean paused) {
         GameData.paused = paused;
     }
 
-    public static BooleanProperty getFocusedProperty()
-    {
+    public static BooleanProperty getFocusedProperty() {
         return focusedProperty;
     }
 
@@ -151,7 +151,8 @@ public class GameData
     }
 
     public static Vector2D toScreenSpace(double x, double y) {
-        Vector2D origin = new Vector2D((double) GameData.getDisplayWidth() / 2, (double) GameData.getDisplayHeight() / 2);
+        Vector2D origin = new Vector2D((double) GameData.getDisplayWidth() / 2,
+                (double) GameData.getDisplayHeight() / 2);
         Vector2D p = new Vector2D(x, y).getSubtracted(camera.getCenter()); // distance from camera center to point
 
         return origin.getAdded(new Vector2D(p.x * getPPM(), -p.y * getPPM()));
@@ -177,37 +178,39 @@ public class GameData
 
     /**
      * Returns null if not on solid ground
-    * */
+     */
     public static Vector2D randomWorldPos() {
         double x = Math.random() * GameData.worldSize - (double) GameData.worldSize / 2;
         double y = Math.random() * GameData.worldSize - (double) GameData.worldSize / 2;
         if (world.map.getTile((int) x, (int) y).type == Tile.Type.WATER) {
             return null;
-        }
-        else return new Vector2D(x, y);
+        } else
+            return new Vector2D(x, y);
     }
-    public static void setMouseMode(MouseMode mouseMode){
+
+    public static void setMouseMode(MouseMode mouseMode) {
         GameData.mouseMode = mouseMode;
     }
 
-    public static MouseMode getMouseMode(){
+    public static MouseMode getMouseMode() {
         return GameData.mouseMode;
     }
 
-    public static Entity getHand(){
+    public static Entity getHand() {
         return hand;
     }
 
-    public static void setHand(Entity entity){
+    public static void setHand(Entity entity) {
         hand = entity;
     }
 
-    public static void setGameMode(GameMode gameMode_in){
+    public static void setGameMode(GameMode gameMode_in) {
         gameMode = gameMode_in;
-        if (onGameModeChanged != null) onGameModeChanged.accept(gameMode_in);
+        if (onGameModeChanged != null)
+            onGameModeChanged.accept(gameMode_in);
     }
 
-    public static GameMode getGameMode(){
+    public static GameMode getGameMode() {
         return gameMode;
     }
 
@@ -217,5 +220,10 @@ public class GameData
 
     public static void setCurrentlyPlacing(IEntitySPI currentlyPlacing) {
         GameData.currentlyPlacing = currentlyPlacing;
+    }
+
+    public static final Queue<RespawnRequest> pendingRespawns = new LinkedList<>();
+
+    public record RespawnRequest(IEntitySPI.Type type, Vector2D position, double delay) {
     }
 }

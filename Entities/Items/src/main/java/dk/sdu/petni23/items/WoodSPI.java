@@ -44,6 +44,7 @@ public class WoodSPI implements IEntitySPI {
         wood.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
         wood.add(new VelocityComponent());
         wood.add(new CurrencyComponent());
+        wood.add(new DurationComponent(60000 * 5, GameData.getCurrentMillis()));
 
         ItemComponent item = new ItemComponent(IEntitySPI.Type.WOOD);
         item.onPickup = node -> {
