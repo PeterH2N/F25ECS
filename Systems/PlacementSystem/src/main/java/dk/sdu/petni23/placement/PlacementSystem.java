@@ -160,10 +160,8 @@ public class PlacementSystem extends ISystem {
     private boolean purchase(Map<IEntitySPI.Type, Integer> prices) {
 
         Map<IEntitySPI.Type,Integer> inventoryAmounts = GameData.playerInventory.amounts;
-        for(IEntitySPI.Type resource : prices.keySet()){
-            if(inventoryAmounts.get(resource)==null || inventoryAmounts.get(resource) < prices.get(resource)) {
-                return false;
-            }
+        if(!canAfford(prices)){
+            return false;
         }
         for(IEntitySPI.Type resource : prices.keySet()) {
             inventoryAmounts.put(resource, inventoryAmounts.get(resource) - prices.get(resource));
