@@ -1,7 +1,5 @@
 package dk.sdu.petni23.structures.tower;
 
-import dk.sdu.petni23.common.GameData;
-import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.services.IPluginService;
 
 public class HousePlugin implements IPluginService

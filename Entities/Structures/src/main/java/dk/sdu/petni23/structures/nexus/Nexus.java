@@ -47,7 +47,7 @@ public class Nexus implements IPluginService, IEntitySPI {
         nexus.add(new HitBoxComponent(hitBoxShape, offset));
         nexus.add(new CollisionComponent(hitBoxShape, offset));
 
-        var sprite = nexus.add(new SpriteComponent(spriteSheet, new Vector2D(-0.5, -0.9)));
+        nexus.add(new SpriteComponent(spriteSheet, new Vector2D(-0.5, -0.9)));
         nexus.add(new DisplayComponent(DisplayComponent.Layer.FOREGROUND));
         nexus.add(new LayerComponent(LayerComponent.Layer.PLAYER));
         nexus.add(new AIComponent(AIComponent.Type.NEXUS, null, null));

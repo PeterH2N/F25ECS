@@ -22,9 +22,6 @@ import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-
 import java.util.Objects;
 
 public class WorkerHut implements IEntitySPI {
@@ -48,7 +45,7 @@ public class WorkerHut implements IEntitySPI {
 
         var rect = new AABBShape((21d * 0.5) / 8, (9d * 0.5) / 8);
         var collision = new CollisionComponent(rect, new Vector2D(0, 0.45));
-        var hitBox = hut.add(new HitBoxComponent(rect, new Vector2D(0, 0.45)));
+        hut.add(new HitBoxComponent(rect, new Vector2D(0, 0.45)));
         collision.active = false;
         hut.add(collision);
 

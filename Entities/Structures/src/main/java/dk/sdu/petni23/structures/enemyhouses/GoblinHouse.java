@@ -3,14 +3,10 @@ package dk.sdu.petni23.structures.enemyhouses;
 import java.util.Objects;
 
 import dk.sdu.petni23.common.components.collision.CollisionComponent;
-import dk.sdu.petni23.common.components.collision.HitBoxComponent;
-import dk.sdu.petni23.common.components.damage.LayerComponent;
 import dk.sdu.petni23.common.components.gameflow.SpawnComponent;
-import dk.sdu.petni23.common.components.health.HealthComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.components.rendering.DisplayComponent;
 import dk.sdu.petni23.common.components.rendering.SpriteComponent;
-import dk.sdu.petni23.common.shape.AABBShape;
 import dk.sdu.petni23.common.shape.OvalShape;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.common.util.Vector2D;

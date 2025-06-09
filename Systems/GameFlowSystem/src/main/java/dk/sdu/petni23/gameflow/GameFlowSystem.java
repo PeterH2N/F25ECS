@@ -20,32 +20,29 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane; 
+import javafx.scene.layout.StackPane;
 
 public class GameFlowSystem extends ISystem implements IPluginService {
     private static AnchorPane pane;
     private GameFlowController controller = new GameFlowController();
-    private final long interval = 10000;
     private long roundEndTime = System.currentTimeMillis();
     public static GameFlow settings;
 
     @Override
     public void update(double deltaTime) {
-        if(GameData.getGameMode() == GameMode.WAIT){
-            //System.out.println("Between rounds: " + Long.toString(System.currentTimeMillis()-roundEndTime));
-            if(System.currentTimeMillis()-roundEndTime>interval){
-                GameData.setGameMode(GameMode.IN_GAME);
-                controller.newRound();
-            }else{
-                //potentially update global time
-            }
-        }else if(controller.endRoundIfAppropriate() && GameData.getGameMode() == GameMode.IN_GAME){
+        if (GameData.getGameMode() == GameMode.STARTING) {
+            controller.newRound();
+            GameData.setGameMode(GameMode.IN_GAME);
+        } else if (GameData.getGameMode() == GameMode.IN_GAME &&
+                controller.endRoundIfAppropriate()) {
             GameData.setGameMode(GameMode.WAIT);
             roundEndTime = System.currentTimeMillis();
+        } else if (GameData.getGameMode() == GameMode.WAIT) {
+            if (System.currentTimeMillis() - roundEndTime > 10_000) {
+                GameData.setGameMode(GameMode.STARTING);
+            }
         }
-
     }
-
 
     @Override
     public int getPriority() {
@@ -55,13 +52,14 @@ public class GameFlowSystem extends ISystem implements IPluginService {
     @Override
     public void start() {
         InputStream in = ConfigReader.getConfigInputStream();
-        try(InputStreamReader inputStreamReader = new InputStreamReader(in)) {
+        try (InputStreamReader inputStreamReader = new InputStreamReader(in)) {
             JsonObject root = JsonParser.parseReader(inputStreamReader).getAsJsonObject();
             JsonElement gameFlowElement = root.get("gameFlowSettings");
             Gson gson = new Gson();
             settings = gson.fromJson(gameFlowElement, GameFlow.class);
-        } catch(IOException e) {
-            e.printStackTrace();;
+        } catch (IOException e) {
+            e.printStackTrace();
+            ;
         }
         try {
             FXMLLoader loader = new FXMLLoader(GameFlowSystem.class.getResource("/ScoreUI.fxml"));

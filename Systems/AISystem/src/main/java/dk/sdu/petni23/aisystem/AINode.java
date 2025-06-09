@@ -1,6 +1,5 @@
 package dk.sdu.petni23.aisystem;
 
-import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.components.ai.AIComponent;
 import dk.sdu.petni23.common.components.actions.ActionSetComponent;
 import dk.sdu.petni23.common.components.ai.PathFindingComponent;
@@ -13,7 +12,6 @@ import dk.sdu.petni23.common.components.inventory.InventoryComponent;
 import dk.sdu.petni23.common.components.movement.DirectionComponent;
 import dk.sdu.petni23.common.components.movement.PositionComponent;
 import dk.sdu.petni23.common.components.movement.VelocityComponent;
-import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.node.Node;
 import dk.sdu.petni23.gameengine.node.OptionalComponent;

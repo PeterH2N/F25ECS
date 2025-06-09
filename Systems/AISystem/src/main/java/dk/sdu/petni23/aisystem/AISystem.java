@@ -2,7 +2,6 @@ package dk.sdu.petni23.aisystem;
 
 import dk.sdu.petni23.common.GameData;
 import dk.sdu.petni23.common.components.ControlComponent;
-import dk.sdu.petni23.common.components.PlacementComponent;
 import dk.sdu.petni23.common.components.actions.ActionSetComponent;
 import dk.sdu.petni23.common.components.ai.AIComponent;
 import dk.sdu.petni23.common.components.ai.Path;

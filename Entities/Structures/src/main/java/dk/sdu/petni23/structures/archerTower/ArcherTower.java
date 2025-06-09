@@ -21,7 +21,6 @@ import dk.sdu.petni23.common.shape.OvalShape;
 import dk.sdu.petni23.common.shape.Shape;
 import dk.sdu.petni23.common.spritesystem.SpriteSheet;
 import dk.sdu.petni23.common.util.Vector2D;
-import dk.sdu.petni23.gameengine.Engine;
 import dk.sdu.petni23.gameengine.entity.Entity;
 import dk.sdu.petni23.gameengine.entity.IEntitySPI;
 import javafx.scene.image.Image;
@@ -46,7 +45,7 @@ public class ArcherTower implements IEntitySPI {
     public static Entity create(Vector2D pos){
         Entity tower = new Entity(Type.TOWER_3);
 
-        var positionComponent = tower.add(new PositionComponent(pos));
+        tower.add(new PositionComponent(pos));
 
         var origin = new Vector2D(-0.5, -0.85);
         var sprite = new SpriteComponent(towerSpriteSheet, origin);
