@@ -20,7 +20,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.StackPane; 
 
 public class GameFlowSystem extends ISystem implements IPluginService {
     private static AnchorPane pane;
